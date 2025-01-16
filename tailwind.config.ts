@@ -8,6 +8,13 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        press: ['"Press Start 2P"', "serif"], 
+      },
+      fontSize: {
+        xxs: "10px",
+        tiny: "12px", 
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
