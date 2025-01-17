@@ -1,16 +1,7 @@
 "use client";
 
 export default function AcademicForm() {
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const checkedPrograms = Array.from(
-            document.querySelectorAll('input[name="programs"]:checked')
-        );
-        if (checkedPrograms.length > 3) {
-            e.target.checked = false;
-            alert("Solo puedes seleccionar hasta 3 programas académicos.");
-        }
-    };
-
+  
     return (
       <form
         action="/api/forms"

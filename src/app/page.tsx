@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image'
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -27,12 +28,12 @@ export default function LoadingPage() {
 
       {/* Contenido */}
       <div className="relative z-10 text-center">
-        <img
+        <Image
           src="/VTG.svg"
           alt="VTG"
           className="mx-auto mt-4 w-80 md:w-80"
         />
-        <img
+        <Image
           src="/logoeafit.svg"
           alt="Universidad EAFIT"
           className="mx-auto mt-4 w-40 md:w-48"

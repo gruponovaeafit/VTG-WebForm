@@ -1,4 +1,6 @@
 "use client";
+
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import PersonalForm from "../globalcomponents/Form-Personal";
 
@@ -93,20 +95,20 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10">
         <h1 className="text-2xl md:text-1xl text-center mb-6 pixel-font text-white">
-          ¡Bienvenido al Retro Formulario!
+          ¡Bienvenid@ al Formulario VTG!
         </h1>
 
         <PersonalForm />
 
 
         <footer className="bottom z-10 text-center">
-          <img
+          <Image
             src="/PoweredByNOVA.svg"
             alt="Universidad powe"
             className="mx-auto mt-4 w-40 md:w-48"
           />
       </footer>
-      
+
       </main>
 
       
