@@ -20,14 +20,12 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Press Start 2P", serif;
-  font-size: 10px;
 }
 
 .press-start-2p-regular {
   font-family: "Press Start 2P", serif;
   font-weight: 100;
   font-style: normal;
-  font-size: 10px;
 }
 
 

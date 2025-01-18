@@ -71,14 +71,15 @@ export default function Home() {
 
   return (
     <div
-      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
-      style={{
-        backgroundImage: "url('/back_main.jpeg')",
-        backgroundSize: "cover",
-        position: "relative",
-        overflow: "hidden",
-      }}
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+    style={{
+      backgroundImage: "url('/back_main.jpeg')",
+      backgroundSize: "cover",
+      position: "relative",
+      overflow: "hidden",
+    }}
     >
+
       {/* Lienzo para la animación */}
       <canvas
         ref={canvasRef}
@@ -104,8 +105,10 @@ export default function Home() {
         <footer className="bottom z-10 text-center">
           <Image
             src="/PoweredByNOVA.svg"
-            alt="Universidad powe"
+            alt="Powered By NOVA"
             className="mx-auto mt-4 w-40 md:w-48"
+            width={300}
+            height={200}
           />
       </footer>
 
