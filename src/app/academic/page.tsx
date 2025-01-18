@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 import AcademicForm from "../globalcomponents/Form-Academic";
 
 export default function Home() {
