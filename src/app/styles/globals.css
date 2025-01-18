@@ -45,6 +45,24 @@ body {
   animation: glitch 3s infinite;
 }
 
+
+@keyframes glitch_partners {
+  0% {
+    text-shadow: 2px 2px 0 #007bff, -2px -2px 0 #d27b0a;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #007bff, 4px 2px 0 #d27b0a;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #007bff, -2px 2px 0 #d27b0a;
+  }
+}
+
+.glitch_partners {
+  position: relative;
+  animation: glitch_partners 3s infinite;
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);

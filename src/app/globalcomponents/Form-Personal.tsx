@@ -1,57 +1,12 @@
 "use client";
-import { useEffect } from "react";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function PersonalForm() {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://www.google.com/recaptcha/api.js";
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Verificar si grecaptcha está disponible
-    if (typeof grecaptcha === "undefined") {
-      console.error("reCAPTCHA no está disponible.");
-      return;
-    }
-
-    // Ejecutar reCAPTCHA
-    grecaptcha.ready(() => {
-      grecaptcha.execute(process.env.CLIENT_KEY_CAPTCHA, { action: "submit" }).then(async (token: string) => {
-        console.log("reCAPTCHA token:", token);
-
-        // Envía el token y los datos del formulario al servidor
-        const formData = new FormData(e.currentTarget);
-
-        const response = await fetch("/api/verify", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token,
-            formData: Object.fromEntries(formData.entries()), // Convierte FormData a un objeto
-          }),
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-          console.log("Formulario enviado correctamente.");
-        } else {
-          console.error("Error al enviar el formulario.");
-        }
-      });
-    });
-  };
+  const router = useRouter();
+  const [captcha, setCaptcha] = useState<string | null>(null);
 
   const handleInvalidEmail = (e: React.InvalidEvent<HTMLInputElement>) => {
     e.target.setCustomValidity("Por favor ingresa un correo válido con el dominio @eafit.edu.co.");
@@ -59,6 +14,49 @@ export default function PersonalForm() {
 
   const handleInputEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.setCustomValidity("");
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!captcha) {
+      alert("Por favor completa el reCAPTCHA antes de enviar.");
+      return;
+    }
+
+    const formElement = e.currentTarget;
+    const formData = new FormData(formElement);
+
+    try {
+      const response = await fetch("/api/forms/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: captcha, // Token de reCAPTCHA
+          ...Object.fromEntries(formData.entries()), // Datos del formulario
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error en la respuesta del servidor:", errorData);
+        alert(`Error: ${errorData.message}`);
+        return;
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Formulario enviado correctamente.");
+        router.push("/academic"); // Redirige a la siguiente página
+      } else {
+        alert(`Error en la validación: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      alert("Error interno al enviar el formulario.");
+    }
   };
 
   return (
@@ -76,7 +74,6 @@ export default function PersonalForm() {
           name="name"
           required
           placeholder="Pepito"
-          title="Ingresa tu Nombre"
           className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
         />
       </div>
@@ -91,7 +88,6 @@ export default function PersonalForm() {
           name="secondName"
           required
           placeholder="Perez"
-          title="Ingresa tus Apellidos"
           className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
         />
       </div>
@@ -107,21 +103,24 @@ export default function PersonalForm() {
           required
           placeholder="pp@eafit.edu.co"
           pattern="^[a-zA-Z0-9._%+-]+@eafit\\.edu\\.co$"
+          title="El correo debe ser institucional (@eafit.edu.co)."
           onInvalid={handleInvalidEmail}
           onInput={handleInputEmail}
-          title="El correo debe ser institucional (@eafit.edu.co)."
           className="w-full px-4 py-2 rounded border border-green-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-green-500 placeholder:opacity-70"
         />
       </div>
 
-      <div
-        className="g-recaptcha"
-        data-sitekey={process.env.CLIENT_KEY_CAPTCHA}
-      ></div>
+      {/* reCAPTCHA */}
+      <div className="flex justify-center">
+        <ReCAPTCHA
+          sitekey={process.env.NEXT_PUBLIC_CLIENT_KEY_CAPTCHA!}
+          onChange={(token) => setCaptcha(token)}
+        />
+      </div>
 
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 mt-4"
       >
         ¡Enviar!
       </button>
