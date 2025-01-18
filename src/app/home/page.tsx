@@ -19,11 +19,11 @@ export default function Home() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const numPixels = 50; // Número de píxeles en pantalla
+    const numPixels = 25; // Número de píxeles en pantalla
     const pixels = Array.from({ length: numPixels }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 10 + 5, // Tamaño de los píxeles
+      size: Math.random() * 17 + 5, // Tamaño de los píxeles
       color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
         Math.random() * 255
       })`,
@@ -73,7 +73,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/back_main.jpeg')",
+      backgroundImage: "url('/back_landing_coins.png')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -94,22 +94,22 @@ export default function Home() {
       />
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10">
-        <h1 className="text-2xl md:text-1xl text-center mb-6 pixel-font text-white">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
+        <h1 className="text-2xl md:text-1xl text-center mb-6 pixel-font text-white glitch">
           ¡Bienvenid@ al Formulario VTG!
         </h1>
 
         <PersonalForm />
 
-
-        <footer className="bottom z-10 text-center">
-          <Image
-            src="/PoweredByNOVA.svg"
-            alt="Powered By NOVA"
-            className="mx-auto mt-4 w-40 md:w-48"
-            width={300}
-            height={200}
-          />
+        {/* Footer */}
+      <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
+        <Image
+          src="/PoweredByNOVA.svg"
+          alt="Powered By NOVA"
+          className="w-40 md:w-48"
+          width={300}
+          height={200}
+        />
       </footer>
 
       </main>
@@ -117,6 +117,8 @@ export default function Home() {
       
       
     </div>
+
+
 
         
 
