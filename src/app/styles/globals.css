@@ -30,13 +30,13 @@ body {
 
 @keyframes glitch {
   0% {
-    text-shadow: 2px 2px 0 #007bff, -2px -2px 0 #802ebb;
+    text-shadow: 4px 4px 0 #a200ff, -2px -2px 0 #00ff4c;
   }
   50% {
-    text-shadow: -4px -2px 0 #007bff, 4px 2px 0 #802ebb;
+    text-shadow: -4px -4px 0 #a200ff, 2px 2px 0 #00ff4c;
   }
   100% {
-    text-shadow: 2px -2px 0 #007bff, -2px 2px 0 #802ebb;
+    text-shadow: -4px -4px 0 #a200ff, -2px 2px 0 #00ff4c;
   }
 }
 

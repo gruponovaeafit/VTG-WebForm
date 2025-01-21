@@ -10,7 +10,7 @@ const pressStart2P = Press_Start_2P({
 
 export const metadata: Metadata = {
   title: "Formulario VTG",
-  description: "Aplicación personalizada hecha por el Grupo NOVA ",
+  description: "Aplicación personalizada hecha por el Grupo NOVA",
 };
 
 export default function RootLayout({
