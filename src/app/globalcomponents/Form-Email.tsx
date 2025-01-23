@@ -16,7 +16,7 @@ export default function EmailForm() {
     e.target.setCustomValidity("");
   }; */ } 
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {2
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!captcha) {
