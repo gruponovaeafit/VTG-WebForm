@@ -1,6 +1,22 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+// pages/api/dbtest.ts
+import { NextApiRequest, NextApiResponse } from "next";
+import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+
+const config: SqlConfig = {
+  user: process.env.DB_USER as string,
+  password: process.env.DB_PASS as string,
+  database: process.env.DB_NAME as string,
+  server: process.env.DB_SERVER as string,
+  port: parseInt(process.env.DB_PORT ?? "1433", 10),
+  options: {
+    encrypt: true, 
+    trustServerCertificate: false,
+  },
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  let pool: ConnectionPool | null = null;
+
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, message: "Método no permitido" });
   }
@@ -37,18 +53,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // Validar los campos del formulario
-    if ( !email ) {
+    if (!email) {
       console.error("Datos faltantes en el formulario:", { email });
       return res.status(400).json({ success: false, message: "Faltan datos obligatorios" });
     }
 
-    console.log("Formulario recibido correctamente:", { email });
+    pool = await sql.connect(config);
 
-    // Respuesta exitosa
-    return res.status(200).json({ success: true, message: "Formulario enviado correctamente" });
-  } catch (error) {
-    console.error("Error en el servidor:", error);
+    // Convertimos el correo a minúsculas
+    const emailLower = email.toLowerCase();
+
+    // Insertamos en la BD usando los valores transformados
+    await pool.request()
+      .input("correo", sql.VarChar, emailLower)
+      .query(`
+        INSERT INTO persona (correo) 
+        VALUES (@correo)
+      `);
+
+    return res.status(200).json({ success: true, message: "Formulario enviado y datos insertados correctamente" });
+
+  } catch (err) {
+    console.error("Error en el servidor:", err);
     return res.status(500).json({ success: false, message: "Error interno del servidor" });
+  } finally {
+    if (pool) {
+      pool.close();
+    }
   }
 }
