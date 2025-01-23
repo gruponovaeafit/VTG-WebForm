@@ -8,7 +8,7 @@ export default function LoadingPage() {
   const router = useRouter();
 
   const handleRedirect = () => {
-    router.push("/home");
+    router.push("/email");
   };
 
   return (
