@@ -64,33 +64,6 @@ export default function PersonalForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-pink-400">
-          Nombre
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="Pepito"
-          className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-pink-400">
-          Apellidos
-        </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
-          required
-          placeholder="Perez"
-          className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
-        />
-      </div>
 
       <div className="mb-4">
         <label htmlFor="email" className="block text-sm mb-2 text-green-400">
@@ -101,9 +74,9 @@ export default function PersonalForm() {
           id="email"
           name="email"
           required
-          placeholder="pp@eafit.edu.co"
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\\.edu\\.co$"
-          title="El correo debe ser institucional (@eafit.edu.co)."
+          placeholder="usuario@eafit.edu.co"
+          //pattern="^[a-zA-Z0-9._%+-]+@eafit\\.edu\\.co$"
+          title="El correo debe ser institucional (@eafit.edu.co)"
           onInvalid={handleInvalidEmail}
           onInput={handleInputEmail}
           className="w-full px-4 py-2 rounded border border-green-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-green-500 placeholder:opacity-70"

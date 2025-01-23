@@ -12,8 +12,8 @@ export default function Home() {
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
 
-        <h1 className="text-3xl md:text-1xl text-center mb-6 pixel-font text-white glitch">
-          GAME OVER
+        <h1 className="text-4xl md:text-1xl text-center mb-6 pixel-font text-white glitch">
+          LEVEL UP
         </h1>
 
         <Image

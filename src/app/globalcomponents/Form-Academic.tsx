@@ -37,6 +37,35 @@ export default function AcademicForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
+
+<div className="mb-4">
+        <label htmlFor="name" className="block text-sm mb-2 text-pink-400">
+          Nombre
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="Pepito"
+          className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="secondName" className="block text-sm mb-2 text-pink-400">
+          Apellidos
+        </label>
+        <input
+          type="text"
+          id="secondName"
+          name="secondName"
+          required
+          placeholder="Perez"
+          className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
+        />
+      </div>
+
       <div className="mb-4">
         <label htmlFor="programs" className="block text-m mb-2 text-yellow-400">
           Programa académico
