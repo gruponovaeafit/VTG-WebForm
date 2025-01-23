@@ -1,12 +1,41 @@
 "use client";
 
-export default function AlreadyUserForm() {
+import { useRouter } from "next/navigation";
+export default function GroupsForm() {
+
+    const router = useRouter();
+
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const formElement = e.currentTarget;
+      const formData = new FormData(formElement);
+
+      try {
+        const response = await fetch("/api/forms/final", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
+        });
+
+        if (!response.ok) {
+          throw new Error("Error en el servidor");
+        } 
+
+        alert("Formulario enviado correctamente.");
+        router.push("/levelup"); 
+      } catch (error) {
+        console.error("Error al enviar el formulario:", error);
+        alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      }
+    };
 
 
     return (
-      <form
-        action="/api/forms"
-        method="POST"
+      <form 
+        onSubmit={handleFormSubmit}
         className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
       >  
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AlreadyUserForm from "../globalcomponents/Form-AlreadyUser";
+import GroupsForm from "../globalcomponents/Form-Groups";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
         </h1>
 
         {/* Formulario arcade */}
-        <AlreadyUserForm />
+        <GroupsForm />
 
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">

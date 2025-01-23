@@ -25,7 +25,7 @@ export default function AcademicForm() {
       } 
 
       alert("Formulario enviado correctamente.");
-      router.push("/Completed"); 
+      router.push("/groups"); 
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
