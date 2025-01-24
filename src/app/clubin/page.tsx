@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import PartnersForm from "../globalcomponents/Form-Partners";
+import ClubinForm from "../globalcomponents/Form-Clubin";
 
 export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -73,7 +73,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/partners.svg')",
+      backgroundImage: "url('/back_partners.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -96,10 +96,10 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
         <h1 className="text-4xl md:text-2xl text-center mb-6 pixel-font text-white glitch_partners">
-          PARTNERS
+          CLUBIN
         </h1>
 
-        <PartnersForm />
+        <ClubinForm />
 
         {/* Footer */}
       <footer className="relative z-10 flex items-center justify-center py-2 mb-10">

@@ -63,6 +63,127 @@ body {
   animation: glitch_partners 3s infinite;
 }
 
+@keyframes glitch_aiesec {
+  0% {
+    text-shadow: 2px 2px 0 #007bff, -2px -2px 0 #007bff;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #007bff, 4px 2px 0 #007bff;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #007bff, -2px 2px 0 #007bff;
+  }
+}
+
+.glitch_aiesec {
+  position: relative;
+  animation: glitch_aiesec 3s infinite;
+}
+
+@keyframes glitch_clubmerc {
+  0% {
+    text-shadow: 2px 2px 0 #83aad1, -2px -2px 0 #83aad1;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #83aad1, 4px 2px 0 #83aad1;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #83aad1, -2px 2px 0 #83aad1;
+  }
+}
+
+.glitch_clubmerc {
+  position: relative;
+  animation: glitch_clubmerc 3s infinite;
+}
+
+@keyframes glitch_gpg {
+  0% {
+    text-shadow: 2px 2px 0 #8856df, -2px -2px 0 #8856df;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #8856df, 4px 2px 0 #8856df;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #8856df, -2px 2px 0 #8856df;
+  }
+}
+
+.glitch_gpg {
+  position: relative;
+  animation: glitch_gpg 3s infinite;
+}
+
+
+
+@keyframes glitch_nexos {
+  0% {
+    text-shadow: 2px 2px 0 #9A975F, -2px -2px 0 #9A975F;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #9A975F, 4px 2px 0 #9A975F;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #9A975F, -2px 2px 0 #9A975F;
+  }
+}
+
+.glitch_nexos {
+  position: relative;
+  animation: glitch_nexos 3s infinite;
+}
+
+@keyframes glitch_Seres {
+  0% {
+    text-shadow: 2px 2px 0 #68ada5, -2px -2px 0 #68ada5;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #68ada5, 4px 2px 0 #68ada5;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #68ada5, -2px 2px 0 #68ada5;
+  }
+}
+
+.glitch_Seres {
+  position: relative;
+  animation: glitch_Seres 3s infinite;
+}
+
+@keyframes glitch_Spie {
+  0% {
+    text-shadow: 2px 2px 0 #c71a1a, -2px -2px 0 #c71a1a;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #c71a1a, 4px 2px 0 #c71a1a;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #c71a1a, -2px 2px 0 #c71a1a;
+  }
+}
+
+.glitch_Spie {
+  position: relative;
+  animation: glitch_Spie 3s infinite;
+}
+
+@keyframes glitch_NOVA {
+  0% {
+    text-shadow: 8px 8px 0 #7f0f7d, -8px -8px 0 #7f0f7d;
+  }
+  50% {
+    text-shadow: -8px -8px 0 #7f0f7d, 8px 8px 0 #7f0f7d;
+  }
+  100% {
+    text-shadow: 8px 8px 0 #7f0f7d, -8px -8px 0 #7f0f7d;
+  }
+}
+
+.glitch_NOVA {
+  position: relative;
+  animation: glitch_NOVA 3s infinite;
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);

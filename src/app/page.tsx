@@ -16,7 +16,7 @@ export default function LoadingPage() {
       <div
         className="absolute inset-0 bg-no-repeat bg-center"
         style={{
-          backgroundImage: "url('/back_landing_coins.png')",
+          backgroundImage: "url('/coins.png')",
           backgroundSize: "cover",
         }}
       ></div>
