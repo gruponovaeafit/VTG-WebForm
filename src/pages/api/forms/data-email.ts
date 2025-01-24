@@ -53,9 +53,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    if (!email) {
-      console.error("Datos faltantes en el formulario:", { email });
-      return res.status(400).json({ success: false, message: "Faltan datos obligatorios" });
+    if (!email || !email.endsWith("@eafit.edu.co")) {
+      console.error("Correo inválido o faltante:", { email });
+      return res.status(400).json({ success: false, message: "El correo debe ser del dominio @eafit.edu.co" });
     }
 
     pool = await sql.connect(config);
