@@ -1,4 +1,4 @@
-// pages/api/dbtest.ts
+
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 

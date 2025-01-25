@@ -29,7 +29,7 @@ export default function EmailForm() {
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/data-email", {
+      const response = await fetch("/api/dataemail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default function EmailForm() {
         addNotification("success", "Formulario enviado correctamente.");
         setTimeout(() => {
           router.push("/home"); // Redirige después de 5 segundos
-        }, 5000);
+        }, 2000);
       }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
