@@ -29,7 +29,7 @@ export default function EmailForm() {
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/forms/data-email", {
+      const response = await fetch("/api/data-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
