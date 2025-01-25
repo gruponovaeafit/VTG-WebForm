@@ -12,21 +12,7 @@ export default function OEForm() {
     const formData = new FormData(formElement);
 
     try {
-      // Opcional: Enviar los datos a un endpoint
-      const response = await fetch("/api/forms/oe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
-      });
-
-      if (!response.ok) {
-        throw new Error("Error en el servidor");
-      }
-
-      // Redirigir al usuario a /completed
-      router.push("/levelup");
+      router.push("/levelup"); // Redirigir al usuario
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
@@ -36,54 +22,32 @@ export default function OEForm() {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full space-y-6"
     >
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-600">
-          Nombre
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
-      </div>
 
       <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-blue-600">
-          Apellidos
+        <label htmlFor="programs" className="block text-m mb-2 text-blue-400">
+          ¿Puedes asistir a nuestra convocatoria para conocer más sobre el grupo? 
         </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
-          required
-          placeholder="Perez"
-          title="Ingresa tus Apellidos"
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm mb-2 text-blue-600">
-          Correo Institucional
+        <label htmlFor="programs" className="block text-m mb-2">
+          Próximo viernes 31 de Enero a las 3pm
         </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
+        <select
+          id="programs"
+          name="programs"
           required
-          placeholder="pp@eafit.edu.co"
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\.edu\.co$"
-          title="El correo debe ser institucional (@eafit.edu.co)."
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
+          className="w-full px-2 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {[
+            "Si",
+            "No"
+          ].map((program, index) => (
+            <option key={index} value={program}>
+              {program}
+            </option>
+          ))}
+        </select>
       </div>
-
 
       <button
         type="submit"
