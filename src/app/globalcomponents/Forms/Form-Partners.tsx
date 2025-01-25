@@ -40,32 +40,17 @@ export default function PartnersForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     > 
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-orange-600">
-          Nombre
+        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
+          ¿Quién te registró?
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
+          id="who"
+          name="who"
           required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-orange-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-orange-700 placeholder:opacity-70"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-orange-600">
-          Apellidos
-        </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
-          required
-          placeholder="Perez"
-          title="Ingresa tus Apellidos"
-          className="w-full px-4 py-2 rounded border border-orange-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-orange-700 placeholder:opacity-70"
+          placeholder="Nombre"
+          title="Ingresa el nombre de quien te registró"
+          className="w-full px-4 py-2 rounded border border-blue-200 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:opacity-85"
         />
       </div>
 
