@@ -1,4 +1,6 @@
-import AcademicForm from "../globalcomponents/Form-Academic";
+"use client";
+
+import AcademicForm from "../globalcomponents/Forms/Form-Academic";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 
 export default function Home() {
@@ -22,6 +24,7 @@ export default function Home() {
         </h1>
 
         <AcademicForm />
+
       </main>
     </div>
   );

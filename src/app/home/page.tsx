@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import PersonalForm from "../globalcomponents/Form-Personal";
+import PersonalForm from "../globalcomponents/Forms/Form-Personal";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 
 
@@ -18,7 +18,9 @@ export default function Home() {
     }}
     >
     
-      <PixelsAnimation />
+      <div style={{ pointerEvents: "none" }}>
+        <PixelsAnimation />
+      </div>
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
 

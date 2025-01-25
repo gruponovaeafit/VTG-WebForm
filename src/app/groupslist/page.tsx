@@ -1,6 +1,7 @@
 "use client";
 
-import GroupsForm from "../globalcomponents/Form-Groups";
+import GroupsForm from "../globalcomponents/Forms/Form-Groups";
+import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 
 export default function Home() {
   return (
@@ -12,6 +13,11 @@ export default function Home() {
       overflow: "hidden",
     }}
     >
+
+      <div style={{ pointerEvents: "none" }}>
+        <PixelsAnimation />
+      </div>
+      
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
 
         <h1 className="text-2xl md:text-6xl text-center mb-6 pixel-font text-white-300">

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import PixelsAnimation from "./globalcomponents/UI/Pixels_animation";
 
-export default function LoadingPage() {
+export default function MainPage() {
   const router = useRouter();
 
   const handleRedirect = () => {
@@ -12,7 +12,7 @@ export default function LoadingPage() {
   };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-black relative overflow-hidden">
+    <div className="flex flex-col justify-between min-h-screen relative">
       <div
         className="absolute inset-0 bg-no-repeat bg-center"
         style={{
@@ -21,22 +21,22 @@ export default function LoadingPage() {
         }}
       ></div>
 
+      <div style={{ pointerEvents: "none" }}>
         <PixelsAnimation />
+      </div>
   
         <div className="relative flex flex-col items-center justify-center flex-grow py-2">
         <button
           onClick={handleRedirect}
-          className="w-64 h-32 bg-no-repeat bg-center bg-contain animate-growShrink"
+          className="w-64 h-32 bg-center bg-contain animate-growShrink"
           style={{
             backgroundImage: "url('/START.png')",
           }}
-          type="button"
-        >
-          <span className="sr-only">Start</span>
+          type="button">
         </button>
 
         <footer
-          className="absolute bottom-20 flex items-center justify-center"
+          className="absolute bottom-20 flex items-center justify-center" // CHECK
           style={{ top: 'auto' }}
         >
           <Image
@@ -44,7 +44,7 @@ export default function LoadingPage() {
             alt="Powered By NOVA"
             className="w-40 md:w-48"
             width={300}
-            height={200}
+            height={300}
           />
         </footer>
       </div>

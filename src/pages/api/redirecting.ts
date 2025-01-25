@@ -7,18 +7,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     // Mapea los grupos a sus respectivas rutas
     const groupRoutes: Record<string, string> = {
-      AIESEC: "/aiesec",
-      CLUBIN: "/clubin",
-      CLUBMERC: "/clubmerc",
-      GPG: "/gpg",
-      NEXOS: "/nexos",
-      NOVA: "/nova",
-      PARTNERS: "/partners",
-      SERES: "/seres",
-      SPIE: "/spie",
-      TUTORES: "/tutores",
-      TVU: "/tvu",
-      "UN SOCIETY": "/unsociety",
+      AIESEC: "/groups/aiesec",
+      CLUBIN: "/groups/clubin",
+      CLUBMERC: "/groups/clubmerc",
+      GPG: "/groups/gpg",
+      NEXOS: "/groups/nexos",
+      NOVA: "/groups/nova",
+      PARTNERS: "/groups/partners",
+      SERES: "/groups/seres",
+      SPIE: "/groups/spie",
+      TUTORES: "/groups/tutores",
+      TVU: "/groups/tvu",
+      "UN SOCIETY": "/groups/unsociety",
     };
 
     const redirectUrl = groupRoutes[studentGroup];
