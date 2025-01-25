@@ -38,49 +38,56 @@ export default function AiesecForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
+
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-600">
-          Nombre
+        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
+          ¿Qué edad tienes?
         </label>
         <input
-          type="text"
-          id="name"
-          name="name"
+          type="int"
+          id="age"
+          name="age"
           required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
+          placeholder="Edad"
+          title="Ingresa tu edad"
+          className="w-full px-4 py-2 rounded border border-blue-200 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:opacity-85"
         />
       </div>
 
+
       <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-blue-600">
-          Apellidos
+        <label htmlFor="talks" className="block text-m mb-2 text-blue-200">
+          ¿Tienes disponibilidad los Viernes de 3pm a 5pm?
         </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
+        <select
+          id="talk"
+          name="talk"
           required
-          placeholder="Perez"
-          title="Ingresa tus Apellidos"
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
+          className="w-full px-2 py-2 rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {[
+            "Si",
+            "No"
+          ].map((talks, index) => (
+            <option key={index} value={talks}>
+              {talks}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="mb-4">
-        <label htmlFor="email" className="block text-sm mb-2 text-blue-600">
-          Correo Institucional
+        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
+          ¿Quién te registró?
         </label>
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="who"
+          name="who"
           required
-          placeholder="pp@eafit.edu.co"
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\.edu\.co$"
-          title="El correo debe ser institucional (@eafit.edu.co)."
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
+          placeholder="Nombre"
+          title="Ingresa el nombre de quien te registró"
+          className="w-full px-4 py-2 rounded border border-blue-200 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:opacity-85"
         />
       </div>
 

@@ -25,7 +25,7 @@ export default function GpgForm() {
         throw new Error("Error en el servidor");
       }
 
-      // Redirigir al usuario a /completed
+      // purpleirigir al usuario a /completed
       router.push("/levelup");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
@@ -37,50 +37,41 @@ export default function GpgForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-purple-300">
-          Nombre
+
+    <div className="mb-4">
+        <label htmlFor="name" className="block text-sm mb-2 text-purple-600">
+          ¿Qué edad tienes?
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
+          id="age"
+          name="age"
           required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-purple-300 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
+          placeholder="Edad"
+          title="Ingresa tu edad"
+          className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-85"
         />
       </div>
 
       <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-purple-300">
-          Apellidos
+        <label htmlFor="talks" className="block text-m mb-2 text-purple-600">
+          ¿Estás viendo pre-práctica?
         </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
+        <select
+          id="talk"
+          name="talk"
           required
-          placeholder="Perez"
-          title="Ingresa tus Apellidos"
-          className="w-full px-4 py-2 rounded border border-purple-300 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm mb-2 text-purple-300">
-          Correo Institucional
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          placeholder="pp@eafit.edu.co"
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\.edu\.co$"
-          title="El correo debe ser institucional (@eafit.edu.co)."
-          className="w-full px-4 py-2 rounded border border-purple-300 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
-        />
+          className="w-full px-2 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-700"
+        >
+          {[
+            "Si",
+            "No"
+          ].map((talks, index) => (
+            <option key={index} value={talks}>
+              {talks}
+            </option>
+          ))}
+        </select>
       </div>
 
 
