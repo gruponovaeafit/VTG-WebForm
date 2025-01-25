@@ -39,51 +39,26 @@ export default function AiesecForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-600">
-          Nombre
+        <label htmlFor="Pregunta 1" className="block text-sm mb-2 text-blue-600 px-4">
+          ¿A qué charla informativa puedes/deseas asistir?
         </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
+        <select
+          name="talkSelection"
+          id="talkSelection"
           required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
+          className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+        >
+          {[
+            "Charla #1/Día X Hora XX:XX",
+            "Charla #2/Día X Hora XX:XX",
+            "Charla #3/Día X Hora XX:XX",
+          ].map((talk, index) => (
+            <option key={index} value={talk}>
+              {talk}
+            </option>
+          ))}
+        </select>
       </div>
-
-      <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-blue-600">
-          Apellidos
-        </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
-          required
-          placeholder="Perez"
-          title="Ingresa tus Apellidos"
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm mb-2 text-blue-600">
-          Correo Institucional
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          placeholder="pp@eafit.edu.co"
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\.edu\.co$"
-          title="El correo debe ser institucional (@eafit.edu.co)."
-          className="w-full px-4 py-2 rounded border border-blue-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-700 placeholder:opacity-70"
-        />
-      </div>
-
 
       <button
         type="submit"

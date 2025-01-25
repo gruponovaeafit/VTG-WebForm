@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TvuForm from "../../globalcomponents/Forms/Form-Tvu";
 import InfoTvu from "@/app/globalcomponents/Info/Info-Tvu";
@@ -32,15 +32,7 @@ export default function Home() {
         <TvuForm />
 
         {/* Footer */}
-      <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
-        <Image
-          src="/PoweredByNOVA.svg"
-          alt="Powered By NOVA"
-          className="w-40 md:w-48"
-          width={300}
-          height={200}
-        />
-      </footer>
+        <Footer/>
 
       </main>
 
