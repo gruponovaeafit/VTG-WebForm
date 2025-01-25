@@ -38,47 +38,56 @@ export default function NexosForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-[#9A975F]">
-          Nombre
+        <label htmlFor="Departments" className="block text-sm mb-2 text-[#9A975F]">
+          Departamentos
         </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-[#9A975F]-700 placeholder:opacity-70"
-        />
+        <div className="flex flex-col space-y-2">
+          {["Edición",
+            "Desarrollo Humano",
+            "Mercadeo",
+            "Relaciones Públicas",
+          ].map((department, index)=>(
+            <label key={index} className="inline-flex items-center">
+              <input 
+              type="checkbox"
+              name="departments"
+              value={department}
+              className="form-checkbox text-[#9A975F] focus:ring-[#9A975F]" />
+              <span className="ml-2 text-white">{department}</span>
+            </label>
+          ))}
+        </div>
       </div>
 
       <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-[#9A975F]">
-          Apellidos
+        <label htmlFor="assistance" className="block text-sm mb-2 text-[#9A975F]">
+        ¿Asistirás a la charla informativa el viernes 26 de julio a las 2p.m.?
         </label>
-        <input
-          type="text"
-          id="secondName"
-          name="secondName"
-          required
-          placeholder="Perez"
-          title="Ingresa tus Apellidos"
-          className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-[#9A975F]-700 placeholder:opacity-70"
-        />
+        <select 
+        name="assistance" 
+        id="assistance"
+        required
+        className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+          {["Sí",
+            "No",
+          ].map((response, index)=>(
+            <option key={index} value={response}>{response}</option>
+          ))}
+        </select>
       </div>
 
       <div className="mb-4">
-        <label htmlFor="email" className="block text-sm mb-2 text-[#9A975F]">
-          Correo Institucional
+        <label htmlFor="Excuse" className="block text-sm mb-2 text-[#9A975F]">
+        ¿Por qué no puedes asistir?
         </label>
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="excuse"
+          name="excuse"
           required
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\.edu\.co$"
-          title="El correo debe ser institucional (@eafit.edu.co)."
+          title="Excuse"
           className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-[#9A975F]-700 placeholder:opacity-70"
+          placeholder="Ingresa tu excusa aquí"
         />
       </div>
 
