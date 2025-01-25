@@ -12,7 +12,7 @@ export default function GroupsForm() {
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/forms/redirecting", {
+      const response = await fetch("/api/redirecting", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
