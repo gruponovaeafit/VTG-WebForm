@@ -3,6 +3,7 @@
 import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import SpieForm from "../../globalcomponents/Forms/Form-Spie";
+import InfoSPIE from "@/app/globalcomponents/Info/Info-SPIE";
 
 export default function Home() {
   return (
@@ -22,10 +23,12 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-5xl md:text-2xl text-center mb-6 pixel-font text-white glitch_Spie">
+        <h1 className="text-5xl md:text-2xl text-center pixel-font text-white glitch_Spie">
           Spie
         </h1>
 
+        <InfoSPIE/>
+        
         <SpieForm />
 
         {/* Footer */}

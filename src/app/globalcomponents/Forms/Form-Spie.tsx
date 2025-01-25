@@ -39,18 +39,22 @@ export default function SpieForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-red-600">
+        <label htmlFor="committie" className="block text-sm mb-2 text-red-600">
           ¿En que comité te gustaría participar?
         </label>
-        <input
-          type="text"
-          id="comite"
-          name="comite"
-          required
-          placeholder="Cómite"
-          title="Ingresa el comite de tu preferencia"
-          className="w-full px-4 py-2 rounded border border-red-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-red-700 placeholder:opacity-85"
-        />
+        <select 
+        name="committie" 
+        id="committie"
+        required
+        className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600">
+          {["Comité de Publicidad",
+            "Comité de Divulgación",
+            "Comité de RRPP",
+            "Comité de GH",
+          ].map((committie, index)=>(
+            <option key={index} value={committie}>{committie}</option>
+          ))}
+        </select>
       </div>
 
       <div className="mb-4">
@@ -61,7 +65,7 @@ export default function SpieForm() {
           id="secondaryPrograms"
           name="secondaryPrograms"
           required
-          className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600 "
+          className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600"
         >
           {[
             "Charla 1",
