@@ -66,7 +66,7 @@ export default function NOVAForm() {
           id="secondName"
           name="secondName"
           required
-          placeholder="Perez"
+          placeholder="Pregunta 2"
           title="Ingresa tus Apellidos"
           className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
         />
@@ -81,7 +81,7 @@ export default function NOVAForm() {
           id="Pregunta 3"
           name="Pregunta 3"
           required
-          placeholder="Sexo con simios"
+          placeholder="Pregunta 3"
           title="El correo debe ser institucional (@eafit.edu.co)."
           className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
         />
@@ -96,7 +96,7 @@ export default function NOVAForm() {
         id="Pregunta 4"
         name="Pregunta 4"
         required
-        placeholder="Sexo con simios"
+        placeholder="Pregunta 4"
         title="Obama"
         className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
 
