@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import AiesecForm from "../../globalcomponents/Forms/Form-Aiesec";
 
@@ -22,23 +22,16 @@ export default function Home() {
         </div>
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-4xl md:text-2xl text-center mb-6 pixel-font text-white glitch_aiesec">
+        <h1 className="text-4xl md:text-2xl text-center pixel-font text-white glitch_aiesec">
           AIESEC
         </h1>
 
         <AiesecForm />
 
-        
+        {/* Footer */}      
+        <Footer />
 
-      <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
-        <Image
-          src="/PoweredByNOVA.svg"
-          alt="Powered By NOVA"
-          className="w-40 md:w-48"
-          width={300}
-          height={200}
-        />
-      </footer>
+
 
       </main>
 
