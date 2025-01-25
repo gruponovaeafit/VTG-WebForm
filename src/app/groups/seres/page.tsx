@@ -3,6 +3,7 @@
 import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import SeresForm from "../../globalcomponents/Forms/Form-Seres";
+import InfoSeres from "@/app/globalcomponents/Info/Info-Seres";
 
 export default function Home() {
 
@@ -27,6 +28,7 @@ export default function Home() {
           Seres
         </h1>
 
+        <InfoSeres />
         <SeresForm />
 
         {/* Footer */}

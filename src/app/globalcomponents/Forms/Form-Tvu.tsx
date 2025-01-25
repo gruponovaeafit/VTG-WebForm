@@ -39,21 +39,22 @@ export default function TvuForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
-        <label htmlFor="programs" className="block text-m mb-2 text-purple-400">
+        <label htmlFor="talks" className="block text-m mb-2 text-purple-400">
           ¿A qué charla informativa deseas asistir? 
         </label>
         <select
-          id="programs"
-          name="programs"
+          id="talk"
+          name="talk"
           required
           className="w-full px-2 py-2 rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           {[
             "Charla 1",
-            "Charla 2"
-          ].map((program, index) => (
-            <option key={index} value={program}>
-              {program}
+            "Charla 2",
+            "Charla 3"
+          ].map((talks, index) => (
+            <option key={index} value={talks}>
+              {talks}
             </option>
           ))}
         </select>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TvuForm from "../../globalcomponents/Forms/Form-Tvu";
+import InfoTvu from "@/app/globalcomponents/Info/Info-Tvu";
 
 export default function Home() {
   
@@ -27,6 +28,7 @@ export default function Home() {
           Tvu
         </h1>
 
+        <InfoTvu />
         <TvuForm />
 
         {/* Footer */}
