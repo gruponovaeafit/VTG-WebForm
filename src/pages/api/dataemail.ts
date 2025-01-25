@@ -1,6 +1,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { cookies } from "next/headers";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -70,8 +71,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         INSERT INTO persona (correo) 
         VALUES (@correo)
       `);
-
-    return res.status(200).json({ success: true, message: "Formulario enviado y datos insertados correctamente" });
+  
+      (await cookies()).set("token", emailLower, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60,
+        sameSite: true
+      });
+        
+    return res.status(200).json({ success: true, message: "Formulario enviado y datos insertados correctamente" } );
 
   } catch (err) {
     console.error("Error en el servidor:", err);
