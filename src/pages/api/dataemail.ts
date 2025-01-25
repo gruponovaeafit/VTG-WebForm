@@ -2,6 +2,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 import { cookies } from "next/headers";
+import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -63,6 +65,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Convertimos el correo a minúsculas
     const emailLower = email.toLowerCase();
+
+    //Creamos el token JWT con el correo
+    const jwtToken = jwt.sign({ 
+      email: emailLower }, 
+      process.env.JWT_SECRET as string, 
+      { expiresIn: '1h' });
+
+     // Configuraciones de la cookie
+    res.setHeader("Set-Cookie", cookie.serialize("jwtToken", jwtToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", 
+      maxAge: 3600, 
+      path: "/", //Accesible desde cualquier ruta
+      sameSite: "strict", // No se envía en peticiones de terceros
+    }));
 
     // Insertamos en la BD usando los valores transformados
     await pool.request()
