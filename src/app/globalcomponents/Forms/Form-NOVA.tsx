@@ -39,22 +39,27 @@ export default function NOVAForm() {
     >
       <div className="mb-4">
         <label htmlFor="name" className="block text-sm mb-2 text-purple-600">
-          Nombre
+          Departamentos
         </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          placeholder="Pepito"
-          title="Ingresa tu Nombre"
-          className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
-        />
+        <select
+        id="studentGroup"
+        name="studentGroup"
+        required
+        className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+          {[
+            "MERCADEO",
+            "COMMNUNITIES",
+            "GESTIÓN HUMANA",
+            "RELACIONES PÚBLICAS",
+          ].map((group, index)=>(
+            <option key={index} value={group}>{group}</option>
+          ))}          
+        </select>
       </div>
 
       <div className="mb-4">
         <label htmlFor="secondName" className="block text-sm mb-2 text-purple-600">
-          Apellidos
+          Pregunta 2
         </label>
         <input
           type="text"
@@ -69,18 +74,33 @@ export default function NOVAForm() {
 
       <div className="mb-4">
         <label htmlFor="email" className="block text-sm mb-2 text-purple-600">
-          Correo Institucional
+          Pregunta 3
         </label>
         <input
           type="email"
-          id="email"
-          name="email"
+          id="Pregunta 3"
+          name="Pregunta 3"
           required
-          placeholder="pp@eafit.edu.co"
-          pattern="^[a-zA-Z0-9._%+-]+@eafit\.edu\.co$"
+          placeholder="Sexo con simios"
           title="El correo debe ser institucional (@eafit.edu.co)."
           className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
         />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="form" className="block text-sm mb-2 text-purple-600">
+          Pregunta 4
+        </label>
+        <input 
+        type="text"
+        id="Pregunta 4"
+        name="Pregunta 4"
+        required
+        placeholder="Sexo con simios"
+        title="Obama"
+        className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
+
+         />
       </div>
 
 
