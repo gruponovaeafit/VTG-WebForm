@@ -35,7 +35,7 @@ export default function NexosForm() {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+      className="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
         <label htmlFor="Departments" className="block text-sm mb-2 text-[#9A975F]">

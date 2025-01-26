@@ -15,17 +15,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    // OJO: Ponemos overflow: hidden para que NO se pueda scrollear
+    <html lang="es" style={{ overflow: "hidden" }}>
       <head>
-        <link rel="icon" href="/NOVA.ico" /> 
+        <link rel="icon" href="/NOVA.ico" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
       </head>
-      <body
-        className={`${pressStart2P.variable} antialiased`}
-      >
+      <body className={`${pressStart2P.variable} antialiased`}>
         {children}
       </body>
     </html>

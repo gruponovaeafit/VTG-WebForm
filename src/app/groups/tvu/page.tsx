@@ -31,16 +31,13 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-4xl md:text-2xl text-center mb-6 pixel-font text-white glitch_Tvu">
+      <main className="flex flex-col gap-6 row-start-2 items-center sm:items-start relative z-10 ">
+        <h1 className="text-4xl md:text-2xl text-center mb-2 pixel-font text-white glitch_Tvu">
           Tvu
         </h1>
 
         <InfoTvu />
         <TvuForm />
-
-        {/* Footer */}
-        <Footer/>
 
       </main>
 
