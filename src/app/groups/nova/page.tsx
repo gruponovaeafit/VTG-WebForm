@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
+
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import NOVAForm from "../../globalcomponents/Forms/Form-NOVA";
 import { useEffect } from "react";
