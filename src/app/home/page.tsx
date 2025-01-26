@@ -1,47 +1,43 @@
 "use client";
 
-import Image from "next/image";
 import PersonalForm from "../globalcomponents/Forms/Form-Personal";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
-
+import { useEffect } from "react";
+import Footer from "../globalcomponents/UI/Footer";
 
 export default function Home() {
+  useEffect(() => {
+    // Elimina el scroll de la página
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = ""; // Restaura el scroll al salir
+    };
+  }, []);
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
-    style={{
-      backgroundImage: "url('/coins.png')",
-      backgroundSize: "cover",
-      position: "relative",
-      overflow: "hidden",
-    }}
+      className="relative flex flex-col justify-between w-full h-screen bg-black text-white overflow-hidden"
+      style={{
+        backgroundImage: "url('/coins.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
     >
-    
-      <div style={{ pointerEvents: "none" }}>
+      {/* Animación de píxeles */}
+      <div className="absolute inset-0 pointer-events-none z-0">
         <PixelsAnimation />
       </div>
 
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-
-        <h1 className="text-2xl md:text-1xl text-center mb-6 pixel-font text-white">
-          ¡Bienvenidx al Formulario VTG!
+      {/* Contenido principal */}
+      <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center">
+        <h1 className="text-2xl md:text-3xl mb-4 pixel-font text-white-300">
+          ¡Formulario Personal!
         </h1>
-
         <PersonalForm />
-
-        
-
-        <Image
-          src="/PoweredByNOVA.svg"
-          alt="Powered By NOVA"
-          className="w-40 md:w-48"
-          width={300}
-          height={200}
-        />
-
       </main>
 
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

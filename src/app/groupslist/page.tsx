@@ -2,32 +2,44 @@
 
 import GroupsForm from "../globalcomponents/Forms/Form-Groups";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
+import Footer from "../globalcomponents/UI/Footer";
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
-    style={{
-      backgroundImage: "url('/coins.png')",
-      backgroundSize: "cover",
-      position: "relative",
-      overflow: "hidden",
-    }}
-    >
+  useEffect(() => {
+    // Elimina el scroll de la página
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
-      <div style={{ pointerEvents: "none" }}>
+  return (
+    <div
+      className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden"
+      style={{
+        backgroundImage: "url('/coins.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Animación de píxeles */}
+      <div className="absolute inset-0 pointer-events-none z-0">
         <PixelsAnimation />
       </div>
-      
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
 
-        <h1 className="text-2xl md:text-6xl text-center mb-6 pixel-font text-white-300">
+      {/* Contenido principal */}
+      <main className="relative z-10 flex flex-col items-center text-center p-8 sm:p-20 w-[90%] max-w-lg gap-8">
+        <h1 className="text-2xl md:text-4xl font-bold pixel-font text-yellow-300">
           ¡Escoge el grupo de tu preferencia!
         </h1>
 
         {/* Formulario arcade */}
         <GroupsForm />
-
       </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

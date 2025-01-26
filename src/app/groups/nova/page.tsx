@@ -3,8 +3,16 @@
 import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import NOVAForm from "../../globalcomponents/Forms/Form-NOVA";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
     <div style={{ pointerEvents: "none" }}>
         <PixelsAnimation />
@@ -33,18 +41,8 @@ export default function Home() {
 
         <NOVAForm />
 
-        {/* Footer */}
-        <Footer />
-
       </main>
 
-      
-      
     </div>
-
-
-
-        
-
   );
 }

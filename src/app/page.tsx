@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import PixelsAnimation from "./globalcomponents/UI/Pixels_animation";
+import { useEffect } from "react";
+import Footer from "./globalcomponents/UI/Footer";
 
 export default function MainPage() {
   const router = useRouter();
@@ -11,43 +12,43 @@ export default function MainPage() {
     router.push("/email");
   };
 
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col justify-between min-h-screen relative">
+    <div className="relative flex flex-col justify-between items-center w-full h-screen overflow-hidden">
+      {/* Fondo que ocupa toda la pantalla */}
       <div
-        className="absolute inset-0 bg-no-repeat bg-center"
-        style={{
-          backgroundImage: "url('/coins.png')",
-          backgroundSize: "cover",
-        }}
+        className="absolute inset-0 bg-no-repeat bg-center bg-cover"
+        style={{ backgroundImage: "url('/coins.png')" }}
       ></div>
 
-      <div style={{ pointerEvents: "none" }}>
+      {/* Animación de píxeles */}
+      <div className="absolute inset-0 pointer-events-none z-10">
         <PixelsAnimation />
       </div>
-  
-        <div className="relative flex flex-col items-center justify-center flex-grow py-2">
+
+      {/* Contenido principal */}
+      <div className="relative z-20 flex flex-col justify-center items-center flex-grow">
         <button
           onClick={handleRedirect}
-          className="w-64 h-32 bg-center bg-contain animate-growShrink"
+          className="w-48 h-24 md:w-64 md:h-32 bg-center justify-center bg-contain animate-growShrink focus:outline-none"
           style={{
             backgroundImage: "url('/START.png')",
           }}
-          type="button">
-        </button>
+          type="button"
+        />
 
-        <footer
-          className="absolute bottom-20 flex items-center justify-center" // CHECK
-          style={{ top: 'auto' }}
-        >
-          <Image
-            src="/PoweredByNOVA.svg"
-            alt="Powered By NOVA"
-            className="w-40 md:w-48"
-            width={300}
-            height={300}
-          />
-        </footer>
+        <Footer />
+
       </div>
+      
     </div>
   );
 }
+
+

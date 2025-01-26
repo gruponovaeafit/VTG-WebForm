@@ -1,9 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect } from "react";
 
 
 export default function Home() {
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
   return (
     <div

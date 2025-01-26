@@ -4,6 +4,7 @@ import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import NexosForm from "../../globalcomponents/Forms/Form-Nexos";
 
+
 export default function Home() {
 
   return (

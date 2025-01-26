@@ -4,8 +4,16 @@ import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import PartnersForm from "../../globalcomponents/Forms/Form-Partners";
 import InfoPartners from "@/app/globalcomponents/Info/Info-Partners";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
   return (
     <div

@@ -5,7 +5,9 @@ import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import UnForm from "../../globalcomponents/Forms/Form-Un";
 import InfoUn from "@/app/globalcomponents/Info/Info-Un";
 
+
 export default function Home() {
+
 
   return (
     <div

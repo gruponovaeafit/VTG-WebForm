@@ -35,7 +35,7 @@ export default function AcademicForm() {
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+      className="bg-gray-800 bg-opacity-90 p-4 rounded-lg shadow-lg max-w-md"
     >
 
 <div className="mb-4">

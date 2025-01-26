@@ -129,7 +129,7 @@ export default function AcademicForm() {
 
       <div className="mb-4">
         <label htmlFor="semester" className="block text-m mb-2 text-purple-400">
-          ¿En qué semestre te encuentras?
+          ¿En qué semestre te encuentras matriculadx?
         </label>
         <select
           id="semester"
@@ -142,8 +142,11 @@ export default function AcademicForm() {
               {i + 1}
             </option>
           ))}
+          {/* Opción adicional "10+" */}
+          <option value="10+">10+</option>
         </select>
       </div>
+
 
       <button
         type="submit"

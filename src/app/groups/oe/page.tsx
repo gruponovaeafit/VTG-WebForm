@@ -3,8 +3,16 @@
 import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import OEForm from "../../globalcomponents/Forms/Form-OE";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
 
   return (
     <div

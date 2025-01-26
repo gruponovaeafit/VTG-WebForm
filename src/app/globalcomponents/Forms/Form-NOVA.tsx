@@ -48,7 +48,7 @@ export default function NOVAForm() {
         className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
           {[
             "MERCADEO",
-            "COMMNUNITIES",
+            "COMMUNITIES",
             "GESTIÓN HUMANA",
             "RELACIONES PÚBLICAS",
           ].map((group, index)=>(

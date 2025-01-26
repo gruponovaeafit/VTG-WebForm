@@ -3,8 +3,17 @@
 import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import ClubmercForm from "../../globalcomponents/Forms/Form-Clubmerc";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+
 
   return (
     <div
