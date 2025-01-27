@@ -12,7 +12,7 @@ export default function AcademicForm() {
     const formData = new FormData(formElement);
 
      try {
-      const response = await fetch("/api/final", {
+      const response = await fetch("/api/dataAcademic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export default function AcademicForm() {
       if (!response.ok) {
         throw new Error("Error en el servidor");
       } 
-
+      
       alert("Formulario enviado correctamente.");
       router.push("/groupslist"); 
     } catch (error) {
@@ -128,6 +128,7 @@ export default function AcademicForm() {
       </div>
 
       <div className="mb-4">
+
         <label htmlFor="semester" className="block text-m mb-2 text-purple-400">
           ¿En qué semestre te encuentras matriculadx?
         </label>
