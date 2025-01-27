@@ -3,9 +3,25 @@
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
 import InfoSPIE from "@/app/globalcomponents/Info/Info-SPIE";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   useEffect(() => {
+    const checkAuthentication = async () => { 
+      try {
+        const res = await fetch("/api/cookieCheck", { method: "GET" });
+        
+          // If the response status is not 200, redirect the user to the home page
+          if (res.status !== 200) {
+            router.push("/"); // Redirect to the home page if not authenticated
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+          router.push("/"); // Redirect to the home page in case of error
+        }
+    }
+    checkAuthentication();
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
