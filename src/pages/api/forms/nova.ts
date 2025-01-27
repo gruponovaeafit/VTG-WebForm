@@ -34,7 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const groupId = 5; // Obtener el ID del grupo seleccionado
       const email = cookieManagement.verifyJwtFromCookies(req, res);
 
-      console.log("Datos recibidos:", { talk, IdNovato, email });
 
 
       await pool.request()
