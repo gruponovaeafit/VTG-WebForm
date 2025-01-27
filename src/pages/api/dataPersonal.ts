@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import sql, { config as SqlConfig } from "mssql";
+import cookieManagement from "./cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -26,24 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const body = req.body;
 
-    const cookies = req.headers.cookie;
-
-    if (!cookies) {
-      res.status(401).json({ success: false, message: "No se encontraron cookies" });
-      return;
-    }
-
-    const parsedCookies = cookie.parse(cookies);
-    const jwtToken = parsedCookies.jwtToken;
-
-    if (!jwtToken) {
-      res.status(401).json({ success: false, message: "No se encontró el token en las cookies" });
-      return;
-    }
-
-    const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY as string);
-
-    const email = (decoded as { email: string }).email;
+    const email = cookieManagement.verifyJwtFromCookies(req, res);
     const { name, secondName } = body;
 
     if (!name || !secondName) {
@@ -58,17 +42,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const nombre = `${name} ${secondName}`;
 
     // Conexión a la base de datos
-    pool = await sql.connect(config);
+ //   pool = await sql.connect(config);
 
     // Actualizar el registro en la tabla "persona"
-    await pool.request()
+   /* await pool.request()
       .input("correo", sql.VarChar, email)
       .input("nombre", sql.VarChar, nombre)
       .query(`
         UPDATE persona
         SET nombre = @nombre
         WHERE correo = @correo
-      `);
+      `);*/
 
     console.log("Registro actualizado para el correo:", email);
 
@@ -84,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   } finally {
     if (pool) {
-      pool.close();
+   //   pool.close();
     }
   }
 }

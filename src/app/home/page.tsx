@@ -10,7 +10,7 @@ export default function Home() {
   const router = useRouter();
   
   useEffect(()   =>   {
-// copiar esta parte 
+  // copiar esta parte 
     const checkAuthentication = async () => { 
     try {
       const res = await fetch("/api/cookieCheck", { method: "GET" });
@@ -26,7 +26,7 @@ export default function Home() {
   }
   
   checkAuthentication();
-// hasta aca y poner las liberias 
+  // hasta aca y poner las liberias 
 
     // Elimina el scroll de la página
     document.body.style.overflow = "hidden";

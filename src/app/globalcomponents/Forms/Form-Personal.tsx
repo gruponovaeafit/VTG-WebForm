@@ -12,7 +12,7 @@ export default function AcademicForm() {
     const formData = new FormData(formElement);
 
      try {
-      const response = await fetch("/api/Data-Personal", {
+      const response = await fetch("/api/dataPersonal", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
