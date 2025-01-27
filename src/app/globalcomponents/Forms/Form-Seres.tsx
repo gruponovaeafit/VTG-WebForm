@@ -13,7 +13,7 @@ export default function SeresForm() {
 
         try {
           // Opcional: Enviar los datos a un endpoint
-          const response = await fetch("/api/forms/tvu", {
+          const response = await fetch("/api/forms/seres", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
