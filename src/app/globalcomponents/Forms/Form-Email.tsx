@@ -42,6 +42,7 @@ export default function EmailForm() {
 
       const result = await response.json();
 
+      
       if (!response.ok) {
         addNotification("error", result.message || "Ocurrió un error al enviar el formulario.");
         if (captchaRef.current) {
