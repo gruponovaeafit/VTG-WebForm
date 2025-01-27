@@ -1,6 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import cookieManagement from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -23,28 +24,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     pool = await sql.connect(config);
 
     if (req.method === "POST") {
-      const { email } = req.body as {
-        email: string;
+      const { committie } = req.body as {
+        committie: string;
       };
-      const { name } = req.body as {
-        name: string;
+      const { talk } = req.body as {
+        talk: string;
       };
-      const { secondName } = req.body as {
-        secondName: string;
-      };
-  
-      const fullName = `${name} ${secondName}`;
-      
 
-      // 3) Convertimos el correo a mayúsculas
-      const emailUpper = email.toLowerCase();
+      const email = cookieManagement.verifyJwtFromCookies(req, res);
+      const groupId = 12; // Obtener el ID del grupo seleccionado
+      const talkValue = talk === "Sí, podré asistir" ? 1 : 0;
+  
+
 
       await pool.request()
-        .input("correo", sql.VarChar, emailUpper)
-        .input("nombre", sql.VarChar, fullName )
+        .input("id_grupo", sql.Int, groupId)
+        .input("correo", sql.VarChar, email )
+        .input("departamentos", sql.VarChar, committie)
+        .input("charla_info", sql.Int, talkValue)
         .query(`
-          INSERT INTO persona (correo, nombre) 
-          VALUES (@correo, @nombre)
+          INSERT INTO un (id_grupo, correo, departamentos, charla_info)
+          VALUES (@id_grupo, @correo, @departamentos, @charla_info)
         `);
 
       return res.status(200).json({ message: "Datos insertados con éxito" });
