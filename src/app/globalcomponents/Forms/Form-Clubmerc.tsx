@@ -46,7 +46,7 @@ export default function ClubmercForm() {
         name="committieSelect" 
         id="committieSelect"
         required
-        className="w-full px-4 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
           {["Relaciones Públicas",
             "Publicidad y Mercadeo",
             "Conexión Estratégica",
@@ -65,7 +65,7 @@ export default function ClubmercForm() {
         name="committieSelect" 
         id="committieSelect"
         required
-        className="w-full px-4 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
           {["Sí",
             "No",
           ].map((response, index)=>(

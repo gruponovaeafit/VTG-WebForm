@@ -38,28 +38,6 @@ export default function AiesecForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
-      <div className="mb-4">
-        <label htmlFor="Pregunta 1" className="block text-sm mb-2 text-blue-600 px-4">
-          ¿A qué charla informativa puedes/deseas asistir?
-        </label>
-        <select
-          name="talkSelection"
-          id="talkSelection"
-          required
-          className="w-full px-4 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-400" style={{ fontSize: '0.875rem' }}
-
-        >
-          {[
-            "Charla #1/Día X Hora XX:XX",
-            "Charla #2/Día X Hora XX:XX",
-            "Charla #3/Día X Hora XX:XX",
-          ].map((talk, index) => (
-            <option key={index} value={talk}>
-              {talk}
-            </option>
-          ))}
-        </select>
-      </div>
 
       <button
         type="submit"

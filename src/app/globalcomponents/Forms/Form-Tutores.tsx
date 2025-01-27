@@ -39,14 +39,14 @@ export default function TutoresForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
-        <label htmlFor="talks" className="block text-m mb-2 text-blue-200">
+        <label htmlFor="talks" className="block text-m mb-2 text-[#9b9b9b]">
           ¿A qué charla informativa deseas asistir? 
         </label>
         <select
           id="talk"
           name="talk"
           required
-          className="w-full px-2 py-2 rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-2 py-2 text-sm rounded border border-[#9b9b9b] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9b9b9b]"
         >
           {[
             "Charla 1",

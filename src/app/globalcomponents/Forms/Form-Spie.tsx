@@ -46,7 +46,7 @@ export default function SpieForm() {
         name="committie" 
         id="committie"
         required
-        className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600">
+        className="w-full px-4 py-2 text-xs rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600">
           {["Comité de Publicidad",
             "Comité de Divulgación",
             "Comité de RRPP",

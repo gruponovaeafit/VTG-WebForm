@@ -59,6 +59,7 @@ export default function GroupsForm() {
             "GPG",
             "NEXOS",
             "NOVA",
+            "OE",
             "PARTNERS",
             "SERES",
             "SPIE",

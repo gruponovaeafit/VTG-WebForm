@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import ClubinForm from "../../globalcomponents/Forms/Form-Clubin";
+import Footer from "@/app/globalcomponents/UI/Footer";
+import PixelsAnimation from "../../../globalcomponents/UI/Pixels_animation";
+import InfoUn2 from "@/app/globalcomponents/Info/Info-Un2";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -10,7 +10,6 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     const checkAuthentication = async () => { 
-
       try {
         const res = await fetch("/api/cookieCheck", { method: "GET" });
         
@@ -23,7 +22,6 @@ export default function Home() {
           router.push("/"); // Redirect to the home page in case of error
         }
     }
-    
     checkAuthentication();
     document.body.classList.add("no-scroll");
     return () => {
@@ -35,34 +33,27 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/clubin.svg')",
+      backgroundImage: "url('/un.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
     }}
     >
-        <div style={{ pointerEvents: "none" }}>
-          { <PixelsAnimation /> }
-        </div>  
+
+      <div style={{ pointerEvents: "none" }}>
+        <PixelsAnimation />
+      </div>
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-4xl md:text-2xl text-center mb-6 pixel-font text-white pulse">
-          CLUBIN
+        <h1 className="text-4xl md:text-2xl text-center mb-6 pixel-font text-white glitch_UN">
+          UN
         </h1>
 
-        <ClubinForm />
+        <InfoUn2/>
 
         {/* Footer */}
-      <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
-        <Image
-          src="/PoweredByNOVA.svg"
-          alt="Powered By NOVA"
-          className="w-40 md:w-48"
-          width={300}
-          height={200}
-        />
-      </footer>
+        <Footer/>
 
       </main>
 

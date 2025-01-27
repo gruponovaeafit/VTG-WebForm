@@ -40,7 +40,7 @@ export default function PartnersForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     > 
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
+        <label htmlFor="name" className="block text-sm mb-2 text-orange-400">
           ¿Quién te registró?
         </label>
         <input
@@ -50,8 +50,30 @@ export default function PartnersForm() {
           required
           placeholder="Nombre"
           title="Ingresa el nombre de quien te registró"
-          className="w-full px-4 py-2 rounded border border-blue-200 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:opacity-85"
+          className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder:opacity-85"
         />
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="Pregunta 1" className="block text-sm mb-2 text-orange-400 px-4">
+          ¿Vas a asistir a alguna de nuestras charlas informativas?
+        </label>
+        <select
+          name="talkSelection"
+          id="talkSelection"
+          required
+          className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-400" style={{ fontSize: '0.875rem' }}
+
+        >
+          {[
+            "Si",
+            "No"
+          ].map((talk, index) => (
+            <option key={index} value={talk}>
+              {talk}
+            </option>
+          ))}
+        </select>
       </div>
 
 

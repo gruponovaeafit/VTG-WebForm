@@ -45,7 +45,7 @@ export default function NOVAForm() {
         id="talk"
         name="talk"
         required
-        className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600">
+        className="w-full px-4 py-2 text-sm rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600">
           {[
             "Charla 1 Día XX XX:XX",
             "Charla 2 Día XX XX:XX",
