@@ -26,7 +26,7 @@ export default function PartnersForm() {
       }
 
       // Redirigir al usuario a /completed
-      router.push("/levelup");
+      router.push("/gameover");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
@@ -81,7 +81,7 @@ export default function PartnersForm() {
         type="submit"
         className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
       >
-        ¡Enviar!
+        Level Up!
       </button>
     </form>
   );
