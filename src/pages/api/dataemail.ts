@@ -81,7 +81,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }));
 
     // Insertamos en la BD usando los valores transformados
-
     await pool.request()
       .input("correo", sql.VarChar, emailLower)
       .query(`
