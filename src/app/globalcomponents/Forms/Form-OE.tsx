@@ -9,7 +9,7 @@ export default function OEForm() {
     e.preventDefault();
 
     const formElement = e.currentTarget;
-    //const formData = new FormData(formElement);
+    const formData = new FormData(formElement);
 
     try {
       router.push("/levelup"); // Redirigir al usuario

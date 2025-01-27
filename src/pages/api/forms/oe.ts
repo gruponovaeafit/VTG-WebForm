@@ -1,8 +1,6 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import { useEffect } from "react";
-import router from "next/router";
 import cookieManagement from "../cookieManagement";
 
 
