@@ -20,7 +20,14 @@ export default function AcademicForm() {
         body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
       });
 
+      const NoCookieError = 401;
       if (!response.ok) {
+        console.log(response)
+       if(response.status == NoCookieError)
+        {
+          router.push("/"); 
+        }
+
         throw new Error("Error en el servidor");
       } 
 
