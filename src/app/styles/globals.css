@@ -201,6 +201,24 @@ body {
   animation: glitch_NOVA 3s infinite;
 }
 
+@keyframes glitch_oe {
+  0% {
+    text-shadow: 2px 2px 0 #007bff, -2px -2px 0 #007bff;
+  }
+  50% {
+    text-shadow: -4px -2px 0 #007bff, 4px 2px 0 #007bff;
+  }
+  100% {
+    text-shadow: 2px -2px 0 #007bff, -2px 2px 0 #007bff;
+  }
+}
+
+.glitch_oe {
+  position: relative;
+  animation: glitch_oe 3s infinite;
+}
+
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
