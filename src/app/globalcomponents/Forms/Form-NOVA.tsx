@@ -38,19 +38,18 @@ export default function NOVAForm() {
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-purple-600">
-          Departamentos
+        <label htmlFor="talk" className="block text-sm mb-2 text-purple-600">
+          ¿A qué charla informartiva asistirás?
         </label>
         <select
-        id="studentGroup"
-        name="studentGroup"
+        id="talk"
+        name="talk"
         required
         className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600">
           {[
-            "MERCADEO",
-            "COMMUNITIES",
-            "GESTIÓN HUMANA",
-            "RELACIONES PÚBLICAS",
+            "Charla 1 Día XX XX:XX",
+            "Charla 2 Día XX XX:XX",
+            "Charla 3 Día XX XX:XX",
           ].map((group, index)=>(
             <option key={index} value={group}>{group}</option>
           ))}          
@@ -58,50 +57,20 @@ export default function NOVAForm() {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-purple-600">
-          Pregunta 2
+        <label htmlFor="IdNovato" className="block text-sm mb-2 text-purple-600">
+          Nombre de la persona que te inscribió
         </label>
         <input
           type="text"
-          id="secondName"
+          id="IdNovato"
           name="secondName"
           required
-          placeholder="Pregunta 2"
-          title="Ingresa tus Apellidos"
+          placeholder="Nombre"
+          title="IdNovato"
           className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
         />
       </div>
 
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm mb-2 text-purple-600">
-          Pregunta 3
-        </label>
-        <input
-          type="email"
-          id="Pregunta 3"
-          name="Pregunta 3"
-          required
-          placeholder="Pregunta 3"
-          title="El correo debe ser institucional (@eafit.edu.co)."
-          className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="form" className="block text-sm mb-2 text-purple-600">
-          Pregunta 4
-        </label>
-        <input 
-        type="text"
-        id="Pregunta 4"
-        name="Pregunta 4"
-        required
-        placeholder="Pregunta 4"
-        title="Obama"
-        className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
-
-         />
-      </div>
 
 
       <button
