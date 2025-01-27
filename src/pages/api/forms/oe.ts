@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 import { useEffect } from "react";
 import router from "next/router";
+import cookieManagement from "../cookieManagement";
 
 
 const config: SqlConfig = {
@@ -26,32 +27,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     pool = await sql.connect(config);
 
     if (req.method === "POST") {
-      const { email } = req.body as {
-        email: string;
+      const { programs } = req.body as {
+        programs: string;
       };
-      const { name } = req.body as {
-        name: string;
-      };
-      const { secondName } = req.body as {
-        secondName: string;
-      };
-  
-      const fullName = `${name} ${secondName}`;
-      
 
-      // 3) Convertimos el correo a mayúsculas
-      const emailUpper = email.toLowerCase();
+      const email = cookieManagement.verifyJwtFromCookies(req, res);
+      const groupId = 6; 
+      
+      const charla_info = programs === "Si" ? 1 : 0;
 
       await pool.request()
-        .input("correo", sql.VarChar, emailUpper)
-        .input("nombre", sql.VarChar, fullName )
+        .input("id_grupo", sql.Int, groupId)
+        .input("correo", sql.VarChar, email )
+        .input("charla_info", sql.Int, charla_info )
         .query(`
-          INSERT INTO persona (correo, nombre) 
-          VALUES (@correo, @nombre)
+          INSERT INTO oe (correo, charla_info, id_grupo) 
+          VALUES (@correo, @charla_info, @id_grupo)
         `);
 
       return res.status(200).json({ message: "Datos insertados con éxito" });
     } 
+
+    
 
     // GET Metod 
     else if (req.method === "GET") {
