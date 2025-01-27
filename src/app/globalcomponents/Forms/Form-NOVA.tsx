@@ -45,7 +45,7 @@ export default function NOVAForm() {
         id="studentGroup"
         name="studentGroup"
         required
-        className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+        className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600">
           {[
             "MERCADEO",
             "COMMUNITIES",
