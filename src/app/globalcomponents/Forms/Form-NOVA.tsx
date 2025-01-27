@@ -63,7 +63,7 @@ export default function NOVAForm() {
         <input
           type="text"
           id="IdNovato"
-          name="secondName"
+          name="IdNovato"
           required
           placeholder="Nombre"
           title="IdNovato"

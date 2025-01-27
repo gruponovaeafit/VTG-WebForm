@@ -38,6 +38,7 @@ export default function TvuForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
     >
+       
       <div className="mb-4">
         <label htmlFor="talks" className="block text-m mb-2 text-purple-400">
           ¿A qué charla informativa deseas asistir? 

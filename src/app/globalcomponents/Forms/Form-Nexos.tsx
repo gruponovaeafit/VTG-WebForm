@@ -84,7 +84,6 @@ export default function NexosForm() {
           type="text"
           id="excuse"
           name="excuse"
-          required
           title="Excuse"
           className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-[#9A975F]-700 placeholder:opacity-70"
           placeholder="Ingresa tu excusa aquí"
