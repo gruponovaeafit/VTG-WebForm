@@ -46,7 +46,8 @@ export default function AiesecForm() {
           name="talkSelection"
           id="talkSelection"
           required
-          className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="w-full px-4 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-400" style={{ fontSize: '0.875rem' }}
+
         >
           {[
             "Charla #1/Día X Hora XX:XX",

@@ -2,7 +2,6 @@
 
 import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import UnForm from "../../globalcomponents/Forms/Form-Un";
 import InfoUn from "@/app/globalcomponents/Info/Info-Un";
 
 
