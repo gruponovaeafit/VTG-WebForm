@@ -23,7 +23,7 @@ const authMiddleware = (
       // Obtener la cookie jwtToken del header de la petición
       const cookies = cookie.parse(req.headers.cookie || '');
       const token = cookies.jwtToken;
-
+        
       if (!token) {
         return res.status(401).json({ message: 'Authentication token is missing' });
       }

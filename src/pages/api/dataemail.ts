@@ -59,9 +59,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.error("Correo inválido o faltante:", { email });
       return res.status(400).json({ success: false, message: "El correo debe ser del dominio @eafit.edu.co" });
     }
-   
+  
     pool = await sql.connect(config);
-
+    
     // Convertimos el correo a minúsculas
     const emailLower = email.toLowerCase();
 
@@ -86,7 +86,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .query(`
         INSERT INTO persona (correo) 
         VALUES (@correo)
-      `); 
+      `);
+          
         
     return res.status(200).json({ success: true, message: "Formulario enviado y datos insertados correctamente" } );
 
@@ -94,8 +95,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.error("Error en el servidor:", err);
     return res.status(500).json({ success: false, message: "Error interno del servidor" });
   } finally {
-    if (pool) {
-      pool.close();
-    }
+   if (pool) {
+     pool.close();
+   }
   }
 }
