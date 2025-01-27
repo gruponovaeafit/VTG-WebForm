@@ -38,10 +38,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
        const email = cookieManagement.verifyJwtFromCookies(req, res);
        const groupId = 4; 
   
-        console.log("datos enviados",departments, assistance, excuse, email);
-        const assistanceValue = assistance === "Si" ? 1 : 0;
+        
+       const assistanceValue = assistance === "Si" ? 1 : 0;
 
-    
+       console.log(departments);
+       
+
+
 
       await pool.request()
         .input("id_grupo", sql.Int, groupId)
