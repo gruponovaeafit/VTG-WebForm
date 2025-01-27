@@ -1,8 +1,6 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import { useEffect } from "react";
-import router from "next/router";
 import cookieManagement from "../cookieManagement";
 
 
@@ -35,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const groupId = 6; 
       
       const charla_info = programs === "Si" ? 1 : 0;
+      console.log("Datos insertados", charla_info, email, groupId);
 
       await pool.request()
         .input("id_grupo", sql.Int, groupId)
