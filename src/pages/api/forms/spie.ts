@@ -1,6 +1,8 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import jwt from "jsonwebtoken";
+import cookie from "cookie";
 
 
 const config: SqlConfig = {
@@ -17,36 +19,53 @@ const config: SqlConfig = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
+  // Inicio codigo de obtencion de email
+    
+    const cookies = req.headers.cookie;
+    
+  
+      if (!cookies) {
+        res.status(401).json({ success: false, message: "No se encontraron cookies" });
+        return;
+      }
+  
+      const parsedCookies = cookie.parse(cookies);
+      const jwtToken = parsedCookies.jwtToken;
+  
+      if (!jwtToken) {
+        res.status(401).json({ success: false, message: "No se encontró el token en las cookies" });
+        return;
+      }
+  
+      const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY as string);
+  
+      const email = (decoded as { email: string }).email;
+    
+
+    // Fin codigo de obtencion de email  
+
 
   let pool: ConnectionPool | null = null;
+  const group_id = 9;
 
+  let { committie, secondaryPrograms } = req.body;
+  
   try {
     pool = await sql.connect(config);
 
     if (req.method === "POST") {
-      const { email } = req.body as {
-        email: string;
-      };
-      const { name } = req.body as {
-        name: string;
-      };
-      const { secondName } = req.body as {
-        secondName: string;
-      };
+     
   
-      const fullName = `${name} ${secondName}`;
-      
-
-      // 3) Convertimos el correo a mayúsculas
-      const emailUpper = email.toLowerCase();
-
       await pool.request()
-        .input("correo", sql.VarChar, emailUpper)
-        .input("nombre", sql.VarChar, fullName )
-        .query(`
-          INSERT INTO persona (correo, nombre) 
-          VALUES (@correo, @nombre)
-        `);
+        
+          .input("group_id", sql.Int,  group_id)
+          .input("email", sql.VarChar, email)
+          .input("commite", sql.VarChar, committie)
+          .input("talk", sql.VarChar, secondaryPrograms)
+          .query(`
+            INSERT INTO spie (id_grupo, correo, departamentos, charla_info)
+            VALUES (@group_id, @email, @commite, @talk)
+          `);
 
       return res.status(200).json({ message: "Datos insertados con éxito" });
     } 
