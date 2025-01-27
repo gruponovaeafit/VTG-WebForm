@@ -66,8 +66,8 @@ export default function PartnersForm() {
 
         >
           {[
-            "Si",
-            "No"
+            "Charla 1",
+            "Charla 2"
           ].map((talk, index) => (
             <option key={index} value={talk}>
               {talk}
