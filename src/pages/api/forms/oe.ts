@@ -33,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const groupId = 6; 
       
       const charla_info = programs === "Si" ? 1 : 0;
+      console.log("Datos insertados", charla_info, email, groupId);
 
       await pool.request()
         .input("id_grupo", sql.Int, groupId)

@@ -153,7 +153,7 @@ export default function AcademicForm() {
         type="submit"
         className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
       >
-        ¡Enviar!
+        Level Up!
       </button>
     </form>
   );
