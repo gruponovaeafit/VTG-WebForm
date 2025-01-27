@@ -42,17 +42,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const nombre = `${name} ${secondName}`;
 
     // Conexión a la base de datos
- //   pool = await sql.connect(config);
+    pool = await sql.connect(config);
 
     // Actualizar el registro en la tabla "persona"
-   /* await pool.request()
+    await pool.request()
       .input("correo", sql.VarChar, email)
       .input("nombre", sql.VarChar, nombre)
       .query(`
         UPDATE persona
         SET nombre = @nombre
         WHERE correo = @correo
-      `);*/
+      `);
 
     console.log("Registro actualizado para el correo:", email);
 
@@ -68,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   } finally {
     if (pool) {
-   //   pool.close();
+   pool.close();
     }
   }
 }
