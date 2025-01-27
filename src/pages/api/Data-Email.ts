@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+import jwt from "jsonwebtoken";
+import cookie from "cookie";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -10,7 +10,7 @@ const config: SqlConfig = {
   server: process.env.DB_SERVER as string,
   port: parseInt(process.env.DB_PORT ?? "1433", 10),
   options: {
-    encrypt: true, 
+    encrypt: true,
     trustServerCertificate: false,
   },
 };
@@ -19,112 +19,127 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Método no permitido" });
+    return res.status(405).json({
+      success: false,
+      message: "Método no permitido",
+    });
   }
 
   const { token, email } = req.body;
 
   if (!token) {
     console.error("Token de reCAPTCHA faltante");
-    return res.status(400).json({ success: false, message: "Falta el token de reCAPTCHA" });
+    return res.status(400).json({
+      success: false,
+      message: "Falta el token de reCAPTCHA",
+    });
   }
 
   const secretKey = process.env.SERVER_KEY_CAPTCHA;
   if (!secretKey) {
     console.error("Clave secreta no configurada");
-    return res.status(500).json({ success: false, message: "Clave secreta no configurada" });
+    return res.status(500).json({
+      success: false,
+      message: "Clave secreta no configurada",
+    });
   }
 
   try {
-    // Verificar el token con la API de reCAPTCHA
+    // 1. Verificar reCAPTCHA
     const verifyResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: `secret=${secretKey}&response=${token}`,
     });
+    const captchaData = await verifyResponse.json();
 
-    const data = await verifyResponse.json();
-
-    if (!data.success) {
-      console.error("Fallo en la validación de reCAPTCHA", data);
+    if (!captchaData.success) {
+      console.error("Fallo en la validación de reCAPTCHA", captchaData);
       return res.status(400).json({
         success: false,
         message: "Falló la validación de reCAPTCHA",
-        errorCodes: data["error-codes"],
+        errorCodes: captchaData["error-codes"],
       });
     }
 
+    // 2. Validar correo
     if (!email || !email.endsWith("@eafit.edu.co")) {
       console.error("Correo inválido o faltante:", { email });
-      return res.status(400).json({ success: false, message: "El correo debe ser del dominio @eafit.edu.co" });
+      return res.status(400).json({
+        success: false,
+        message: "El correo debe ser del dominio @eafit.edu.co",
+      });
     }
 
+    // 3. Conexión a BD
     pool = await sql.connect(config);
-
-    // Convertimos el correo a minúsculas
     const emailLower = email.toLowerCase();
 
-    // Verificar si el correo ya existe en la base de datos
-    const existingUser = await pool.request()
+    // 4. Verificar si el usuario ya existe
+    const existingUser = await pool
+      .request()
       .input("correo", sql.VarChar, emailLower)
       .query("SELECT * FROM persona WHERE correo = @correo");
 
+    // Generar JWT (siempre)
+    const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
+      expiresIn: "1h",
+    });
+
+    // Setear la cookie
+    res.setHeader(
+      "Set-Cookie",
+      cookie.serialize("jwtToken", jwtToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600,
+        path: "/",
+        sameSite: "strict",
+      })
+    );
+
+    // 5. Si el usuario existe => no insertamos, pero devolvemos success: false + redirectUrl
     if (existingUser.recordset.length > 0) {
       const user = existingUser.recordset[0];
       console.log("Usuario encontrado:", user);
+
       if (user.nombre && user.pregrado) {
-        return res.status(400).json({
+        return res.status(200).json({
           success: false,
-          message: `Ya estás registrado con el nombre: ${user.nombre} y el pregrado: ${user.pregrado}.`,
           redirectUrl: "/groupslist",
         });
       } else if (user.nombre) {
-        return res.status(400).json({
+        return res.status(200).json({
           success: false,
-          message: `Ya estás registrado con el nombre: ${user.nombre}, pero no tienes un pregrado asociado.`,
           redirectUrl: "/academic",
         });
       } else {
-        return res.status(400).json({
+        return res.status(200).json({
           success: false,
-          message: "Ya estás registrado, pero no tienes un nombre ni un pregrado asociado.",
           redirectUrl: "/home",
         });
       }
     }
 
-    // Creamos el token JWT con el correo
-    const jwtToken = jwt.sign({ 
-      email: emailLower }, 
-      process.env.JWT_SECRET_KEY as string, 
-      { expiresIn: '1h' });
+    // 6. Si no existe => Insertar y success: true
+    await pool.request().input("correo", sql.VarChar, emailLower).query(`
+      INSERT INTO persona (correo)
+      VALUES (@correo)
+    `);
 
-    // Configuraciones de la cookie
-    res.setHeader("Set-Cookie", cookie.serialize("jwtToken", jwtToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", 
-      maxAge: 3600, 
-      path: "/", //Accesible desde cualquier ruta
-      sameSite: "strict", // No se envía en peticiones de terceros
-    }));
-
-    // Insertamos en la BD usando los valores transformados
-    await pool.request()
-      .input("correo", sql.VarChar, emailLower)
-      .query(`
-        INSERT INTO persona (correo) 
-        VALUES (@correo)
-      `);
-
-    return res.status(200).json({ success: true, message: "Formulario enviado y datos insertados correctamente" } );
-
+    return res.status(200).json({
+      success: true,
+      message: "Formulario enviado y datos insertados correctamente",
+    });
   } catch (err) {
     console.error("Error en el servidor:", err);
-    return res.status(500).json({ success: false, message: "Error interno del servidor" });
+    return res.status(500).json({
+      success: false,
+      message: "Error interno del servidor",
+    });
   } finally {
     if (pool) {
       pool.close();
     }
   }
 }
- 
