@@ -30,7 +30,7 @@ export default function Home() {
     <div
       className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] text-white"
       style={{
-        backgroundImage: "url('/spie.jpg')",
+        backgroundImage: "url('/spie.svg')",
         backgroundSize: "cover",
         position: "relative",
         overflow: "hidden",

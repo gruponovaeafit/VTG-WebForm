@@ -36,7 +36,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/aiesec.jpg')",
+      backgroundImage: "url('/aiesec.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",

@@ -1,8 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import { useEffect } from "react";
-import router from "next/router";
+
 
 
 const config: SqlConfig = {
@@ -18,32 +17,6 @@ const config: SqlConfig = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
-  useEffect(()   =>   {
-    // copiar esta parte 
-      const checkAuthentication = async () => { 
-      try {
-        const res = await fetch("/api/cookieCheck", { method: "GET" });
-        
-          // If the response status is not 200, redirect the user to the home page
-          if (res.status !== 200) {
-            router.push("/"); // Redirect to the home page if not authenticated
-          }
-        } catch (error) {
-          console.error("Error checking authentication:", error);
-          router.push("/"); // Redirect to the home page in case of error
-        }
-    }
-    
-    checkAuthentication();
-    // hasta aca y poner las liberias 
-  
-      // Elimina el scroll de la página
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.classList.remove("no-scroll");
-      };
-    }, []);
 
   let pool: ConnectionPool | null = null;
 
