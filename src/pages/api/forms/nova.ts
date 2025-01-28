@@ -1,6 +1,6 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import {connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "../cookieManagement";
 
 
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
       const { talk } = req.body as {
@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
       await pool.request()
-        .input("correo", sql.VarChar, email)
-        .input("asesor", sql.VarChar, IdNovato)
-        .input("charla", sql.VarChar, talk)
-        .input("id_grupo", sql.Int, groupId)
+        .input("correo", VarChar, email)
+        .input("asesor", VarChar, IdNovato)
+        .input("charla", VarChar, talk)
+        .input("id_grupo", Int, groupId)
         .query(`
           INSERT INTO nova (asesor, charla, id_grupo, correo)
           VALUES (@asesor, @charla, @id_grupo, @correo);

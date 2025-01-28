@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import cookie from "cookie";
+import {parse} from "cookie";
 import jwt from "jsonwebtoken";
 
 export function verifyJwtFromCookies(
@@ -12,7 +12,7 @@ export function verifyJwtFromCookies(
     return null;
   }
 
-  const parsedCookies = cookie.parse(cookies);
+  const parsedCookies = parse(cookies);
   const jwtToken = parsedCookies.jwtToken;
   if (!jwtToken) {
     res.status(401).json({ success: false, message: "No se encontró el token en las cookies" });

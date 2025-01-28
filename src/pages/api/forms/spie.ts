@@ -1,6 +1,6 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "../cookieManagement";
 
 
@@ -27,17 +27,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { committie, secondaryPrograms } = req.body;
   
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
      
   
       await pool.request()
         
-          .input("group_id", sql.Int,  group_id)
-          .input("email", sql.VarChar, email)
-          .input("commite", sql.VarChar, committie)
-          .input("talk", sql.VarChar, secondaryPrograms)
+          .input("group_id", Int,  group_id)
+          .input("email", VarChar, email)
+          .input("commite", VarChar, committie)
+          .input("talk", VarChar, secondaryPrograms)
           .query(`
             INSERT INTO spie (id_grupo, correo, departamentos, charla_info)
             VALUES (@group_id, @email, @commite, @talk)

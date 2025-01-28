@@ -94,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         secure: process.env.NODE_ENV === "production",
         maxAge: 3600,
         path: "/",
-        sameSite: "none",
+        sameSite: "strict",
       })
     );
 

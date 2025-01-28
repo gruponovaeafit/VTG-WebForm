@@ -1,6 +1,6 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "../cookieManagement";
 
 
@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
       const { committieSelect } = req.body as {
@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
       await pool.request()
-        .input("id_grupo", sql.Int, grupoId)
-        .input("correo", sql.VarChar, email )
-        .input("comite", sql.VarChar, committieSelect)
-        .input("asistencia_charla", sql.Int, talkValue)
+        .input("id_grupo", Int, grupoId)
+        .input("correo", VarChar, email )
+        .input("comite", VarChar, committieSelect)
+        .input("asistencia_charla", Int, talkValue)
         .query(`
           INSERT INTO clubmerc (id_grupo, correo, comite, asistencia_charla)
           VALUES (@id_grupo, @correo, @comite, @asistencia_charla)

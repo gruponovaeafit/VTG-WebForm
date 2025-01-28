@@ -1,6 +1,6 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { connect, Int, VarChar, TinyInt, config as SqlConfig, ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
   
@@ -41,10 +41,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     await pool.request()
         
-        .input("group_id", sql.Int,  group_id)
-        .input("email", sql.VarChar, email)
-        .input("age", sql.Int, age)
-        .input("talk", sql.TinyInt, talk)
+        .input("group_id", Int,  group_id)
+        .input("email", VarChar, email)
+        .input("age", Int, age)
+        .input("talk", TinyInt, talk)
         .query(`
           INSERT INTO gpg (id_grupo, correo, edad, prepractica)
           VALUES (@group_id, @email, @age, @talk)

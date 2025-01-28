@@ -1,6 +1,6 @@
 // pages/api/forms/aiesec.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import {connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "../cookieManagement";
 
 // Configuración de conexión a la base de datos
@@ -27,15 +27,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     // Conexión a la base de datos
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
       
 
       // Inserción en la base de datos
       await pool.request()
-        .input("group_id", sql.Int,  group_id)
-        .input("email", sql.VarChar, email)
+        .input("group_id", Int,  group_id)
+        .input("email", VarChar, email)
         .query(`
           INSERT INTO aiesec (id_grupo, correo)
           VALUES (@group_id, @email)

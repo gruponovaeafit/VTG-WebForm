@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
       const { date } = req.body as {
@@ -37,8 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       console.log("Solicitud recibida con datos:", { date, talk, asesor });
 
       const capacityResult = await pool.request()
-        .input("day_of_week", sql.VarChar, date)
-        .input("start_time", sql.VarChar, talk)
+        .input("day_of_week", VarChar, date)
+        .input("start_time", VarChar, talk)
         .query(`
           SELECT slot_id, capacity
           FROM dbo.pre_assessment_slot
@@ -70,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Resta 1 a la capacidad del slot
       await pool.request()
-        .input("slot_id", sql.Int, slotId)
+        .input("slot_id", Int, slotId)
         .query(`
           UPDATE dbo.pre_assessment_slot
           SET capacity = capacity - 1
@@ -81,10 +81,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Inserta los datos en la tabla club_in
       await pool.request()
-        .input("id_grupo", sql.Int, groupId)
-        .input("correo", sql.VarChar, email)
-        .input("slot_id", sql.Int, slotId)
-        .input("asesor", sql.VarChar, asesor)
+        .input("id_grupo", Int, groupId)
+        .input("correo", VarChar, email)
+        .input("slot_id", Int, slotId)
+        .input("asesor", VarChar, asesor)
         .query(`
           INSERT INTO dbo.club_in (id_grupo, correo, slot_id, asesor)
           VALUES (@id_grupo, @correo, @slot_id, @asesor)
