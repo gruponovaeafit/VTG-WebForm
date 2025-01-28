@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig } from "mssql";
+import {connect, VarChar, config as SqlConfig } from "mssql";
+import type { ConnectionPool } from "mssql";
 import {verifyJwtFromCookies} from "./cookieManagement";
 
 const config: SqlConfig = {
@@ -20,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  let pool = null;
+  let pool: ConnectionPool | null = null;
 
   try {
     const body = req.body;
@@ -40,12 +41,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const nombre = `${name} ${secondName}`;
 
     // Conexión a la base de datos
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     // Actualizar el registro en la tabla "persona"
     await pool.request()
-      .input("correo", sql.VarChar, email)
-      .input("nombre", sql.VarChar, nombre)
+      .input("correo", VarChar, email)
+      .input("nombre", VarChar, nombre)
       .query(`
         UPDATE persona
         SET nombre = @nombre
@@ -66,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   } finally {
     if (pool) {
-   pool.close();
+      pool.close();
     }
   }
 }

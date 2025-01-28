@@ -4,7 +4,7 @@ import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin1";
+import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin";
 
 export default function Home() {
   const router = useRouter();

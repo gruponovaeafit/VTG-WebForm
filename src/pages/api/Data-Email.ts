@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 import jwt from "jsonwebtoken";
-import cookie from "cookie";
+import {serialize} from "cookie";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -86,17 +86,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       expiresIn: "15m",
     });
 
-    console.log("Cookie object:", cookie),
-
     // Setear la cookie
     res.setHeader(
       "Set-Cookie",
-      cookie.serialize("jwtToken", jwtToken, {
+        serialize("jwtToken", jwtToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 3600,
         path: "/",
-        sameSite: "strict",
+        sameSite: "none",
       })
     );
 
