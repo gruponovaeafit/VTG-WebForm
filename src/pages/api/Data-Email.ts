@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const secretKey = process.env.SERVER_KEY_CAPTCHA;
   if (!secretKey) {
-    console.error("Clave secreta no configurada");
+    console.error("Clave secreta del captcha no configurada");
     return res.status(500).json({
       success: false,
-      message: "Clave secreta no configurada",
+      message: "Clave secreta del captcha no configurada",
     });
   }
 
@@ -83,8 +83,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Generar JWT (siempre)
     const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
-      expiresIn: "1h",
+      expiresIn: "15m",
     });
+
+    console.log("Cookie object:", cookie),
 
     // Setear la cookie
     res.setHeader(
