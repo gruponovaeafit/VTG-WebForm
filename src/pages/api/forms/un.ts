@@ -30,9 +30,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { talk } = req.body as {
         talk: string;
       };
-      const { assessment} = req.body as {
-        assessment: string;
-      };
 
       const email = verifyJwtFromCookies(req, res);
       const groupId = 12; // Obtener el ID del grupo seleccionado

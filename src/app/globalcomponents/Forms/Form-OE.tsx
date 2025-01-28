@@ -28,7 +28,7 @@ export default function OEForm() {
       }
 
       console.log("Respuesta del servidor:", await response.json());
-      router.push("/levelup");
+      router.push("/gameover");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
