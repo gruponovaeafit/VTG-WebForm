@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const GLOBAL_PASSWORD = process.env.TUTORES_TSS; // Definir la contraseña global aquí
+const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_TUTORES_TSS; // Definir la contraseña global aquí
 
 export default function TutoresPage() {
   const [data, setData] = useState<any>(null);
@@ -12,6 +12,14 @@ export default function TutoresPage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   const handlePasswordSubmit = () => {
+    // Verifica si la contraseña global está definida
+    if (!GLOBAL_PASSWORD) {
+      console.error("La contraseña global no está configurada.");
+      alert("Error en la configuración del servidor.");
+      return;
+    }
+
+    // Compara la contraseña ingresada con la global
     if (password === GLOBAL_PASSWORD) {
       setAuthenticated(true);
     } else {

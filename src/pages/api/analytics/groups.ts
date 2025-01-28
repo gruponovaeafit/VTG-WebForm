@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql from "mssql";
-import { config } from "../db"; // Ajusta la ruta según la ubicación de tu archivo db.ts
+import { dbConfig } from "../forms/db"; // Ajusta la ruta según la ubicación de tu archivo db.ts
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: sql.ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await sql.connect(dbConfig);
 
     // 🔍 Contar la cantidad de registros en cada tabla de grupos
     const result = await pool

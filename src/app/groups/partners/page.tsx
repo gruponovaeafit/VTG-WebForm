@@ -6,66 +6,62 @@ import PartnersForm from "../../globalcomponents/Forms/Form-Partners";
 import InfoPartners from "@/app/globalcomponents/Info/Info-Partners";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-export default function Home() {
 
+export default function Home() {
   const router = useRouter();
+
   useEffect(() => {
-    const checkAuthentication = async () => { 
+    const checkAuthentication = async () => {
       try {
         const res = await fetch("/api/cookieCheck", { method: "GET" });
-        
-          // If the response status is not 200, redirect the user to the home page
-          if (res.status !== 200) {
-            router.push("/"); // Redirect to the home page if not authenticated
-          }
-        } catch (error) {
-          console.error("Error checking authentication:", error);
-          router.push("/"); // Redirect to the home page in case of error
+        // Si el usuario no está autenticado, redirecciona
+        if (res.status !== 200) {
+          router.push("/");
         }
-    }
-    checkAuthentication();
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        router.push("/");
+      }
     };
-  }, []);
+
+    checkAuthentication();
+
+    // Elimina o comenta las líneas que añaden/remueven "no-scroll" para permitir scroll
+    // document.body.classList.add("no-scroll");
+    // return () => {
+    //   document.body.classList.remove("no-scroll");
+    // };
+  }, [router]);
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
-    style={{
-      backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/partners.svg')",
-      backgroundSize: "cover",
-      position: "relative",
-      overflow: "hidden",
-    }}
+      // Remueve overflow:hidden y añade overflow-auto para permitir scroll
+      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white overflow-auto"
+      style={{
+        backgroundImage:
+          "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/partners.svg')",
+        backgroundSize: "cover",
+        position: "relative",
+        // overflow: "hidden", // Quita o comenta esta línea
+      }}
     >
-
+      {/* Animación de píxeles (sin afectar eventos del mouse) */}
       <div style={{ pointerEvents: "none" }}>
         <PixelsAnimation />
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-4xl md:text-2xl text-center  pixel-font text-white glitch_partners">
+      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10">
+        <h1 className="text-4xl md:text-2xl text-center pixel-font text-white glitch_partners">
           PARTNERS
         </h1>
 
         <InfoPartners />
 
         <PartnersForm />
-        
+
         <Footer />
-
       </main>
-
-      
-      
     </div>
-
-
-
-        
-
   );
 }

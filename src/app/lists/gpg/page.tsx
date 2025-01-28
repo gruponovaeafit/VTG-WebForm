@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const GLOBAL_PASSWORD = process.env.GPG_TSS; // Definir la contraseña global aquí // Definir la contraseña global aquí
+const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_GPG_TSS; // Definir la contraseña global aquí // Definir la contraseña global aquí
 
 
 export default function GpgPage() {
@@ -13,6 +13,14 @@ export default function GpgPage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   const handlePasswordSubmit = () => {
+    // Verifica si la contraseña global está definida
+    if (!GLOBAL_PASSWORD) {
+      console.error("La contraseña global no está configurada.");
+      alert("Error en la configuración del servidor.");
+      return;
+    }
+
+    // Compara la contraseña ingresada con la global
     if (password === GLOBAL_PASSWORD) {
       setAuthenticated(true);
     } else {

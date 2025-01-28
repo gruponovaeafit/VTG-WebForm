@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const GLOBAL_PASSWORD = process.env.CLUBIN_TSS; // Definir la contraseña global aquí
+const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_CLUBIN_TSS; // Definir la contraseña global aquí
 
 export default function ClubInPage() {
   const [data, setData] = useState<any>(null);
@@ -12,13 +12,20 @@ export default function ClubInPage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
   const handlePasswordSubmit = () => {
+    // Verifica si la contraseña global está definida
+    if (!GLOBAL_PASSWORD) {
+      console.error("La contraseña global no está configurada.");
+      alert("Error en la configuración del servidor.");
+      return;
+    }
+
+    // Compara la contraseña ingresada con la global
     if (password === GLOBAL_PASSWORD) {
       setAuthenticated(true);
     } else {
       alert("Contraseña incorrecta");
     }
   };
-
   useEffect(() => {
     if (!authenticated) return;
     

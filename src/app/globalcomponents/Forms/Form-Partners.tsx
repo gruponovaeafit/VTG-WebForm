@@ -26,17 +26,10 @@ export default function PartnersForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        if (result.message) {
-          toast.error(result.message, {
-            position: "top-center",
-            autoClose: 3000,
-          });
-        } else {
-          toast.error("Error en el servidor.", {
-            position: "top-center",
-            autoClose: 3000,
-          });
-        }
+        toast.error(result.message || "Error en el servidor.", {
+          position: "top-center",
+          autoClose: 3000,
+        });
         return;
       }
 
@@ -58,52 +51,14 @@ export default function PartnersForm() {
   };
 
   return (
-    <div>
+    <>
       <form
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-
+        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md"
       >
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-orange-400">
-          ¿Quién te registró?
-        </label>
-        <input
-          type="text"
-          id="who"
-          name="who"
-          required
-          placeholder="Nombre"
-          title="Ingresa el nombre de quien te registró"
-          className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder:opacity-85"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="Pregunta 1" className="block text-sm mb-2 text-orange-400 px-4">
-          ¿Vas a asistir a alguna de nuestras charlas informativas?
-        </label>
-        <select
-          name="talkSelection"
-          id="talkSelection"
-          required
-          className="w-full px-4 py-2 text-xs rounded border border-orange-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-400" style={{ fontSize: '0.875rem' }}
-        >
-          {[
-            "Mar. 28 ene, 5 p.m.",
-            "Mie. 29 ene, 5 p.m.",
-            "Jue. 30 ene, 5 p.m.",
-            "Vie. 31 ene, 9 a.m."           
-          ].map((talk, index) => (
-            <option key={index} value={talk}>
-              {talk}
-            </option>
-          ))}
-        </select>
-      </div>
-
+        {/* Campo 1: ¿Quién te registró? */}
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm mb-2 text-orange-400">
+          <label htmlFor="who" className="block text-sm mb-2 text-orange-400">
             ¿Quién te registró?
           </label>
           <input
@@ -113,14 +68,15 @@ export default function PartnersForm() {
             required
             placeholder="Nombre"
             title="Ingresa el nombre de quien te registró"
-            className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder:opacity-85"
+            className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder:opacity-85"
           />
         </div>
 
+        {/* Campo 2: ¿Vas a asistir a alguna de nuestras charlas informativas? */}
         <div className="mb-4">
           <label
-            htmlFor="Pregunta 1"
-            className="block text-sm mb-2 text-orange-400 px-4"
+            htmlFor="talkSelection"
+            className="block text-sm mb-2 text-orange-400"
           >
             ¿Vas a asistir a alguna de nuestras charlas informativas?
           </label>
@@ -128,14 +84,13 @@ export default function PartnersForm() {
             name="talkSelection"
             id="talkSelection"
             required
-            className="w-full px-4 py-2 text-xs rounded border border-orange-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
-            style={{ fontSize: "0.875rem" }}
+            className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
           >
             {[
-              "Sáb. 27 ene, 5 p.m.",
-              "Dom. 28 ene, 5 p.m.",
-              "Lun. 29 ene, 5 p.m.",
-              "Mar. 30 ene, 9 a.m.",
+              "Mar. 28 ene, 5 p.m.",
+              "Mie. 29 ene, 5 p.m.",
+              "Jue. 30 ene, 5 p.m.",
+              "Vie. 31 ene, 9 a.m.",
             ].map((talk, index) => (
               <option key={index} value={talk}>
                 {talk}
@@ -144,6 +99,7 @@ export default function PartnersForm() {
           </select>
         </div>
 
+        {/* Botón de envío */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
@@ -152,6 +108,6 @@ export default function PartnersForm() {
         </button>
       </form>
       <ToastContainer />
-    </div>
+    </>
   );
 }

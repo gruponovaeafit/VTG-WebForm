@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql from "mssql";
-import { config } from "../db"; // Importación directa sin "@/lib/"
+import { dbConfig } from "../forms/db"; // Importación directa sin "@/lib/"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: sql.ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await sql.connect(dbConfig);
 
     const result = await pool
       .request()
