@@ -35,7 +35,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-6 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/clubin.svg')",
+      backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/clubin.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -56,7 +56,7 @@ export default function Home() {
         {/* Footer */}
       <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
         <Image
-          src="/PoweredByNOVA.svg"
+          src="https://novaeafit.blob.core.windows.net/vtg-2025-1/PoweredByNOVA.svg"
           alt="Powered By NOVA"
           className="w-40 md:w-48"
           width={300}
@@ -64,15 +64,9 @@ export default function Home() {
         />
       </footer>
 
-      </main>
-
+      </main>  
       
-      
-    </div>
-
-
-
-        
+    </div>    
 
   );
 }

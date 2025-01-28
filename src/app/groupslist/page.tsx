@@ -35,7 +35,7 @@ export default function Home() {
     <div
       className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden"
       style={{
-        backgroundImage: "url('/coins.png')",
+        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -53,10 +53,11 @@ export default function Home() {
 
         {/* Formulario arcade */}
         <GroupsForm />
+
+        <Footer />
+
       </main>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

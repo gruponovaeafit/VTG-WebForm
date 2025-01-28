@@ -4,6 +4,8 @@ import PixelsAnimation from "../../../globalcomponents/UI/Pixels_animation";
 import SpieForm from "../../../globalcomponents/Forms/Form-Spie";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Footer from "@/app/globalcomponents/UI/Footer";
+
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function Home() {
     <div
       className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] text-white"
       style={{
-        backgroundImage: "url('/spie.svg')",
+        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/spie.svg')",
         backgroundSize: "cover",
         position: "relative",
         overflow: "hidden",
@@ -49,6 +51,8 @@ export default function Home() {
         </h1>
         
         <SpieForm />
+
+        <Footer/>
 
       </main>
     </div>

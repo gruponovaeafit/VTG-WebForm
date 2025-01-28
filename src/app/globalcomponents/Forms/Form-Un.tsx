@@ -84,7 +84,9 @@ export default function UnForm() {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">Puedes asistir al assessment el 1 de Febrero</label>
+        <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">
+          Puedes asistir al assessment el 1 de Febrero
+        </label>
         <select 
         name="assessment" 
         id="assessment"

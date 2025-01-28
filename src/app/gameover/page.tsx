@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import Footer from "@/app/globalcomponents/UI/Footer";
 import { useEffect } from "react";
 
 
@@ -24,13 +24,7 @@ export default function Home() {
           GAME OVER
         </h1>
 
-        <Image
-          src="/PoweredByNOVA.svg"
-          alt="Powered By NOVA"
-          className="w-40 md:w-48"
-          width={300}
-          height={200}
-        />
+        <Footer/>
 
       </main>
 
