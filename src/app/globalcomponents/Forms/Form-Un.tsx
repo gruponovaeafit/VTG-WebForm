@@ -59,9 +59,9 @@ export default function UnForm() {
     <div>
       <form
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        className="bg-gray-800 bg-opacity-90 p-2 rounded-lg shadow-lg max-w-md w-full"
       >
-        <div className="mb-4">
+        <div className="mb-2">
           <label htmlFor="committies" className="block text-sm mb-2 text-blue-400">
             ¿Cuáles son tus comités de preferencia?
           </label>
@@ -85,7 +85,7 @@ export default function UnForm() {
           </select>
         </div>
 
-        <div className="mb-4">
+        <div className="mb-2">
           <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
             ¿Podrás asistir a la charla informativa del 31/01/2025 a las 3pm?
           </label>

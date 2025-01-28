@@ -20,23 +20,35 @@ interface DateData {
 export default function UsersByDate() {
   const [data, setData] = useState<DateData[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/analytics/days");
-        const result: DateData[] = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Error obteniendo datos:", error);
-      }
-    };
+  // Función para obtener los datos desde la API
+  const fetchData = async () => {
+    try {
+      const response = await fetch("/api/analytics/days");
+      const result: DateData[] = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error obteniendo datos:", error);
+    }
+  };
 
+  useEffect(() => {
+    // Llamada inicial
     fetchData();
+
+    // Intervalo cada 5 segundos para actualizar los datos
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+    // Limpieza: detener el intervalo cuando se desmonte el componente
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: "#000000", color: "#FFFFFF" }}>
-      <h2 className="text-2xl font-bold mb-4" style={{ color: "#FF00FF" }}>Usuarios por Fecha de Creación</h2>
+      <h2 className="text-2xl font-bold mb-4" style={{ color: "#FF00FF" }}>
+        Usuarios por Fecha de Creación
+      </h2>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid stroke="#555555" strokeDasharray="3 3" />

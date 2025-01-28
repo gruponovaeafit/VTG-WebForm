@@ -3,21 +3,20 @@
 import { useState } from "react";
 import Dashboard from "@/app/globalcomponents/analytics/dashboard";
 
-const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_ANALY_TSS; // Usar variable de entorno para mayor seguridad
+// Variable de entorno para la contraseña
+const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_ANALY_TSS;
 
 export default function Home() {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
 
   const handlePasswordSubmit = () => {
-    // Verificar si la contraseña global está definida
     if (!GLOBAL_PASSWORD) {
       console.error("La contraseña global no está configurada.");
       alert("Error en la configuración del servidor.");
       return;
     }
 
-    // Comparar la contraseña ingresada con la global
     if (password === GLOBAL_PASSWORD) {
       setAuthenticated(true);
     } else {
@@ -42,5 +41,6 @@ export default function Home() {
     );
   }
 
+  // Si pasa la contraseña, se muestra el Dashboard
   return <Dashboard />;
 }

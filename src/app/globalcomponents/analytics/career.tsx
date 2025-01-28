@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import {
   BarChart,
@@ -34,35 +36,72 @@ const COLORS = {
 export default function UsersByDegreeChart() {
   const [data, setData] = useState<DataItem[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/analytics/undergrad");
-        const result: DataItem[] = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Error obteniendo datos:", error);
-      }
-    };
+  // Función para obtener la data desde la API
+  const fetchData = async () => {
+    try {
+      const response = await fetch("/api/analytics/undergrad");
+      const result: DataItem[] = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error obteniendo datos:", error);
+    }
+  };
 
+  useEffect(() => {
+    // Llamada inicial
     fetchData();
+
+    // Intervalo cada 5 segundos para actualizar la data
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+    // Limpieza del intervalo cuando se desmonte el componente
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: COLORS.background, color: COLORS.text }}>
-      <h2 className="text-2xl font-bold mb-4" style={{ color: COLORS.title }}>Usuarios por Carrera</h2>
+    <div
+      className="p-6 rounded-lg shadow-lg"
+      style={{ backgroundColor: COLORS.background, color: COLORS.text }}
+    >
+      <h2
+        className="text-2xl font-bold mb-4"
+        style={{ color: COLORS.title }}
+      >
+        Usuarios por Carrera
+      </h2>
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <BarChart
+          data={data}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        >
           <CartesianGrid stroke={COLORS.grid} strokeDasharray="3 3" />
-          <XAxis dataKey="pregrado" stroke={COLORS.axis} tick={{ fill: COLORS.axis, fontSize: 14 }} />
-          <YAxis stroke={COLORS.axis} tick={{ fill: COLORS.axis, fontSize: 14 }} />
+          <XAxis
+            dataKey="pregrado"
+            stroke={COLORS.axis}
+            tick={{ fill: COLORS.axis, fontSize: 14 }}
+          />
+          <YAxis
+            stroke={COLORS.axis}
+            tick={{ fill: COLORS.axis, fontSize: 14 }}
+          />
           <Tooltip
-            contentStyle={{ backgroundColor: COLORS.tooltipBackground, borderColor: COLORS.tooltipBorder, color: COLORS.tooltipText }}
+            contentStyle={{
+              backgroundColor: COLORS.tooltipBackground,
+              borderColor: COLORS.tooltipBorder,
+              color: COLORS.tooltipText
+            }}
             labelStyle={{ color: COLORS.tooltipText }}
           />
           <Legend wrapperStyle={{ color: COLORS.legend }} />
           <Bar dataKey="cantidad" fill={COLORS.bar}>
-            <LabelList dataKey="cantidad" position="top" fill={COLORS.label} fontSize={14} />
+            <LabelList
+              dataKey="cantidad"
+              position="top"
+              fill={COLORS.label}
+              fontSize={14}
+            />
           </Bar>
         </BarChart>
       </ResponsiveContainer>

@@ -45,7 +45,7 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-4 row-start-2 items-center sm:items-start relative z-10 ">
+      <main className="flex flex-col gap-2 row-start-2 items-center sm:items-start relative z-10 ">
         <h1 className="text-4xl md:text-2xl text-center mb-2 pixel-font text-white glitch_UN">
           UN
         </h1>
