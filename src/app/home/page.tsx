@@ -13,6 +13,7 @@ export default function Home() {
   // copiar esta parte 
     const checkAuthentication = async () => { 
     try {
+      
       const res = await fetch("/api/cookieCheck", { method: "GET" });
       
         // If the response status is not 200, redirect the user to the home page

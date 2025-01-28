@@ -79,7 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const existingUser = await pool
       .request()
       .input("correo", sql.VarChar, emailLower)
-      .query("SELECT * FROM persona WHERE correo = @correo");
+      .query("SELECT TOP 1 correo, nombre, pregrado FROM persona WHERE correo = @correo");
 
     // Generar JWT (siempre)
     const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
