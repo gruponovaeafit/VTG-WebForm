@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 import jwt from "jsonwebtoken";
-import {serialize} from "cookie";
+import { serialize } from "cookie";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -20,8 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method !== "POST") {
     return res.status(405).json({
-      success: false,
-      message: "Método no permitido",
+      notification: {
+        type: "error",
+        message: "Método no permitido.",
+      },
     });
   }
 
@@ -30,8 +32,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!token) {
     console.error("Token de reCAPTCHA faltante");
     return res.status(400).json({
-      success: false,
-      message: "Falta el token de reCAPTCHA",
+      notification: {
+        type: "error",
+        message: "Falta el token de reCAPTCHA.",
+      },
     });
   }
 
@@ -39,8 +43,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!secretKey) {
     console.error("Clave secreta del captcha no configurada");
     return res.status(500).json({
-      success: false,
-      message: "Clave secreta del captcha no configurada",
+      notification: {
+        type: "error",
+        message: "Clave secreta del captcha no configurada.",
+      },
     });
   }
 
@@ -56,9 +62,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!captchaData.success) {
       console.error("Fallo en la validación de reCAPTCHA", captchaData);
       return res.status(400).json({
-        success: false,
-        message: "Falló la validación de reCAPTCHA",
-        errorCodes: captchaData["error-codes"],
+        notification: {
+          type: "error",
+          message: "Falló la validación de reCAPTCHA.",
+        },
       });
     }
 
@@ -66,8 +73,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!email || !email.endsWith("@eafit.edu.co")) {
       console.error("Correo inválido o faltante:", { email });
       return res.status(400).json({
-        success: false,
-        message: "El correo debe ser del dominio @eafit.edu.co",
+        notification: {
+          type: "error",
+          message: "El correo debe ser del dominio @eafit.edu.co.",
+        },
       });
     }
 
@@ -81,7 +90,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .input("correo", sql.VarChar, emailLower)
       .query("SELECT TOP 1 correo, nombre, pregrado FROM persona WHERE correo = @correo");
 
-    // Generar JWT (siempre)
+    // Generar JWT
     const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
       expiresIn: "15m",
     });
@@ -89,7 +98,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Setear la cookie
     res.setHeader(
       "Set-Cookie",
-        serialize("jwtToken", jwtToken, {
+      serialize("jwtToken", jwtToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         maxAge: 3600,
@@ -98,44 +107,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     );
 
-    // 5. Si el usuario existe => no insertamos, pero devolvemos success: false + redirectUrl
+    // 5. Si el usuario existe
     if (existingUser.recordset.length > 0) {
       const user = existingUser.recordset[0];
       console.log("Usuario encontrado:", user);
 
-      if (user.nombre && user.pregrado) {
-        return res.status(200).json({
-          success: false,
-          redirectUrl: "/groupslist",
-        });
-      } else if (user.nombre) {
-        return res.status(200).json({
-          success: false,
-          redirectUrl: "/academic",
-        });
-      } else {
-        return res.status(200).json({
-          success: false,
-          redirectUrl: "/home",
-        });
-      }
+      return res.status(200).json({
+        notification: {
+          type: "info",
+          message: "Ya estás registrado. Bienvenido de nuevo.",
+        },
+        redirectUrl: user.nombre && user.pregrado ? "/groupslist" : user.nombre ? "/academic" : "/home",
+      });
     }
 
-    // 6. Si no existe => Insertar y success: true
+    // 6. Insertar nuevo usuario
     await pool.request().input("correo", sql.VarChar, emailLower).query(`
       INSERT INTO persona (correo)
       VALUES (@correo)
     `);
 
     return res.status(200).json({
-      success: true,
-      message: "Formulario enviado y datos insertados correctamente",
+      notification: {
+        type: "success",
+        message: "Información guardada con éxito.",
+      },
+      redirectUrl: "/home",
     });
   } catch (err) {
     console.error("Error en el servidor:", err);
     return res.status(500).json({
-      success: false,
-      message: "Error interno del servidor",
+      notification: {
+        type: "error",
+        message: "Error interno del servidor.",
+      },
     });
   } finally {
     if (pool) {

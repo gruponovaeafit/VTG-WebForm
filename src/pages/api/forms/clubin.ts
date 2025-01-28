@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
-import {verifyJwtFromCookies} from "../cookieManagement";
+import { verifyJwtFromCookies } from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -34,8 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const groupId = 1; // ID del grupo seleccionado
       const email = verifyJwtFromCookies(req, res);
 
-      console.log("Solicitud recibida con datos:", { date, talk, asesor });
-
       const capacityResult = await pool.request()
         .input("day_of_week", VarChar, date)
         .input("start_time", VarChar, talk)
@@ -44,8 +42,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           FROM dbo.pre_assessment_slot
           WHERE day_of_week = @day_of_week AND start_time = @start_time
         `);
-
-      console.log("Resultado de la consulta SQL para capacidad:", capacityResult.recordset);
 
       const slot = capacityResult.recordset[0];
       const capacity = slot?.capacity;
@@ -77,27 +73,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           WHERE slot_id = @slot_id
         `);
 
-      console.log("Capacidad actualizada exitosamente para el slot con ID:", slotId);
-
       // Inserta los datos en la tabla club_in
-      await pool.request()
-        .input("id_grupo", Int, groupId)
-        .input("correo", VarChar, email)
-        .input("slot_id", Int, slotId)
-        .input("asesor", VarChar, asesor)
-        .query(`
-          INSERT INTO dbo.club_in (id_grupo, correo, slot_id, asesor)
-          VALUES (@id_grupo, @correo, @slot_id, @asesor)
-        `);
+      try {
+        await pool.request()
+          .input("id_grupo", Int, groupId)
+          .input("correo", VarChar, email)
+          .input("slot_id", Int, slotId)
+          .input("asesor", VarChar, asesor)
+          .query(`
+            INSERT INTO dbo.club_in (id_grupo, correo, slot_id, asesor)
+            VALUES (@id_grupo, @correo, @slot_id, @asesor)
+          `);
 
-      console.log("Datos insertados exitosamente en la tabla club_in.");
-
-      return res.status(200).json({
-        notification: {
-          type: "success",
-          message: "Reserva realizada con éxito y capacidad actualizada."
+        return res.status(200).json({
+          notification: {
+            type: "success",
+            message: "Formulario enviado con éxito."
+          }
+        });
+      } catch (insertError) {
+        if (insertError instanceof Error && insertError.message.includes("Violation of PRIMARY KEY constraint")) {
+          console.error("El usuario ya está registrado en Club IN.");
+          return res.status(400).json({
+            notification: {
+              type: "error",
+              message: "Ya estás registrado en Club IN."
+            }
+          });
         }
-      });
+        throw insertError;
+      }
     } 
     
     else if (req.method === "GET") {
