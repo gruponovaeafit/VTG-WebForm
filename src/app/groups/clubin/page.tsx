@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import ClubinForm from "../../globalcomponents/Forms/Form-Clubin";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin";
 
 export default function Home() {
   const router = useRouter();
@@ -33,9 +33,9 @@ export default function Home() {
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-6 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/clubin.svg')",
+      backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/clubin.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -51,12 +51,12 @@ export default function Home() {
           CLUBIN
         </h1>
 
-        <ClubinForm />
+        <Clubin1Form />
 
         {/* Footer */}
       <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
         <Image
-          src="/PoweredByNOVA.svg"
+          src="https://novaeafit.blob.core.windows.net/vtg-2025-1/PoweredByNOVA.svg"
           alt="Powered By NOVA"
           className="w-40 md:w-48"
           width={300}
@@ -64,15 +64,9 @@ export default function Home() {
         />
       </footer>
 
-      </main>
-
+      </main>  
       
-      
-    </div>
-
-
-
-        
+    </div>    
 
   );
 }

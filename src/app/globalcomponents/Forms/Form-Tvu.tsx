@@ -50,9 +50,9 @@ export default function TvuForm() {
           className="w-full px-2 py-2 text-sm rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           {[
-            "Charla 1",
-            "Charla 2",
-            "Charla 3"
+            "Jue. 30 ene, 6-7 p.m.",
+            "Vie. 31 ene, 4-5 p.m.",
+            "Mié. 5 feb, 6-7 p.m."
           ].map((talks, index) => (
             <option key={index} value={talks}>
               {talks}

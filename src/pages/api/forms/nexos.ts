@@ -1,7 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookieManagement from "../cookieManagement";
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
       const { departments } = req.body as {
@@ -35,20 +35,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         excuse: string;
       };
 
-       const email = cookieManagement.verifyJwtFromCookies(req, res);
+       const email = verifyJwtFromCookies(req, res);
        const groupId = 4; 
   
-        console.log("datos enviados",departments, assistance, excuse, email);
-        const assistanceValue = assistance === "Si" ? 1 : 0;
+        
+       const assistanceValue = assistance === "Si" ? 1 : 0;
 
-    
+       console.log(departments);
+       
+
+
 
       await pool.request()
-        .input("id_grupo", sql.Int, groupId)
-        .input("correo", sql.VarChar, email)
-        .input("departamento", sql.VarChar, departments)
-        .input("charla_informativa", sql.Int, assistanceValue)
-        .input("justificacion", sql.VarChar, excuse)
+        .input("id_grupo", Int, groupId)
+        .input("correo", VarChar, email)
+        .input("departamento", VarChar, departments)
+        .input("charla_informativa", Int, assistanceValue)
+        .input("justificacion", VarChar, excuse)
         .query(`
           INSERT INTO nexos (id_grupo, correo, departamento, charla_informativa, justificacion)
           VALUES (@id_grupo, @correo, @departamento, @charla_informativa, @justificacion);

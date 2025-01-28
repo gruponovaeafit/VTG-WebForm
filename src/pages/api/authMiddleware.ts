@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
+import {parse} from 'cookie';
 
 // Define una interfaz para el payload decodificado del JWT
 interface JwtPayload {
@@ -21,7 +21,7 @@ const authMiddleware = (
   return async (req: CustomNextApiRequest, res: NextApiResponse) => {
     try {
       // Obtener la cookie jwtToken del header de la petición
-      const cookies = cookie.parse(req.headers.cookie || '');
+      const cookies = parse(req.headers.cookie || '');
       const token = cookies.jwtToken;
         
       if (!token) {

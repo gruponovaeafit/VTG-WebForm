@@ -13,6 +13,7 @@ export default function Home() {
   // copiar esta parte 
     const checkAuthentication = async () => { 
     try {
+      
       const res = await fetch("/api/cookieCheck", { method: "GET" });
       
         // If the response status is not 200, redirect the user to the home page
@@ -39,7 +40,7 @@ export default function Home() {
     <div
       className="relative flex flex-col justify-between w-full h-screen bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('/coins.png')",
+        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -55,10 +56,13 @@ export default function Home() {
           ¡Formulario Personal!
         </h1>
         <PersonalForm />
+
+        <Footer />
+
       </main>
 
-      {/* Footer */}
-      <Footer />
+
+
     </div>
   );
 }

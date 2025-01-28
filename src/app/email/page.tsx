@@ -17,7 +17,7 @@ export default function Home() {
     <div
       className="relative flex flex-col justify-center items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('/coins.png')",
+        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -35,10 +35,11 @@ export default function Home() {
 
         {/* Formulario de email */}
         <EmailForm />
-      </main>
 
-      {/* Footer */}
-      <Footer />
+        <Footer />
+
+      </main>
+      
     </div>
   );
 }

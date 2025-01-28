@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import cookie from "cookie"; // Import cookie parsing library
+import {parse} from "cookie"; // Import cookie parsing library
 
 export default function cookieCheck(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     // Parse cookies from the request headers
-    const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
 
     // Check if the cookie (jwtToken) exists
     if (!cookies.jwtToken) {

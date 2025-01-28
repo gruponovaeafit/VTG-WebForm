@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig } from "mssql";
-import jwt from "jsonwebtoken";
-import cookie from "cookie";
+import { connect, VarChar, Int, config as SqlConfig } from "mssql";
+import {verify} from "jsonwebtoken";
+import {parse} from "cookie";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
   
-      const parsedCookies = cookie.parse(cookies);
+      const parsedCookies = parse(cookies);
       const jwtToken = parsedCookies.jwtToken;
   
       if (!jwtToken) {
@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return;
       }
   
-      const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY as string);
+      const decoded = verify(jwtToken, process.env.JWT_SECRET_KEY as string);
   
       const email = (decoded as { email: string }).email;
     
@@ -51,7 +51,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = req.body;
    
   
-    let { programs, semester, secondPrograms } = body;
+    const { programs } = body;
+    let {semester, secondPrograms } = body;
    
     if (!secondPrograms) {
       secondPrograms = 'No aplica';
@@ -73,17 +74,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Conexión a la base de datos
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
   
     // Insertar el registro en la tabla "PERSONA"
 
     await pool.request()
     
-    .input("programs", sql.VarChar, programs)
-    .input("secondaryPrograms", sql.VarChar, secondPrograms)
-    .input("semester", sql.Int, semester)
-    .input("correo", sql.VarChar, email)
+    .input("programs", VarChar, programs)
+    .input("secondaryPrograms", VarChar, secondPrograms)
+    .input("semester", Int, semester)
+    .input("correo", VarChar, email)
     .query(`
         UPDATE persona
         SET semestre = @semester, pregrado = @programs, pregrado_2 = @secondaryPrograms

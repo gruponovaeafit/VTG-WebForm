@@ -11,8 +11,24 @@ export default function OEForm() {
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
+    const formDataObject = Object.fromEntries(formData.entries());
+    console.log("Datos del formulario:", formDataObject);
+
     try {
-      router.push("/gameover"); // Redirigir al usuario
+      const response = await fetch("/api/forms/oe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataObject),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error en el servidor");
+      }
+
+      console.log("Respuesta del servidor:", await response.json());
+      router.push("/gameover");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
@@ -24,7 +40,6 @@ export default function OEForm() {
       onSubmit={handleFormSubmit}
       className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full space-y-6"
     >
-
       <div className="mb-4">
         <label htmlFor="programs" className="block text-m mb-2 text-blue-400">
           ¿Puedes asistir a nuestra convocatoria para conocer más sobre el grupo? 
@@ -38,10 +53,7 @@ export default function OEForm() {
           required
           className="w-full px-2 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          {[
-            "Si",
-            "No"
-          ].map((program, index) => (
+          {["Si", "No"].map((program, index) => (
             <option key={index} value={program}>
               {program}
             </option>

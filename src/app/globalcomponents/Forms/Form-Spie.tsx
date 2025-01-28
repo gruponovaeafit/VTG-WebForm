@@ -65,19 +65,19 @@ export default function SpieForm() {
           id="secondaryPrograms"
           name="secondaryPrograms"
           required
-          className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600"
+          className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600 mb-4"
         >
           {[
-            "Charla 1",
-            "Charla 2",
-            "Charla 3",
-            "Charla 4"
+            "Vie. 31 ene, 5-6 p.m.",
+            "Lun. 3 feb, 1-2 p.m.",  
+            "Jue. 6 feb, 1-2 p.m."  
           ].map((program, index) => (
             <option key={index} value={program}>
               {program}
             </option>
           ))}
         </select>
+        <label htmlFor="disclamer" className="block text-sm mb-2 text-white text-[10px]">Los salones de las charlas serán avisadas en redes sociales <span className="block text-sm mb-2 text-red-600 text-[10px]">@capitulospieeafit</span></label>
       </div>
 
       <button
