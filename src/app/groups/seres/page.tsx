@@ -22,6 +22,7 @@ export default function Home() {
             router.push("/"); // Redirect to the home page in case of error
           }
       }
+      checkAuthentication();
       document.body.classList.add("no-scroll");
       return () => {
         document.body.classList.remove("no-scroll");

@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
-import cookie from "cookie";
 import sql, { config as SqlConfig } from "mssql";
-import cookieManagement from "./cookieManagement";
+import {verifyJwtFromCookies} from "./cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -27,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const body = req.body;
 
-    const email = cookieManagement.verifyJwtFromCookies(req, res);
+    const email = verifyJwtFromCookies(req, res);
     const { name, secondName } = body;
 
     if (!name || !secondName) {

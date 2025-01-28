@@ -1,7 +1,7 @@
 // pages/api/forms/aiesec.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookieManagement from "../cookieManagement";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 // Configuración de conexión a la base de datos
 const config: SqlConfig = {
@@ -19,7 +19,7 @@ const config: SqlConfig = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     
 
-  const email = cookieManagement.verifyJwtFromCookies(req, res);
+  const email = verifyJwtFromCookies(req, res);
 
   let pool: ConnectionPool | null = null;
 
