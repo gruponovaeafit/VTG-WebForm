@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookieManagement from "../cookieManagement";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       };
 
       const groupId = 1; // ID del grupo seleccionado
-      const email = cookieManagement.verifyJwtFromCookies(req, res);
+      const email = verifyJwtFromCookies(req, res);
 
       console.log("Solicitud recibida con datos:", { date, talk, asesor });
 
@@ -117,7 +117,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         type: "error",
         message: "Error interno del servidor. Inténtelo de nuevo más tarde."
       },
-      details: err.message || err
+      details: (err instanceof Error) ? err.message : String(err)
     });
   } finally {
     if (pool) {
