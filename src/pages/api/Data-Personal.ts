@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import {connect, VarChar, config as SqlConfig } from "mssql";
+import { connect, VarChar, config as SqlConfig } from "mssql";
 import type { ConnectionPool } from "mssql";
-import {verifyJwtFromCookies} from "./cookieManagement";
+import { verifyJwtFromCookies } from "./cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -17,8 +17,12 @@ const config: SqlConfig = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    res.status(405).json({ success: false, message: "Método no permitido" });
-    return;
+    return res.status(405).json({
+      notification: {
+        type: "error",
+        message: "Método no permitido",
+      },
+    });
   }
 
   let pool: ConnectionPool | null = null;
@@ -30,20 +34,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { name, secondName } = body;
 
     if (!name || !secondName) {
-      res.status(400).json({
-        success: false,
-        message: "El nombre y el apellido son obligatorios",
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "El nombre y el apellido son obligatorios.",
+        },
       });
-      return;
     }
 
-    // Unir el nombre y apellido en un solo campo
     const nombre = `${name} ${secondName}`;
-
-    // Conexión a la base de datos
     pool = await connect(config);
 
-    // Actualizar el registro en la tabla "persona"
     await pool.request()
       .input("correo", VarChar, email)
       .input("nombre", VarChar, nombre)
@@ -53,17 +54,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         WHERE correo = @correo
       `);
 
-    console.log("Registro actualizado para el correo:", email);
-
-    res.status(200).json({
-      success: true,
-      message: "Registro actualizado exitosamente",
+    return res.status(200).json({
+      notification: {
+        type: "success",
+        message: "Registro actualizado exitosamente.",
+      },
     });
   } catch (error) {
     console.error("Error al procesar la solicitud:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error al procesar la solicitud",
+    return res.status(500).json({
+      notification: {
+        type: "error",
+        message: "Error al procesar la solicitud.",
+      },
     });
   } finally {
     if (pool) {

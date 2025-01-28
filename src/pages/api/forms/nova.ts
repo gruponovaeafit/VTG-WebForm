@@ -1,8 +1,6 @@
-// pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import {connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
-import {verifyJwtFromCookies} from "../cookieManagement";
-
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
+import { verifyJwtFromCookies } from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -11,31 +9,26 @@ const config: SqlConfig = {
   server: process.env.DB_SERVER as string,
   port: parseInt(process.env.DB_PORT ?? "1433", 10),
   options: {
-    encrypt: true, 
+    encrypt: true,
     trustServerCertificate: false,
   },
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
-
   let pool: ConnectionPool | null = null;
 
   try {
+    if (req.method !== "POST") {
+      return res.status(405).json({ message: "Método no permitido." });
+    }
+
     pool = await connect(config);
 
-    if (req.method === "POST") {
-      const { talk } = req.body as {
-        talk: string;
-      };
-      const { IdNovato } = req.body as {
-        IdNovato: string;
-      };
-      const groupId = 5; // Obtener el ID del grupo seleccionado
-      const email = verifyJwtFromCookies(req, res);
+    const { talk, IdNovato } = req.body;
+    const groupId = 5;
+    const email = verifyJwtFromCookies(req, res);
 
-
-
+    try {
       await pool.request()
         .input("correo", VarChar, email)
         .input("asesor", VarChar, IdNovato)
@@ -44,28 +37,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .query(`
           INSERT INTO nova (asesor, charla, id_grupo, correo)
           VALUES (@asesor, @charla, @id_grupo, @correo);
-          
         `);
 
-      return res.status(200).json({ message: "Datos insertados con éxito" });
-    } 
-
-    // GET Metod 
-    else if (req.method === "GET") {
-      // Consulta para obtener todos los registros
-      const result = await pool.request().query("SELECT * FROM persona");
-      return res.status(200).json(result.recordset);
-    } else {
-      return res.status(405).json({ message: "Método no permitido" });
+      return res.status(200).json({ message: "Formulario enviado con éxito." });
+    } catch (error: any) {
+      if (error.number === 2627) {
+        // Manejo de error de clave primaria duplicada
+        return res.status(400).json({
+          message: "Ya estás registrado en este grupo.",
+        });
+      }
+      throw error;
     }
-  } 
-
-  // Server Fail 
-  catch (err) {
+  } catch (err) {
     console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({ error: "Error de servidor", details: err });
+    return res.status(500).json({
+      message: "Error de servidor.",
+    });
   } finally {
-    // Cierra la conexión SQL
     if (pool) {
       pool.close();
     }
