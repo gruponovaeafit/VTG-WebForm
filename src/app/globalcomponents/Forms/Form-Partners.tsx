@@ -102,11 +102,6 @@ export default function PartnersForm() {
         </select>
       </div>
 
-
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
-      >
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm mb-2 text-orange-400">
             ¿Quién te registró?
