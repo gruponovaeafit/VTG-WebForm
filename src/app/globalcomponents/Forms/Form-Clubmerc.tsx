@@ -59,7 +59,7 @@ export default function ClubmercForm() {
 
       <div className="mb-4">
         <label htmlFor="secondName" className="block text-sm mb-2 text-blue-400">
-        ¿Tienes disponibilidad este Sábado 03 de Agosto de 7am - 1pm
+        ¿Tienes disponibilidad este Sábado 01 de Febrero?
         </label>
         <select 
         name="talk" 

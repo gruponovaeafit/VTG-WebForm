@@ -49,9 +49,9 @@ export default function TutoresForm() {
           className="w-full px-2 py-2 text-sm rounded border border-[#9b9b9b] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9b9b9b]"
         >
           {[
-            "Charla 1",
-            "Charla 2",
-            "Charla 3"
+            "Charla 1: Martes 28 de Enero 5pm",
+            "Charla 2: Miércoles 29 de Enero 4:30pm",
+            "Charla 3: Jueves 30 de Enero 5pm",
           ].map((talks, index) => (
             <option key={index} value={talks}>
               {talks}

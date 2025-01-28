@@ -30,6 +30,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { talk } = req.body as {
         talk: string;
       };
+      const { assessment} = req.body as {
+        assessment: string;
+      };
 
       const email = verifyJwtFromCookies(req, res);
       const groupId = 12; // Obtener el ID del grupo seleccionado
@@ -43,8 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .input("departamentos", VarChar, committie)
         .input("charla_info", Int, talkValue)
         .query(`
-          INSERT INTO un (id_grupo, correo, departamentos, charla_info)
-          VALUES (@id_grupo, @correo, @departamentos, @charla_info)
+          INSERT INTO un (id_grupo, correo, departamentos, charla_info, asis_assessment)
+          VALUES (@id_grupo, @correo, @departamentos, @charla_info, @asis_assessment)
         `);
 
       return res.status(200).json({ message: "Datos insertados con éxito" });

@@ -64,7 +64,7 @@ export default function UnForm() {
       
      <div className="mb-4">
         <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
-          ¿Podrás asistir a la charla informativa del X/X/XXXX a las X?
+          ¿Podrás asistir a la charla informativa del 31/01/2025 a las 3pm?
         </label>
         <select
           id="talk"
@@ -79,6 +79,22 @@ export default function UnForm() {
             <option key={index} value={talks}>
               {talks}
             </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-4">
+        <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">Puedes asistir al assessment el 1 de Febrero</label>
+        <select 
+        name="assessment" 
+        id="assessment"
+        required
+        className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          {["Sí",
+            "No"
+          ].map((assessment, index)=>(
+            <option key={index} value={assessment}>{assessment}</option>
           ))}
         </select>
       </div>
