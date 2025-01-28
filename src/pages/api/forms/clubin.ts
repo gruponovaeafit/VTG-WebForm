@@ -1,7 +1,6 @@
-// pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-
+import cookieManagement from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -16,58 +15,113 @@ const config: SqlConfig = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
-
   let pool: ConnectionPool | null = null;
 
   try {
     pool = await sql.connect(config);
 
     if (req.method === "POST") {
-      const { email } = req.body as {
-        email: string;
+      const { date } = req.body as {
+        date: string;
       };
-      const { name } = req.body as {
-        name: string;
+      const { talk } = req.body as {
+        talk: string;
       };
-      const { secondName } = req.body as {
-        secondName: string;
+      const { asesor } = req.body as {
+        asesor: string;
       };
-  
-      const fullName = `${name} ${secondName}`;
-      
 
-      // 3) Convertimos el correo a mayúsculas
-      const emailUpper = email.toLowerCase();
+      const groupId = 1; // ID del grupo seleccionado
+      const email = cookieManagement.verifyJwtFromCookies(req, res);
 
-      await pool.request()
-        .input("correo", sql.VarChar, emailUpper)
-        .input("nombre", sql.VarChar, fullName )
+      console.log("Solicitud recibida con datos:", { date, talk, asesor });
+
+      const capacityResult = await pool.request()
+        .input("day_of_week", sql.VarChar, date)
+        .input("start_time", sql.VarChar, talk)
         .query(`
-          INSERT INTO persona (correo, nombre) 
-          VALUES (@correo, @nombre)
+          SELECT slot_id, capacity
+          FROM dbo.pre_assessment_slot
+          WHERE day_of_week = @day_of_week AND start_time = @start_time
         `);
 
-      return res.status(200).json({ message: "Datos insertados con éxito" });
-    } 
+      console.log("Resultado de la consulta SQL para capacidad:", capacityResult.recordset);
 
-    // GET Metod 
+      const slot = capacityResult.recordset[0];
+      const capacity = slot?.capacity;
+      const slotId = slot?.slot_id;
+
+      if (capacity === undefined || capacity == 0) {
+        console.error("No hay capacidad disponible para la fecha y hora seleccionadas.");
+        return res.status(400).json({
+          notification: {
+            type: "error",
+            message: "No hay capacidad disponible para la fecha y hora seleccionadas."
+          },
+          frontendAction: {
+            showNotification: true,
+            notificationType: "error",
+            notificationMessage: "No hay capacidad disponible para la fecha y hora seleccionadas."
+          }
+        });
+      }
+
+      console.log("Capacidad disponible, actualizando capacidad del slot con ID:", slotId);
+
+      // Resta 1 a la capacidad del slot
+      await pool.request()
+        .input("slot_id", sql.Int, slotId)
+        .query(`
+          UPDATE dbo.pre_assessment_slot
+          SET capacity = capacity - 1
+          WHERE slot_id = @slot_id
+        `);
+
+      console.log("Capacidad actualizada exitosamente para el slot con ID:", slotId);
+
+      // Inserta los datos en la tabla club_in
+      await pool.request()
+        .input("id_grupo", sql.Int, groupId)
+        .input("correo", sql.VarChar, email)
+        .input("slot_id", sql.Int, slotId)
+        .input("asesor", sql.VarChar, asesor)
+        .query(`
+          INSERT INTO dbo.club_in (id_grupo, correo, slot_id, asesor)
+          VALUES (@id_grupo, @correo, @slot_id, @asesor)
+        `);
+
+      console.log("Datos insertados exitosamente en la tabla club_in.");
+
+      return res.status(200).json({
+        notification: {
+          type: "success",
+          message: "Reserva realizada con éxito y capacidad actualizada."
+        }
+      });
+    } 
+    
     else if (req.method === "GET") {
-      // Consulta para obtener todos los registros
+      console.log("Solicitud GET recibida, obteniendo todos los registros de la tabla persona.");
       const result = await pool.request().query("SELECT * FROM persona");
       return res.status(200).json(result.recordset);
     } else {
+      console.error("Método no permitido: ", req.method);
       return res.status(405).json({ message: "Método no permitido" });
     }
   } 
 
-  // Server Fail 
   catch (err) {
     console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({ error: "Error de servidor", details: err });
+    return res.status(500).json({
+      notification: {
+        type: "error",
+        message: "Error interno del servidor. Inténtelo de nuevo más tarde."
+      },
+      details: err.message || err
+    });
   } finally {
-    // Cierra la conexión SQL
     if (pool) {
+      console.log("Cerrando conexión SQL.");
       pool.close();
     }
   }
