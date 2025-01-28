@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-export default function AiesecForm() {
+export default function Clubin1Form() {
   const router = useRouter();
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,24 +40,30 @@ export default function AiesecForm() {
     >
 
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
-          ¿Qué edad tienes?
+      <label htmlFor="name" className="block text-sm mb-4 text-blue-200">
+            Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
         </label>
-        <input
-          type="int"
-          id="age"
-          name="age"
-          required
-          placeholder="Edad"
-          title="Ingresa tu edad"
-          className="w-full px-4 py-2 rounded border border-blue-200 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:opacity-85"
-        />
+        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
+          Días
+        </label>
+        <select 
+        name="date" 
+        id="date"
+        required
+        className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+          {["Miercoles", "Jueves", "Viernes"].map((date, index) => (
+            <option key={index} value={date}>
+              {date}
+            </option>
+          ))}
+        </select>
+        
       </div>
 
 
       <div className="mb-4">
         <label htmlFor="talks" className="block text-sm mb-2 text-blue-200">
-          ¿Tienes disponibilidad los Viernes de 3pm a 5pm?
+          Horas
         </label>
         <select
           id="talk"
@@ -66,8 +72,42 @@ export default function AiesecForm() {
           className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {[
-            "Si",
-            "No"
+            "10:00",  
+            "10:10",  
+            "10:20",  
+            "10:30",  
+            "10:40",  
+            "10:50",  
+            "11:00",  
+            "11:10",  
+            "11:20",  
+            "11:30",  
+            "11:40",  
+            "11:50",  
+            "13:00",  
+            "13:10",  
+            "13:20",  
+            "13:30",  
+            "13:40",  
+            "13:50",  
+            "14:00",  
+            "14:10",  
+            "14:20",  
+            "14:30",  
+            "14:40",  
+            "14:50",  
+            "15:00",  
+            "15:10",  
+            "15:20",  
+            "15:30",  
+            "15:40",  
+            "15:50",  
+            "16:00",  
+            "16:10",  
+            "16:20",  
+            "16:30",  
+            "16:40",  
+            "16:50",
           ].map((talks, index) => (
             <option key={index} value={talks}>
               {talks}
@@ -77,19 +117,19 @@ export default function AiesecForm() {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
-          ¿Quién te registró?
+        <label htmlFor="asesor" className="block text-sm mb-2 text-blue-200">
+          Escribe el nombre de tu asesor
         </label>
         <input
           type="text"
-          id="who"
-          name="who"
+          id="asesor"
+          name="asesor"
           required
-          placeholder="Nombre"
-          title="Ingresa el nombre de quien te registró"
-          className="w-full px-4 py-2 rounded border border-blue-200 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:opacity-85"
-        />
+          className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Nombre"> 
+          </input>
       </div>
+
 
 
       <button

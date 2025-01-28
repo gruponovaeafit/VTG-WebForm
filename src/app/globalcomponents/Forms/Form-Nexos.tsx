@@ -11,27 +11,40 @@ export default function NexosForm() {
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
+    // Recopilar los valores de los checkboxes seleccionados
+    const departments = formElement.querySelectorAll('input[name="departments"]:checked');
+    const departmentsArray = Array.from(departments).map((checkbox) => (checkbox as HTMLInputElement).value);
+
+    // Convertir el array de departamentos a una cadena de texto separada por comas
+    const departmentsString = departmentsArray.join(", ");
+
+    // Agregar los departamentos al formData
+    formData.append("departments", departmentsString);
+
+    const formDataObject = Object.fromEntries(formData.entries());
+    console.log("Datos del formulario:", formDataObject);
+
     try {
-      // Opcional: Enviar los datos a un endpoint
       const response = await fetch("/api/forms/nexos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
+        body: JSON.stringify(formDataObject),
       });
 
       if (!response.ok) {
         throw new Error("Error en el servidor");
       }
 
-      // Redirigir al usuario a /completed
+      // Redirigir al usuario a /gameover
       router.push("/gameover");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
     }
   };
+
   return (
     <form
       onSubmit={handleFormSubmit}
@@ -46,31 +59,28 @@ export default function NexosForm() {
             "Desarrollo Humano",
             "Mercadeo",
             "Relaciones Públicas",
-          ].map((department, index)=>(
+          ].map((department, index) => (
             <label key={index} className="inline-flex items-center">
               <input 
-              type="checkbox"
-              name="departments"
-              value={department}
-              className="form-checkbox text-[#9A975F] focus:ring-[#9A975F]" />
+                type="checkbox"
+                name="departments"
+                value={department}
+                className="form-checkbox text-[#9A975F] focus:ring-[#9A975F]" />
               <span className="ml-2 text-white">{department}</span>
             </label>
           ))}
         </div>
       </div>
-
       <div className="mb-4">
         <label htmlFor="assistance" className="block text-sm mb-2 text-[#9A975F]">
-        ¿Asistirás a la charla informativa el viernes 26 de julio a las 2p.m.?
+          ¿Asistirás a la charla informativa el viernes 26 de julio a las 2p.m.?
         </label>
         <select 
-        name="assistance" 
-        id="assistance"
-        required
-        className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9A975F]">
-          {["Sí",
-            "No",
-          ].map((response, index)=>(
+          name="assistance" 
+          id="assistance"
+          required
+          className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9A975F]">
+          {["Sí", "No"].map((response, index) => (
             <option key={index} value={response}>{response}</option>
           ))}
         </select>
@@ -78,7 +88,7 @@ export default function NexosForm() {
 
       <div className="mb-4">
         <label htmlFor="Excuse" className="block text-sm mb-2 text-[#9A975F]">
-        ¿Por qué no puedes asistir?
+          ¿Por qué no puedes asistir?
         </label>
         <input
           type="text"
@@ -89,7 +99,6 @@ export default function NexosForm() {
           placeholder="Ingresa tu excusa aquí"
         />
       </div>
-
 
       <button
         type="submit"

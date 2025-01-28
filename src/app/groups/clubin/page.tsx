@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import ClubinForm from "../../globalcomponents/Forms/Form-Clubin";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin1";
 
 export default function Home() {
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-6 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
       backgroundImage: "url('/clubin.svg')",
       backgroundSize: "cover",
@@ -51,7 +51,7 @@ export default function Home() {
           CLUBIN
         </h1>
 
-        <ClubinForm />
+        <Clubin1Form />
 
         {/* Footer */}
       <footer className="relative z-10 flex items-center justify-center py-2 mb-10">

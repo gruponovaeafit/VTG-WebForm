@@ -1,7 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookieManagement from "../cookieManagement";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -35,13 +35,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         excuse: string;
       };
 
-       const email = cookieManagement.verifyJwtFromCookies(req, res);
+       const email = verifyJwtFromCookies(req, res);
        const groupId = 4; 
   
-        console.log("datos enviados",departments, assistance, excuse, email);
-        const assistanceValue = assistance === "Si" ? 1 : 0;
+        
+       const assistanceValue = assistance === "Si" ? 1 : 0;
 
-    
+       console.log(departments);
+       
+
+
 
       await pool.request()
         .input("id_grupo", sql.Int, groupId)

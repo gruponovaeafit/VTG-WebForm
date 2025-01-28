@@ -1,7 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookieManagement from "../cookieManagement";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         talk: string;
       };
 
-      const email = cookieManagement.verifyJwtFromCookies(req, res);
+      const email = verifyJwtFromCookies(req, res);
       const groupId = 12; // Obtener el ID del grupo seleccionado
       const talkValue = talk === "Sí, podré asistir" ? 1 : 0;
   

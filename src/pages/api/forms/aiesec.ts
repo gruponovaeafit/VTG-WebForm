@@ -1,8 +1,7 @@
 // pages/api/forms/aiesec.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookie from "cookie";
-import jwt from 'jsonwebtoken';
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 // Configuración de conexión a la base de datos
 const config: SqlConfig = {
@@ -20,31 +19,7 @@ const config: SqlConfig = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     
 
-  
-
-  // Inicio codigo de obtencion de email
-
-    const cookies = req.headers.cookie;
-  
-      if (!cookies) {
-        res.status(401).json({ success: false, message: "No se encontraron cookies" });
-        return;
-      }
-  
-      const parsedCookies = cookie.parse(cookies);
-      const jwtToken = parsedCookies.jwtToken;
-  
-      if (!jwtToken) {
-        res.status(401).json({ success: false, message: "No se encontró el token en las cookies" });
-        return;
-      }
-  
-      const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY as string);
-  
-      const email = (decoded as { email: string }).email;
-    
-
-    // Fin codigo de obtencion de email  
+  const email = verifyJwtFromCookies(req, res);
 
   let pool: ConnectionPool | null = null;
 
