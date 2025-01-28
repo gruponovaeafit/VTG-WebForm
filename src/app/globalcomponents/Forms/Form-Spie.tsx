@@ -68,9 +68,9 @@ export default function SpieForm() {
           className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600 mb-4"
         >
           {[
-            "Charla 1: Viernes 31 de Enero 5pm-6pm",
-            "Charla 2: Lunes 3 de Febrero 1pm-2pm",
-            "Charla 3: Jueves 6 de Febrero 1pm-2pm",
+            "Vie. 31 ene, 5-6 p.m.",
+            "Lun. 3 feb, 1-2 p.m.",  
+            "Jue. 6 feb, 1-2 p.m."  
           ].map((program, index) => (
             <option key={index} value={program}>
               {program}

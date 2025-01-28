@@ -4,6 +4,7 @@ import AcademicForm from "../globalcomponents/Forms/Form-Academic";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Footer from "@/app/globalcomponents/UI/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -38,7 +39,7 @@ export default function Home() {
     <div
       className="relative flex items-center justify-center w-full h-screen bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('/coins.png')",
+        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -54,7 +55,13 @@ export default function Home() {
           ¡Formulario Académico!
         </h1>
         <AcademicForm />
+
+        <Footer />
+
       </main>
+
+      
+
     </div>
   );
 }

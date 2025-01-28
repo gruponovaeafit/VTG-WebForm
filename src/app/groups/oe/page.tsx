@@ -35,7 +35,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/oe.svg')",
+      backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/oe.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -54,7 +54,7 @@ export default function Home() {
 
         <OEForm />
 
-        {/* Footer */}
+
         <Footer />
 
       </main>

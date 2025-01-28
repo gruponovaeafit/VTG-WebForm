@@ -88,7 +88,7 @@ export default function NexosForm() {
 
       <div className="mb-4">
         <label htmlFor="Excuse" className="block text-sm mb-2 text-[#9A975F]">
-          ¿Por qué no puedes asistir?
+        En caso de que no puedas ir a la charla. ¿Por qué no puedes asistir? 
         </label>
         <input
           type="text"

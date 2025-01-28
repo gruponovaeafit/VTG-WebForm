@@ -47,9 +47,9 @@ export default function NOVAForm() {
         required
         className="w-full px-4 py-2 text-sm rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600">
           {[
-            "Charla 1 Día XX XX:XX",
-            "Charla 2 Día XX XX:XX",
-            "Charla 3 Día XX XX:XX",
+            "Lun. 3 feb, 2-3 p.m.",
+            "Mié. 5 feb, 3-4 p.m.",
+            "Vie. 7 feb, 1-2 p.m."
           ].map((group, index)=>(
             <option key={index} value={group}>{group}</option>
           ))}          
