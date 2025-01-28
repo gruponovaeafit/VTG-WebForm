@@ -54,7 +54,8 @@ export default function Home() {
 
         <InfoTvu />
         <TvuForm />
-
+        <Footer/>
+        
       </main>
 
       

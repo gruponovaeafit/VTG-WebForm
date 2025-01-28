@@ -1,7 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookieManagement from "../cookieManagement";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 
 const config: SqlConfig = {
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         IdNovato: string;
       };
       const groupId = 5; // Obtener el ID del grupo seleccionado
-      const email = cookieManagement.verifyJwtFromCookies(req, res);
+      const email = verifyJwtFromCookies(req, res);
 
 
 

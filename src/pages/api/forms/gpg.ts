@@ -1,9 +1,7 @@
 // pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-import cookie from "cookie";
-import jwt from 'jsonwebtoken';
-import cookieManagement from "../cookieManagement";
+import {verifyJwtFromCookies} from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -19,12 +17,13 @@ const config: SqlConfig = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-  const email = cookieManagement.verifyJwtFromCookies(req, res);
+  const email = verifyJwtFromCookies(req, res);
 
 
   let pool: ConnectionPool | null = null;
   const group_id = 3;
-  let { age, talk } = req.body;
+  let { talk } = req.body;
+  const { age } = req.body;
 
   if (talk === 'Si') {
     talk = 1;

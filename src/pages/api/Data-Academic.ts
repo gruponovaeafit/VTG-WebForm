@@ -51,7 +51,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = req.body;
    
   
-    let { programs, semester, secondPrograms } = body;
+    const { programs } = body;
+    let {semester, secondPrograms } = body;
    
     if (!secondPrograms) {
       secondPrograms = 'No aplica';
