@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ClubmercForm() {
   const router = useRouter();
@@ -12,7 +14,6 @@ export default function ClubmercForm() {
     const formData = new FormData(formElement);
 
     try {
-      // Opcional: Enviar los datos a un endpoint
       const response = await fetch("/api/forms/clubmerc", {
         method: "POST",
         headers: {
@@ -21,67 +22,97 @@ export default function ClubmercForm() {
         body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Error en el servidor");
+        toast.error(result.message || "Error en el servidor.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
       }
 
-      // Redirigir al usuario a /completed
-      router.push("/gameover");
+      toast.success(result.message || "Formulario enviado con éxito.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        onClose: () => router.push("/gameover"), // Redirige tras la notificación
+      });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-    >
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-blue-400">
-          Comités
-        </label>
-        <select 
-        name="committieSelect" 
-        id="committieSelect"
-        required
-        className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-          {["Relaciones Públicas",
-            "Publicidad y Mercadeo",
-            "Conexión Estratégica",
-            "Gestión Humana",
-          ].map((committie, index)=>(
-            <option key={index} value={committie}>{committie}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="secondName" className="block text-sm mb-2 text-blue-400">
-        ¿Tienes disponibilidad este Sábado 01 de Febrero?
-        </label>
-        <select 
-        name="talk" 
-        id="talk"
-        required
-        className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-          {["Sí",
-            "No",
-          ].map((response, index)=>(
-            <option key={index} value={response}>{response}</option>
-          ))}
-        </select>
-      </div>
-
-
-
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-400 font-bold uppercase tracking-wider transition duration-300"
+    <div>
+      <form
+        onSubmit={handleFormSubmit}
+        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
       >
-        Level Up!
-      </button>
-    </form>
+        <div className="mb-4">
+          <label htmlFor="committieSelect" className="block text-sm mb-2 text-blue-400">
+            Comités
+          </label>
+          <select
+            name="committieSelect"
+            id="committieSelect"
+            required
+            className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {[
+              "Relaciones Públicas",
+              "Publicidad y Mercadeo",
+              "Conexión Estratégica",
+              "Gestión Humana",
+            ].map((committie, index) => (
+              <option key={index} value={committie}>
+                {committie}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="talk" className="block text-sm mb-2 text-blue-400">
+            ¿Tienes disponibilidad este Sábado 01 de Febrero?
+          </label>
+          <select
+            name="talk"
+            id="talk"
+            required
+            className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {["Sí", "No"].map((response, index) => (
+              <option key={index} value={response}>
+                {response}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-400 font-bold uppercase tracking-wider transition duration-300"
+        >
+          Level Up!
+        </button>
+      </form>
+      <ToastContainer />
+    </div>
   );
 }

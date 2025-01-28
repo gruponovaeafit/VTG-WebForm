@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AiesecForm() {
   const router = useRouter();
@@ -12,39 +14,64 @@ export default function AiesecForm() {
     const formData = new FormData(formElement);
 
     try {
-      // Opcional: Enviar los datos a un endpoint
       const response = await fetch("/api/forms/aiesec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Error en el servidor");
+        toast.error(result.notification?.message || "Error en el servidor.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
       }
 
-      // Redirigir al usuario a /completed
-      router.push("/gameover");
+      toast.success(result.notification?.message || "Formulario enviado con éxito.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        onClose: () => router.push("/gameover"), // Redirige tras la notificación
+      });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-    >
-
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+    <div>
+      <form
+        onSubmit={handleFormSubmit}
+        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
       >
-        Level Up!
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+        >
+          Level Up!
+        </button>
+      </form>
+      <ToastContainer />
+    </div>
   );
 }

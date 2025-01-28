@@ -1,7 +1,6 @@
-// pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import { connect, Int, VarChar, TinyInt, config as SqlConfig, ConnectionPool } from "mssql";
-import {verifyJwtFromCookies} from "../cookieManagement";
+import { verifyJwtFromCookies } from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -10,65 +9,59 @@ const config: SqlConfig = {
   server: process.env.DB_SERVER as string,
   port: parseInt(process.env.DB_PORT ?? "1433", 10),
   options: {
-    encrypt: true, 
+    encrypt: true,
     trustServerCertificate: false,
   },
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
   const email = verifyJwtFromCookies(req, res);
-
-
-  let pool: ConnectionPool | null = null;
   const group_id = 3;
   let { talk } = req.body;
   const { age } = req.body;
 
-  if (talk === 'Si') {
-    talk = 1;
-  } else {
-    talk = 0;
-  }
+  // Convertir el valor de 'talk' a entero
+  const talkValue = talk === "Si" ? 1 : 0;
+
+  let pool: ConnectionPool | null = null;
 
   try {
+    if (req.method !== "POST") {
+      return res.status(405).json({
+        message: "Método no permitido.",
+      });
+    }
+
     pool = await connect(config);
 
-    if (req.method === "POST") {
-  
-    // Inserción en la base de datos
-    
-
-    await pool.request()
-        
-        .input("group_id", Int,  group_id)
+    try {
+      await pool.request()
+        .input("group_id", Int, group_id)
         .input("email", VarChar, email)
         .input("age", Int, age)
-        .input("talk", TinyInt, talk)
+        .input("talk", TinyInt, talkValue)
         .query(`
           INSERT INTO gpg (id_grupo, correo, edad, prepractica)
           VALUES (@group_id, @email, @age, @talk)
         `);
 
-      return res.status(200).json({ message: "Datos insertados con éxito" });
-    } 
-
-    // GET Metod 
-    else if (req.method === "GET") {
-      // Consulta para obtener todos los registros
-      const result = await pool.request().query("SELECT * FROM persona");
-      return res.status(200).json(result.recordset);
-    } else {
-      return res.status(405).json({ message: "Método no permitido" });
+      return res.status(200).json({
+        message: "Formulario enviado con éxito.",
+      });
+    } catch (error: any) {
+      if (error.number === 2627) {
+        return res.status(400).json({
+          message: "Ya estás registrado en este grupo.",
+        });
+      }
+      throw error;
     }
-  } 
-
-  // Server Fail 
-  catch (err) {
-    console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({ error: "Error de servidor", details: err });
+  } catch (err) {
+    console.error("Error general en el servidor:", err);
+    return res.status(500).json({
+      message: "Error de servidor.",
+    });
   } finally {
-    // Cierra la conexión SQL
     if (pool) {
       pool.close();
     }

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connect, VarChar, Int, config as SqlConfig } from "mssql";
-import {verify} from "jsonwebtoken";
-import {parse} from "cookie";
+import { verify } from "jsonwebtoken";
+import { parse } from "cookie";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -17,91 +17,81 @@ const config: SqlConfig = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
-    res.status(405).json({ success: false, message: "Método no permitido" });
-    return;
+    return res.status(405).json({
+      notification: {
+        type: "error",
+        message: "Método no permitido",
+      },
+    });
   }
 
   let pool = null;
 
-  // Inicio codigo de obtencion de email
-
-    const cookies = req.headers.cookie;
-  
-      if (!cookies) {
-        res.status(401).json({ success: false, message: "No se encontraron cookies" });
-        return;
-      }
-  
-      const parsedCookies = parse(cookies);
-      const jwtToken = parsedCookies.jwtToken;
-  
-      if (!jwtToken) {
-        res.status(401).json({ success: false, message: "No se encontró el token en las cookies" });
-        return;
-      }
-  
-      const decoded = verify(jwtToken, process.env.JWT_SECRET_KEY as string);
-  
-      const email = (decoded as { email: string }).email;
-    
-
-    // Fin codigo de obtencion de email  
-
   try {
-    const body = req.body;
-   
-  
-    const { programs } = body;
-    let {semester, secondPrograms } = body;
-   
-    if (!secondPrograms) {
-      secondPrograms = 'No aplica';
-     }
-
-    if (semester == '10+'){
-      semester = 11;
-    } 
-    
-    if (!semester || !programs) {
-      
-      console.log(semester, programs, secondPrograms);
-      console.log("Campos faltantes");
-      res.status(400).json({
-        success: false,
-        message: "El semestre, el programa y el segundo programa son obligatorios",
+    const cookies = req.headers.cookie;
+    if (!cookies) {
+      return res.status(401).json({
+        notification: {
+          type: "error",
+          message: "No se encontraron cookies.",
+        },
       });
-      return;
     }
 
-    // Conexión a la base de datos
+    const parsedCookies = parse(cookies);
+    const jwtToken = parsedCookies.jwtToken;
+
+    if (!jwtToken) {
+      return res.status(401).json({
+        notification: {
+          type: "error",
+          message: "No se encontró el token en las cookies.",
+        },
+      });
+    }
+
+    const decoded = verify(jwtToken, process.env.JWT_SECRET_KEY as string);
+    const email = (decoded as { email: string }).email;
+
+    const { programs, semester, secondaryPrograms = "No aplica" } = req.body;
+
+    if (!programs || !semester) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "El semestre y el programa son obligatorios.",
+        },
+      });
+    }
+
+    const adjustedSemester = semester === "10+" ? 11 : parseInt(semester, 10);
+
     pool = await connect(config);
 
-  
-    // Insertar el registro en la tabla "PERSONA"
-
     await pool.request()
-    
-    .input("programs", VarChar, programs)
-    .input("secondaryPrograms", VarChar, secondPrograms)
-    .input("semester", Int, semester)
-    .input("correo", VarChar, email)
-    .query(`
+      .input("programs", VarChar, programs)
+      .input("secondaryPrograms", VarChar, secondaryPrograms)
+      .input("semester", Int, adjustedSemester)
+      .input("correo", VarChar, email)
+      .query(`
         UPDATE persona
         SET semestre = @semester, pregrado = @programs, pregrado_2 = @secondaryPrograms
-        WHERE correo = @correo; 
+        WHERE correo = @correo;
       `);
 
-    console.log("Datos académicos almacenados");
-
-    res.status(200).json({
-      success: true,
-      message: "Registro actualizado exitosamente",
+    return res.status(200).json({
+      notification: {
+        type: "success",
+        message: "Información guardada con éxito.",
+      },
     });
   } catch (error) {
     console.error("Error al procesar la solicitud:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error al procesar la solicitud",
+    return res.status(500).json({
+      notification: {
+        type: "error",
+        message: "Error al procesar la solicitud.",
+      },
     });
   } finally {
     if (pool) {
