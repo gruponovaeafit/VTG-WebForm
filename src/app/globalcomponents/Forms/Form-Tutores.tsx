@@ -77,6 +77,24 @@ export default function TutoresForm() {
           </select>
         </div>
 
+        <div className="mb-4">
+          <label
+            htmlFor="IdTutor"
+            className="block text-sm mb-2 text-purple-600"
+          >
+            Nombre de la persona que te inscribió
+          </label>
+          <input
+            type="text"
+            id="IdTutor"
+            name="IdTutor"
+            required
+            placeholder="Asesor"
+            title="IdTutor"
+            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
+          />
+        </div>
+
         <button
           type="submit"
           className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"

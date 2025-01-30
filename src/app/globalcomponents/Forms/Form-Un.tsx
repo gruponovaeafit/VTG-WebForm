@@ -87,7 +87,7 @@ export default function UnForm() {
 
         <div className="mb-2">
           <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
-            ¿Podrás asistir a la charla informativa del 31/01/2025 a las 3pm?
+            ¿Podrás asistir a la charla informativa del 31/01/2025 a las 4pm?
           </label>
           <select
             id="talk"

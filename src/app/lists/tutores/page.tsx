@@ -81,15 +81,17 @@ export default function TutoresPage() {
                 <th className="border border-green-500 px-2 py-1">Nombre</th>
                 <th className="border border-green-500 px-2 py-1">Pregrado</th>
                 <th className="border border-green-500 px-2 py-1">Semestre</th>
+                <th className="border border-green-500 px-2 py-1">Tutor</th>
               </tr>
             </thead>
             <tbody>
-              {charla.participants.map((participant: { correo: string; id_grupo: number; nombre?: string; pregrado?: string; semestre?: string }) => (
+              {charla.participants.map((participant: { correo: string; id_grupo: number; nombre?: string; pregrado?: string; semestre?: string; asesor?: string }) => (
                 <tr key={`${participant.correo}-${participant.id_grupo}`} className="hover:bg-gray-800">
                   <td className="border border-green-500 px-2 py-1">{participant.correo}</td>
                   <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
                   <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                   <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
+                  <td className="border border-green-500 px-2 py-1">{participant.asesor || "N/A"}</td>
                 </tr>
               ))}
             </tbody>

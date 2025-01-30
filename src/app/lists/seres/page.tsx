@@ -11,6 +11,10 @@ export default function SeresPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [authenticated, setAuthenticated] = useState<boolean>(false);
+  let contador1 = 1;
+  let contador2 = 1;
+  let contador3 = 1;
+  let contador4 = 1;
 
   const handlePasswordSubmit = () => {
     // Verifica si la contraseña global está definida
@@ -78,6 +82,7 @@ export default function SeresPage() {
           <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
             <thead>
               <tr className="bg-gray-700 text-yellow-300">
+                <th className="border border-green-500 px-2 py-1">#</th>
                 <th className="border border-green-500 px-2 py-1">Correo</th>
                 <th className="border border-green-500 px-2 py-1">Nombre</th>
                 <th className="border border-green-500 px-2 py-1">Pregrado</th>
@@ -87,6 +92,12 @@ export default function SeresPage() {
             <tbody>
               {charla.participants.map((participant: { correo: string; id_grupo: number; nombre?: string; pregrado?: string; semestre?: string }) => (
                 <tr key={`${participant.correo}-${participant.id_grupo}`} className="hover:bg-gray-800">
+                  <td className="border border-green-500 px-2 py-1">
+                    {charla.charla_info === "Vie. 31 ene, 8-9 a.m." ? contador1++ : null}
+                    {charla.charla_info === "Vie. 31 ene, 10-11 a.m." ? contador2++ : null}
+                    {charla.charla_info === "Vie. 31 ene, 12-1 p.m." ?contador3++ : null}
+                    {charla.charla_info === "Vie. 31 ene, 3-4 p.m." ?contador4++ : null}
+                  </td>
                   <td className="border border-green-500 px-2 py-1">{participant.correo}</td>
                   <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
                   <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>

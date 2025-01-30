@@ -30,9 +30,6 @@ export default function Home() {
     };
   }, []);
 
-    <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
-      </div>
 
   return (
     <div

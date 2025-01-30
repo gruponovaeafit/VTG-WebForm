@@ -101,7 +101,7 @@ export default function NOVAForm() {
             id="IdNovato"
             name="IdNovato"
             required
-            placeholder="Nombre"
+            placeholder="Asesor"
             title="IdNovato"
             className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
           />
