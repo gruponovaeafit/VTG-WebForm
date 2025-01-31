@@ -1,13 +1,28 @@
 "use client";
 
-import Image from "next/image";
+import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import GpgForm from "../../globalcomponents/Forms/Form-Gpg";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  
+  const router = useRouter();
   useEffect(() => {
+    const checkAuthentication = async () => { 
+      try {
+        const res = await fetch("/api/cookieCheck", { method: "GET" });
+        
+          // If the response status is not 200, redirect the user to the home page
+          if (res.status !== 200) {
+            router.push("/"); // Redirect to the home page if not authenticated
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+          router.push("/"); // Redirect to the home page in case of error
+        }
+    }
+    checkAuthentication();
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
@@ -18,7 +33,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/gpg.jpg')",
+      backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/gpg.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -37,16 +52,7 @@ export default function Home() {
 
         <GpgForm />
 
-        {/* Footer */}
-      <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
-        <Image
-          src="/PoweredByNOVA.svg"
-          alt="Powered By NOVA"
-          className="w-40 md:w-48"
-          width={300}
-          height={200}
-        />
-      </footer>
+        <Footer />
 
       </main>
 

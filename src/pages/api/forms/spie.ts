@@ -1,6 +1,6 @@
-// pages/api/forms/unform.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
+import { verifyJwtFromCookies } from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -9,64 +9,51 @@ const config: SqlConfig = {
   server: process.env.DB_SERVER as string,
   port: parseInt(process.env.DB_PORT ?? "1433", 10),
   options: {
-    encrypt: true, 
+    encrypt: true,
     trustServerCertificate: false,
   },
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let pool: ConnectionPool | null = null;
+  const group_id = 9;
 
   try {
-    pool = await sql.connect(config);
-
-    if (req.method === "POST") {
-      const { email } = req.body as {
-        email: string;
-      };
-      const { name } = req.body as {
-        name: string;
-      };
-      const { secondName } = req.body as {
-        secondName: string;
-      };
-  
-      const fullName = `${name} ${secondName}`;
-      
-
-      // 3) Convertimos el correo a mayúsculas
-      const emailUpper = email.toLowerCase();
-
-      await pool.request()
-        .input("correo", sql.VarChar, emailUpper)
-        .input("nombre", sql.VarChar, fullName )
-        .query(`
-          INSERT INTO persona (correo, nombre) 
-          VALUES (@correo, @nombre)
-        `);
-
-      return res.status(200).json({ message: "Datos insertados con éxito" });
-    } 
-
-    // GET Metod 
-    else if (req.method === "GET") {
-      // Consulta para obtener todos los registros
-      const result = await pool.request().query("SELECT * FROM persona");
-      return res.status(200).json(result.recordset);
-    } else {
+    if (req.method !== "POST") {
       return res.status(405).json({ message: "Método no permitido" });
     }
-  } 
 
-  // Server Fail 
-  catch (err) {
+    pool = await connect(config);
+
+    const email = verifyJwtFromCookies(req, res);
+    const { committie, secondaryPrograms } = req.body;
+
+    try {
+      await pool
+        .request()
+        .input("group_id", Int, group_id)
+        .input("email", VarChar, email)
+        .input("commite", VarChar, committie)
+        .input("talk", VarChar, secondaryPrograms)
+        .query(`
+          INSERT INTO spie (id_grupo, correo, departamentos, charla_info)
+          VALUES (@group_id, @email, @commite, @talk)
+        `);
+
+      return res.status(200).json({ message: "Formulario enviado con éxito" });
+    } catch (error: any) {
+      if (error.number === 2627) {
+        // Error de clave primaria duplicada
+        return res.status(400).json({ message: "Ya estás registrado en este grupo" });
+      }
+      throw error;
+    }
+  } catch (err) {
     console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({ error: "Error de servidor", details: err });
+    return res.status(500).json({ message: "Error de servidor" });
   } finally {
-    // Cierra la conexión SQL
     if (pool) {
       pool.close();
     }
   }
 }
-

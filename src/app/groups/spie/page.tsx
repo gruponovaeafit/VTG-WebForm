@@ -1,36 +1,59 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import SpieForm from "../../globalcomponents/Forms/Form-Spie";
+import { useEffect } from "react";
 import InfoSPIE from "@/app/globalcomponents/Info/Info-SPIE";
+import { useRouter } from "next/navigation";
+import Footer from "@/app/globalcomponents/UI/Footer";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    const checkAuthentication = async () => { 
+      try {
+        const res = await fetch("/api/cookieCheck", { method: "GET" });
+        
+          // If the response status is not 200, redirect the user to the home page
+          if (res.status !== 200) {
+            router.push("/"); // Redirect to the home page if not authenticated
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+          router.push("/"); // Redirect to the home page in case of error
+        }
+    }
+    checkAuthentication();
+    document.body.classList.add("no-scroll");
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, []);
+
   return (
     <div
-      className="relative flex flex-col items-center justify-start w-full min-h-screen bg-black text-white overflow-hidden"
+      className="grid grid-rows-[20px_1fr_20px] items-center justify-center h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] text-white"
       style={{
-        backgroundImage: "url('/spie.jpg')",
+        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/spie.svg')",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       {/* Animación de píxeles */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      <div style={{ pointerEvents: "none" }}>
         <PixelsAnimation />
       </div>
 
       {/* Contenido principal */}
-      <main className="relative z-10 flex flex-col items-center gap-8 text-center w-full max-w-2xl mt-8 sm:mt-16">
-        <h1 className="text-5xl md:text-6xl font-bold pixel-font text-white glitch_Spie">
+      <main className="flex flex-col row-start-2 items-center sm:items-start relative z-10">
+        <h1 className="text-5xl md:text-2xl text-center mb-6 pixel-font text-white glitch_Spie">
           SPIE
         </h1>
-
-        {/* Información de SPIE */}
+        
         <InfoSPIE />
 
-        {/* Formulario SPIE */}
-        <SpieForm />
+        <Footer/>
+
       </main>
     </div>
   );

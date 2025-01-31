@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 943.2 326.4">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <rect class="cls-2" x="82.8" y="40.9" width="777.6" height="244.6" rx="118.6" ry="118.6"/>
+  <g>
+    <path class="cls-1" d="M163,224.6v-15.8h-15.8v-15.8h31.7v15.8h47.5v-47.5h-63.3v-15.8h-15.8v-31.7h15.8v-15.8h79.1v15.8h15.8v15.8h-31.6v-15.8h-47.5v31.7h63.3v15.8h15.8v47.5h-15.8v15.8h-79.1Z"/>
+    <path class="cls-1" d="M321.3,224.6v-110.7h-39.6v-15.8h110.7v15.8h-39.5v110.7h-31.7Z"/>
+    <path class="cls-1" d="M416.2,224.6v-94.9h15.8v-15.8h15.9v-15.8h47.5v15.8h15.8v15.8h15.8v94.9h-31.6v-47.5h-47.5v47.5h-31.7ZM495.4,161.3v-31.7h-15.9v-15.8h-15.8v15.8h-15.8v31.7h47.5Z"/>
+    <path class="cls-1" d="M550.7,224.6v-126.6h94.9v15.8h15.8v31.7h-15.8v15.8h15.8v63.3h-31.6v-63.3h-47.5v63.3h-31.7ZM629.9,145.5v-31.7h-47.5v31.7h47.5Z"/>
+    <path class="cls-1" d="M724.8,224.6v-110.7h-39.6v-15.8h110.7v15.8h-39.5v110.7h-31.7Z"/>
+  </g>
+</svg>

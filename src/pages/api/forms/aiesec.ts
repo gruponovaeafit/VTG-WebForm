@@ -1,8 +1,7 @@
-// pages/api/forms/aiesec.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
+import { verifyJwtFromCookies } from "../cookieManagement";
 
-// Configuración de conexión a la base de datos
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
   password: process.env.DB_PASS as string,
@@ -19,41 +18,66 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
-    // Conexión a la base de datos
-    pool = await sql.connect(config);
+    if (req.method !== "POST") {
+      return res.status(405).json({
+        notification: {
+          type: "error",
+          message: "Método no permitido.",
+        },
+      });
+    }
 
-    if (req.method === "POST") {
-      // Desestructuramos los datos enviados por el formulario
-      const { talkSelection } = req.body as { talkSelection: string };
+    const email = verifyJwtFromCookies(req, res);
+    const group_id = 13;
 
-      // Validación básica
-      if (!talkSelection) {
-        return res.status(400).json({ error: "Todos los campos son requeridos." });
-      }
+    pool = await connect(config);
 
-      // Inserción en la base de datos
+    try {
+      // Intentar insertar en la base de datos
       await pool.request()
-        .input("talkSelection", sql.VarChar, talkSelection)
+        .input("group_id", Int, group_id)
+        .input("email", VarChar, email)
         .query(`
-          INSERT INTO aiesecForm (talkSelection)
-          VALUES (@talkSelection)
+          INSERT INTO aiesec (id_grupo, correo)
+          VALUES (@group_id, @email)
         `);
 
-      return res.status(200).json({ message: "Datos insertados con éxito" });
-    } 
+      // Respuesta en caso de éxito
+      return res.status(200).json({
+        notification: {
+          type: "success",
+          message: "Formulario enviado con éxito.",
+        },
+      });
+    } catch (error: any) {
+      // Manejo de error de clave duplicada
+      if (error.number === 2627) {
+        return res.status(400).json({
+          notification: {
+            type: "error",
+            message: "Ya estás registrado en este grupo.",
+          },
+        });
+      }
 
-    // Método GET para obtener registros
-    else if (req.method === "GET") {
-      const result = await pool.request().query("SELECT * FROM aiesecForm");
-      return res.status(200).json(result.recordset);
-    } else {
-      return res.status(405).json({ message: "Método no permitido" });
+      // Otros errores
+      console.error("Error al insertar en la base de datos:", error);
+      return res.status(500).json({
+        notification: {
+          type: "error",
+          message: "Error al guardar los datos. Por favor, inténtalo de nuevo más tarde.",
+        },
+      });
     }
   } catch (err) {
-    console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({ error: "Error de servidor", details: err });
+    console.error("Error general en el servidor:", err);
+    return res.status(500).json({
+      notification: {
+        type: "error",
+        message: "Error interno del servidor.",
+      },
+    });
   } finally {
-    // Cerrar la conexión SQL
     if (pool) {
       pool.close();
     }

@@ -1,6 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function GpgForm() {
   const router = useRouter();
@@ -12,7 +14,6 @@ export default function GpgForm() {
     const formData = new FormData(formElement);
 
     try {
-      // Opcional: Enviar los datos a un endpoint
       const response = await fetch("/api/forms/gpg", {
         method: "POST",
         headers: {
@@ -21,66 +22,89 @@ export default function GpgForm() {
         body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Error en el servidor");
+        toast.error(result.message || "Error en el servidor.", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        return;
       }
 
-      // purpleirigir al usuario a /completed
-      router.push("/levelup");
+      toast.success(result.message || "Formulario enviado con éxito.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        onClose: () => router.push("/gameover"), // Redirige tras la notificación
+      });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
   };
+
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-    >
-
-    <div className="mb-4">
-        <label htmlFor="name" className="block text-sm mb-2 text-purple-600">
-          ¿Qué edad tienes?
-        </label>
-        <input
-          type="text"
-          id="age"
-          name="age"
-          required
-          placeholder="Edad"
-          title="Ingresa tu edad"
-          className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-85"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="talks" className="block text-m mb-2 text-purple-600">
-          ¿Estás viendo pre-práctica?
-        </label>
-        <select
-          id="talk"
-          name="talk"
-          required
-          className="w-full px-2 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-700"
-        >
-          {[
-            "Si",
-            "No"
-          ].map((talks, index) => (
-            <option key={index} value={talks}>
-              {talks}
-            </option>
-          ))}
-        </select>
-      </div>
-
-
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-300 font-bold uppercase tracking-wider transition duration-300"
+    <div>
+      <form
+        onSubmit={handleFormSubmit}
+        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
       >
-        ¡Enviar!
-      </button>
-    </form>
+        <div className="mb-4">
+          <label htmlFor="age" className="block text-sm mb-2 text-purple-600">
+            ¿Qué edad tienes?
+          </label>
+          <input
+            type="text"
+            id="age"
+            name="age"
+            required
+            placeholder="Edad"
+            title="Ingresa tu edad"
+            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-85"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="talk" className="block text-m mb-2 text-purple-600">
+            ¿Estás viendo pre-práctica?
+          </label>
+          <select
+            id="talk"
+            name="talk"
+            required
+            className="w-full px-2 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-700"
+          >
+            {["Si", "No"].map((talks, index) => (
+              <option key={index} value={talks}>
+                {talks}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-300 font-bold uppercase tracking-wider transition duration-300"
+        >
+          Level Up!
+        </button>
+      </form>
+      <ToastContainer />
+    </div>
   );
 }

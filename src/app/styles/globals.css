@@ -4,11 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* Modo oscuro opcional */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -16,18 +23,29 @@
   }
 }
 
+/* El body ocupa toda la pantalla, pero sin forzar centrado */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Press Start 2P", serif;
+  /* Quita display: flex; justify-content: center; align-items: center; */
 }
 
-.press-start-2p-regular {
-  font-family: "Press Start 2P", serif;
-  font-weight: 100;
-  font-style: normal;
+/* Clases de scroll (usarlas solo si haces un toggle manual) */
+.no-scroll {
+  overflow: hidden; /* Elimina el scroll */
+}
+.auto-scroll {
+  overflow: auto; /* permite el scroll */
 }
 
+/* Efectos glitch */
 @keyframes glitch {
   0% {
     text-shadow: 4px 4px 0 #a200ff, -2px -2px 0 #00ff4c;
@@ -39,39 +57,21 @@ body {
     text-shadow: -4px -4px 0 #a200ff, -2px 2px 0 #00ff4c;
   }
 }
-
 .glitch {
   position: relative;
   animation: glitch 3s infinite;
 }
 
 
-@keyframes glitch_partners {
-  0% {
-    text-shadow: 2px 2px 0 #007bff, -2px -2px 0 #d27b0a;
-  }
-  50% {
-    text-shadow: -4px -2px 0 #007bff, 4px 2px 0 #d27b0a;
-  }
-  100% {
-    text-shadow: 2px -2px 0 #007bff, -2px 2px 0 #d27b0a;
-  }
-}
-
-.glitch_partners {
-  position: relative;
-  animation: glitch_partners 3s infinite;
-}
-
 @keyframes glitch_aiesec {
   0% {
-    text-shadow: 2px 2px 0 #007bff, -2px -2px 0 #007bff;
+    text-shadow: 2px 2px 0 #3f5b8a, -2px -2px 0 #3f5b8a;
   }
   50% {
-    text-shadow: -4px -2px 0 #007bff, 4px 2px 0 #007bff;
+    text-shadow: -4px -4px 0 #3f5b8a, 4px 4px 0 #3f5b8a;
   }
   100% {
-    text-shadow: 2px -2px 0 #007bff, -2px 2px 0 #007bff;
+    text-shadow: 2px 2px 0 #3f5b8a, -2px -2px 0 #3f5b8a;
   }
 }
 
@@ -184,6 +184,74 @@ body {
   animation: glitch_NOVA 3s infinite;
 }
 
+@keyframes glitch_partners {
+  0% {
+    text-shadow: 4px 4px 0 #00346c, -4px -4px 0 #d27b0a;
+  }
+  50% {
+    text-shadow: -4px -4px 0 #00346c, 4px 4px 0 #d27b0a;
+  }
+  100% {
+    text-shadow: 4px 4px 0 #00346c, -4px -4px 0 #d27b0a;
+  }
+}
+
+.glitch_partners {
+  position: relative;
+  animation: glitch_partners 3s infinite;
+}
+
+@keyframes glitch_OE {
+  0% {
+    text-shadow: 4px 4px 0 #3d9bf3, -4px -4px 0 #3d9bf3;
+  }
+  50% {
+    text-shadow: -4px -4px 0 #3d9bf3, 4px 4px 0 #3d9bf3;
+  }
+  100% {
+    text-shadow: 4px 4px 0 #3d9bf3, -4px -4px 0 #3d9bf3;
+  }
+}
+
+.glitch_OE {
+  position: relative;
+  animation: glitch_OE 3s infinite;
+}
+
+@keyframes glitch_Tutores {
+  0% {
+    text-shadow: 4px 4px 0 #9b9b9b, -4px -4px 0 #9b9b9b;
+  }
+  50% {
+    text-shadow: -4px -4px 0 #9b9b9b, 4px 4px 0 #9b9b9b;
+  }
+  100% {
+    text-shadow: 4px 4px 0 #9b9b9b, -4px -4px 0 #9b9b9b;
+  }
+}
+
+.glitch_Tutores {
+  position: relative;
+  animation: glitch_Tutores 3s infinite;
+}
+
+@keyframes glitch_UN {
+  0% {
+    text-shadow: 4px 4px 0 #468dd3, -4px -4px 0 #468dd3;
+  }
+  50% {
+    text-shadow: -4px -4px 0 #468dd3, 4px 4px 0 #468dd3;
+  }
+  100% {
+    text-shadow: 4px 4px 0 #468dd3, -4px -4px 0 #468dd3;
+  }
+}
+
+.glitch_UN {
+  position: relative;
+  animation: glitch_UN 3s infinite;
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
@@ -196,8 +264,6 @@ body {
 .pulse {
   animation: pulse 1.5s infinite;
 }
-
-
 
 
 @keyframes blink {
@@ -217,22 +283,13 @@ body {
   animation: glitch 0.3s infinite, pulse 1.5s infinite;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .no-scroll {
   overflow: hidden; /* Elimina el scroll */
+}
+
+.auto-scroll {
+  overflow: auto; /* permite el scroll */
 }
 
 

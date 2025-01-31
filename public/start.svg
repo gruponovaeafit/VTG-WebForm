@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 943.2 326.4">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        filter: url(#outer-glow-1);
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        filter: url(#outer-glow-2);
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+    <filter id="outer-glow-1" x="0" y="0" width="943.2" height="326.4" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#fff" flood-opacity=".5"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="outer-glow-2" x="81.12" y="72.72" width="780.96" height="176.64" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur-2" stdDeviation="5"/>
+      <feFlood flood-color="#fff" flood-opacity=".75"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <rect class="cls-1" x="21.57" y="21.55" width="900" height="283.14" rx="118.63" ry="118.63"/>
+  <g class="cls-2">
+    <path class="cls-3" d="M114.43,234.2v-18.3h-18.3v-18.3h36.64v18.3h54.94v-54.94h-73.29v-18.3h-18.3v-36.64h18.3v-18.3h91.58v18.3h18.3v18.3h-36.59v-18.3h-54.94v36.64h73.24v18.3h18.3v54.94h-18.3v18.3h-91.58Z"/>
+    <path class="cls-3" d="M297.6,234.2V106.02h-45.79v-18.3h128.18v18.3h-45.74v128.18h-36.64Z"/>
+    <path class="cls-3" d="M407.48,234.2v-109.88h18.3v-18.3h18.35v-18.3h54.94v18.3h18.3v18.3h18.3v109.88h-36.59v-54.94h-54.94v54.94h-36.64ZM499.07,160.96v-36.64h-18.35v-18.3h-18.3v18.3h-18.3v36.64h54.94Z"/>
+    <path class="cls-3" d="M563.15,234.2V87.72h109.88v18.3h18.3v36.64h-18.3v18.3h18.3v73.24h-36.59v-73.24h-54.94v73.24h-36.64ZM654.74,142.67v-36.64h-54.94v36.64h54.94Z"/>
+    <path class="cls-3" d="M764.62,234.2V106.02h-45.79v-18.3h128.18v18.3h-45.74v128.18h-36.64Z"/>
+  </g>
+</svg>

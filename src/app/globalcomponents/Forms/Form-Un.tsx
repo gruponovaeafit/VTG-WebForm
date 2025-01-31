@@ -1,5 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function UnForm() {
   const router = useRouter();
@@ -11,84 +13,124 @@ export default function UnForm() {
     const formData = new FormData(formElement);
 
     try {
-      // Opcional: Enviar los datos a un endpoint
       const response = await fetch("/api/forms/un", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
       });
 
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error("Error en el servidor");
+        if (result.message) {
+          toast.error(result.message, {
+            position: "top-center",
+            autoClose: 3000,
+          });
+        } else {
+          toast.error("Error en el servidor", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+        }
+        return;
       }
 
-      // Redirigir al usuario a /completed
-      router.push("/levelup");
+      toast.success("Formulario enviado con éxito", {
+        position: "top-center",
+        autoClose: 3000,
+        onClose: () => router.push("/gameover"),
+      });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      toast.error(
+        "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
     }
   };
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-    >
-
-<div className="mb-4">
-        <label htmlFor="committies" className="block text-m mb-2 text-purple-400">
-        ¿Cuáles son tus comités de preferencia? 
-        </label>
-        <select
-          id="comittie"
-          name="committie"
-          required
-          className="w-full px-2 py-2 rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-        >
-          {[
-            "Publicidad y Redes: Responsables de la creación de contenido para redes sociales y del diseño de material gráfico.",
-            "Gestión Humana: Gestores de las dinamicas sociales y el bienestar del grupo, enfocados en la construcción de un ambiente activo y sano.",
-            "Relaciones Públicas: Encargados del desarrollo de fuertes vinculos de patrocinios, convenios y beneficios con aliados estrategicos.",
-            "Logística y Mercadeo: Estrategia, contacto y coordinación para alcanzar metas. ",
-            "Académico: Formadores de lideres, encargados de contacto de ponentes y montaje de eventos académicos."
-          ].map((talks, index) => (
-            <option key={index} value={talks}>
-              {talks}
-            </option>
-          ))}
-        </select>
-      </div>
-      
-     <div className="mb-4">
-        <label htmlFor="talks" className="block text-m mb-2 text-purple-400">
-          ¿Podrás asistir a la charla informativa del X/X/XXXX a las X?
-        </label>
-        <select
-          id="talk"
-          name="talk"
-          required
-          className="w-full px-2 py-2 rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-        >
-          {[
-            "Sí, podré asistir",
-            "No, nos vemos en el Assessment."
-          ].map((talks, index) => (
-            <option key={index} value={talks}>
-              {talks}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <button
-        type="submit"
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+    <div>
+      <form
+        onSubmit={handleFormSubmit}
+        className="bg-gray-800 bg-opacity-90 p-2 rounded-lg shadow-lg max-w-md w-full"
       >
-        ¡Enviar!
-      </button>
-    </form>
+        <div className="mb-2">
+          <label htmlFor="committies" className="block text-sm mb-2 text-blue-400">
+            ¿Cuáles son tus comités de preferencia?
+          </label>
+          <select
+            id="committie"
+            name="committie"
+            required
+            className="w-full px-2 py-2 text-xs rounded border border-blue-400 bg-black text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {[
+              "Publicidad y Redes",
+              "Gestión Humana",
+              "Relaciones Públicas",
+              "Logística y Mercadeo",
+              "Académico",
+            ].map((talks, index) => (
+              <option key={index} value={talks}>
+                {talks}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-2">
+          <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
+            ¿Podrás asistir a la charla informativa del 31/01/2025 a las 4pm?
+          </label>
+          <select
+            id="talk"
+            name="talk"
+            required
+            className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {["Sí, podré asistir", "No, nos vemos en el Assessment."].map(
+              (talks, index) => (
+                <option key={index} value={talks}>
+                  {talks}
+                </option>
+              )
+            )}
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">
+            ¿Puedes asistir al assessment el 1 de Febrero?
+          </label>
+          <select
+            name="assessment"
+            id="assessment"
+            required
+            className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {["Sí", "No"].map((assessment, index) => (
+              <option key={index} value={assessment}>
+                {assessment}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+        >
+          Level Up!
+        </button>
+      </form>
+      <ToastContainer />
+    </div>
   );
 }

@@ -24,7 +24,7 @@ export default function MainPage() {
       {/* Fondo que ocupa toda la pantalla */}
       <div
         className="absolute inset-0 bg-no-repeat bg-center bg-cover"
-        style={{ backgroundImage: "url('/coins.png')" }}
+        style={{ backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')" }}
       ></div>
 
       {/* Animación de píxeles */}
@@ -38,7 +38,7 @@ export default function MainPage() {
           onClick={handleRedirect}
           className="w-48 h-24 md:w-64 md:h-32 bg-center justify-center bg-contain animate-growShrink focus:outline-none"
           style={{
-            backgroundImage: "url('/START.png')",
+            backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/START.png')",
           }}
           type="button"
         />

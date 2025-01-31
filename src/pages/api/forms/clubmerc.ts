@@ -1,7 +1,7 @@
-// pages/api/forms/unform.ts
+// pages/api/forms/clubmerc.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
-
+import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
+import { verifyJwtFromCookies } from "../cookieManagement";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -10,7 +10,7 @@ const config: SqlConfig = {
   server: process.env.DB_SERVER as string,
   port: parseInt(process.env.DB_PORT ?? "1433", 10),
   options: {
-    encrypt: true, 
+    encrypt: true,
     trustServerCertificate: false,
   },
 };
@@ -19,52 +19,52 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
-    pool = await sql.connect(config);
+    pool = await connect(config);
 
     if (req.method === "POST") {
-      const { email } = req.body as {
-        email: string;
+      const { committieSelect, talk } = req.body as {
+        committieSelect: string;
+        talk: string;
       };
-      const { name } = req.body as {
-        name: string;
-      };
-      const { secondName } = req.body as {
-        secondName: string;
-      };
-  
-      const fullName = `${name} ${secondName}`;
-      
 
-      // 3) Convertimos el correo a mayúsculas
-      const emailUpper = email.toLowerCase();
+      const email = verifyJwtFromCookies(req, res);
+      const grupoId = 2; // ID del grupo seleccionado
+      const talkValue = talk === "Sí" ? 1 : 0;
 
-      await pool.request()
-        .input("correo", sql.VarChar, emailUpper)
-        .input("nombre", sql.VarChar, fullName )
-        .query(`
-          INSERT INTO persona (correo, nombre) 
-          VALUES (@correo, @nombre)
-        `);
+      try {
+        await pool.request()
+          .input("id_grupo", Int, grupoId)
+          .input("correo", VarChar, email)
+          .input("comite", VarChar, committieSelect)
+          .input("asistencia_charla", Int, talkValue)
+          .query(`
+            INSERT INTO clubmerc (id_grupo, correo, comite, asistencia_charla)
+            VALUES (@id_grupo, @correo, @comite, @asistencia_charla)
+          `);
 
-      return res.status(200).json({ message: "Datos insertados con éxito" });
-    } 
-
-    // GET Metod 
-    else if (req.method === "GET") {
-      // Consulta para obtener todos los registros
-      const result = await pool.request().query("SELECT * FROM persona");
-      return res.status(200).json(result.recordset);
+        return res.status(200).json({
+          message: "Formulario enviado con éxito.",
+        });
+      } catch (error: any) {
+        if (error.number === 2627) {
+          return res.status(400).json({
+            message: "Ya estás registrado en este grupo.",
+          });
+        }
+        throw error;
+      }
     } else {
-      return res.status(405).json({ message: "Método no permitido" });
+      return res.status(405).json({
+        message: "Método no permitido.",
+      });
     }
-  } 
-
-  // Server Fail 
-  catch (err) {
+  } catch (err) {
     console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({ error: "Error de servidor", details: err });
+    return res.status(500).json({
+      message: "Error de servidor.",
+      details: err,
+    });
   } finally {
-    // Cierra la conexión SQL
     if (pool) {
       pool.close();
     }

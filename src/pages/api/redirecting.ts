@@ -1,7 +1,7 @@
 // pages/api/forms/final.ts
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { studentGroup } = req.body;
 
@@ -13,6 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       GPG: "/groups/gpg",
       NEXOS: "/groups/nexos",
       NOVA: "/groups/nova",
+      OE: "/groups/oe",
       PARTNERS: "/groups/partners",
       SERES: "/groups/seres",
       SPIE: "/groups/spie",
@@ -23,13 +24,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const redirectUrl = groupRoutes[studentGroup];
 
-    if (!redirectUrl) {
-      return res.status(400).json({ error: "Grupo no válido" });
-    }
-
     return res.status(200).json({ redirectUrl });
   }
 
   res.setHeader("Allow", ["POST"]);
   res.status(405).end(`Method ${req.method} Not Allowed`);
 }
+
