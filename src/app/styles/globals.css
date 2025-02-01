@@ -285,13 +285,29 @@ body {
 
 
 .no-scroll {
-  overflow: hidden; /* Elimina el scroll */
+  overflow: hidden;
 }
 
 .auto-scroll {
-  overflow: auto; /* permite el scroll */
+  overflow: auto; 
 }
 
+.glitch {
+  text-transform: uppercase;
+  position: relative;
+  font-weight: bold;
+  animation: glitch 0.5s infinite alternate;
+}
 
+@keyframes glitch {
+  0% { text-shadow: -2px -2px 0px #ff00ff, 2px 2px 0px #00ffff; }
+  100% { text-shadow: 2px -2px 0px #ff00ff, -2px 2px 0px #00ffff; }
+}
 
+.bg-stars {
+  background-image: url('/stars-bg.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
