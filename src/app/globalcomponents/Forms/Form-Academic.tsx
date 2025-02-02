@@ -43,7 +43,7 @@ export default function AcademicForm() {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/groupslist"), // Redirige después de que la notificación desaparezca
+        onClose: () => router.push("/groups/nova"), // Redirige después de que la notificación desaparezca
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);

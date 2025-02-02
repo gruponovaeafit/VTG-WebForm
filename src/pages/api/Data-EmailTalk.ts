@@ -117,7 +117,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           type: "info",
           message: "Ya estás registrado. Bienvenido de nuevo.",
         },
-        redirectUrl: user.nombre && user.pregrado ? "/groupslist" : user.nombre ? "/academic" : "/home",
+        redirectUrl: user.nombre && user.pregrado ? "/assessmentassistance" : user.nombre ? "/academic" : "/home",
       });
     }
 

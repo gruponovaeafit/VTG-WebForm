@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import NOVAForm from "../../globalcomponents/Forms/Form-NOVA";
+import TalkForm from "../../globalcomponents/Forms/Form-Talk";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -52,7 +52,7 @@ export default function Home() {
           NOVA
         </h1>
 
-        <NOVAForm />
+        <TalkForm />
 
         <footer className="flex items-center justify-center relative z-10">
               <Image

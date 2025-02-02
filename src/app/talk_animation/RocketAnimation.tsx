@@ -22,7 +22,7 @@ export default function RocketAnimation() {
           transition={{ duration: 1, delay: 1}}
         >
           <Image
-            src="/rocket.gif"
+            src="https://novaeafit.blob.core.windows.net/vtg-2025-1/rocket.gif"
             alt="Cohete despegando"
             fill={true} 
             className="object-cover"

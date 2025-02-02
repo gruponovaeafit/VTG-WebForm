@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Footer from "@/app/globalcomponents/UI/Footer";
 import RocketAnimation from "./RocketAnimation";
 
 export default function TalkAnimationPage() {
@@ -53,7 +52,7 @@ export default function TalkAnimationPage() {
             animate={{ scale: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            <Image src="/trophy2.png" alt="Trophy" width={150} height={150} priority />
+            <Image src="https://novaeafit.blob.core.windows.net/vtg-2025-1/trophy2.png" alt="Trophy" width={150} height={150} priority />
           </motion.div>
 
           {/*LOGO*/}
@@ -63,26 +62,21 @@ export default function TalkAnimationPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            <Image src="/nova-logo.png" alt="NOVA" width={200} height={80} priority />
+            <Image src="https://novaeafit.blob.core.windows.net/vtg-2025-1/nova-logo.png" alt="NOVA" width={200} height={80} priority />
             <p className="text-lg sm:text-xl md:text-2xl pixel-font">
-              <TypingText text="¡Has superado este nivel!" />
+              <TypingText text="Domingo 9 de febrero 7AM - Bloque 29 1er piso" />
             </p>
           </motion.div>
 
-          {/* BOTÓN RESTART MÁS COMPACTO */}
-          {showButton && (
-            <motion.button
-              onClick={handleRestart}
-              className="mt-4 px-6 py-3 text-md sm:text-lg bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-md transition duration-300 shadow-lg"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
-            >
-              RESTART
-            </motion.button>
-          )}
-
-          <Footer />
+          <footer className="flex items-center justify-center relative z-10">
+                        <Image
+                                  src="https://novaeafit.blob.core.windows.net/vtg-2025-1/PoweredByLOVE.svg"
+                                  alt="Powered By NOVA"
+                                  className="w-40 h-10"
+                                  width={240} // Equivalent to w-40
+                                  height={120} // Equivalent to h-20
+                        />
+                  </footer>
         </main>
       )}
     </div>
