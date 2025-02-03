@@ -19,12 +19,13 @@ export default function AcademicForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
+        // Si hay un error, se muestra con un toast
         toast.error(result.message || "Error en el servidor.", {
           position: "top-center",
           autoClose: 3000,
@@ -36,6 +37,7 @@ export default function AcademicForm() {
         return;
       }
 
+      // Si todo está bien, muestra un toast de éxito y redirige a /assessmentassistance
       toast.success(result.message || "Información guardada con éxito.", {
         position: "top-center",
         autoClose: 3000,
@@ -43,7 +45,7 @@ export default function AcademicForm() {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/groups/nova"), // Redirige después de que la notificación desaparezca
+        onClose: () => router.push("/assessmentassistance"),
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
@@ -72,7 +74,8 @@ export default function AcademicForm() {
             id="programs"
             name="programs"
             required
-            className="w-full px-4 py-2 rounded border border-yellow-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            className="w-full px-4 py-2 rounded border border-yellow-400 bg-black text-white
+                       focus:outline-none focus:ring-2 focus:ring-yellow-500"
           >
             {[
               "Administración de Negocios",
@@ -116,7 +119,8 @@ export default function AcademicForm() {
             id="secondaryPrograms"
             name="secondaryPrograms"
             required
-            className="w-full px-4 py-2 rounded border border-yellow-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            className="w-full px-4 py-2 rounded border border-yellow-400 bg-black text-white
+                       focus:outline-none focus:ring-2 focus:ring-yellow-500"
           >
             {[
               "No Aplica",
@@ -161,7 +165,8 @@ export default function AcademicForm() {
             id="semester"
             name="semester"
             required
-            className="w-full px-4 py-2 rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full px-4 py-2 rounded border border-purple-400 bg-black text-white
+                       focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             {[...Array(10)].map((_, i) => (
               <option key={i + 1} value={i + 1}>
@@ -174,7 +179,9 @@ export default function AcademicForm() {
 
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow
+                     hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase
+                     tracking-wider transition duration-300"
         >
           Level Up!
         </button>

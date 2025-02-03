@@ -305,7 +305,7 @@ body {
 }
 
 .bg-stars {
-  background-image: url('/stars-bg.gif');
+  background-image: url('https://novaeafit.blob.core.windows.net/vtg-2025-1/stars-bg.gif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

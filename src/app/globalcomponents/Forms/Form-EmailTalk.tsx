@@ -17,7 +17,7 @@ export default function TalkEmailForm() {
     if (!captcha) {
       toast.error("Por favor completa el reCAPTCHA antes de enviar.", {
         position: "top-center",
-        autoClose: 3000, // Notificación de 3 segundos
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -47,7 +47,7 @@ export default function TalkEmailForm() {
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 3000, // Notificación de 3 segundos
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -56,7 +56,7 @@ export default function TalkEmailForm() {
         } else {
           toast.error("Ocurrió un error al enviar el formulario.", {
             position: "top-center",
-            autoClose: 3000, // Notificación de 3 segundos
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -68,30 +68,30 @@ export default function TalkEmailForm() {
         return;
       }
 
+      // Si todo salió bien
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 3000, // Notificación de 3 segundos
+        autoClose: 3000, 
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         onClose: () => {
           // Redirigir después de que se cierre la notificación
-          if (result.success) {
-            router.push("/home");
-          } else if (result.redirectUrl) {
+          if (result.redirectUrl) {
             router.push(result.redirectUrl);
           }
         },
       });
 
+      // Resetear captcha
       if (captchaRef.current) captchaRef.current.reset();
       setCaptcha(null);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 3000, // Notificación de 3 segundos
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

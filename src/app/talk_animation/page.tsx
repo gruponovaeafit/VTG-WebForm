@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import RocketAnimation from "./RocketAnimation";
+import "../styles/globals.css";
 
 export default function TalkAnimationPage() {
   const [showLogo, setShowLogo] = useState(false);
@@ -29,8 +30,8 @@ export default function TalkAnimationPage() {
   };
 
   return (
-    <div className="relative w-full h-screen flex items-center justify-center text-white bg-black bg-stars">
-      {/*Rocket*/}
+    <div className="relative w-full h-screen flex items-center justify-center text-white bg-stars">
+ 
       {!showLogo ? (
         <RocketAnimation />
       ) : (

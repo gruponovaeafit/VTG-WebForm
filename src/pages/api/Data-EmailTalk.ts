@@ -29,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { token, email } = req.body;
 
+  // Validar que llegue el token del recaptcha
   if (!token) {
     console.error("Token de reCAPTCHA faltante");
     return res.status(400).json({
@@ -39,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
+  // Validar que la clave secreta esté configurada
   const secretKey = process.env.SERVER_KEY_CAPTCHA;
   if (!secretKey) {
     console.error("Clave secreta del captcha no configurada");
@@ -88,14 +90,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const existingUser = await pool
       .request()
       .input("correo", sql.VarChar, emailLower)
-      .query("SELECT TOP 1 correo, nombre, pregrado FROM persona WHERE correo = @correo");
+      .query("SELECT TOP 1 correo FROM persona WHERE correo = @correo");
 
     // Generar JWT
     const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
       expiresIn: "15m",
     });
 
-    // Setear la cookie
+    // Setear la cookie con el JWT
     res.setHeader(
       "Set-Cookie",
       serialize("jwtToken", jwtToken, {
@@ -107,21 +109,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     );
 
-    // 5. Si el usuario existe
+    // 5. Si el usuario existe -> redirige a /assessmentassistance
     if (existingUser.recordset.length > 0) {
-      const user = existingUser.recordset[0];
-      console.log("Usuario encontrado:", user);
+      console.log("Usuario ya existe en la tabla persona.");
 
       return res.status(200).json({
         notification: {
           type: "info",
           message: "Ya estás registrado. Bienvenido de nuevo.",
         },
-        redirectUrl: user.nombre && user.pregrado ? "/assessmentassistance" : user.nombre ? "/academic" : "/home",
+        redirectUrl: "/assessmentassistance",
       });
     }
 
-    // 6. Insertar nuevo usuario
+    // 6. Si NO existe, lo insertas y rediriges a /home
     await pool.request().input("correo", sql.VarChar, emailLower).query(`
       INSERT INTO persona (correo)
       VALUES (@correo)
