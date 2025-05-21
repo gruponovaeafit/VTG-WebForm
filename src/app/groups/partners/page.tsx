@@ -8,30 +8,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      try {
-        const res = await fetch("/api/cookieCheck", { method: "GET" });
-        // Si el usuario no está autenticado, redirecciona
-        if (res.status !== 200) {
-          router.push("/");
-        }
-      } catch (error) {
-        console.error("Error checking authentication:", error);
-        router.push("/");
-      }
-    };
-
-    checkAuthentication();
-
-    // Elimina o comenta las líneas que añaden/remueven "no-scroll" para permitir scroll
-    // document.body.classList.add("no-scroll");
-    // return () => {
-    //   document.body.classList.remove("no-scroll");
-    // };
-  }, [router]);
 
   return (
     <div
