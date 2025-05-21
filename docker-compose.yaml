@@ -1,0 +1,36 @@
+services:
+  
+  mysql:
+    image: mysql:8.0
+    container_name: VTG-DB
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "7000:3306"
+    networks:
+      - vtg-network
+
+
+  mysql-admin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "7001:80"
+    networks:
+      - vtg-network
+
+volumes:
+  mysql_data:
+
+networks:
+  vtg-network:
+    driver: bridge
