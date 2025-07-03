@@ -59,14 +59,14 @@ export default function AiesecForm() {
   };
 
   return (
-    <div>
+    <div className="w-full max-w-md mx-auto px-4 sm:px-0">
       <form
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        className="bg-gray-800 bg-opacity-90 p-4 sm:p-6 rounded-lg shadow-lg w-full"
       >
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
+          className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95"
         >
           Level Up!
         </button>

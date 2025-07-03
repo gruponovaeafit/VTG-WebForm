@@ -29,11 +29,13 @@ export default function MainPage() {
       </div>
 
       {/* Contenido principal */}
-      <div className="relative z-20 flex flex-col justify-center items-center flex-grow">
-        <h1 className="text-2xl md:text-3xl mb-6 pixel-font text-white">
-            Te esperamos el proximo semestre!
+      <div className="relative z-20 flex flex-col justify-center items-center flex-grow px-4 sm:px-8 lg:px-12">
+        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4 sm:mb-6 md:mb-8 pixel-font text-white leading-tight">
+            ¡Te esperamos el próximo semestre!
           </h1>
-
+        </div>
+        
         <Footer />
 
       </div>
@@ -41,5 +43,3 @@ export default function MainPage() {
     </div>
   );
 }
-
-

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-export default function PixelsAnimation() {
+export default function PixelsAnimation({ minSize = 16, maxSize = 20 }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -16,11 +16,11 @@ export default function PixelsAnimation() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const numPixels = 25; // Número de pixeles en pantalla
+    const numPixels = 25; // Número de píxeles en pantalla
     const pixels = Array.from({ length: numPixels }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      size: Math.random() * 17 + 5, // Tamaño de los pixeles
+      size: Math.random() * (maxSize - minSize) + minSize, // Tamaño de los píxeles con valores ajustables
       color: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
         Math.random() * 255
       })`,
@@ -32,11 +32,11 @@ export default function PixelsAnimation() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       pixels.forEach((pixel) => {
-        // Dibujar el pixel
+        // Dibujar el píxel
         ctx.fillStyle = pixel.color;
         ctx.fillRect(pixel.x, pixel.y, pixel.size, pixel.size);
 
-        // Mover el pixel
+        // Mover el píxel
         pixel.x += pixel.speedX;
         pixel.y += pixel.speedY;
 
@@ -64,13 +64,11 @@ export default function PixelsAnimation() {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [minSize, maxSize]);
 
-
-return (
-
+  return (
     <div>
-      {/* Lienzo para la animacion */}
+      {/* Lienzo para la animación */}
       <canvas
         ref={canvasRef}
         style={{
@@ -82,7 +80,6 @@ return (
           zIndex: 0,
         }}
       />
-
     </div>
-    );
+  );
 }
