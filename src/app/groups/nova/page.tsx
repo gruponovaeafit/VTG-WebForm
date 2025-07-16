@@ -4,24 +4,23 @@ import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TalkForm from "../../globalcomponents/Forms/Form-Talk";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   
-  const router = useRouter();
   useEffect(() => {
     const checkAuthentication = async () => { 
       try {
         const res = await fetch("/api/cookieCheck", { method: "GET" });
         
-          // If the response status is not 200, redirect the user to the home page
-          if (res.status !== 200) {
-            router.push("/"); // Redirect to the home page if not authenticated
-          }
-        } catch (error) {
-          console.error("Error checking authentication:", error);
-          router.push("/"); // Redirect to the home page in case of error
+        // Si la respuesta no es 200, ya no redirige
+        if (res.status !== 200) {
+          console.log("No autenticado");
         }
+      } catch (error) {
+        console.error("Error al verificar la autenticación:", error);
+        // En caso de error, ya no redirige
+        console.log("Error al verificar autenticación");
+      }
     }
     checkAuthentication();
     document.body.classList.add("no-scroll");

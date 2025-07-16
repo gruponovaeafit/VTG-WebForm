@@ -43,7 +43,10 @@ export default function TalkForm() {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/gameover"),
+        // Redirige directamente después de que el formulario se haya enviado con éxito
+        onClose: () => {
+          router.push("/gameover");
+        },
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
