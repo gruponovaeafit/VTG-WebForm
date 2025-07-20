@@ -30,16 +30,16 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="relative z-10 flex flex-col gap-8 items-center text-center">
         <h1 className="text-2xl md:text-3xl mb-6 pixel-font text-white">
-          ¡Bienvenidx al Formulario VTG! (No habilitado)
+          ¡Bienvenidx al Formulario VTG!
         </h1>
 
         {/* Formulario de email */}
-
+        <EmailForm />
 
         <Footer />
 
       </main>
-      
+
     </div>
   );
 }

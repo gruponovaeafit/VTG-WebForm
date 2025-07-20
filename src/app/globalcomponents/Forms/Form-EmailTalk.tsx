@@ -17,7 +17,7 @@ export default function TalkEmailForm() {
     if (!captcha) {
       toast.error("Por favor completa el reCAPTCHA antes de enviar.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -43,11 +43,12 @@ export default function TalkEmailForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -56,7 +57,7 @@ export default function TalkEmailForm() {
         } else {
           toast.error("Ocurrió un error al enviar el formulario.", {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -68,10 +69,10 @@ export default function TalkEmailForm() {
         return;
       }
 
-      // Si todo salió bien
+      // Si todo está bien desde el servidor, muestra un toast de éxito 
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 3000, 
+        autoClose: 1500, 
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -91,7 +92,7 @@ export default function TalkEmailForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

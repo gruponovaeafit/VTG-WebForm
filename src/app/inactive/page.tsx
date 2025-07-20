@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import PixelsAnimation from "./globalcomponents/UI/Pixels_animation";
+import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
-import Footer from "./globalcomponents/UI/Footer";
+import Footer from "../globalcomponents/UI/Footer";
 
 export default function MainPage() {
   const router = useRouter();
@@ -22,10 +22,6 @@ export default function MainPage() {
   return (
     <div className="relative flex flex-col justify-between items-center w-full h-screen overflow-hidden">
       {/* Fondo que ocupa toda la pantalla */}
-      <div
-        className="absolute inset-0 bg-no-repeat bg-center bg-cover"
-        style={{ backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')" }}
-      ></div>
 
       {/* Animación de píxeles */}
       <div className="absolute inset-0 pointer-events-none z-10">
@@ -33,20 +29,17 @@ export default function MainPage() {
       </div>
 
       {/* Contenido principal */}
-      <div className="relative z-20 flex flex-col justify-center items-center flex-grow">
-        <button
-          onClick={handleRedirect}
-          className="w-48 h-24 md:w-64 md:h-32 bg-center justify-center bg-contain animate-growShrink focus:outline-none"
-          style={{
-            backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/START.png')",
-          }}
-          type="button"
-        />
-
+      <div className="relative z-20 flex flex-col justify-center items-center flex-grow px-4 sm:px-8 lg:px-12">
+        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-4 sm:mb-6 md:mb-8 pixel-font text-white leading-tight">
+            ¡Te esperamos el próximo semestre!
+          </h1>
+        </div>
+        
         <Footer />
 
       </div>
-
+      
     </div>
   );
 }

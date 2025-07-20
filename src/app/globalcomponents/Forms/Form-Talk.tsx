@@ -24,10 +24,11 @@ export default function TalkForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         toast.error(result.message || "Error en el servidor.", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -36,14 +37,18 @@ export default function TalkForm() {
         return;
       }
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.message || "Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/gameover"),
+        // Redirige directamente después de que el formulario se haya enviado con éxito
+        onClose: () => {
+          router.push("/gameover");
+        },
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
@@ -51,7 +56,7 @@ export default function TalkForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

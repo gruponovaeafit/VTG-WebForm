@@ -4,24 +4,24 @@ import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TalkForm from "../../globalcomponents/Forms/Form-Talk";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import Footer from "@/app/globalcomponents/UI/Footer_NOVA";
 
 export default function Home() {
   
-  const router = useRouter();
   useEffect(() => {
     const checkAuthentication = async () => { 
       try {
         const res = await fetch("/api/cookieCheck", { method: "GET" });
         
-          // If the response status is not 200, redirect the user to the home page
-          if (res.status !== 200) {
-            router.push("/"); // Redirect to the home page if not authenticated
-          }
-        } catch (error) {
-          console.error("Error checking authentication:", error);
-          router.push("/"); // Redirect to the home page in case of error
+        // Si la respuesta no es 200, ya no redirige
+        if (res.status !== 200) {
+          console.log("No autenticado");
         }
+      } catch (error) {
+        console.error("Error al verificar la autenticación:", error);
+        // En caso de error, ya no redirige
+        console.log("Error al verificar autenticación");
+      }
     }
     checkAuthentication();
     document.body.classList.add("no-scroll");
@@ -48,21 +48,13 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-5xl md:text-2xl text-center mb-6 pixel-font text-white glitch_NOVA">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6 pixel-font text-white glitch_NOVA">
           NOVA
         </h1>
 
         <TalkForm />
 
-        <footer className="flex items-center justify-center relative z-10">
-              <Image
-                src="https://novaeafit.blob.core.windows.net/vtg-2025-1/PoweredByLOVE.svg"
-                alt="Powered By NOVA"
-                className="w-40 h-10"
-                width={240} // Equivalent to w-40
-                height={120} // Equivalent to h-20
-              />
-            </footer>
+        <Footer />
 
       </main>
 

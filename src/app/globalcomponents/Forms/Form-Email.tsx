@@ -17,7 +17,7 @@ export default function EmailForm() {
     if (!captcha) {
       toast.error("Por favor completa el reCAPTCHA antes de enviar.", {
         position: "top-center",
-        autoClose: 3000, // Notificación de 3 segundos
+        autoClose: 1500, // Notificación de 3 segundos
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -43,11 +43,12 @@ export default function EmailForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 3000, // Notificación de 3 segundos
+            autoClose: 1500, // Notificación de 1.5 segundos
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -56,7 +57,7 @@ export default function EmailForm() {
         } else {
           toast.error("Ocurrió un error al enviar el formulario.", {
             position: "top-center",
-            autoClose: 3000, // Notificación de 3 segundos
+            autoClose: 1500, // Notificación de 1.5 segundos
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -68,9 +69,10 @@ export default function EmailForm() {
         return;
       }
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /home
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 3000, // Notificación de 3 segundos
+        autoClose: 1500, // Notificación de 1.5 segundos
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -91,7 +93,7 @@ export default function EmailForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 3000, // Notificación de 3 segundos
+        autoClose: 2000, // Notificación de 2 segundos
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
