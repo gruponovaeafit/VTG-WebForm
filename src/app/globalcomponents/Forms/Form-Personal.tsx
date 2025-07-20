@@ -28,9 +28,11 @@ export default function AcademicForm() {
         }
 
         const result = await response.json();
+
+        // Manejo de errores en la respuesta del servidor
         toast.error(result.message || "Error en el servidor", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -41,9 +43,10 @@ export default function AcademicForm() {
 
       const result = await response.json();
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /academic
       toast.success(result.message || "Información guardada con éxito.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -54,7 +57,7 @@ export default function AcademicForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -78,7 +81,7 @@ export default function AcademicForm() {
             id="name"
             name="name"
             required
-            placeholder="Pepito"
+            placeholder="Pepitx"
             className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
           />
         </div>

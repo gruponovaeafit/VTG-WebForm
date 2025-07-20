@@ -74,20 +74,20 @@ export default function PixelsAnimation({ minSize = 16, maxSize = 20 }) {
         pixel.relativeX = pixel.x / canvas.width;
         pixel.relativeY = pixel.y / canvas.height;
 
-        // Rebote en los bordes
+        // Rebote en los bordes + cambio de color al tocar el borde
         if (pixel.x <= 0 || pixel.x + pixel.size >= canvas.width) {
           pixel.speedX *= -1;
+
+          // Cambiar color al tocar el borde horizontal 
+          pixel.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
         }
         if (pixel.y <= 0 || pixel.y + pixel.size >= canvas.height) {
           pixel.speedY *= -1;
+
+          // Cambiar color al tocar el borde vertical
+          pixel.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
         }
 
-        // Cambiar color aleatoriamente
-        if (Math.random() > 0.99) {
-          pixel.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${
-            Math.random() * 255
-          })`;
-        }
       });
 
       animationId = requestAnimationFrame(animate);

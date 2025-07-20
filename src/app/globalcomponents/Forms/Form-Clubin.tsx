@@ -25,11 +25,12 @@ export default function Clubin1Form() {
       const result = await response.json();
 
       if (!response.ok) {
-        // Mostrar la notificación de error del servidor
+
+        // Manejo de errores en la respuesta del servidor
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -42,10 +43,10 @@ export default function Clubin1Form() {
         return;
       }
 
-      // Mostrar mensaje de éxito y redirigir
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -55,7 +56,7 @@ export default function Clubin1Form() {
 
       setTimeout(() => {
         router.push("/gameover");
-      }, 5000);
+      }, 2000);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");

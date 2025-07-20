@@ -1,87 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VTG-WebForm 🎯
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-### 🚀 How to use Docker in this project
-
-#### ✅ Prerequisites
-
-1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your system.
-2. Open **Docker Desktop** and verify that it is running.
+**VTG-WebForm** is a custom registration form ✍️ designed for people who wish to apply to a student group during the **VTG** event. It's built with [Next.js](https://nextjs.org) 🚀 and crafted to make the process of collecting and managing applications fast, efficient, and—why not—visually engaging, with a strong focus on interactivity.
 
 ---
 
-## ⚙️ Initial Setup
-
-1. Ensure that there is a `.env` file in the root directory of the project (`./VTG-WEBFORM`).
-2. If the `.env` file is missing, request it from a team member with authorized access.
-
-Example `.env` file:
-
-```env
-MYSQL_ROOT_PASSWORD=root
-MYSQL_DATABASE=db
-MYSQL_USER=userdb
-MYSQL_PASSWORD=userdb
-```
-
-## Basic Commands
+Getting started with this project is super easy 🛠️. You just need to have [Node.js](https://nodejs.org) (version 22 or higher recommended) and our package manager: [npm](https://www.npmjs.com/). Once you've cloned the repository:
 
 ```bash
-# Start all services in detached mode
-docker-compose up -d
-
-# Stop and remove containers (preserves data)
-docker-compose down
-
-# Rebuild containers after configuration changes
-docker-compose up --build -d
+git clone https://github.com/gruponovaeafit/VTG-WebForm.git
 ```
 
-#### Access Points
+Enter the project folder and install the dependencies:
 
-- phpMyAdmin: http://localhost:7001
-- Database: Manage 'databasename' database via phpMyAdmin
-
-#### 🧠 Additional Notes
-
-- The init.sql file will be executed automatically the first time the MySQL container is created. Make sure it contains the necessary SQL instructions.
-- If you need to rebuild the containers (for example, after changing configuration), run:
 ```bash
-docker-compose up --build -d
+npm install
 ```
 
+---
 
+If the project requires additional configuration 🔐, make sure to create a `.env` file at the root of the project. You can ask the project lead (or the Director) for the required values.
+
+---
+
+To see the form in action, run the following command:
+
+```bash
+npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000) 🌐 in your browser.
+
+Any changes you make to the code—for example, in `app/page.tsx`—will be reflected instantly thanks to Next.js's hot reload feature ⚡.
+
+---
+
+Want to learn more or need help? 📚 Here are some useful resources:
+
+- [Official Next.js Documentation](https://nextjs.org/docs)
+- [Interactive Next.js Tutorial](https://nextjs.org/learn)
+- [Next.js GitHub Repository](https://github.com/vercel/next.js)

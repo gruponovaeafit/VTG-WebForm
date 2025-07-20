@@ -26,7 +26,7 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center">
         <h1 className="text-2xl md:text-3xl mb-4 pixel-font text-white-300">
-          ¡Formulario Personal!
+          ¡Información Personal!
         </h1>
         <PersonalForm />
 
