@@ -74,6 +74,7 @@ export default function GpgForm() {
             type="text"
             id="age"
             name="age"
+            min= "15"
             required
             placeholder="Edad"
             title="Ingresa tu edad"
