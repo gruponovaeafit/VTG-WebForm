@@ -17,7 +17,7 @@ export default function NovaPage() {
     // Verifica si la contraseña global está definida
 
     // Compara la contraseña ingresada con la global
-    if (password === "1234") {
+    if (password === GLOBAL_PASSWORD) {
       setAuthenticated(true);
     } else {
       alert("Contraseña incorrecta");
