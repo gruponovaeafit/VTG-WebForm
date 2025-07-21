@@ -63,11 +63,11 @@ export default function OEForm() {
             ¿Puedes asistir a nuestra convocatoria para conocer más sobre el grupo?
           </label>
           <label htmlFor="programs" className="block text-m mb-2">
-            Próximo viernes 31 de Enero a las 3pm
+            Próximo viernes 25 de Julio a las 3:00pm
           </label>
           <select
-            id="programs"
-            name="programs"
+            id="talk"
+            name="talk"
             required
             className="w-full px-2 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
