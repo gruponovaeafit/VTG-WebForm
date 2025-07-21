@@ -38,7 +38,7 @@ export default function AcademicForm() {
         return;
       }
 
-      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /assessmentassistance
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /groupslist
       toast.success(result.message || "Información guardada con éxito.", {
         position: "top-center",
         autoClose: 1500,
@@ -46,7 +46,7 @@ export default function AcademicForm() {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/assessmentassistance"),
+        onClose: () => router.push("/groupslist"),
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);

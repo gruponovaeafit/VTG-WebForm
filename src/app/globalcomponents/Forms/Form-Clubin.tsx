@@ -1,11 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Clubin1Form() {
   const router = useRouter();
+
+  const [selectedDay, setSelectedDay] = useState<"Miercoles" | "Jueves" | "Viernes">("Miercoles");
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,8 +28,6 @@ export default function Clubin1Form() {
       const result = await response.json();
 
       if (!response.ok) {
-
-        // Manejo de errores en la respuesta del servidor
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
@@ -43,7 +44,6 @@ export default function Clubin1Form() {
         return;
       }
 
-      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.notification.message, {
         position: "top-center",
         autoClose: 1500,
@@ -63,6 +63,29 @@ export default function Clubin1Form() {
     }
   };
 
+  const horarios = {
+    Miercoles: [
+      "1:00 p. m.", "1:15 p. m.", "1:30 p. m.", "1:45 p. m.",
+      "2:00 p. m.", "2:15 p. m.", "2:30 p. m.", "2:45 p. m.",
+      "3:30 p. m.", "3:45 p. m.", "4:00 p. m.", "4:15 p. m.",
+      "4:30 p. m.", "4:45 p. m.", "5:00 p. m.", "5:15 p. m.",
+      "5:30 p. m.", "5:45 p. m.",
+    ],
+    Jueves: [
+      "8:30 a. m.", "8:45 a. m.", "9:00 a. m.", "9:15 a. m.",
+      "9:30 a. m.", "9:45 a. m.", "10:15 a. m.", "10:30 a. m.",
+      "10:45 a. m.", "11:00 a. m.", "11:15 a. m.", "11:30 a. m.",
+      "11:45 a. m.", "3:15 p. m.", "3:30 p. m.", "3:45 p. m.",
+      "4:00 p. m.", "4:15 p. m.", "4:30 p. m.", "4:45 p. m.",
+      "5:00 p. m.", "5:15 p. m.", "5:30 p. m.", "5:45 p. m.",
+    ],
+    Viernes: [
+      "8:30 a. m.", "8:45 a. m.", "9:00 a. m.", "9:15 a. m.",
+      "9:30 a. m.", "10:15 a. m.", "10:30 a. m.", "10:45 a. m.",
+      "11:00 a. m.", "11:15 a. m.", "11:30 a. m.", "11:45 a. m.",
+    ],
+  };
+
   return (
     <div>
       <form
@@ -80,6 +103,8 @@ export default function Clubin1Form() {
             name="date" 
             id="date"
             required
+            value={selectedDay}
+            onChange={(e) => setSelectedDay(e.target.value as "Miercoles" | "Jueves" | "Viernes")}
             className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {["Miercoles", "Jueves", "Viernes"].map((date, index) => (
@@ -91,7 +116,7 @@ export default function Clubin1Form() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="talks" className="block text-sm mb-2 text-blue-200">
+          <label htmlFor="talk" className="block text-sm mb-2 text-blue-200">
             Horas
           </label>
           <select
@@ -100,16 +125,9 @@ export default function Clubin1Form() {
             required
             className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {[
-              "10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00", 
-              "11:10", "11:20", "11:30", "11:40", "11:50", "13:00", "13:10", 
-              "13:20", "13:30", "13:40", "13:50", "14:00", "14:10", "14:20", 
-              "14:30", "14:40", "14:50", "15:00", "15:10", "15:20", "15:30", 
-              "15:40", "15:50", "16:00", "16:10", "16:20", "16:30", "16:40", 
-              "16:50",
-            ].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
+            {horarios[selectedDay]?.map((hora, index) => (
+              <option key={index} value={hora}>
+                {hora}
               </option>
             ))}
           </select>
