@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         n.correo,
         n.charla,
         n.asesor,
+        n.fecha_inscripcion,
         p.nombre,
         p.pregrado,
         p.semestre

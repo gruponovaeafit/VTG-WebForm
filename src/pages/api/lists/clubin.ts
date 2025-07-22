@@ -21,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         c.id_grupo,
         c.correo,
         c.slot_id,
-        c.asesor
+        c.asesor,
+        c.fecha_inscripcion 
       FROM dbo.club_in AS c
       LEFT JOIN dbo.pre_assessment_slot AS p ON c.slot_id = p.slot_id
       ORDER BY p.day_of_week, p.start_time;
@@ -36,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       acc[key].participants.push({
         id_grupo: row.id_grupo,
         correo: row.correo,
+        fecha_inscripcion: row.fecha_inscripcion,
         slot_id: row.slot_id,
         asesor: row.asesor
       });
