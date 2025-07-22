@@ -26,7 +26,7 @@ export default function AiesecForm() {
 
       // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        const errorMessage = result.notification?.message || "Error en el servidor.";
+        const errorMessage = result.message || "Error en el servidor.";
 
         toast.error(errorMessage, {
           position: "top-center",
