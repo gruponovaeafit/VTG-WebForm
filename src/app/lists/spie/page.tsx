@@ -116,38 +116,28 @@ export default function SpiePage() {
 
       {groupByDate
         ? Object.entries(groupByFecha(data)).map(([fecha, participants]) => (
-          <div key={fecha} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
-            <h2 className="text-md font-semibold mb-1 text-cyan-400">Inscritos en {fecha}</h2>
-            <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
-              <Users className="h-5 w-5 text-green-500" />
-              <span>Participantes: {participants.length}</span>
-            </div>
-            <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
-              <thead>
-                <tr className="bg-gray-700 text-yellow-300">
-                  <th className="border border-green-500 px-2 py-1">Correo</th>
-                  <th className="border border-green-500 px-2 py-1">Nombre</th>
-                  <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                  <th className="border border-green-500 px-2 py-1">Semestre</th>
-                  <th className="border border-green-500 px-2 py-1">Departamentos</th>
-                  <th className="border border-green-500 px-2 py-1">Charla</th>
-                </tr>
-              </thead>
-              <tbody>
-                {participants.map((participant, i) => (
-                  <tr key={`${participant.correo}-${participant.id_grupo}-${i}`} className="hover:bg-gray-800">
-                    <td className="border border-green-500 px-2 py-1">{participant.correo}</td>
-                    <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{participant.departamentos || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{participant.charla_info}</td>
+            <div key={fecha} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
+              <h2 className="text-md font-semibold mb-1 text-cyan-400">Inscritos en {fecha}</h2>
+              <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
+                <Users className="h-5 w-5 text-green-500" />
+                <span>Participantes: {participants.length}</span>
+              </div>
+              <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
+                <thead>
+                  <tr className="bg-gray-700 text-yellow-300">
+                    <th className="border border-green-500 px-2 py-1">Correo</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))
+                </thead>
+                <tbody>
+                  {participants.map((participant, i) => (
+                    <tr key={`${participant.correo}-${participant.id_grupo}-${i}`} className="hover:bg-gray-800">
+                      <td className="border border-green-500 px-2 py-1">{participant.correo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))
         : data?.map((charla: { charla_info: string; participants: any[] }) => (
           <div key={charla.charla_info} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
             <h2 className="text-md font-semibold mb-1 text-cyan-400">{charla.charla_info}</h2>

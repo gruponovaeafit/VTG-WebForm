@@ -70,7 +70,6 @@ export default function OePage() {
           className="w-full max-w-sm p-6 bg-gray-900 rounded-lg shadow-lg"
         >
           <h2 className="text-2xl font-bold mb-4 text-center">Ingresa la contraseña</h2>
-
           <label htmlFor="password" className="block mb-2 text-sm font-medium text-green-200">
             Contraseña
           </label>
@@ -82,7 +81,6 @@ export default function OePage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
           <button
             type="submit"
             className="w-full py-2 px-4 bg-green-500 text-black font-semibold rounded-md hover:bg-green-400 transition duration-200"
@@ -107,7 +105,7 @@ export default function OePage() {
   );
 
   const groupedByDate: Record<string, any[]> = {};
-  allParticipants?.forEach((p: { fecha_inscripcion: string | number | Date; }) => {
+  allParticipants?.forEach((p: any) => {
     const date = p.fecha_inscripcion ? new Date(p.fecha_inscripcion).toLocaleDateString() : "Sin fecha";
     if (!groupedByDate[date]) groupedByDate[date] = [];
     groupedByDate[date].push(p);
@@ -135,24 +133,20 @@ export default function OePage() {
           .map(([date, participants]) => (
             <div key={date} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
               <h2 className="text-md font-semibold mb-1 text-cyan-400">{date}</h2>
+              <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
+                <Users className="h-5 w-5 text-green-500" />
+              <span>Participantes: {participants.length}</span>
+            </div>
               <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
                 <thead>
                   <tr className="bg-gray-700 text-yellow-300">
                     <th className="border border-green-500 px-2 py-1">Correo</th>
-                    <th className="border border-green-500 px-2 py-1">Nombre</th>
-                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                    <th className="border border-green-500 px-2 py-1">Semestre</th>
-                    <th className="border border-green-500 px-2 py-1">Asiste</th>
                   </tr>
                 </thead>
                 <tbody>
                   {participants.map((p, idx) => (
                     <tr key={`${p.correo}-${idx}`} className="hover:bg-gray-800">
                       <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.charla_info === 1 ? "Sí" : "No"}</td>
                     </tr>
                   ))}
                 </tbody>

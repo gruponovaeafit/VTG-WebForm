@@ -81,7 +81,7 @@ export default function ClubmercPage() {
   );
 
   const groupedByDate: Record<string, any[]> = {};
-  allParticipants?.forEach((p: { fecha_inscripcion: string | number | Date; }) => {
+  allParticipants?.forEach((p: { fecha_inscripcion: string | number | Date }) => {
     const date = p.fecha_inscripcion ? new Date(p.fecha_inscripcion).toLocaleDateString() : "Sin fecha";
     if (!groupedByDate[date]) groupedByDate[date] = [];
     groupedByDate[date].push(p);
@@ -104,27 +104,17 @@ export default function ClubmercPage() {
           .sort((a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime())
           .map(([date, participants]) => (
             <div key={date} className="mb-4 border border-yellow-500 rounded-lg p-2 bg-gray-900">
-              <h2 className="text-md font-semibold mb-1 text-cyan-400">{date}</h2>
+              <h2 className="text-md font-semibold mb-1 text-cyan-400">Inscritos el {date}</h2>
               <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
                 <thead>
                   <tr className="bg-gray-700 text-yellow-300">
                     <th className="border border-green-500 px-2 py-1">Correo</th>
-                    <th className="border border-green-500 px-2 py-1">Nombre</th>
-                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                    <th className="border border-green-500 px-2 py-1">Semestre</th>
-                    <th className="border border-green-500 px-2 py-1">Comité</th>
-                    <th className="border border-green-500 px-2 py-1">Asistencia Charla</th>
                   </tr>
                 </thead>
                 <tbody>
                   {participants.map((p, idx) => (
                     <tr key={`${p.correo}-${idx}`} className="hover:bg-gray-800">
                       <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.comite}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.asistencia_charla ? "Sí" : "No"}</td>
                     </tr>
                   ))}
                 </tbody>

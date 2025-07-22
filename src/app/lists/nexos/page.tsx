@@ -170,22 +170,12 @@ export default function NexosPage() {
                 <thead>
                   <tr className="bg-gray-700 text-yellow-300">
                     <th className="border border-green-500 px-2 py-1">Correo</th>
-                    <th className="border border-green-500 px-2 py-1">Nombre</th>
-                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                    <th className="border border-green-500 px-2 py-1">Semestre</th>
-                    <th className="border border-green-500 px-2 py-1">Charla Informativa</th>
-                    <th className="border border-green-500 px-2 py-1">Justificación</th>
                   </tr>
                 </thead>
                 <tbody>
                   {participants.map((p: any) => (
                     <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
                       <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.charla_informativa ? "Sí" : "No"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.justificacion || "N/A"}</td>
                     </tr>
                   ))}
                 </tbody>

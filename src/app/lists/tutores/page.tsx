@@ -149,15 +149,6 @@ export default function TutoresPage() {
                 <thead>
                   <tr className="bg-gray-700 text-yellow-300">
                     <th className="border border-green-500 px-2 py-1">Correo</th>
-                    <th className="border border-green-500 px-2 py-1">Nombre</th>
-                    <th className="border border-green-500 px-2 py-1">
-                      Pregrado
-                    </th>
-                    <th className="border border-green-500 px-2 py-1">
-                      Semestre
-                    </th>
-                    <th className="border border-green-500 px-2 py-1">Charla</th>
-                    <th className="border border-green-500 px-2 py-1">Tutor</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -165,21 +156,6 @@ export default function TutoresPage() {
                     <tr key={`${p.correo}-${p.charla_info}-${idx}`}>
                       <td className="border border-green-500 px-2 py-1">
                         {p.correo}
-                      </td>
-                      <td className="border border-green-500 px-2 py-1">
-                        {p.nombre || "N/A"}
-                      </td>
-                      <td className="border border-green-500 px-2 py-1">
-                        {p.pregrado || "N/A"}
-                      </td>
-                      <td className="border border-green-500 px-2 py-1">
-                        {p.semestre || "N/A"}
-                      </td>
-                      <td className="border border-green-500 px-2 py-1">
-                        {p.charla_info || "N/A"}
-                      </td>
-                      <td className="border border-green-500 px-2 py-1">
-                        {p.asesor || "N/A"}
                       </td>
                     </tr>
                   ))}

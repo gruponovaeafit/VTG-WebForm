@@ -63,13 +63,7 @@ export default function PartnersPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-black text-green-300 px-4">
         <div className="flex items-center space-x-3 mb-8">
-          <div
-            className="p-2 rounded-lg"
-            style={{
-              backgroundColor: "rgba(74, 222, 128, 0.1)",
-              border: "1px solid #4ade80",
-            }}
-          >
+          <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(74, 222, 128, 0.1)", border: "1px solid #4ade80" }}>
             <LayoutDashboard className="h-5 w-5 text-green-400" />
           </div>
           <div>
@@ -122,9 +116,7 @@ export default function PartnersPage() {
   return (
     <div className="p-2 h-screen overflow-auto bg-black text-green-300 font-mono">
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">
-          Partners - Charlas
-        </h1>
+        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">Partners - Charlas</h1>
         <button
           className="px-3 py-1 text-sm bg-gray-800 border border-green-500 text-green-300 rounded hover:bg-green-700"
           onClick={() => setGroupByDate(!groupByDate)}
@@ -138,7 +130,9 @@ export default function PartnersPage() {
           key={groupTitle}
           className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900"
         >
-          <h2 className="text-md font-semibold mb-1 text-cyan-400">{groupTitle}</h2>
+          <h2 className="text-md font-semibold mb-1 text-cyan-400">
+            {groupByDate ? `Inscritos el ${groupTitle}` : groupTitle}
+          </h2>
           <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
             <Users className="h-5 w-5 text-green-500" />
             <span>Participantes: {(participants as any[]).length}</span>
@@ -147,20 +141,28 @@ export default function PartnersPage() {
             <thead>
               <tr className="bg-gray-700 text-yellow-300">
                 <th className="border border-green-500 px-2 py-1">Correo</th>
-                <th className="border border-green-500 px-2 py-1">Nombre</th>
-                <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                <th className="border border-green-500 px-2 py-1">Semestre</th>
-                <th className="border border-green-500 px-2 py-1">Asesor</th>
+                {!groupByDate && (
+                  <>
+                    <th className="border border-green-500 px-2 py-1">Nombre</th>
+                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
+                    <th className="border border-green-500 px-2 py-1">Semestre</th>
+                    <th className="border border-green-500 px-2 py-1">Asesor</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
               {(participants as any[]).map((p) => (
                 <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
                   <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.asesor || "N/A"}</td>
+                  {!groupByDate && (
+                    <>
+                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.asesor || "N/A"}</td>
+                    </>
+                  )}
                 </tr>
               ))}
             </tbody>

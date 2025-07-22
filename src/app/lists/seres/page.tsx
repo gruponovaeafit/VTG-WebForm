@@ -11,7 +11,7 @@ export default function SeresPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const [groupByDate, setGroupByDate] = useState(false); // NUEVO
+  const [groupByDate, setGroupByDate] = useState<boolean>(false);
 
   const handlePasswordSubmit = () => {
     if (!GLOBAL_PASSWORD) {
@@ -46,20 +46,16 @@ export default function SeresPage() {
     return () => clearInterval(interval);
   }, [authenticated]);
 
-  const groupByFecha = () => {
-    const agrupado: Record<string, any[]> = {};
-    data?.forEach((grupo: any) => {
-      grupo.participants.forEach((p: any) => {
+  const groupParticipantsByDate = (data: any[]) => {
+    const grouped: { [fecha: string]: any[] } = {};
+    data.forEach((charla) => {
+      charla.participants.forEach((p: any) => {
         const fecha = p.fecha_inscripcion?.split("T")[0] || "Sin fecha";
-        if (!agrupado[fecha]) agrupado[fecha] = [];
-        agrupado[fecha].push(p);
+        if (!grouped[fecha]) grouped[fecha] = [];
+        grouped[fecha].push(p);
       });
     });
-
-    return Object.entries(agrupado).map(([fecha, participants]) => ({
-      fecha,
-      participants,
-    }));
+    return grouped;
   };
 
   if (!authenticated) {
@@ -70,12 +66,9 @@ export default function SeresPage() {
             <LayoutDashboard className="h-5 w-5 text-green-400" />
           </div>
           <div>
-            <h1 className="text-4xl font-bold text-green-400 text-center text-neon-pink">
-              Dashboard VTG SERES
-            </h1>
+            <h1 className="text-4xl font-bold text-green-400 text-center">Dashboard VTG SERES</h1>
           </div>
         </div>
-
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -90,7 +83,7 @@ export default function SeresPage() {
           <input
             id="password"
             type="password"
-            className="w-full p-2 mb-4 rounded-md bg-gray-800 text-green-300 placeholder-green-500 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="w-full p-2 mb-4 rounded-md bg-gray-800 text-green-300"
             placeholder="••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -106,51 +99,13 @@ export default function SeresPage() {
     );
   }
 
-  if (isLoading) return <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center"><div className="animate-pulse">Cargando datos, por favor espera...</div></div>;
+  if (isLoading)
+    return (
+      <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center">
+        <div className="animate-pulse">Cargando datos, por favor espera...</div>
+      </div>
+    );
   if (error) return <div className="p-2 text-sm text-red-400">Error al cargar los datos.</div>;
-
-  const renderGroups = () => {
-    const dataToRender = groupByDate ? groupByFecha() : data;
-
-    return dataToRender?.map((group: any) => {
-      const title = groupByDate ? `Fecha de inscripción: ${group.fecha}` : group.charla_info;
-      let contador = 1;
-
-      return (
-        <div key={title} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
-          <div className="flex justify-between items-center mb-1">
-            <h2 className="text-md font-semibold text-cyan-400">{title}</h2>
-          </div>
-          <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
-            <Users className="h-5 w-5 text-green-500" />
-            <span>Participantes: {group.participants.length}</span>
-          </div>
-          <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
-            <thead>
-              <tr className="bg-gray-700 text-yellow-300">
-                <th className="border border-green-500 px-2 py-1">#</th>
-                <th className="border border-green-500 px-2 py-1">Correo</th>
-                <th className="border border-green-500 px-2 py-1">Nombre</th>
-                <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                <th className="border border-green-500 px-2 py-1">Semestre</th>
-              </tr>
-            </thead>
-            <tbody>
-              {group.participants.map((p: any) => (
-                <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
-                  <td className="border border-green-500 px-2 py-1">{contador++}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                  <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      );
-    });
-  };
 
   return (
     <div className="p-2 h-screen overflow-auto bg-black text-green-300 font-mono">
@@ -158,12 +113,65 @@ export default function SeresPage() {
         <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">Seres - Charlas</h1>
         <button
           onClick={() => setGroupByDate(!groupByDate)}
-          className="px-3 py-1 text-xs bg-yellow-400 text-black rounded hover:bg-yellow-300 transition"
+          className="px-3 py-1 text-sm bg-green-600 hover:bg-green-500 text-black font-semibold rounded"
         >
-          {groupByDate ? "Ver por charla" : "Ver por fecha de inscripción"}
+          {groupByDate ? "Ver por charla" : "Ver por fecha"}
         </button>
       </div>
-      {renderGroups()}
+
+      {groupByDate ? (
+        Object.entries(groupParticipantsByDate(data)).map(([fecha, participants]: any) => (
+          <div key={fecha} className="mb-4 border border-yellow-500 rounded-lg p-2 bg-gray-900">
+            <h2 className="text-md font-semibold mb-2 text-cyan-400">Inscritos en {fecha}</h2>
+            <table className="w-full border-collapse border border-green-500 text-xs text-green-200">
+              <thead>
+                <tr className="bg-gray-700 text-yellow-300">
+                  <th className="border border-green-500 px-2 py-1">Correo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {participants.map((p: any) => (
+                  <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
+                    <td className="border border-green-500 px-2 py-1">{p.correo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))
+      ) : (
+        data?.map((charla: { charla_info: string; participants: any[] }) => (
+          <div key={charla.charla_info} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
+            <h2 className="text-md font-semibold mb-1 text-cyan-400">
+              {charla.charla_info === "1" ? "Asiste a la charla" : "No asiste a la charla"}
+            </h2>
+            <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
+              <Users className="h-5 w-5 text-green-500" />
+              <span>Participantes: {charla.participants.length}</span>
+            </div>
+            <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
+              <thead>
+                <tr className="bg-gray-700 text-yellow-300">
+                  <th className="border border-green-500 px-2 py-1">Correo</th>
+                  <th className="border border-green-500 px-2 py-1">Nombre</th>
+                  <th className="border border-green-500 px-2 py-1">Pregrado</th>
+                  <th className="border border-green-500 px-2 py-1">Semestre</th>
+                </tr>
+              </thead>
+              <tbody>
+                {charla.participants.map((p: any) => (
+                  <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
+                    <td className="border border-green-500 px-2 py-1">{p.correo}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))
+      )}
     </div>
   );
 }

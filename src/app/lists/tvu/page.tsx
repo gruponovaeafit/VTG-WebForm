@@ -120,26 +120,25 @@ export default function TvuPage() {
 
       {groupByDate
         ? Object.entries(groupedByDate).map(([fecha, items]) => (
-            <div key={fecha} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
-              <h2 className="text-md font-semibold mb-1 text-cyan-400">Inscritos el {fecha}</h2>
+            <div
+              key={fecha}
+              className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900"
+            >
+              <h2 className="text-md font-semibold mb-1 text-cyan-400">
+                Inscritos el {fecha}
+              </h2>
               <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
                 <thead>
                   <tr className="bg-gray-700 text-yellow-300">
                     <th className="border border-green-500 px-2 py-1">Correo</th>
-                    <th className="border border-green-500 px-2 py-1">Nombre</th>
-                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                    <th className="border border-green-500 px-2 py-1">Semestre</th>
-                    <th className="border border-green-500 px-2 py-1">Charla</th>
                   </tr>
                 </thead>
                 <tbody>
                   {items.map((p, idx) => (
-                    <tr key={`${p.correo}-${p.charla_info}-${idx}`} className="hover:bg-gray-800">
-                      <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.charla_info || "N/A"}</td>
+                    <tr key={`${p.correo}-${p.charla_info}-${idx}`}>
+                      <td className="border border-green-500 px-2 py-1">
+                        {p.correo}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
