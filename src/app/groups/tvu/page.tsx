@@ -35,7 +35,7 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="flex flex-col gap-6 row-start-2 items-center sm:items-start relative z-10 ">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-2 pixel-font text-white glitch_Tvu">
-          Tvu
+          TVU
         </h1>
 
         <InfoTvu />

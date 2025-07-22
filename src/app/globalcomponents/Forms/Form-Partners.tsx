@@ -87,10 +87,10 @@ export default function PartnersForm() {
             className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
           >
             {[
-              "Mar. 28 ene, 5 p.m.",
-              "Mie. 29 ene, 5 p.m.",
-              "Jue. 30 ene, 5 p.m.",
-              "Vie. 31 ene, 9 a.m.",
+              "Mar. 22 Julio, 5 p.m.",
+              "Mie. 23 Julio, 5 p.m.",
+              "Jue. 24 Julio, 5 p.m.",
+              "Vie. 25 Julio, 9 a.m.",
             ].map((talk, index) => (
               <option key={index} value={talk}>
                 {talk}

@@ -78,7 +78,7 @@ export default function NexosForm() {
   };
 
   return (
-    <div>
+    <div className="max-h-[500px] overflow-y-auto">
       <form
         onSubmit={handleFormSubmit}
         className="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full"

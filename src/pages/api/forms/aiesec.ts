@@ -29,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const email = verifyJwtFromCookies(req, res);
     const group_id = 13;
+    const phone = req.body;
 
     pool = await connect(config);
 
@@ -37,9 +38,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await pool.request()
         .input("group_id", Int, group_id)
         .input("email", VarChar, email)
+        .input("phone", VarChar, phone)
         .query(`
-          INSERT INTO aiesec (id_grupo, correo)
-          VALUES (@group_id, @email)
+          INSERT INTO aiesec (id_grupo, correo, telefono)
+          VALUES (@group_id, @email, @phone)
         `);
 
       // Respuesta en caso de éxito

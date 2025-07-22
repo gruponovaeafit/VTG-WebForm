@@ -220,13 +220,13 @@ body {
 
 @keyframes glitch_Tutores {
   0% {
-    text-shadow: 4px 4px 0 #9b9b9b, -4px -4px 0 #9b9b9b;
+    text-shadow: 4px 4px 0 #513D9C, -4px -4px 0 #513D9C;
   }
   50% {
-    text-shadow: -4px -4px 0 #9b9b9b, 4px 4px 0 #9b9b9b;
+    text-shadow: -4px -4px 0 #513D9C, 4px 4px 0 #513D9C;
   }
   100% {
-    text-shadow: 4px 4px 0 #9b9b9b, -4px -4px 0 #9b9b9b;
+    text-shadow: 4px 4px 0 #513D9C, -4px -4px 0 #513D9C;
   }
 }
 
