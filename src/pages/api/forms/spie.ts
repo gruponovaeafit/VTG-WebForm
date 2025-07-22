@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     pool = await connect(config);
 
     const email = verifyJwtFromCookies(req, res);
-    const { committie, secondaryPrograms } = req.body;
+    const { committie, talk } = req.body;
 
     try {
       await pool
@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .input("group_id", Int, group_id)
         .input("email", VarChar, email)
         .input("commite", VarChar, committie)
-        .input("talk", VarChar, secondaryPrograms)
+        .input("talk", VarChar, talk)
         .query(`
           INSERT INTO spie (id_grupo, correo, departamentos, charla_info)
           VALUES (@group_id, @email, @commite, @talk)
