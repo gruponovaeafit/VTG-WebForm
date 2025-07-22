@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     pool = await connect(config);
 
     const email = verifyJwtFromCookies(req, res);
-    const { talk, IdTutor } = req.body;
+    const { IdTutor } = req.body;
     const groupId = 10;
  
 
@@ -34,11 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .request()
         .input("id_grupo", Int, groupId)
         .input("correo", VarChar, email)
-        .input("charla_info", VarChar, talk)
         .input("asesor", VarChar, IdTutor)
         .query(`
-          INSERT INTO tutores (id_grupo, correo, charla_info, asesor)
-          VALUES (@id_grupo, @correo, @charla_info , @asesor);
+          INSERT INTO tutores (id_grupo, correo, asesor)
+          VALUES (@id_grupo, @correo, @asesor);
         `);
 
       return res.status(200).json({ message: "Formulario enviado con éxito" });
