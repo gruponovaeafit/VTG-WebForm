@@ -102,14 +102,14 @@ export default function NOVAForm() {
             htmlFor="IdNovato"
             className="block text-sm mb-2 text-purple-600"
           >
-            Nombre de la persona que te inscribió
+            Nombre del Novatto/a que te inscribió
           </label>
           <input
             type="text"
             id="IdNovato"
             name="IdNovato"
             required
-            placeholder="Asesor"
+            placeholder="Novatto/a"
             title="IdNovato"
             className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
           />

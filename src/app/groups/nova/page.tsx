@@ -1,7 +1,7 @@
 "use client";
 
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import TalkForm from "../../globalcomponents/Forms/Form-Talk";
+import Form from "../../globalcomponents/Forms/Form-NOVA";
 import { useEffect } from "react";
 import Footer from "@/app/globalcomponents/UI/Footer_NOVA";
 import { useRouter } from "next/navigation";
@@ -52,13 +52,11 @@ export default function Home() {
           NOVA
         </h1>
 
-        <TalkForm />
+        <Form />
 
         <Footer />
 
       </main>
-
- 
 
     </div>
   );
