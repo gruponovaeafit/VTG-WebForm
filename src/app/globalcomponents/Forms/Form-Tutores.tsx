@@ -73,14 +73,14 @@ export default function TutoresForm() {
             htmlFor="IdTutor"
             className="block text-sm mb-2 text-[#513D9C]"
           >
-            Nombre de la persona que te inscribió
+            Nombre del Tutor/a que te inscribió
           </label>
           <input
             type="text"
             id="IdTutor"
             name="IdTutor"
             required
-            placeholder="Asesor"
+            placeholder="Tutor/a"
             title="IdTutor"
             className="w-full px-4 py-2 rounded border border-[#9b9b9b] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-white placeholder:opacity-70"
           />
