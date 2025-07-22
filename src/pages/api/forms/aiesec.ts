@@ -29,7 +29,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const email = verifyJwtFromCookies(req, res);
     const group_id = 13;
-    const phone = req.body;
+    const phone = req.body.phone;
+
+    const phoneRegex = /^3\d{9}$/;
+
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Número de teléfono inválido. Debe ser un número celular colombiano de 10 dígitos que comience por 3.",
+        },
+      });
+    }
+
+
 
     pool = await connect(config);
 
