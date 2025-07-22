@@ -170,6 +170,7 @@ export default function OePage() {
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
                   <th className="border border-green-500 px-2 py-1">Pregrado</th>
                   <th className="border border-green-500 px-2 py-1">Semestre</th>
+                  <th className="border border-green-500 px-2 py-1">Asesor</th>
                   <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
@@ -180,6 +181,7 @@ export default function OePage() {
                     <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{participant.asesor || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">
                       {participant.fecha_inscripcion ? new Date(participant.fecha_inscripcion).toLocaleDateString() : "N/A"}
                     </td>
