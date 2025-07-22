@@ -43,7 +43,7 @@ export default function UnForm() {
 
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -52,7 +52,7 @@ export default function UnForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
         }
       );
     }

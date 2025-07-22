@@ -62,7 +62,7 @@ export default function NexosForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.message || "Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -75,7 +75,7 @@ export default function NexosForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

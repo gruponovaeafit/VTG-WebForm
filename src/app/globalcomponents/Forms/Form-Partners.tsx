@@ -47,7 +47,7 @@ export default function PartnersForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success("Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -56,7 +56,7 @@ export default function PartnersForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 1500,
         }
       );
     }

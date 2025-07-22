@@ -46,7 +46,7 @@ export default function Clubin1Form() {
 
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

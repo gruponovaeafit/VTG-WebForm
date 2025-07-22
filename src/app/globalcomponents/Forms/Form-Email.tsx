@@ -93,7 +93,7 @@ export default function EmailForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 2000, // Notificación de 2 segundos
+        autoClose: 1500, 
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

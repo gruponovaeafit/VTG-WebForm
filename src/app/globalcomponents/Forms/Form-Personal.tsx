@@ -46,7 +46,7 @@ export default function AcademicForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /academic
       toast.success(result.message || "Información guardada con éxito.", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

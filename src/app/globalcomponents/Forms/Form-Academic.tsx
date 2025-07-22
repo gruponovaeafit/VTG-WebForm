@@ -41,7 +41,7 @@ export default function AcademicForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /groupslist
       toast.success(result.message || "Información guardada con éxito.", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -52,7 +52,7 @@ export default function AcademicForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
         position: "top-center",
-        autoClose: 2500,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
