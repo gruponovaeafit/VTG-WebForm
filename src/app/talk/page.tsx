@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import TalkEmailForm from "../globalcomponents/Forms/Form-EmailTalk";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import Image from "next/image";
@@ -14,11 +14,11 @@ export default function Home() {
       try {
         const res = await fetch("/api/cookieCheck");
         if (!res.ok) {
-          router.push("/");
+          router.replace("/");
         }
       } catch (error) {
         console.error("Error al verificar JWT:", error);
-        router.push("/");
+        router.replace("/");
       }
     };
 

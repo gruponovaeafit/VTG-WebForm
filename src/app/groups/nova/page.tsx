@@ -4,7 +4,8 @@ import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TalkForm from "../../globalcomponents/Forms/Form-Talk";
 import { useEffect } from "react";
 import Footer from "@/app/globalcomponents/UI/Footer_NOVA";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 
 export default function Home() {
   const router = useRouter();
@@ -14,11 +15,11 @@ export default function Home() {
       try {
         const res = await fetch("/api/cookieCheck");
         if (!res.ok) {
-          router.push("/");
+          router.replace("/");
         }
       } catch (error) {
         console.error("Error al verificar JWT:", error);
-        router.push("/");
+        router.replace("/");
       }
     };
 
