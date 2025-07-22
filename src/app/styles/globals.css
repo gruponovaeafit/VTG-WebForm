@@ -247,6 +247,23 @@ body {
   }
 }
 
+.glitch_Tvu {
+  position: relative;
+  animation: glitch_Tvu 3s infinite;
+}
+
+@keyframes glitch_Tvu {
+  0% {
+    text-shadow: 4px 4px 0 purple, -4px -4px 0 purple;
+  }
+  50% {
+    text-shadow: -4px -4px 0 purple, 4px 4px 0 purple;
+  }
+  100% {
+    text-shadow: 4px 4px 0 purple, -4px -4px 0 purple;
+  }
+}
+
 .glitch_UN {
   position: relative;
   animation: glitch_UN 3s infinite;

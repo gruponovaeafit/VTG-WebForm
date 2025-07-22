@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LayoutDashboard, Users } from "lucide-react";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_NOVA_TSS; // Definir la contraseña global aquí
 
@@ -14,11 +15,6 @@ export default function NovaPage() {
 
   const handlePasswordSubmit = () => {
     // Verifica si la contraseña global está definida
-    if (!GLOBAL_PASSWORD) {
-      console.error("La contraseña global no está configurada.");
-      alert("Error en la configuración del servidor.");
-      return;
-    }
 
     // Compara la contraseña ingresada con la global
     if (password === GLOBAL_PASSWORD) {
@@ -30,11 +26,12 @@ export default function NovaPage() {
 
   useEffect(() => {
     if (!authenticated) return;
-    
+
     const fetchData = async () => {
       try {
         const response = await fetch("/api/lists/nova");
         const result = await response.json();
+        console.log(result)
         setData(result.data);
       } catch (err) {
         setError(err as Error);
@@ -51,22 +48,56 @@ export default function NovaPage() {
 
   if (!authenticated) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-black text-green-300">
-        <h1 className="text-lg font-bold mb-2">Ingresa la contraseña</h1>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black text-purple-700 px-4">
+        <div className="flex items-center space-x-3 mb-8">
+        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(107, 33, 168, 0.1)", border: "1px solid #6B21A8" }}>
+          <LayoutDashboard className="h-5 w-5 text-purple-800"/>
+        </div>
+        <div>
+          <h1 className="text-4xl font-bold text-purple-800 text-center text-neon-pink" >
+            Dashboard VTG NOVA
+          </h1>
+        </div>
+      </div>
+
+      {/* Contenedor del login */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handlePasswordSubmit();
+        }}
+        className="w-full max-w-sm p-6 bg-gray-900 rounded-lg shadow-lg"
+      >
+        <h2 className="text-2xl font-bold mb-4 text-center">Ingresa la contraseña</h2>
+
+        <label htmlFor="password" className="block mb-2 text-sm font-medium text-purple-200">
+          Contraseña
+        </label>
         <input
+          id="password"
           type="password"
-          className="p-2 text-black rounded-md mb-2"
+          className="w-full p-2 mb-4 rounded-md bg-gray-800 text-purple-300 placeholder-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          placeholder="••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="p-2 bg-green-500 text-black rounded-md" onClick={handlePasswordSubmit}>
+
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-purple-500 text-black font-semibold rounded-md hover:bg-purple-400 transition duration-200"
+        >
           Acceder
         </button>
-      </div>
+      </form>
+    </div>
     );
   }
 
-  if (isLoading) return <div className="p-2 text-sm text-green-300">Cargando datos...</div>;
+  if (isLoading) return (
+  <div className="p-4 text-purple-300 bg-gray-800 rounded-lg shadow-inner border border-purple-400 text-sm text-center">
+    <div className="animate-pulse">Cargando datos, por favor espera...</div>
+  </div>
+  )
   if (error) return <div className="p-2 text-sm text-red-400">Error al cargar los datos.</div>;
 
   const groupedData = data?.reduce((acc: Record<string, any[]>, person: { charla: string; correo: string; nombre?: string; pregrado?: string; semestre?: string; asesor?: string }) => {
@@ -81,6 +112,10 @@ export default function NovaPage() {
       {Object.keys(groupedData || {}).map((charla) => (
         <div key={charla} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
           <h2 className="text-md font-semibold mb-1 text-cyan-400">{charla}</h2>
+          <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
+              <Users className="h-5 w-5 text-green-500" />
+              <span>Participantes: {groupedData[charla].length}</span>
+          </div>
           <table className="w-full border-collapse border border-green-500 text-xs text-green-200">
             <thead>
               <tr className="bg-gray-700 text-yellow-300">

@@ -28,11 +28,12 @@ export default function AssessmentAssistanceForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        // Manejo de errores
+
+        // Manejo de errores en la respuesta del servidor
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 2500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -41,7 +42,7 @@ export default function AssessmentAssistanceForm() {
         } else {
           toast.error("Ocurrió un error al enviar el formulario.", {
             position: "top-center",
-            autoClose: 3000,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -54,7 +55,7 @@ export default function AssessmentAssistanceForm() {
       // Éxito
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -72,7 +73,7 @@ export default function AssessmentAssistanceForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

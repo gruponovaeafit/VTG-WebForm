@@ -5,6 +5,7 @@ import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin";
+import Footer from "@/app/globalcomponents/UI/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -37,16 +38,7 @@ export default function Home() {
 
         <Clubin1Form />
 
-        {/* Footer */}
-      <footer className="relative z-10 flex items-center justify-center py-2 mb-10">
-        <Image
-          src="https://novaeafit.blob.core.windows.net/vtg-2025-1/PoweredByLOVE.svg"
-          alt="Powered By NOVA"
-          className="w-32 sm:w-36 md:w-40 lg:w-44 xl:w-48"
-          width={300}
-          height={200}
-        />
-      </footer>
+        <Footer />
 
       </main>  
       

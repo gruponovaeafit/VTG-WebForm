@@ -40,10 +40,11 @@ export default function NexosForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         toast.error(result.message || "Error en el servidor.", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -52,9 +53,10 @@ export default function NexosForm() {
         return;
       }
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.message || "Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -67,7 +69,7 @@ export default function NexosForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -105,7 +107,7 @@ export default function NexosForm() {
         </div>
         <div className="mb-4">
           <label htmlFor="assistance" className="block text-sm mb-2 text-[#9A975F]">
-            ¿Asistirás a la charla informativa el viernes 31 de Enero a las 2pm?
+            ¿Asistirás a la charla informativa el viernes 25 de Julio de 12:00pm a 3:00pm?
           </label>
           <select
             name="assistance"

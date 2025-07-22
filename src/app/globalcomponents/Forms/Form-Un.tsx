@@ -75,7 +75,7 @@ export default function UnForm() {
               "Publicidad y Redes",
               "Gestión Humana",
               "Relaciones Públicas",
-              "Logística y Mercadeo",
+              "Logística",
               "Académico",
             ].map((talks, index) => (
               <option key={index} value={talks}>
@@ -87,7 +87,7 @@ export default function UnForm() {
 
         <div className="mb-2">
           <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
-            ¿Podrás asistir a la charla informativa del 31/01/2025 a las 4pm?
+            ¿Podrás asistir a la charla informativa del Viernes 25 de julio a las 4:00pm?
           </label>
           <select
             id="talk"
@@ -107,7 +107,7 @@ export default function UnForm() {
 
         <div className="mb-4">
           <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">
-            ¿Puedes asistir al assessment el 1 de Febrero?
+            ¿Puedes asistir al assessment el sábado 26 de julio?
           </label>
           <select
             name="assessment"

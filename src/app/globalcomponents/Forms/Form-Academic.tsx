@@ -25,10 +25,11 @@ export default function AcademicForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        // Si hay un error, se muestra con un toast
+
+        // Manejo de errores en la respuesta del servidor
         toast.error(result.message || "Error en el servidor.", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -37,21 +38,21 @@ export default function AcademicForm() {
         return;
       }
 
-      // Si todo está bien, muestra un toast de éxito y redirige a /assessmentassistance
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /groupslist
       toast.success(result.message || "Información guardada con éxito.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/assessmentassistance"),
+        onClose: () => router.push("/groupslist"),
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

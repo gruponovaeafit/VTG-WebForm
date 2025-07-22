@@ -25,17 +25,19 @@ export default function OEForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         toast.error(result.message || "Error en el servidor.", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
         });
         return;
       }
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.message || "Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -44,7 +46,7 @@ export default function OEForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
         }
       );
     }
@@ -61,11 +63,11 @@ export default function OEForm() {
             ¿Puedes asistir a nuestra convocatoria para conocer más sobre el grupo?
           </label>
           <label htmlFor="programs" className="block text-m mb-2">
-            Próximo viernes 31 de Enero a las 3pm
+            Próximo viernes 25 de Julio a las 3:00pm
           </label>
           <select
-            id="programs"
-            name="programs"
+            id="talk"
+            name="talk"
             required
             className="w-full px-2 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >

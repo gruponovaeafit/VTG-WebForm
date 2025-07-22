@@ -24,10 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     pool = await connect(config);
 
-    const { programs } = req.body;
+    const { talk } = req.body;
     const email = verifyJwtFromCookies(req, res);
     const groupId = 6;
-    const charla_info = programs === "Si" ? 1 : 0;
+    const charla_info = talk === "Si" ? 1 : 0;
 
     try {
       await pool.request()

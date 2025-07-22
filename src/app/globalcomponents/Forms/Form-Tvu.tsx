@@ -24,17 +24,19 @@ export default function TvuForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         toast.error(result.message || "Error en el servidor", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
         });
         return;
       }
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -43,7 +45,7 @@ export default function TvuForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
         }
       );
     }
@@ -66,9 +68,8 @@ export default function TvuForm() {
             className="w-full px-2 py-2 text-sm rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             {[
-              "Jue. 30 ene, 6-7 p.m.",
-              "Vie. 31 ene, 4-5 p.m.",
-              "Mié. 5 feb, 6-7 p.m.",
+              "Vie. 25 jul, 3-4 p.m.",
+              "Mar. 29 jul, 6-7 p.m.",
             ].map((talks, index) => (
               <option key={index} value={talks}>
                 {talks}

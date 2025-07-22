@@ -24,17 +24,19 @@ export default function SpieForm() {
 
       const result = await response.json();
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         toast.error(result.message || "Error en el servidor", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
         });
         return;
       }
 
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 1500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -43,7 +45,7 @@ export default function SpieForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 2000,
         }
       );
     }
@@ -80,24 +82,24 @@ export default function SpieForm() {
 
         <div className="mb-4">
           <label
-            htmlFor="secondaryPrograms"
+            htmlFor="talk"
             className="block text-sm mb-2 text-red-600 "
           >
             ¿A que charla informativa puedes asistir?
           </label>
           <select
-            id="secondaryPrograms"
-            name="secondaryPrograms"
+            id="talk"
+            name="talk"
             required
             className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600 mb-4"
           >
             {[
-              "Vie. 31 ene, 5-6 p.m.",
-              "Lun. 3 feb, 1-2 p.m.",
-              "Jue. 6 feb, 1-2 p.m.",
-            ].map((program, index) => (
-              <option key={index} value={program}>
-                {program}
+              "Vie. 25 Jul, 4:00 p.m.",
+              "Mie. 30 Jul, 6:00 p.m.",
+              "Vie. 1 Ago, 4:00 p.m.",
+            ].map((talks, index) => (
+              <option key={index} value={talks}>
+                {talks}
               </option>
             ))}
           </select>

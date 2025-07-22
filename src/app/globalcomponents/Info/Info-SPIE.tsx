@@ -19,7 +19,7 @@ export default function InfoSPIE() {
         <span className="font-bold text-red-600">Comité de divulgación:</span> Planea y ejecuta actividades de divulgación científica y experimentos creativos en la universidad y otros espacios.
       </p>
       <p className="text-[10px] mb-2">
-        <span className="font-bold text-red-600">Comité de RRPP:</span> Gestiona la imagen del grupo y establece vínculos con la comunidad, ponentes y patrocinadores para mayor visibilidad.
+        <span className="font-bold text-red-600">Comité de RRPP:</span> Gestiona la imagen del grupo y establece vínculos con la comunidad y diferentes patrocinadores para mayor visibilidad.
       </p>
       <p className="text-[10px] mb-2">
         <span className="font-bold text-red-600">Comité de GH:</span> Genera un ambiente seguro y acogedor para los miembros mediante diversas actividades de integración.
