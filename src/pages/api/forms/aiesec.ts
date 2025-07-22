@@ -29,6 +29,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const email = verifyJwtFromCookies(req, res);
     const group_id = 13;
+    const phone = req.body.phone;
+
+    const phoneRegex = /^3\d{9}$/;
+
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Número de teléfono inválido. Debe ser un número celular colombiano de 10 dígitos que comience por 3.",
+        },
+      });
+    }
+
+
 
     pool = await connect(config);
 
@@ -37,9 +51,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await pool.request()
         .input("group_id", Int, group_id)
         .input("email", VarChar, email)
+        .input("phone", VarChar, phone)
         .query(`
-          INSERT INTO aiesec (id_grupo, correo)
-          VALUES (@group_id, @email)
+          INSERT INTO aiesec (id_grupo, correo, telefono)
+          VALUES (@group_id, @email, @phone)
         `);
 
       // Respuesta en caso de éxito

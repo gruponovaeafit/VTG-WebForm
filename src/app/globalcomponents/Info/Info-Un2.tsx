@@ -23,7 +23,7 @@ export default function InfoUn2() {
         <span className="font-bold text-blue-400">Relaciones Públicas:</span> Encargados del desarrollo de fuertes vinculos de patrocinios, convenios y beneficios con aliados estrategicos.
       </p>
       <p className="text-[10px] mb-1">
-        <span className="font-bold text-blue-400">Logística y Mercadeo:</span> Estrategia, contacto y coordinación para alcanzar metas. 
+        <span className="font-bold text-blue-400">Logística:</span> Estrategia, contacto y coordinación para alcanzar metas. 
       </p>
       <p className="text-[10px] mb-1">
         <span className="font-bold text-blue-400">Académico:</span> Formadores de lideres, encargados de contacto de ponentes y montaje de eventos académicos.

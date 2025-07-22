@@ -24,23 +24,26 @@ export default function UnForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        if (result.message) {
-          toast.error(result.message, {
-            position: "top-center",
-            autoClose: 3000,
-          });
-        } else {
-          toast.error("Error en el servidor", {
-            position: "top-center",
-            autoClose: 3000,
-          });
-        }
+        const errorMessage = result.message || "Error en el servidor.";
+
+        toast.error(errorMessage, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          onClose: () => {
+            if (errorMessage === "Ya estás registrado en este grupo.") {
+              router.push("/groupslist");
+            }
+          },
+        });
         return;
       }
 
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -49,7 +52,7 @@ export default function UnForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1500,
         }
       );
     }

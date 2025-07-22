@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         t.correo,
         t.charla_info,
         t.asesor,
+        t.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
@@ -38,7 +39,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         nombre: row.nombre,
         pregrado: row.pregrado,
         semestre: row.semestre,
-        asesor: row.asesor
+        asesor: row.asesor,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {});

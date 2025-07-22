@@ -27,9 +27,19 @@ export default function OEForm() {
 
       // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        toast.error(result.message || "Error en el servidor.", {
+        const errorMessage = result.message || "Error en el servidor.";
+
+        toast.error(errorMessage, {
           position: "top-center",
-          autoClose: 1500,
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          onClose: () => {
+            if (errorMessage === "Ya estás registrado en este grupo.") {
+              router.push("/groupslist");
+            }
+          },
         });
         return;
       }
@@ -37,7 +47,7 @@ export default function OEForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.message || "Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -46,7 +56,7 @@ export default function OEForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 1500,
         }
       );
     }
@@ -77,6 +87,21 @@ export default function OEForm() {
               </option>
             ))}
           </select>
+          <label
+            htmlFor="asesor"
+            className="block text-m mb-4 mt-4 text-blue-400"
+          >
+            Nombre de la persona que te inscribió
+          </label>
+          <input
+            type="text"
+            id="asesor"
+            name="asesor"
+            placeholder="Asesor"
+            title="IdTutor"
+            className="w-full px-4 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:opacity-70"
+          />
+
         </div>
 
         <button

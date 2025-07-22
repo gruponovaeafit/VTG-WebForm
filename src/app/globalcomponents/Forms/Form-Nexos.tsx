@@ -42,13 +42,19 @@ export default function NexosForm() {
 
       // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        toast.error(result.message || "Error en el servidor.", {
+        const errorMessage = result.message || "Error en el servidor.";
+
+        toast.error(errorMessage, {
           position: "top-center",
-          autoClose: 1500,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          pauseOnHover: false,
+          onClose: () => {
+            if (errorMessage === "Ya estás registrado en este grupo.") {
+              router.push("/groupslist");
+            }
+          },
         });
         return;
       }
@@ -56,7 +62,7 @@ export default function NexosForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success(result.message || "Formulario enviado con éxito.", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -69,7 +75,7 @@ export default function NexosForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -80,7 +86,7 @@ export default function NexosForm() {
   };
 
   return (
-    <div>
+    <div className="max-h-[500px] overflow-y-auto">
       <form
         onSubmit={handleFormSubmit}
         className="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full"

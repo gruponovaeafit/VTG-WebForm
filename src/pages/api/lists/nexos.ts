@@ -20,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         n.departamento,
         n.charla_informativa,
         n.justificacion,
+        n.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
@@ -40,7 +41,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         justificacion: row.justificacion,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {});

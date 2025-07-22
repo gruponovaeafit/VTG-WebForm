@@ -12,18 +12,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     pool = await sql.connect(dbConfig);
 
-    // Consulta para obtener información de la tabla 'oe' junto con los datos de la persona
+    // Consulta actualizada para incluir fecha_inscripcion
     const result = await pool.request().query(`
       SELECT 
         o.id_grupo,
         o.correo,
         o.charla_info,
+        o.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
       FROM dbo.oe AS o
       LEFT JOIN dbo.persona AS pe ON o.correo = pe.correo
-      ORDER BY o.charla_info;
+      ORDER BY o.charla_info, o.fecha_inscripcion DESC;
     `);
 
     // Agrupar los datos por charla
@@ -36,10 +37,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         correo: row.correo,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion, // incluir en la respuesta
       });
       return acc;
-    }, {});
+    }, {} as Record<string, { charla_info: string; participants: any[] }>);
 
     res.status(200).json({ success: true, data: Object.values(groupedData) });
   } catch (error) {

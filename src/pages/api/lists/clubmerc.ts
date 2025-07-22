@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         c.correo,
         c.comite,
         c.asistencia_charla,
+        c.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
@@ -36,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         id_grupo: row.id_grupo,
         correo: row.correo,
         asistencia_charla: row.asistencia_charla,
+        fecha_inscripcion: row.fecha_inscripcion,
         nombre: row.nombre,
         pregrado: row.pregrado,
         semestre: row.semestre

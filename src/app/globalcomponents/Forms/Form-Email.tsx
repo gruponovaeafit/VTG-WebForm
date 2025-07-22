@@ -48,7 +48,7 @@ export default function EmailForm() {
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 1500, // Notificación de 1.5 segundos
+            autoClose: 500, // Notificación de 0.8 segundos
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -57,7 +57,7 @@ export default function EmailForm() {
         } else {
           toast.error("Ocurrió un error al enviar el formulario.", {
             position: "top-center",
-            autoClose: 1500, // Notificación de 1.5 segundos
+            autoClose: 1000, // Notificación de 1.5 segundos
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -72,7 +72,7 @@ export default function EmailForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /home
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 1500, // Notificación de 1.5 segundos
+        autoClose: 500, // Notificación de 1.5 segundos
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -93,7 +93,7 @@ export default function EmailForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 2000, // Notificación de 2 segundos
+        autoClose: 1500, 
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

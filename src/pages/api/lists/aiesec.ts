@@ -17,6 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       SELECT 
         a.id_grupo,
         a.correo,
+        a.telefono,
+        a.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
@@ -33,6 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       acc[row.id_grupo].participants.push({
         correo: row.correo,
         nombre: row.nombre,
+        telefono: row.telefono,
+        fecha_inscripcion: row.fecha_inscripcion,
         pregrado: row.pregrado,
         semestre: row.semestre
       });

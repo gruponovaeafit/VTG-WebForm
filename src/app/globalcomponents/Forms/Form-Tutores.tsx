@@ -26,9 +26,19 @@ export default function TutoresForm() {
 
       // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        toast.error(result.message || "Error en el servidor", {
+        const errorMessage = result.message || "Error en el servidor.";
+
+        toast.error(errorMessage, {
           position: "top-center",
-          autoClose: 1500,
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          onClose: () => {
+            if (errorMessage === "Ya estás registrado en este grupo.") {
+              router.push("/groupslist");
+            }
+          },
         });
         return;
       }
@@ -36,7 +46,7 @@ export default function TutoresForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -45,7 +55,7 @@ export default function TutoresForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 1500,
         }
       );
     }
@@ -57,32 +67,11 @@ export default function TutoresForm() {
         onSubmit={handleFormSubmit}
         className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
       >
-        <div className="mb-4">
-          <label htmlFor="talks" className="block text-m mb-2 text-[#9b9b9b]">
-            ¿A qué charla informativa deseas asistir?
-          </label>
-          <select
-            id="talk"
-            name="talk"
-            required
-            className="w-full px-2 py-2 text-sm rounded border border-[#9b9b9b] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9b9b9b]"
-          >
-            {[
-              "Mar. 28 ene, 5 p.m.",
-              "Mié. 29 ene, 4:30 p.m.",
-              "Jue. 30 ene, 5 p.m.",
-            ].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
-        </div>
-
+  
         <div className="mb-4">
           <label
             htmlFor="IdTutor"
-            className="block text-sm mb-2 text-purple-600"
+            className="block text-sm mb-2 text-[#513D9C]"
           >
             Nombre de la persona que te inscribió
           </label>
@@ -93,8 +82,13 @@ export default function TutoresForm() {
             required
             placeholder="Asesor"
             title="IdTutor"
-            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
+            className="w-full px-4 py-2 rounded border border-[#9b9b9b] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-white placeholder:opacity-70"
           />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="ig" className="block text-sm mb-2 text-[#513D9C]">
+            Ingresa a <a href="https://www.instagram.com/tutoreseafit" target="_blank" className="text-white">@tutoreseafit</a> para consultar los horarios de nuestras charlas informativas
+          </label>
         </div>
 
         <button

@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         g.correo,
         g.prepractica,
         g.edad,
+        g.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
@@ -39,7 +40,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         edad: row.edad,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {});

@@ -33,7 +33,7 @@ export default function AssessmentAssistanceForm() {
         if (result.notification) {
           toast.error(result.notification.message, {
             position: "top-center",
-            autoClose: 2500,
+            autoClose: 1500,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -55,7 +55,7 @@ export default function AssessmentAssistanceForm() {
       // Éxito
       toast.success(result.notification.message, {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -73,7 +73,7 @@ export default function AssessmentAssistanceForm() {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

@@ -26,9 +26,19 @@ export default function SeresForm() {
 
       // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        toast.error(result.message || "Error en el servidor", {
+        const errorMessage = result.message || "Error en el servidor.";
+
+        toast.error(errorMessage, {
           position: "top-center",
-          autoClose: 1500,
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          onClose: () => {
+            if (errorMessage === "Ya estás registrado en este grupo.") {
+              router.push("/groupslist");
+            }
+          },
         });
         return;
       }
@@ -36,7 +46,7 @@ export default function SeresForm() {
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
-        autoClose: 1500,
+        autoClose: 500,
         onClose: () => router.push("/gameover"),
       });
     } catch (error) {
@@ -45,7 +55,7 @@ export default function SeresForm() {
         "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
         {
           position: "top-center",
-          autoClose: 2000,
+          autoClose: 1500,
         }
       );
     }
@@ -68,10 +78,10 @@ export default function SeresForm() {
             className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {[
-              "Vie. 31 ene, 8-9 a.m.",
-              "Vie. 31 ene, 10-11 a.m.",
-              "Vie. 31 ene, 12-1 p.m.",
-              "Vie. 31 ene, 3-4 p.m.",
+              "Vie. 25 jul, 8-9 a.m.",
+              "Vie. 25 jul, 10-11 a.m.",
+              "Vie. 25 jul, 12-1 p.m.",
+              "Vie. 25 jul, 3-4 p.m.",
             ].map((talks, index) => (
               <option key={index} value={talks}>
                 {talks}
