@@ -1,34 +1,33 @@
 "use client";
 
-import Image from "next/image";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TalkForm from "../../globalcomponents/Forms/Form-Talk";
 import { useEffect } from "react";
 import Footer from "@/app/globalcomponents/UI/Footer_NOVA";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   
   useEffect(() => {
-    const checkAuthentication = async () => { 
+    const checkCookie = async () => {
       try {
-        const res = await fetch("/api/cookieCheck", { method: "GET" });
-        
-        // Si la respuesta no es 200, ya no redirige
-        if (res.status !== 200) {
-          console.log("No autenticado");
+        const res = await fetch("/api/cookieCheck");
+        if (!res.ok) {
+          router.push("/");
         }
       } catch (error) {
-        console.error("Error al verificar la autenticación:", error);
-        // En caso de error, ya no redirige
-        console.log("Error al verificar autenticación");
+        console.error("Error al verificar JWT:", error);
+        router.push("/");
       }
-    }
-    checkAuthentication();
+    };
+
+    checkCookie();
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, []);
+  }, [router]);
 
 
   return (
