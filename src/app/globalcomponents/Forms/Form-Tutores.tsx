@@ -57,28 +57,7 @@ export default function TutoresForm() {
         onSubmit={handleFormSubmit}
         className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
       >
-        <div className="mb-4">
-          <label htmlFor="talks" className="block text-m mb-2 text-[#513D9C]">
-            ¿A qué charla informativa deseas asistir?
-          </label>
-          <select
-            id="talk"
-            name="talk"
-            required
-            className="w-full px-2 py-2 text-sm rounded border border-[#9b9b9b] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9b9b9b]"
-          >
-            {[
-              "Mar. 28 ene, 5 p.m.",
-              "Mié. 29 ene, 4:30 p.m.",
-              "Jue. 30 ene, 5 p.m.",
-            ].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
-        </div>
-
+  
         <div className="mb-4">
           <label
             htmlFor="IdTutor"
@@ -95,6 +74,11 @@ export default function TutoresForm() {
             title="IdTutor"
             className="w-full px-4 py-2 rounded border border-[#9b9b9b] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-white placeholder:opacity-70"
           />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="ig" className="block text-sm mb-2 text-[#513D9C]">
+            Ingresa a <a href="https://www.instagram.com/tutoreseafit" target="_blank" className="text-white">@tutoreseafit</a> para consultar los horarios de nuestras charlas informativas
+          </label>
         </div>
 
         <button
