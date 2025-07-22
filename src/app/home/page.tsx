@@ -9,6 +9,22 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
+  useEffect(() => {
+    const checkCookie = async () => {
+      try {
+        const res = await fetch("/api/cookieCheck");
+        if (!res.ok) {
+          router.push("/");
+        }
+      } catch (error) {
+        console.error("Error al verificar JWT:", error);
+        router.push("/");
+      }
+    };
+
+    checkCookie();
+  }, [router]);
+
   return (
     <div
       className="relative flex flex-col justify-between w-full h-screen bg-black text-white overflow-hidden"
@@ -31,11 +47,7 @@ export default function Home() {
         <PersonalForm />
 
         <Footer />
-
       </main>
-
-
-
     </div>
   );
 }

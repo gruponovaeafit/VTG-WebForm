@@ -1,20 +1,26 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {parse} from "cookie"; // Import cookie parsing library
+import { parse } from "cookie";
+import { verify } from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET_KEY!;
 
 export default function cookieCheck(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === "GET") {
-    // Parse cookies from the request headers
-    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
-
-    // Check if the cookie (jwtToken) exists
-    if (!cookies.jwtToken) {
-      // If no JWT cookie, return a 401 Unauthorized status
-      return res.status(401).json({ message: "Unauthorized" }); // No need for redirect here, handle on client-side
-    }
-
-    // If the cookie exists, you can continue with the request handling
-    return res.status(200).json({ message: "Cookie is present!" });
+  if (req.method !== "GET") {
+    return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  return res.status(405).json({ message: "Method Not Allowed" });
+  const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+  const token = cookies.jwtToken;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: No token found" });
+  }
+
+  try {
+    // Verifica el token con la clave secreta
+    verify(token, JWT_SECRET);
+    return res.status(200).json({ message: "Token válido" });
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized: Invalid or expired token" });
+  }
 }
