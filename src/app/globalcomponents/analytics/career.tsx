@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -13,14 +13,13 @@ import {
   LabelList
 } from "recharts";
 
-import {BarChart3} from "lucide-react"
+import { BarChart3 } from "lucide-react";
 
 interface DataItem {
   pregrado: string;
   cantidad: number;
 }
 
-// 🎨 Definir colores en variables para personalización rápida
 const COLORS = {
   background: "#000000",
   text: "#FFFFFF",
@@ -38,7 +37,6 @@ const COLORS = {
 export default function UsersByDegreeChart() {
   const [data, setData] = useState<DataItem[]>([]);
 
-  // Función para obtener la data desde la API
   const fetchData = async () => {
     try {
       const response = await fetch("/api/analytics/undergrad");
@@ -77,48 +75,44 @@ export default function UsersByDegreeChart() {
     "Psicología": "Psicología"
   };
 
-let totalInscritosCarrera = 0;
-let topCarrera = null;
-let maxCantidad = -Infinity;
+  const {
+    totalInscritosCarrera,
+    promedioPorCarrera,
+    topCarrera,
+    porcentajeData
+  } = useMemo(() => {
+    let total = 0;
+    let top: DataItem | null = null;
+    let max = -Infinity;
 
-for (let i = 0; i < data.length; i++) {
-  const item = data[i];
-  totalInscritosCarrera += item.cantidad;
-
-  if (item.cantidad > maxCantidad) {
-    maxCantidad = item.cantidad;
-    topCarrera = item;
-  }
-}
-
-const promedioPorCarrera = data.length > 0
-  ? Math.round(totalInscritosCarrera / data.length)
-  : 0;
-
-  const Porcentaje: Array<DataItem & { porcentaje: string }> = [];
-  if (Array.isArray(data)) {
     data.forEach((item) => {
-      const porcentaje = totalInscritosCarrera > 0
-        ? ((item.cantidad / totalInscritosCarrera) * 100).toFixed(2)
-        : "0.00";
-
-      Porcentaje.push({
-        ...item,
-        porcentaje
-      });
+      total += item.cantidad;
+      if (item.cantidad > max) {
+        max = item.cantidad;
+        top = item;
+      }
     });
-  }
+
+    const promedio = data.length > 0 ? Math.round(total / data.length) : 0;
+
+    const porcentajeData = data.map((item) => ({
+      ...item,
+      porcentaje: total > 0 ? ((item.cantidad / total) * 100).toFixed(2) : "0.00",
+    }));
+
+    return {
+      totalInscritosCarrera: total,
+      promedioPorCarrera: promedio,
+      topCarrera: top as DataItem | null,
+      porcentajeData
+    };
+  }, [data]);
 
   useEffect(() => {
-    // Llamada inicial
     fetchData();
-
-    // Intervalo cada 5 segundos para actualizar la data
     const interval = setInterval(() => {
       fetchData();
     }, 5000);
-
-    // Limpieza del intervalo cuando se desmonte el componente
     return () => clearInterval(interval);
   }, []);
 
@@ -135,50 +129,38 @@ const promedioPorCarrera = data.length > 0
         </div>
       </div>
 
-      {/* Indicador de carreras */}
       <div className="flex items-center space-x-2 mb-2">
         <div className="flex space-x-1">
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: COLORS.axis }}></div>
           <div className="w-2 h-2 rounded-full animate-pulse delay-75" style={{ backgroundColor: COLORS.axis }}></div>
-          <div
-            className="w-2 h-2 rounded-full animate-pulse delay-150"
-            style={{ backgroundColor: COLORS.axis }}
-          ></div>
+          <div className="w-2 h-2 rounded-full animate-pulse delay-150" style={{ backgroundColor: COLORS.axis }}></div>
         </div>
         <span className="text-xs" style={{ color: COLORS.axis }}>
           {data.length} carreras activas
         </span>
       </div>
 
-      {/* Estadísticas de carrera */}
       <div className="grid grid-cols-3 gap-3 mb-2">
         <div className="text-center p-2 rounded-lg border w-full max-w-[200px]" style={{ borderColor: COLORS.grid, backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
-          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>
-            Carrera Líder
-          </p>
+          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>Carrera Líder</p>
           <p className="text-xs font-bold" style={{ color: COLORS.bar }}>
             {topCarrera ? abreviaturas[topCarrera.pregrado] || topCarrera.pregrado : "N/A"}
           </p>
         </div>
         <div className="text-center p-2 rounded-lg border" style={{ borderColor: COLORS.grid, backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
-          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>
-            Promedio
-          </p>
+          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>Promedio</p>
           <p className="text-lg font-bold" style={{ color: COLORS.axis }}>
             {promedioPorCarrera}
           </p>
         </div>
         <div className="text-center p-2 rounded-lg border" style={{ borderColor: COLORS.grid, backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
-          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>
-            % Líder
-          </p>
+          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>% Líder</p>
           <p className="text-sm font-bold" style={{ color: COLORS.bar }}>
-            {topCarrera ? `${Porcentaje.find(item => item.pregrado === topCarrera.pregrado)?.porcentaje ?? "0.00"}%` : "N/A"}
+            {topCarrera ? `${porcentajeData.find(item => item.pregrado === topCarrera.pregrado)?.porcentaje ?? "0.00"}%` : "N/A"}
           </p>
         </div>
       </div>
 
-      {/* Contenedor del gráfico */}
       {data.length === 0 ? (
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
