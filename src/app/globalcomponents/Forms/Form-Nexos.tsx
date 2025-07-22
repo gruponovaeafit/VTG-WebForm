@@ -113,7 +113,9 @@ export default function NexosForm() {
         </div>
         <div className="mb-4">
           <label htmlFor="assistance" className="block text-sm mb-2 text-[#9A975F]">
-            ¿Asistirás a la charla informativa el viernes 25 de Julio de 12:00pm a 3:00pm?
+            ¿Asistirás a la charla informativa el viernes 25 de Julio a la 1:30pm? 
+            <br />
+            Salón 34-302
           </label>
           <select
             name="assistance"
