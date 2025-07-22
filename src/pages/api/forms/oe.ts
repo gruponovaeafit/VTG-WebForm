@@ -28,15 +28,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const email = verifyJwtFromCookies(req, res);
     const groupId = 6;
     const charla_info = talk === "Si" ? 1 : 0;
+    const asesor = req.body.asesor;
 
     try {
       await pool.request()
         .input("id_grupo", Int, groupId)
         .input("correo", VarChar, email)
         .input("charla_info", Int, charla_info)
+        .input("asesor", VarChar, asesor)
         .query(`
-          INSERT INTO oe (correo, charla_info, id_grupo) 
-          VALUES (@correo, @charla_info, @id_grupo);
+          INSERT INTO oe (correo, charla_info, id_grupo, asesor) 
+          VALUES (@correo, @charla_info, @id_grupo, @asesor);
         `);
 
       return res.status(200).json({ message: "Formulario enviado con éxito." });

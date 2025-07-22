@@ -77,6 +77,22 @@ export default function OEForm() {
               </option>
             ))}
           </select>
+          <label
+            htmlFor="asesor"
+            className="block text-m mb-4 mt-4 text-blue-400"
+          >
+            Nombre de la persona que te inscribió
+          </label>
+          <input
+            type="text"
+            id="asesor"
+            name="asesor"
+            required
+            placeholder="Asesor"
+            title="IdTutor"
+            className="w-full px-4 py-2 rounded border border-[#9b9b9b] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-white placeholder:opacity-70"
+          />
+
         </div>
 
         <button
