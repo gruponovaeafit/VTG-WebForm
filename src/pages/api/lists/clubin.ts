@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         c.fecha_inscripcion 
       FROM dbo.club_in AS c
       LEFT JOIN dbo.pre_assessment_slot AS p ON c.slot_id = p.slot_id
-      ORDER BY p.day_of_week, p.start_time;
+      ORDER BY p.day_of_week asc, p.start_time asc;
     `);
 
     // Agrupar los datos por day_of_week y start_time

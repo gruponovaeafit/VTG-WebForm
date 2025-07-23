@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,6 +9,43 @@ export default function Clubin1Form() {
   const router = useRouter();
 
   const [selectedDay, setSelectedDay] = useState<"Miercoles" | "Jueves" | "Viernes">("Miercoles");
+  const [availableSlots, setAvailableSlots] = useState<{ [key: string]: string[] }>({});
+
+  useEffect(() => {
+    const fetchAvailableSlots = async () => {
+      console.log("📡 Iniciando solicitud para obtener horarios disponibles...");
+      try {
+        const res = await fetch("/api/forms/clubin");
+
+        if (!res.ok) {
+          throw new Error(`❌ Error al obtener los datos. Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log("✅ Datos de backend recibidos:", data);
+
+        const grouped: { [key: string]: string[] } = {};
+
+        data.data.forEach((slot: any) => {
+          const day = slot.day_of_week;
+          const time = slot.start_time;
+          const cap = slot.capacity;
+          console.log(`🕒 Slot recibido: ${day} - ${time} (capacidad: ${cap})`);
+
+          if (!grouped[day]) grouped[day] = [];
+          grouped[day].push(time);
+        });
+
+        setAvailableSlots(grouped);
+        console.log("📅 Slots agrupados y guardados en estado:", grouped);
+      } catch (error) {
+        console.error("🔥 Error al obtener los horarios disponibles:", error);
+        toast.error("No se pudieron cargar los horarios. Inténtalo más tarde.");
+      }
+    };
+
+    fetchAvailableSlots();
+  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,27 +53,27 @@ export default function Clubin1Form() {
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
+    const payload = Object.fromEntries(formData.entries());
+    console.log("🚀 Enviando datos del formulario:", payload);
+
     try {
       const response = await fetch("/api/forms/clubin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
+      console.log("📥 Respuesta recibida del backend:", result);
 
       if (!response.ok) {
         if (result.notification) {
+          console.warn("⚠️ Error mostrado al usuario:", result.notification.message);
           toast.error(result.notification.message, {
             position: "top-center",
             autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
           });
         } else {
           toast.error("Hubo un error inesperado. Inténtalo nuevamente.");
@@ -47,45 +84,17 @@ export default function Clubin1Form() {
       toast.success(result.notification.message, {
         position: "top-center",
         autoClose: 500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
       });
 
       setTimeout(() => {
+        console.log("🔁 Redireccionando a /gameover...");
         router.push("/gameover");
       }, 2000);
     } catch (error) {
-      console.error("Error al enviar el formulario:", error);
+      console.error("❌ Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
     }
   };
-
-  const horarios = {
-    Miercoles: [
-      "1:00pm", "1:15pm", "1:30pm", "1:45pm",
-      "2:00pm", "2:15pm", "2:30pm", "2:45pm",
-      "3:30pm", "3:45pm", "4:00pm", "4:15pm",
-      "4:30pm", "4:45pm", "5:00pm", "5:15pm",
-      "5:30pm", "5:45pm",
-    ],
-    Jueves: [
-      "8:30am", "8:45am", "9:00am", "9:15am",
-      "9:30am", "9:45am", "10:15am", "10:30am",
-      "10:45am", "11:00am", "11:15am", "11:30am",
-      "11:45am", "3:15pm", "3:30pm", "3:45pm",
-      "4:00pm", "4:15pm", "4:30pm", "4:45pm",
-      "5:00pm", "5:15pm", "5:30pm", "5:45pm",
-    ],
-    Viernes: [
-      "8:30am", "8:45am", "9:00am", "9:15am",
-      "9:30am", "10:15am", "10:30am", "10:45am",
-      "11:00am", "11:15am", "11:30am", "11:45am",
-    ],
-  };
-
 
   return (
     <div>
@@ -97,18 +106,22 @@ export default function Clubin1Form() {
           <label htmlFor="name" className="block text-sm mb-4 text-blue-200">
             Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
           </label>
-          <label htmlFor="name" className="block text-sm mb-2 text-blue-200">
+          <label htmlFor="date" className="block text-sm mb-2 text-blue-200">
             Días
           </label>
-          <select 
-            name="date" 
+          <select
+            name="date"
             id="date"
             required
             value={selectedDay}
-            onChange={(e) => setSelectedDay(e.target.value as "Miercoles" | "Jueves" | "Viernes")}
+            onChange={(e) => {
+              const newDay = e.target.value as "Miercoles" | "Jueves" | "Viernes";
+              console.log("🗓️ Día seleccionado:", newDay);
+              setSelectedDay(newDay);
+            }}
             className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {["Miercoles", "Jueves", "Viernes"].map((date, index) => (
+            {Object.keys(availableSlots).map((date, index) => (
               <option key={index} value={date}>
                 {date}
               </option>
@@ -126,11 +139,15 @@ export default function Clubin1Form() {
             required
             className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {horarios[selectedDay]?.map((hora, index) => (
-              <option key={index} value={hora}>
-                {hora}
-              </option>
-            ))}
+            {availableSlots[selectedDay]?.length > 0 ? (
+              availableSlots[selectedDay].map((hora, index) => (
+                <option key={index} value={hora}>
+                  {hora}
+                </option>
+              ))
+            ) : (
+              <option disabled>No hay horarios disponibles</option>
+            )}
           </select>
         </div>
 
