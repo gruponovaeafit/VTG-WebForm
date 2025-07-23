@@ -68,26 +68,35 @@ export default function Clubin1Form() {
       const result = await response.json();
       console.log("📥 Respuesta recibida del backend:", result);
 
+      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        if (result.notification) {
-          console.warn("⚠️ Error mostrado al usuario:", result.notification.message);
-          toast.error(result.notification.message, {
-            position: "top-center",
-            autoClose: 1500,
-          });
-        } else {
-          toast.error("Hubo un error inesperado. Inténtalo nuevamente.");
-        }
+        const errorMessage = result.notification?.message || "Error en el servidor.";
+
+        toast.error(errorMessage, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          onClose: () => {
+            if (errorMessage === "Ya estás registrado en este grupo.") {
+              console.log("🔁 Redireccionando a /groupslist por registro duplicado...");
+              router.push("/groupslist");
+            }
+          },
+        });
+
         return;
       }
 
+      // Si todo sale bien
       toast.success(result.notification.message, {
         position: "top-center",
         autoClose: 500,
       });
 
       setTimeout(() => {
-        console.log("🔁 Redireccionando a /gameover...");
+        console.log("🔁 Redireccionando a /gameover por inscripción exitosa...");
         router.push("/gameover");
       }, 2000);
     } catch (error) {
@@ -95,6 +104,7 @@ export default function Clubin1Form() {
       toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
     }
   };
+
 
   return (
     <div>

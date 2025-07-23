@@ -112,7 +112,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({
           notification: {
             type: "error",
-            message: "Ya estás registrado en esta charla.",
+            message: "Ya estás registrado en este grupo.",
           },
         });
       }
@@ -143,25 +143,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
       });
     } else if (req.method === "GET") {
-        console.log("📥 Solicitud GET para obtener horarios disponibles");
+  console.log("📥 Solicitud GET para obtener horarios disponibles");
 
-        const result = await pool.request().query(`
-          SELECT 
-            day_of_week, 
-            start_time, 
-            capacity 
-          FROM dbo.pre_assessment_slot
-          WHERE capacity > 0
-          ORDER BY day_of_week, start_time
-        `);
+  const result = await pool.request().query(`
+    SELECT 
+      day_of_week, 
+      start_time, 
+      capacity 
+    FROM dbo.pre_assessment_slot
+    WHERE capacity > 0
+    ORDER BY day_of_week, start_time
+  `);
 
-        console.log("📦 Resultados de horarios disponibles:", result.recordset);
+  console.log("📦 Resultados de horarios disponibles:", result.recordset);
 
-        return res.status(200).json({
-          success: true,
-          data: result.recordset
-        });
-      }
+  return res.status(200).json({
+    success: true,
+    data: result.recordset
+  });
+}
 
 
     console.warn("❌ Método no permitido:", req.method);
