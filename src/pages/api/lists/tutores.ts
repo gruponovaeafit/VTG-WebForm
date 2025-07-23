@@ -24,15 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         pe.semestre
       FROM dbo.tutores AS t
       LEFT JOIN dbo.persona AS pe ON t.correo = pe.correo
-      ORDER BY fecha_inscripcion;
+      ORDER BY asesor;
     `);
 
     // Agrupar los datos por tutor
     const groupedData = result.recordset.reduce((acc, row) => {
-      if (!acc[row.id_grupo] ) {
-        acc[row.id_grupo] = { id_grupo: row.id_grupo, correo: row.correo, nombre: row.nombre, pregrado: row.pregrado, semestre: row.semestre, asesor: row.asesor, fecha_inscripcion: row.fecha_inscripcion, participants: [] };
+      if (!acc[row.asesor]) {
+        acc[row.asesor] = { id_grupo: row.id_grupo, correo: row.correo, nombre: row.nombre, pregrado: row.pregrado, semestre: row.semestre, asesor: row.asesor, fecha_inscripcion: row.fecha_inscripcion, participants: [] };
       }
-      acc[row.id_grupo].participants.push({
+      acc[row.asesor].participants.push({
         id_grupo: row.id_grupo,
         correo: row.correo,
         nombre: row.nombre,
