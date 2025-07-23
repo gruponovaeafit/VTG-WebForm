@@ -17,7 +17,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       SELECT 
         t.id_grupo,
         t.correo,
-        t.charla_info,
         t.asesor,
         t.fecha_inscripcion,
         pe.nombre,
@@ -25,15 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         pe.semestre
       FROM dbo.tutores AS t
       LEFT JOIN dbo.persona AS pe ON t.correo = pe.correo
-      ORDER BY t.charla_info;
+      ORDER BY fecha_inscripcion;
     `);
 
-    // Agrupar los datos por charla
+    // Agrupar los datos por tutor
     const groupedData = result.recordset.reduce((acc, row) => {
-      if (!acc[row.charla_info]) {
-        acc[row.charla_info] = { charla_info: row.charla_info, participants: [] };
+      if (!acc[row.id_grupo] ) {
+        acc[row.id_grupo] = { id_grupo: row.id_grupo, correo: row.correo, nombre: row.nombre, pregrado: row.pregrado, semestre: row.semestre, asesor: row.asesor, fecha_inscripcion: row.fecha_inscripcion, participants: [] };
       }
-      acc[row.charla_info].participants.push({
+      acc[row.id_grupo].participants.push({
         id_grupo: row.id_grupo,
         correo: row.correo,
         nombre: row.nombre,
