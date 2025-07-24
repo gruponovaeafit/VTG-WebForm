@@ -99,6 +99,7 @@ export default function AcademicForm() {
               "Ingeniería de Procesos",
               "Ingeniería de Producción",
               "Ingeniería de Sistemas",
+              "Ingeniería Industrial",
               "Literatura",
               "Mercadeo",
               "Música",
