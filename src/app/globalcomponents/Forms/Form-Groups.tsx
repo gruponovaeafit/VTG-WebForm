@@ -53,19 +53,7 @@ export default function GroupsForm() {
           className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           {[
-            "AIESEC",
-            "CLUBIN",
-            "CLUBMERC",
-            "GPG",
-            "NEXOS",
             "NOVA",
-            "OE",
-            "PARTNERS",
-            "SERES",
-            "SPIE",
-            "TUTORES",
-            "TVU",
-            "UN SOCIETY",
           ].map((group, index) => (
             <option key={index} value={group}>{group}</option>
           ))}
