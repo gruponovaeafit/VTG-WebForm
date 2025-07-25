@@ -143,7 +143,7 @@ export default function SeresPage() {
         data?.map((charla: { charla_info: string; participants: any[] }) => (
           <div key={charla.charla_info} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
             <h2 className="text-md font-semibold mb-1 text-cyan-400">
-              {charla.charla_info === "1" ? "Asiste a la charla" : "No asiste a la charla"}
+              {charla.charla_info}
             </h2>
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
               <Users className="h-5 w-5 text-green-500" />

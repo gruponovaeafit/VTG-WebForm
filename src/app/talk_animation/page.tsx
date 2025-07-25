@@ -65,7 +65,7 @@ export default function TalkAnimationPage() {
           >
             <Image src="https://novaeafit.blob.core.windows.net/vtg-2025-1/nova-logo.png" alt="NOVA" width={200} height={80} priority />
             <p className="text-lg sm:text-xl md:text-2xl pixel-font">
-              <TypingText text="Domingo 9 de febrero 7AM - Bloque 29 1er piso" />
+              <TypingText text="Domingo 3 de agosto 7am - Bloque 29 1er piso" />
             </p>
           </motion.div>
 
