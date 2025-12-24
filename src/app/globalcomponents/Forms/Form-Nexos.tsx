@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FormContainer from "./FormContainer";
 
 export default function NexosForm() {
   const router = useRouter();
@@ -86,10 +87,14 @@ export default function NexosForm() {
   };
 
   return (
-    <div className="max-h-[500px] overflow-y-auto">
-      <form
+    <>
+      <FormContainer
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full"
+        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        formClassName="space-y-4"
+        buttons={[
+          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+        ]}
       >
         <div className="mb-4">
           <label htmlFor="Departments" className="block text-sm mb-2 text-[#9A975F]">
@@ -144,15 +149,8 @@ export default function NexosForm() {
             placeholder="Ingresa tu excusa aquí"
           />
         </div>
-
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
-        >
-          Level Up!
-        </button>
-      </form>
+      </FormContainer>
       <ToastContainer />
-    </div>
+    </>
   );
 }

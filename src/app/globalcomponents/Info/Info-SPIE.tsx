@@ -1,5 +1,5 @@
 "use client";
-
+import FormContainer from "../Forms/FormContainer";
 import { useRouter } from "next/navigation";
 
 export default function InfoSPIE() {
@@ -10,7 +10,15 @@ export default function InfoSPIE() {
   };
 
   return (
-    <div className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full">
+    <>
+    <FormContainer
+    overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+    formClassName="space-y-4"
+    buttons={[
+      <button type="button" onClick={handleNextClick} className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Siguiente</button>
+    ]}
+    >
+      <div className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full">
       <h1 className="mb-4 text-red-600">Comités</h1>
       <p className="text-[10px] mb-2">
         <span className="font-bold text-red-600">Comité de publicidad:</span> Crea, gestiona y planifica la publicidad (física y digital) del capítulo SPIE.
@@ -24,14 +32,8 @@ export default function InfoSPIE() {
       <p className="text-[10px] mb-2">
         <span className="font-bold text-red-600">Comité de GH:</span> Genera un ambiente seguro y acogedor para los miembros mediante diversas actividades de integración.
       </p>
-
-      <button
-        type="button"
-        onClick={handleNextClick} // Función para manejar el clic
-        className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
-      >
-        Siguiente
-      </button>
-    </div>
+      </div>
+    </FormContainer>
+    </>
   );
 }

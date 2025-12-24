@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FormContainer from "./FormContainer";
 
 export default function Clubin1Form() {
   const router = useRouter();
@@ -107,10 +108,14 @@ export default function Clubin1Form() {
 
 
   return (
-    <div>
-      <form
+    <>
+      <FormContainer
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        formClassName="space-y-4"
+        buttons={[
+          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+        ]}
       >
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm mb-4 text-blue-200">
@@ -174,15 +179,8 @@ export default function Clubin1Form() {
             placeholder="Nombre"
           />
         </div>
-
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
-        >
-          Level Up!
-        </button>
-      </form>
+      </FormContainer>
       <ToastContainer />
-    </div>
+    </>
   );
 }

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FormContainer from "./FormContainer";
 
 export default function PartnersForm() {
   const router = useRouter();
@@ -64,9 +65,13 @@ export default function PartnersForm() {
 
   return (
     <>
-      <form
+      <FormContainer
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md"
+        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        formClassName="space-y-4"
+        buttons={[
+          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+        ]}
       >
         {/* Campo 1: ¿Quién te registró? */}
         <div className="mb-4">
@@ -111,14 +116,7 @@ export default function PartnersForm() {
           </select>
         </div>
 
-        {/* Botón de envío */}
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
-        >
-          Level Up!
-        </button>
-      </form>
+      </FormContainer>
       <ToastContainer />
     </>
   );
