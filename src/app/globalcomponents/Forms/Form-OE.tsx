@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FormContainer from "./FormContainer";
+import FormContainer from "../UI/FormContainer";
 
 export default function OEForm() {
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function OEForm() {
           position: "top-center",
           autoClose: 1500,
         }
-      );
+      );  
     }
   };
 

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import FormContainer from "./FormContainer";
+import FormContainer from "../UI/FormContainer";
 
 export default function NOVAForm() {
   const router = useRouter();

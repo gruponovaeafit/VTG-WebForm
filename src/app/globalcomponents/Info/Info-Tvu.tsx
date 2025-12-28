@@ -1,5 +1,5 @@
 "use client";
-import FormContainer from "../Forms/FormContainer";
+import FormContainer from "../UI/FormContainer";
 
 export default function InfoTvu() {
     return (

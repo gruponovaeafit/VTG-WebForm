@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import FormContainer from "../Forms/FormContainer";
+import FormContainer from "../UI/FormContainer";
 
 export default function InfoUn2() {
 
