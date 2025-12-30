@@ -1,4 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@font-face {
+  font-family: "EA Font";
+  src: url("/fonts/EASPORTS.woff2") format("woff2"),
+       url("/fonts/EASPORTS.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-ea {
+  font-family: "EA Font", sans-serif;
+}
 
 @tailwind base;
 @tailwind components;
@@ -34,6 +46,7 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: "Press Start 2P", serif;
+  /* font-family: "EA Font", sans-serif; */
   /* Quita display: flex; justify-content: center; align-items: center; */
 }
 
