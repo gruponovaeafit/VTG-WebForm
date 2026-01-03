@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function OEForm() {
   const router = useRouter();
@@ -92,19 +93,15 @@ export default function OEForm() {
               </option>
             ))}
           </select>
-          <label
-            htmlFor="asesor"
-            className="block text-m mb-4 mt-4 text-blue-400"
-          >
-            Nombre de la persona que te inscribió
-          </label>
-          <input
+          <Input
             type="text"
-            id="asesor"
             name="asesor"
+            label="Nombre de la persona que te inscribió"
             placeholder="Asesor"
-            title="IdTutor"
-            className="w-full px-4 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:opacity-70"
+            required
+            borderColorClass="border-blue-400"
+            focusRingColorClass="focus:ring-blue-500"
+            labelColorClass="text-blue-400"
           />
         </div>
       </FormContainer>

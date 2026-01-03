@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReCAPTCHA from "react-google-recaptcha";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function EmailForm() {
   const router = useRouter();
@@ -116,20 +117,16 @@ export default function EmailForm() {
           Level Up!
         </button>
       ]}>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm mb-2 text-green-400">
-            Correo Institucional
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="usuario@eafit.edu.co"
-            className="w-full px-4 py-2 rounded border border-green-400 bg-black text-white text-sm placeholder:text-xs
-                       focus:outline-none focus:ring-2 focus:ring-green-500 placeholder:opacity-70"
-          />
-        </div>
+        <Input
+          type="email"
+          name="email"
+          label="Correo Institucional"
+          placeholder="usuario@eafit.edu.co"
+          required
+          borderColorClass="border-green-400"
+          focusRingColorClass="focus:ring-green-500"
+          labelColorClass="text-green-400"
+        />
 
         <div className="flex justify-center mb-4">
           <ReCAPTCHA

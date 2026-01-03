@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function NOVAForm() {
   const router = useRouter();
@@ -103,20 +104,15 @@ export default function NOVAForm() {
         </div>
 
         <div className="mb-4">
-          <label
-            htmlFor="IdNovato"
-            className="block text-sm mb-2 text-purple-600"
-          >
-            Nombre del Novatto/a que te inscribió
-          </label>
-          <input
+          <Input
             type="text"
-            id="IdNovato"
             name="IdNovato"
-            required
+            label="Nombre del Novatto/a que te inscribió"
             placeholder="Novatto/a"
-            title="IdNovato"
-            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-70"
+            required
+            borderColorClass="border-purple-600"
+            focusRingColorClass="focus:ring-purple-700"
+            labelColorClass="text-purple-600"
           />
         </div>
       </FormContainer>

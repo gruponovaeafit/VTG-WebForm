@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function GpgForm() {
   const router = useRouter();
@@ -78,19 +79,16 @@ export default function GpgForm() {
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="age" className="block text-sm mb-2 text-purple-600">
-            ¿Qué edad tienes?
-          </label>
-          <input
-            type="text"
-            id="age"
+          <Input
+            type="number"
             name="age"
-            min= "15"
-            required
+            label="¿Qué edad tienes?"
             placeholder="Edad"
-            title="Ingresa tu edad"
-            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-85"
-          />
+            required
+            borderColorClass="border-purple-600"
+            focusRingColorClass="focus:ring-purple-700"
+            labelColorClass="text-purple-600"
+        />
         </div>
 
         <div className="mb-4">

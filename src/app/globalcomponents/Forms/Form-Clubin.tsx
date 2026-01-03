@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function Clubin1Form() {
   const router = useRouter();
@@ -166,19 +167,17 @@ export default function Clubin1Form() {
           </select>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="asesor" className="block text-sm mb-2 text-blue-200">
-            Escribe el nombre de tu asesor
-          </label>
-          <input
-            type="text"
-            id="asesor"
-            name="asesor"
-            required
-            className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Nombre"
-          />
-        </div>
+        <Input
+          type="text"
+          name="asesor"
+          label="Escribe el nombre de tu asesor"
+          placeholder="Nombre"
+          required
+          borderColorClass="border-blue-200"
+          focusRingColorClass="focus:ring-blue-500"
+          labelColorClass="text-blue-200"
+          className="!px-2"
+        />
       </FormContainer>
       <ToastContainer />
     </>

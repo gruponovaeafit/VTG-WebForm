@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function AssessmentForm() {
   const router = useRouter();
@@ -96,42 +97,31 @@ export default function AssessmentForm() {
       ]}>
         {/* Campo 1: Restricciones o preferencias alimentarias */}
         <div className="mb-4">
-          <label htmlFor="foodRestrictions" className="block text-xs mb-2 text-white">
-            ¿Cuentas con alguna preferencia o restricción en tu alimentación?
-          </label>
-          <label className="block text-xs mb-2 text-purple-400">
-            (Puedes poner N/A)
-          </label>
-          <input
+          <Input
             type="text"
             id="foodRestrictions"
             name="foodRestrictions"
             required
             placeholder="Cuéntanos acá"
-            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm 
-                       placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 
-                       placeholder:opacity-70"
+            borderColorClass="border-purple-600"
+            focusRingColorClass="focus:ring-purple-700"
+            labelColorClass="text-purple-600"
+            label="¿Cuentas con alguna preferencia o restricción en tu alimentación?"
           />
         </div>
 
         {/* Campo 2: Consideraciones de salud o movilidad */}
         <div className="mb-4">
-          <label htmlFor="healthConsiderations" className="block text-xs mb-2 text-white">
-            ¿Existe alguna consideración de salud o movilidad que te gustaría compartir para garantizar 
-            tu comodidad y seguridad durante las actividades?
-          </label>
-          <label className="block text-xs mb-2 text-purple-400">
-            (Puedes poner N/A)
-          </label>
-          <input
+          <Input
             type="text"
             id="healthConsiderations"
             name="healthConsiderations"
             required
             placeholder="Cuéntanos acá"
-            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm 
-                       placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 
-                       placeholder:opacity-70"
+            borderColorClass="border-purple-600"
+            focusRingColorClass="focus:ring-purple-700"
+            labelColorClass="text-purple-600"
+            label="¿Existe alguna consideración de salud o movilidad que te gustaría compartir para garantizar tu comodidad y seguridad durante las actividades?"
           />
         </div>
       </FormContainer>

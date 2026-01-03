@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function AiesecForm() {
   const router = useRouter();
@@ -82,19 +83,14 @@ export default function AiesecForm() {
           </button>
         ]}
       >
-        <div className="mb-4">
-          <label htmlFor="phone" className="block text-sm mb-2 text-blue-400">
-            Ingresa tu telefono
-          </label>
-          <input
-            type="phone"
-            id="phone"
-            name="phone"
-            required
-            placeholder="Ej: 3001234567"
-            className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-          />
-        </div>
+        <Input
+          type="tel"
+          name="phone"
+          label="Ingresa tu telefono"
+          placeholder="Ej: 3001234567"
+          required
+          colorTheme="blue"
+        />
         
       </FormContainer>
       <ToastContainer />

@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
+
 export default function AcademicForm() {
   const router = useRouter();
 
@@ -74,30 +76,31 @@ export default function AcademicForm() {
         </button>
       ]}>
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm mb-2 text-pink-400">
-            Nombre
-          </label>
-          <input
+          <Input
             type="text"
             id="name"
             name="name"
             required
             placeholder="Pepitx"
-            className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
-          />
+            borderColorClass="border-pink-400"
+            focusRingColorClass="focus:ring-pink-500"
+            labelColorClass="text-pink-400"
+            label="Nombre"
+          />  
+          
         </div>
 
         <div className="mb-4">
-          <label htmlFor="secondName" className="block text-sm mb-2 text-pink-400">
-            Apellidos
-          </label>
-          <input
+          <Input
             type="text"
             id="secondName"
             name="secondName"
             required
             placeholder="Perez"
-            className="w-full px-4 py-2 rounded border border-pink-400 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-pink-500 placeholder:opacity-70"
+            borderColorClass="border-pink-400"
+            focusRingColorClass="focus:ring-pink-500"
+            labelColorClass="text-pink-400"
+            label="Apellidos"
           />
         </div>
       </FormContainer>
