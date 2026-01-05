@@ -29,7 +29,7 @@ export default function Home() {
     <div
       className="relative flex flex-col justify-between w-full h-screen bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/coins.png')",
+        backgroundImage: "url('/coins.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

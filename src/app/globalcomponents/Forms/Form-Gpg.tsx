@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function GpgForm() {
   const router = useRouter();
@@ -67,25 +69,26 @@ export default function GpgForm() {
   };
 
   return (
-    <div>
-      <form
+    <>
+      <FormContainer
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        formClassName="space-y-4"
+        buttons={[
+          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+        ]}
       >
         <div className="mb-4">
-          <label htmlFor="age" className="block text-sm mb-2 text-purple-600">
-            ¿Qué edad tienes?
-          </label>
-          <input
-            type="text"
-            id="age"
+          <Input
+            type="number"
             name="age"
-            min= "15"
-            required
+            label="¿Qué edad tienes?"
             placeholder="Edad"
-            title="Ingresa tu edad"
-            className="w-full px-4 py-2 rounded border border-purple-600 bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-purple-700 placeholder:opacity-85"
-          />
+            required
+            borderColorClass="border-purple-600"
+            focusRingColorClass="focus:ring-purple-700"
+            labelColorClass="text-purple-600"
+        />
         </div>
 
         <div className="mb-4">
@@ -106,14 +109,9 @@ export default function GpgForm() {
           </select>
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-300 font-bold uppercase tracking-wider transition duration-300"
-        >
-          Level Up!
-        </button>
-      </form>
+        
+      </FormContainer>
       <ToastContainer />
-    </div>
+    </>
   );
 }
