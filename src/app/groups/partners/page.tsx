@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-
   useEffect(() => {
     const checkCookie = async () => {
       try {
@@ -36,7 +35,7 @@ export default function Home() {
       className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white overflow-auto"
       style={{
         backgroundImage:
-          "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/partners.svg')",
+          "url('/partners.svg')",
         backgroundSize: "cover",
         position: "relative",
         // overflow: "hidden", // Quita o comenta esta línea

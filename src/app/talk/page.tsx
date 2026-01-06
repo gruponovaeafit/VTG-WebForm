@@ -33,7 +33,7 @@ export default function Home() {
     <div
       className="relative flex flex-col justify-center items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('https://novaeafit.blob.core.windows.net/vtg-2025-1/nova.svg')",
+        backgroundImage: "url('/nova.svg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -57,7 +57,7 @@ export default function Home() {
 
         <footer className="flex items-center justify-center relative z-10">
               <Image
-                        src="https://novaeafit.blob.core.windows.net/vtg-2025-1/PoweredByLOVE.svg"
+                        src="/PoweredByLOVE.svg"
                         alt="Powered By NOVA"
                         className="w-40 h-10"
                         width={240} // Equivalent to w-40

@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        press: ['"Press Start 2P"', "serif"], 
+        ea: ['"EA Font"', "sans-serif"],  
+        pressStart2P: ['"Press Start 2P"', "serif"],
       },
       fontSize: {
         xxs: "10px",

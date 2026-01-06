@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FormContainer from "../UI/FormContainer";
+import Input from "../UI/Input";
 
 export default function NexosForm() {
   const router = useRouter();
@@ -86,10 +88,14 @@ export default function NexosForm() {
   };
 
   return (
-    <div className="max-h-[500px] overflow-y-auto">
-      <form
+    <>
+      <FormContainer
         onSubmit={handleFormSubmit}
-        className="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full"
+        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
+        formClassName="space-y-4"
+        buttons={[
+          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+        ]}
       >
         <div className="mb-4">
           <label htmlFor="Departments" className="block text-sm mb-2 text-[#9A975F]">
@@ -132,27 +138,19 @@ export default function NexosForm() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="Excuse" className="block text-sm mb-2 text-[#9A975F]">
-            En caso de que no puedas ir a la charla. ¿Por qué no puedes asistir?
-          </label>
-          <input
+          <Input
             type="text"
-            id="excuse"
             name="excuse"
-            title="Excuse"
-            className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white text-sm placeholder:text-xs focus:outline-none focus:ring-2 focus:ring-[#9A975F]-700 placeholder:opacity-70"
+            label="En caso de que no puedas ir a la charla. ¿Por qué no puedes asistir?"
             placeholder="Ingresa tu excusa aquí"
+            required
+            borderColorClass="border-[#9A975F]"
+            focusRingColorClass="focus:ring-[#9A975F]"
+            labelColorClass="text-[#9A975F]"
           />
         </div>
-
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300"
-        >
-          Level Up!
-        </button>
-      </form>
+      </FormContainer>
       <ToastContainer />
-    </div>
+    </>
   );
 }
