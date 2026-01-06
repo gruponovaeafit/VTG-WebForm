@@ -1,10 +1,10 @@
 "use client";
 
-{/* Componente reutilizable de Select con soporte para errores y textos de ayuda */}
+//Componente reutilizable de Select con soporte para errores y textos de ayuda
 import React from "react";
 
 
-{/*  Definición de tipos para las opciones y las props del componente Select */}
+// Definición de tipos para las opciones y las props del componente Select
 type Option = {
   label: string;
   value: string;
@@ -20,7 +20,7 @@ type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   helperText?: string;   
 };
 
-{/* Componente Select */}
+//Componente Select
 export default function Select({
   id,
   name,
@@ -33,7 +33,7 @@ export default function Select({
   className = "",
   ...rest
 }: SelectProps) {
-    {/* Clases base y condicionales para el estilo del select */}
+    //Clases base y condicionales para el estilo del select
   const baseClasses =
     "w-full px-4 py-2 rounded border bg-black text-white text-sm focus:outline-none";
   const normalBorder = "border-purple-600 focus:ring-2 focus:ring-purple-700";
