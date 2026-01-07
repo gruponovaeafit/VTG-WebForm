@@ -110,10 +110,9 @@ export default function EmailForm() {
     <>
       <FormContainer 
       onSubmit={handleFormSubmit} 
-      overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" 
-      formClassName="space-y-4" 
+    
       buttons={[
-        <button type="submit" className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95">
+        <button key="submit-button" type="submit" className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95">
           Level Up!
         </button>
       ]}>
@@ -123,17 +122,17 @@ export default function EmailForm() {
           label="Correo Institucional"
           placeholder="usuario@eafit.edu.co"
           required
-          borderColorClass="border-green-400"
-          focusRingColorClass="focus:ring-green-500"
-          labelColorClass="text-green-400"
+          borderColorClass="border-black"
+          focusRingColorClass="focus:ring-white"
+          labelColorClass="text-white"
         />
 
         <div className="flex justify-center mb-4">
-          <ReCAPTCHA
+          {/*<ReCAPTCHA
             ref={captchaRef}
             sitekey={process.env.NEXT_PUBLIC_CLIENT_KEY_CAPTCHA!}
             onChange={(token) => setCaptcha(token)}
-          />
+          />*/}
         </div>
       </FormContainer>
       <ToastContainer />

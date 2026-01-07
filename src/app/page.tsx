@@ -7,7 +7,12 @@ import Footer from "./globalcomponents/UI/Footer";
 
 export default function MainPage() {
   const router = useRouter();
-  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push("/email");
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const [currentTag, setCurrentTag] = useState("");
   const [isOut, setIsOut] = useState(false);

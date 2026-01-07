@@ -65,7 +65,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Press Start 2P", serif;
+  font-family: "inter", sans-serif;
   /* font-family: "EA Font", sans-serif; */
   /* Quita display: flex; justify-content: center; align-items: center; */
 }

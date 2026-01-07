@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
 
-export default function AcademicForm() {
+export default function PersonalForm() {
   const router = useRouter();
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -70,39 +70,34 @@ export default function AcademicForm() {
 
   return (
     <>
-      <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" formClassName="space-y-4" buttons={[
-        <button type="submit" className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95">
+      <FormContainer onSubmit={handleFormSubmit} buttons={[
+        <button key="submit-button" type="submit" className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95">
           Level Up!
         </button>
       ]}>
-        <div className="mb-4">
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            required
-            placeholder="Pepitx"
-            borderColorClass="border-pink-400"
-            focusRingColorClass="focus:ring-pink-500"
-            labelColorClass="text-pink-400"
-            label="Nombre"
-          />  
-          
-        </div>
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="Pepitx"
+          borderColorClass="border-black"
+          focusRingColorClass="focus:ring-white "
+          labelColorClass="text-white"
+          label="Nombre"
+        />
 
-        <div className="mb-4">
-          <Input
-            type="text"
-            id="secondName"
-            name="secondName"
-            required
-            placeholder="Perez"
-            borderColorClass="border-pink-400"
-            focusRingColorClass="focus:ring-pink-500"
-            labelColorClass="text-pink-400"
-            label="Apellidos"
-          />
-        </div>
+        <Input
+          type="text"
+          id="secondName"
+          name="secondName"
+          required
+          placeholder="Perez"
+          borderColorClass="border-black"
+          focusRingColorClass="focus:ring-white"
+          labelColorClass="text-white"
+          label="Apellidos"
+        />
       </FormContainer>
       <ToastContainer />
     </>
