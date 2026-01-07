@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
+
 export default function AssessmentAssistanceForm() {
   const router = useRouter();
 
@@ -28,7 +30,6 @@ export default function AssessmentAssistanceForm() {
       const result = await response.json();
 
       if (!response.ok) {
-
         // Manejo de errores en la respuesta del servidor
         if (result.notification) {
           toast.error(result.notification.message, {
@@ -94,21 +95,16 @@ export default function AssessmentAssistanceForm() {
         </button>
       ]}>
         <div className="mb-4">
-          <label htmlFor="talk" className="block text-sm mb-2 text-purple-600">
-            ¿Vas a asistir al assessment?
-          </label>
-          <select
+          <Select
             id="talk"
             name="talk"
+            label="¿Vas a asistir al assessment?"
             required
-            className="w-full px-4 py-2 text-sm rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600"
-          >
-            {["Si", "No"].map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Si", value: "Si" },
+              { label: "No", value: "No" },
+            ]}
+          />
         </div>
       </FormContainer>
       <ToastContainer />

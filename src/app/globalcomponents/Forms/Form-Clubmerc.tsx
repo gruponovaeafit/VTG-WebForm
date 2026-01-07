@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
 
 export default function ClubmercForm() {
   const router = useRouter();
@@ -77,46 +78,29 @@ export default function ClubmercForm() {
           <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
         ]}
       >
-        <div className="mb-4">
-          <label htmlFor="committieSelect" className="block text-sm mb-2 text-blue-400">
-            Comités
-          </label>
-          <select
-            name="committieSelect"
-            id="committieSelect"
-            required
-            className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {[
-              "Relaciones Públicas",
-              "Publicidad y Mercadeo",
-              "Conexión Estratégica",
-              "Gestión Humana",
-            ].map((committie, index) => (
-              <option key={index} value={committie}>
-                {committie}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Select
+          id="committieSelect"
+          name="committieSelect"
+          label="Comités"
+          required
+          options={[
+            { label: "Relaciones Públicas", value: "Relaciones Públicas" },
+            { label: "Publicidad y Mercadeo", value: "Publicidad y Mercadeo" },
+            { label: "Conexión Estratégica", value: "Conexión Estratégica" },
+            { label: "Gestión Humana", value: "Gestión Humana" },
+          ]}
+        />
 
-        <div className="mb-4">
-          <label htmlFor="talk" className="block text-sm mb-2 text-blue-400">
-            ¿Tienes disponibilidad este Sábado 26 de Julio?
-          </label>
-          <select
-            name="talk"
-            id="talk"
-            required
-            className="w-full px-4 py-2 text-sm rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {["Sí", "No"].map((response, index) => (
-              <option key={index} value={response}>
-                {response}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Select
+          id="talk"
+          name="talk"
+          label="¿Tienes disponibilidad este Sábado 26 de Julio?"
+          required
+          options={[
+            { label: "Sí", value: "Sí" },
+            { label: "No", value: "No" },
+          ]}
+        />
 
         <button
           type="submit"

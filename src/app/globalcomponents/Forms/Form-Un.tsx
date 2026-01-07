@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
 
 export default function UnForm() {
   const router = useRouter();
@@ -73,62 +74,54 @@ export default function UnForm() {
           <label htmlFor="committies" className="block text-sm mb-2 text-blue-400">
             ¿Cuáles son tus comités de preferencia?
           </label>
-          <select
+          
+          <Select
             id="committie"
             name="committie"
             required
             className="w-full px-2 py-2 text-xs rounded border border-blue-400 bg-black text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {[
-              "Publicidad y Redes",
-              "Gestión Humana",
-              "Relaciones Públicas",
-              "Logística",
-              "Académico",
-            ].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Publicidad y Redes", value: "Publicidad y Redes" },
+              { label: "Gestión Humana", value: "Gestión Humana" },
+              { label: "Relaciones Públicas", value: "Relaciones Públicas" },
+              { label: "Logística", value: "Logística" },
+              { label: "Académico", value: "Académico" },
+            ]}
+          />
         </div>
 
         <div className="mb-2">
           <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
             ¿Podrás asistir a la charla informativa del Viernes 25 de julio a las 4:00pm?
           </label>
-          <select
+          
+          <Select
             id="talk"
             name="talk"
             required
             className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {["Sí, podré asistir", "No, nos vemos en el Assessment."].map(
-              (talks, index) => (
-                <option key={index} value={talks}>
-                  {talks}
-                </option>
-              )
-            )}
-          </select>
+            options={[
+              { label: "Sí, podré asistir", value: "Sí, podré asistir" },
+              { label: "No, nos vemos en el Assessment.", value: "No, nos vemos en el Assessment." },
+            ]}
+          />
         </div>
 
         <div className="mb-4">
           <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">
             ¿Puedes asistir al assessment el sábado 26 de julio?
           </label>
-          <select
-            name="assessment"
+          
+          <Select
             id="assessment"
+            name="assessment"
             required
             className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {["Sí", "No"].map((assessment, index) => (
-              <option key={index} value={assessment}>
-                {assessment}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Sí", value: "Sí" },
+              { label: "No", value: "No" },
+            ]}
+          />
         </div>
       </FormContainer>
       <ToastContainer />

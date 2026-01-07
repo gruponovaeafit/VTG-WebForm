@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
+import Select from "../UI/Select";
 
 export default function Clubin1Form() {
   const router = useRouter();
@@ -107,6 +108,7 @@ export default function Clubin1Form() {
     }
   };
 
+  const hasSlots = availableSlots[selectedDay]?.length > 0;
 
   return (
     <>
@@ -122,12 +124,10 @@ export default function Clubin1Form() {
           <label htmlFor="name" className="block text-sm mb-4 text-blue-200">
             Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
           </label>
-          <label htmlFor="date" className="block text-sm mb-2 text-blue-200">
-            Días
-          </label>
-          <select
-            name="date"
+          <Select
             id="date"
+            name="date"
+            label="Días"
             required
             value={selectedDay}
             onChange={(e) => {
@@ -135,36 +135,34 @@ export default function Clubin1Form() {
               console.log("🗓️ Día seleccionado:", newDay);
               setSelectedDay(newDay);
             }}
-            className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {Object.keys(availableSlots).map((date, index) => (
-              <option key={index} value={date}>
-                {date}
-              </option>
-            ))}
-          </select>
+            options={Object.keys(availableSlots).map((date) => ({
+              label: date,
+              value: date,
+            }))}
+          />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="talk" className="block text-sm mb-2 text-blue-200">
-            Horas
-          </label>
-          <select
+          <Select
             id="talk"
             name="talk"
+            label="Horas"
             required
-            className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {availableSlots[selectedDay]?.length > 0 ? (
-              availableSlots[selectedDay].map((hora, index) => (
-                <option key={index} value={hora}>
-                  {hora}
-                </option>
-              ))
-            ) : (
-              <option disabled>No hay horarios disponibles</option>
-            )}
-          </select>
+            disabled={!hasSlots}
+            options={
+              hasSlots && availableSlots[selectedDay]
+                ? availableSlots[selectedDay].map((hora) => ({
+                    label: hora,
+                    value: hora,
+                  }))
+                : [
+                    {
+                      label: "No hay horarios disponibles",
+                      value: "",
+                    },
+                  ]
+            }
+          />
         </div>
 
         <Input

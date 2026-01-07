@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
 
 export default function TvuForm() {
   const router = useRouter();
@@ -76,21 +77,17 @@ export default function TvuForm() {
           <label htmlFor="talks" className="block text-m mb-2 text-purple-400">
             ¿A qué charla informativa deseas asistir?
           </label>
-          <select
+
+          <Select
             id="talk"
             name="talk"
             required
-            className="w-full px-2 py-2 text-sm rounded border border-purple-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
-          >
-            {[
-              "Vie. 25 jul, 3-4 p.m.",
-              "Mar. 29 jul, 6-7 p.m.",
-            ].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
+            className="border-purple-400 focus:ring-2 focus:ring-purple-500"
+            options={[
+              { label: "Vie. 25 jul, 3-4 p.m.", value: "Vie. 25 jul, 3-4 p.m." },
+              { label: "Mar. 29 jul, 6-7 p.m.", value: "Mar. 29 jul, 6-7 p.m." },
+            ]}
+          />
         </div>
       </FormContainer>
       <ToastContainer />

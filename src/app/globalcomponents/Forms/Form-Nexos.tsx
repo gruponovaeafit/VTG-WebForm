@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
+import Select from "../UI/Select";
 
 export default function NexosForm() {
   const router = useRouter();
@@ -117,24 +118,24 @@ export default function NexosForm() {
             )}
           </div>
         </div>
+
         <div className="mb-4">
           <label htmlFor="assistance" className="block text-sm mb-2 text-[#9A975F]">
             ¿Asistirás a la charla informativa el viernes 25 de Julio a la 1:30pm? 
             <br />
             Salón 34-302
           </label>
-          <select
-            name="assistance"
+         
+          <Select
             id="assistance"
+            name="assistance"
             required
+            options={[
+              { label: "Sí", value: "Sí" },
+              { label: "No", value: "No" },
+            ]}
             className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9A975F]"
-          >
-            {["Sí", "No"].map((response, index) => (
-              <option key={index} value={response}>
-                {response}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         <div className="mb-4">

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
+import Select from "../UI/Select";
 
 export default function OEForm() {
   const router = useRouter();
@@ -81,18 +82,18 @@ export default function OEForm() {
           <label htmlFor="programs" className="block text-m mb-2">
             Próximo viernes 25 de Julio a las 3:00pm
           </label>
-          <select
+
+          <Select
             id="talk"
             name="talk"
             required
-            className="w-full px-2 py-2 rounded border border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {["Si", "No"].map((program, index) => (
-              <option key={index} value={program}>
-                {program}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Si", value: "Si" },
+              { label: "No", value: "No" },
+            ]}
+            className="border-blue-400 focus:ring-2 focus:ring-blue-500"
+          />
+
           <Input
             type="text"
             name="asesor"

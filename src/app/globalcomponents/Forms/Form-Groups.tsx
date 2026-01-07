@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
 
 export default function GroupsForm() {
   const router = useRouter();
@@ -45,24 +46,16 @@ export default function GroupsForm() {
         Level Up!
       </button>
     ]}>
-      <div className="mb-4">
-        <label htmlFor="studentGroup" className="block text-m mb-2 text-teal-400">
-          Grupo estudiantil de interés
-        </label>
-        <select
+        <Select
           id="studentGroup"
           name="studentGroup"
+          label="Grupo estudiantil de interés"
           required
-          className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
-        >
-          {[
-            "NOVA",
-          ].map((group, index) => (
-            <option key={index} value={group}>{group}</option>
-          ))}
-        </select>
-      </div>
-    </FormContainer>
+          options={[
+            { label: "NOVA", value: "NOVA" },
+          ]}
+        />
+      </FormContainer>
     </>
   );
 }
