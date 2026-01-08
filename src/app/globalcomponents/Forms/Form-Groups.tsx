@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
 import Button from "../UI/Button";
 
 export default function GroupsForm() {
@@ -44,24 +45,16 @@ export default function GroupsForm() {
     <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" formClassName="space-y-4" buttons={[
       <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
     ]}>
-      <div className="mb-4">
-        <label htmlFor="studentGroup" className="block text-m mb-2 text-teal-400">
-          Grupo estudiantil de interés
-        </label>
-        <select
+        <Select
           id="studentGroup"
           name="studentGroup"
+          label="Grupo estudiantil de interés"
           required
-          className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
-        >
-          {[
-            "NOVA",
-          ].map((group, index) => (
-            <option key={index} value={group}>{group}</option>
-          ))}
-        </select>
-      </div>
-    </FormContainer>
+          options={[
+            { label: "NOVA", value: "NOVA" },
+          ]}
+        />
+      </FormContainer>
     </>
   );
 }

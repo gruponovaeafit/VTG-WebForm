@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
+import Select from "../UI/Select";
 import Button from "../UI/Button";
 
 export default function GpgForm() {
@@ -89,28 +90,20 @@ export default function GpgForm() {
             borderColorClass="border-purple-600"
             focusRingColorClass="focus:ring-purple-700"
             labelColorClass="text-purple-600"
+          />
+        </div>
+
+        <Select
+          id="talk"
+          name="talk"
+          label="¿Estás viendo pre-práctica?"
+          required
+          options={[
+            { label: "Si", value: "Si" },
+            { label: "No", value: "No" },
+          ]}
         />
-        </div>
 
-        <div className="mb-4">
-          <label htmlFor="talk" className="block text-m mb-2 text-purple-600">
-            ¿Estás viendo pre-práctica?
-          </label>
-          <select
-            id="talk"
-            name="talk"
-            required
-            className="w-full px-2 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-700"
-          >
-            {["Si", "No"].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        
       </FormContainer>
       <ToastContainer />
     </>
