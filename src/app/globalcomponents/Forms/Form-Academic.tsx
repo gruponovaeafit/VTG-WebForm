@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
+import Button from "../UI/Button";
 
 export default function AcademicForm() {
   const router = useRouter();
@@ -26,7 +28,6 @@ export default function AcademicForm() {
       const result = await response.json();
 
       if (!response.ok) {
-
         // Manejo de errores en la respuesta del servidor
         toast.error(result.message || "Error en el servidor.", {
           position: "top-center",
@@ -51,135 +52,115 @@ export default function AcademicForm() {
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
-        position: "top-center",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      toast.error(
+        "Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.",
+        {
+          position: "top-center",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
     }
   };
 
   return (
     <>
-      <FormContainer onSubmit={handleFormSubmit} 
+      <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" 
+      formClassName="space-y-4" 
       buttons={[
-        <button key="submit-button"  type="submit" className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95">
-          Level Up!
-        </button>
+        <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
       ]}>
         <div className="mb-4">
-          <label htmlFor="programs" className="block text-m mb-2 text-yellow-400">
-            Programa académico
-          </label>
-          <select
+          <Select
             id="programs"
             name="programs"
+            label="Programa académico"
             required
-            className="w-full px-4 py-2 rounded border border-yellow-400 bg-black text-white
-                       focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
-            {[
-              "Administración de Negocios",
-              "Biología",
-              "Ciencias Políticas",
-              "Comunicación Social",
-              "Contaduría Pública",
-              "Derecho",
-              "Diseño Interactivo",
-              "Diseño Urbano y Gestión del Hábitat",
-              "Economía",
-              "Finanzas",
-              "Geología",
-              "Ingeniería Agronómica",
-              "Ingeniería Civil",
-              "Ingeniería de Diseño de Producto",
-              "Ingeniería Física",
-              "Ingeniería Matemática",
-              "Ingeniería Mecánica",
-              "Ingeniería de Procesos",
-              "Ingeniería de Producción",
-              "Ingeniería de Sistemas",
-              "Ingeniería Industrial",
-              "Literatura",
-              "Mercadeo",
-              "Música",
-              "Negocios Internacionales",
-              "Psicología",
-            ].map((program, index) => (
-              <option key={index} value={program}>
-                {program}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Administración de Negocios", value: "Administración de Negocios" },
+              { label: "Biología", value: "Biología" },
+              { label: "Ciencias Políticas", value: "Ciencias Políticas" },
+              { label: "Comunicación Social", value: "Comunicación Social" },
+              { label: "Contaduría Pública", value: "Contaduría Pública" },
+              { label: "Derecho", value: "Derecho" },
+              { label: "Diseño Interactivo", value: "Diseño Interactivo" },
+              { label: "Diseño Urbano y Gestión del Hábitat", value: "Diseño Urbano y Gestión del Hábitat" },
+              { label: "Economía", value: "Economía" },
+              { label: "Finanzas", value: "Finanzas" },
+              { label: "Geología", value: "Geología" },
+              { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
+              { label: "Ingeniería Civil", value: "Ingeniería Civil" },
+              { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
+              { label: "Ingeniería Física", value: "Ingeniería Física" },
+              { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
+              { label: "Ingeniería Mecánica", value: "Ingeniería Mecánica" },
+              { label: "Ingeniería de Procesos", value: "Ingeniería de Procesos" },
+              { label: "Ingeniería de Producción", value: "Ingeniería de Producción" },
+              { label: "Ingeniería de Sistemas", value: "Ingeniería de Sistemas" },
+              { label: "Ingeniería Industrial", value: "Ingeniería Industrial" },
+              { label: "Literatura", value: "Literatura" },
+              { label: "Mercadeo", value: "Mercadeo" },
+              { label: "Música", value: "Música" },
+              { label: "Negocios Internacionales", value: "Negocios Internacionales" },
+              { label: "Psicología", value: "Psicología" },
+            ]}
+          />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="secondaryPrograms" className="block text-m mb-2 text-yellow-400">
-            Programa académico Secundario
-          </label>
-          <select
+          <Select
             id="secondaryPrograms"
             name="secondaryPrograms"
+            label="Programa académico Secundario"
             required
-            className="w-full px-4 py-2 rounded border border-yellow-400 bg-black text-white
-                       focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
-            {[
-              "No Aplica",
-              "Administración de Negocios",
-              "Biología",
-              "Ciencias Políticas",
-              "Comunicación Social",
-              "Contaduría Pública",
-              "Derecho",
-              "Diseño Interactivo",
-              "Diseño Urbano y Gestión del Hábitat",
-              "Economía",
-              "Finanzas",
-              "Geología",
-              "Ingeniería Agronómica",
-              "Ingeniería Civil",
-              "Ingeniería de Diseño de Producto",
-              "Ingeniería Física",
-              "Ingeniería Matemática",
-              "Ingeniería Mecánica",
-              "Ingeniería de Procesos",
-              "Ingeniería de Producción",
-              "Ingeniería de Sistemas",
-              "Literatura",
-              "Mercadeo",
-              "Música",
-              "Negocios Internacionales",
-              "Psicología",
-            ].map((program, index) => (
-              <option key={index} value={program}>
-                {program}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "No Aplica", value: "No Aplica" },
+              { label: "Administración de Negocios", value: "Administración de Negocios" },
+              { label: "Biología", value: "Biología" },
+              { label: "Ciencias Políticas", value: "Ciencias Políticas" },
+              { label: "Comunicación Social", value: "Comunicación Social" },
+              { label: "Contaduría Pública", value: "Contaduría Pública" },
+              { label: "Derecho", value: "Derecho" },
+              { label: "Diseño Interactivo", value: "Diseño Interactivo" },
+              { label: "Diseño Urbano y Gestión del Hábitat", value: "Diseño Urbano y Gestión del Hábitat" },
+              { label: "Economía", value: "Economía" },
+              { label: "Finanzas", value: "Finanzas" },
+              { label: "Geología", value: "Geología" },
+              { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
+              { label: "Ingeniería Civil", value: "Ingeniería Civil" },
+              { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
+              { label: "Ingeniería Física", value: "Ingeniería Física" },
+              { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
+              { label: "Ingeniería Mecánica", value: "Ingeniería Mecánica" },
+              { label: "Ingeniería de Procesos", value: "Ingeniería de Procesos" },
+              { label: "Ingeniería de Producción", value: "Ingeniería de Producción" },
+              { label: "Ingeniería de Sistemas", value: "Ingeniería de Sistemas" },
+              { label: "Literatura", value: "Literatura" },
+              { label: "Mercadeo", value: "Mercadeo" },
+              { label: "Música", value: "Música" },
+              { label: "Negocios Internacionales", value: "Negocios Internacionales" },
+              { label: "Psicología", value: "Psicología" },
+            ]}
+          />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="semester" className="block text-m mb-2 text-purple-400">
-            ¿En qué semestre te encuentras matriculadx?
-          </label>
-          <select
+          <Select
             id="semester"
             name="semester"
+            label="¿En qué semestre te encuentras matriculadx?"
             required
-            className="w-full px-4 py-2 rounded border border-purple-400 bg-black text-white
-                       focus:outline-none focus:ring-2 focus:ring-purple-500"
-          >
-            {[...Array(10)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
-              </option>
-            ))}
-            <option value="10+">10+</option>
-          </select>
+            options={[
+              ...Array.from({ length: 10 }, (_, i) => ({
+                label: `${i + 1}`,
+                value: `${i + 1}`,
+              })),
+              { label: "10+", value: "10+" },
+            ]}
+          />
         </div>
       </FormContainer>
       <ToastContainer />

@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
+import Select from "../UI/Select";
+import Button from "../UI/Button";
 
 export default function NOVAForm() {
   const router = useRouter();
@@ -78,30 +80,21 @@ export default function NOVAForm() {
         overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
         formClassName="space-y-4"
         buttons={[
-          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
-        <div className="mb-4">
-          <label htmlFor="talk" className="block text-sm mb-2 text-purple-600">
-            ¿A qué charla informartiva asistirás?
-          </label>
-          <select
-            id="talk"
-            name="talk"
-            required
-            className="w-full px-4 py-2 text-sm rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-600"
-          >
-            {[
-              "Jue. 24 jul, 12-1 p.m.",
-              "Vie. 25 jul, 2-3 p.m.",
-              "Mié. 30 jul, 5-6 p.m.",
-            ].map((group, index) => (
-              <option key={index} value={group}>
-                {group}
-              </option>
-            ))}
-          </select>
-        </div>
+
+        <Select
+          id="talk"
+          name="talk"
+          label="¿A qué charla informartiva asistirás?"
+          required
+          options={[
+            { label: "Jue. 24 jul, 12-1 p.m.", value: "Jue. 24 jul, 12-1 p.m." },
+            { label: "Vie. 25 jul, 2-3 p.m.", value: "Vie. 25 jul, 2-3 p.m." },
+            { label: "Mié. 30 jul, 5-6 p.m.", value: "Mié. 30 jul, 5-6 p.m." },
+          ]}
+        />
 
         <div className="mb-4">
           <Input

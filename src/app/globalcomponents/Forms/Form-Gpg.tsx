@@ -5,6 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
+import Select from "../UI/Select";
+import Button from "../UI/Button";
 
 export default function GpgForm() {
   const router = useRouter();
@@ -75,7 +77,7 @@ export default function GpgForm() {
         overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
         formClassName="space-y-4"
         buttons={[
-          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
         <div className="mb-4">
@@ -88,28 +90,20 @@ export default function GpgForm() {
             borderColorClass="border-purple-600"
             focusRingColorClass="focus:ring-purple-700"
             labelColorClass="text-purple-600"
+          />
+        </div>
+
+        <Select
+          id="talk"
+          name="talk"
+          label="¿Estás viendo pre-práctica?"
+          required
+          options={[
+            { label: "Si", value: "Si" },
+            { label: "No", value: "No" },
+          ]}
         />
-        </div>
 
-        <div className="mb-4">
-          <label htmlFor="talk" className="block text-m mb-2 text-purple-600">
-            ¿Estás viendo pre-práctica?
-          </label>
-          <select
-            id="talk"
-            name="talk"
-            required
-            className="w-full px-2 py-2 rounded border border-purple-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-700"
-          >
-            {["Si", "No"].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        
       </FormContainer>
       <ToastContainer />
     </>

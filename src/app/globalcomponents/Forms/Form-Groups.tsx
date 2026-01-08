@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
+import Button from "../UI/Button";
 
 export default function GroupsForm() {
   const router = useRouter();
@@ -40,29 +42,19 @@ export default function GroupsForm() {
 
   return (
     <>
-    <FormContainer onSubmit={handleFormSubmit}  buttons={[
-      <button key="submit-button" type="submit" className="w-full py-3 sm:py-4 px-4 sm:px-6 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300 text-sm sm:text-base transform hover:scale-105 active:scale-95">
-        Level Up!
-      </button>
+    <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" formClassName="space-y-4" buttons={[
+      <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
     ]}>
-      <div className="mb-4">
-        <label htmlFor="studentGroup" className="block text-m mb-2 text-teal-400">
-          Grupo estudiantil de interés
-        </label>
-        <select
+        <Select
           id="studentGroup"
           name="studentGroup"
+          label="Grupo estudiantil de interés"
           required
-          className="w-full px-4 py-2 rounded border border-teal-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
-        >
-          {[
-            "NOVA",
-          ].map((group, index) => (
-            <option key={index} value={group}>{group}</option>
-          ))}
-        </select>
-      </div>
-    </FormContainer>
+          options={[
+            { label: "NOVA", value: "NOVA" },
+          ]}
+        />
+      </FormContainer>
     </>
   );
 }

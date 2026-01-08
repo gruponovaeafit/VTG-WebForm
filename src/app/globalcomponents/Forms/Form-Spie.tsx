@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
+import Select from "../UI/Select";
+import Button from "../UI/Button";
 
 export default function SpieForm() {
   const router = useRouter();
@@ -69,30 +71,26 @@ export default function SpieForm() {
         overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
         formClassName="space-y-4"
         buttons={[
-          <button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
+          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
         <div className="mb-4">
           <label htmlFor="committie" className="block text-sm mb-2 text-red-600">
             ¿En que comité te gustaría participar?
           </label>
-          <select
-            name="committie"
+          
+          <Select
             id="committie"
+            name="committie"
             required
             className="w-full px-4 py-2 text-xs rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600"
-          >
-            {[
-              "Comité de Publicidad",
-              "Comité de Divulgación",
-              "Comité de RRPP",
-              "Comité de GH",
-            ].map((committie, index) => (
-              <option key={index} value={committie}>
-                {committie}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Comité de Publicidad", value: "Comité de Publicidad" },
+              { label: "Comité de Divulgación", value: "Comité de Divulgación" },
+              { label: "Comité de RRPP", value: "Comité de RRPP" },
+              { label: "Comité de GH", value: "Comité de GH" },
+            ]}
+          />
         </div>
 
         <div className="mb-4">
@@ -102,22 +100,18 @@ export default function SpieForm() {
           >
             ¿A que charla informativa puedes asistir?
           </label>
-          <select
+      
+          <Select
             id="talk"
             name="talk"
             required
             className="w-full px-4 py-2 text-sm rounded border border-red-600 bg-black text-white focus:outline-none focus:ring-2 focus:ring-red-600 mb-4"
-          >
-            {[
-              "Vie. 25 Jul, 4:00 p.m.",
-              "Mie. 30 Jul, 6:00 p.m.",
-              "Vie. 1 Ago, 4:00 p.m.",
-            ].map((talks, index) => (
-              <option key={index} value={talks}>
-                {talks}
-              </option>
-            ))}
-          </select>
+            options={[
+              { label: "Vie. 25 Jul, 4:00 p.m.", value: "Vie. 25 Jul, 4:00 p.m." },
+              { label: "Mie. 30 Jul, 6:00 p.m.", value: "Mie. 30 Jul, 6:00 p.m." },
+              { label: "Vie. 1 Ago, 4:00 p.m.", value: "Vie. 1 Ago, 4:00 p.m." },
+            ]}
+          />
           <label
             htmlFor="disclamer"
             className="block text-sm mb-2 text-white text-[10px]"
