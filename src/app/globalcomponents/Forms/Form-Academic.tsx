@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
-im
 import Button from "../UI/Button";
 
 export default function AcademicForm() {
