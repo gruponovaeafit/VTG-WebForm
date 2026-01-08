@@ -111,8 +111,7 @@ export default function EmailForm() {
     <>
       <FormContainer 
       onSubmit={handleFormSubmit} 
-      overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" 
-      formClassName="space-y-4" 
+    
       buttons={[
         <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
       ]}>
@@ -122,17 +121,17 @@ export default function EmailForm() {
           label="Correo Institucional"
           placeholder="usuario@eafit.edu.co"
           required
-          borderColorClass="border-green-400"
-          focusRingColorClass="focus:ring-green-500"
-          labelColorClass="text-green-400"
+          borderColorClass="border-black"
+          focusRingColorClass="focus:ring-white"
+          labelColorClass="text-white"
         />
 
         <div className="flex justify-center mb-4">
-          <ReCAPTCHA
+          {/*<ReCAPTCHA
             ref={captchaRef}
             sitekey={process.env.NEXT_PUBLIC_CLIENT_KEY_CAPTCHA!}
             onChange={(token) => setCaptcha(token)}
-          />
+          />*/}
         </div>
       </FormContainer>
       <ToastContainer />

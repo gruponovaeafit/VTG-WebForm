@@ -1,50 +1,57 @@
 "use client";
 
 import PersonalForm from "../globalcomponents/Forms/Form-Personal";
-import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
-import { useEffect } from "react";
+import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
 import Footer from "../globalcomponents/UI/Footer";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
 
-  useEffect(() => {
+  {/*useEffect(() => {
     const checkCookie = async () => {
       try {
         const res = await fetch("/api/cookieCheck");
         if (!res.ok) {
-          router.push("/");
+          router.push("/email");
         }
       } catch (error) {
         console.error("Error al verificar JWT:", error);
-        router.push("/");
+        router.push("/email");
       }
     };
 
     checkCookie();
-  }, [router]);
+  }, [router]);*/}
 
   return (
     <div
       className="relative flex flex-col justify-between w-full h-screen bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('/coins.png')",
+        backgroundImage: "url('/main.svg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       {/* Animación de píxeles */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <PixelsAnimation />
+        <ConfettiAnimation/>
       </div>
 
       {/* Contenido principal */}
       <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center">
-        <h1 className="text-2xl md:text-3xl mb-4 pixel-font text-white-300">
-          ¡Información Personal!
-        </h1>
-        <PersonalForm />
+        <div className="flex flex-col gap-0">
+          <h1 className="text-3xl font-ea text-white-300">
+            Informacion
+          </h1>
+          <h1 className="text-5xl font-ea text-white-300">
+            Personal
+          </h1>
+        </div>
+        <div className="-mt-5">
+          <PersonalForm />
+        </div>
 
         <Footer />
       </main>

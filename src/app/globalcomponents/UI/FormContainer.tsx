@@ -7,6 +7,8 @@ type FormContainerProps = {
   titleClassName?: string;
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
   children: React.ReactNode;
+
+  // overrides
   containerClassName?: string;
   overlayClassName?: string;
   formClassName?: string;
@@ -23,31 +25,34 @@ export default function FormContainer({
   formClassName,
   buttons,
 }: FormContainerProps) {
-  const defaultOverlayClassName = "";
-  const defaultFormClassName = "space-y-4";
-  const defaultTitleClassName = "text-3xl text-center pixel-font text-white mb-6";
+  // Contenedor: centra el “formComponent”
+  const defaultContainerClassName =
+    "w-full flex items-center justify-center p-6";
+  // Rectángulo con borde negro (la "tarjeta")
+  // Esquinas redondeadas excepto la inferior derecha (punteaguda)
+  const defaultOverlayClassName =
+    "w-full max-w-[420px] rounded-tl-[52px] rounded-tr-[52px] rounded-bl-[52px] rounded-br-0 border-[10px] border-black bg-black/65 p-8";
+  // Layout del form
+  const defaultFormClassName = "flex flex-col gap-8";
+  // Título estilo “pixel” (si lo usas)
+  const defaultTitleClassName = "text-4xl font-extrabold text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.65)]";
 
   return (
-    <div
-      className={`relative w-full flex items-center justify-center ${
-        containerClassName ?? ""
-      }`}
-    >
+    <div className={containerClassName ?? defaultContainerClassName}>
       <div className={overlayClassName ?? defaultOverlayClassName}>
-        <form onSubmit={onSubmit} className={formClassName ?? defaultFormClassName}>
+        <form
+          onSubmit={onSubmit}
+          className={formClassName ?? defaultFormClassName}
+        >
           {title && (
-            <h2 className={titleClassName ?? defaultTitleClassName}>
-              {title}
-            </h2>
+            <h2 className={titleClassName ?? defaultTitleClassName}>{title}</h2>
           )}
 
           {children}
 
           {buttons && buttons.length > 0 && (
-            <div className="flex gap-3 mt-4">
-              {buttons.map((button, index) => (
-                <React.Fragment key={index}>{button}</React.Fragment>
-              ))}
+            <div className="mt-2 flex justify-center">
+              <div className="flex items-center gap-4">{buttons}</div>
             </div>
           )}
         </form>

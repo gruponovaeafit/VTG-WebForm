@@ -2,7 +2,7 @@
 
 import React from "react";
 
-type InputType = 
+type InputType =
   | "text"
   | "email"
   | "tel"
@@ -20,7 +20,7 @@ type InputType =
   | "month"
   | "week";
 
-type ColorTheme = 
+type ColorTheme =
   | "blue"
   | "pink"
   | "purple"
@@ -55,18 +55,19 @@ type InputProps = {
   className?: string;
   labelClassName?: string;
   containerClassName?: string;
-  colorTheme?: ColorTheme; 
-  borderColorClass?: string; 
-  focusRingColorClass?: string; 
+  colorTheme?: ColorTheme;
+  borderColorClass?: string;
+  focusRingColorClass?: string;
   labelColorClass?: string;
-  // Estados y mensajes
-  error?: boolean; // Indica si el input tiene un error
-  errorMessage?: string; // Mensaje de error a mostrar
-  helpText?: string; // Texto de ayuda o información adicional
+  error?: boolean;
+  errorMessage?: string;
+  helpText?: string;
 };
 
-// Mapeo de temas de color a clases de Tailwind
-const colorThemes: Record<ColorTheme, { border: string; focusRing: string; label: string }> = {
+const colorThemes: Record<
+  ColorTheme,
+  { border: string; focusRing: string; label: string }
+> = {
   blue: { border: "border-blue-400", focusRing: "focus:ring-blue-500", label: "text-blue-400" },
   pink: { border: "border-pink-400", focusRing: "focus:ring-pink-500", label: "text-pink-400" },
   purple: { border: "border-purple-600", focusRing: "focus:ring-purple-700", label: "text-purple-600" },
@@ -110,37 +111,37 @@ export default function Input({
   errorMessage,
   helpText,
 }: InputProps) {
-  // Determinar las clases de color
   const theme = colorThemes[colorTheme];
-  
-  // Si hay error, usar colores de error, sino usar los colores del tema
-  const borderClass = error 
-    ? "border-red-500" 
-    : (borderColorClass || theme.border);
-  const focusRingClass = error
-    ? "focus:ring-red-500"
-    : (focusRingColorClass || theme.focusRing);
-  const labelColor = error
-    ? "text-red-400"
-    : (labelColorClass || theme.label);
 
-  // Clases base del input
-  const baseInputClasses = `w-full px-4 py-2 text-sm rounded border bg-black text-white placeholder:text-xs focus:outline-none focus:ring-2 placeholder:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed`;
-  
-  // Clases del label
-  const baseLabelClasses = `block text-sm mb-2 ${labelColor}`;
+  // Para este estilo: borde negro grueso siempre (como la imagen)
+  const borderClass = error ? "border-red-600" : borderColorClass || "border-black";
+
+  // Ring discreto (en la imagen no se ve ring fuerte)
+  const focusRingClass = error ? "focus:ring-red-500" : focusRingColorClass || "focus:ring-black/30";
+
+  const baseLabelClasses = "block text-left text-lg font-extrabold mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
+
+  const baseInputClasses =
+    "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#f2dc4b] " +
+    "px-4 py-2.5 text-base text-[#2b2b2b] " +
+    "placeholder:text-[#6b6b6b] placeholder:opacity-80 " +
+    "focus:outline-none focus:ring-2 " +
+    "disabled:opacity-50 disabled:cursor-not-allowed";
+
+  const labelColor = error ? "text-red-200" : labelColorClass || "text-white";
 
   return (
-    <div className={containerClassName || "mb-4"}>
+    <div className={containerClassName || "w-full"}>
       {label && (
-        <label 
-          htmlFor={id || name} 
-          className={labelClassName || baseLabelClasses}
+        <label
+          htmlFor={id || name}
+          className={`${baseLabelClasses} ${labelColor} ${labelClassName}`}
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="ml-2 text-red-300">*</span>}
         </label>
       )}
+
       <input
         type={type}
         id={id || name}
@@ -162,32 +163,26 @@ export default function Input({
         autoComplete={autoComplete}
         aria-invalid={error}
         aria-describedby={
-          error && errorMessage ? `${id || name}-error` :
-          helpText ? `${id || name}-help` :
-          undefined
+          error && errorMessage
+            ? `${id || name}-error`
+            : helpText
+              ? `${id || name}-help`
+              : undefined
         }
         className={`${baseInputClasses} ${borderClass} ${focusRingClass} ${className}`}
       />
-      {/* Mensaje de error */}
+
       {error && errorMessage && (
-        <p 
-          id={`${id || name}-error`}
-          className="mt-1 text-sm text-red-400"
-          role="alert"
-        >
+        <p id={`${id || name}-error`} className="mt-2 text-sm text-red-200" role="alert">
           {errorMessage}
         </p>
       )}
-      {/* Texto de ayuda (solo se muestra si no hay error) */}
+
       {!error && helpText && (
-        <p 
-          id={`${id || name}-help`}
-          className="mt-1 text-xs text-gray-400"
-        >
+        <p id={`${id || name}-help`} className="mt-2 text-xs text-white/70">
           {helpText}
         </p>
       )}
     </div>
   );
 }
-

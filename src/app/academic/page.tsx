@@ -1,15 +1,15 @@
 "use client";
 
 import AcademicForm from "../globalcomponents/Forms/Form-Academic";
-import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/globalcomponents/UI/Footer";
+import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
 
 export default function Home() {
   const router = useRouter();
   
-  useEffect(() => {
+  {/*useEffect(() => {
     const checkCookie = async () => {
       try {
         const res = await fetch("/api/cookieCheck");
@@ -27,28 +27,35 @@ export default function Home() {
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);
+  }, [router]);*/}
 
   return (
     <div
       className="relative flex items-center justify-center w-full h-screen bg-black text-white overflow-hidden"
       style={{
-        backgroundImage: "url('/coins.png')",
+        backgroundImage: "url('/main.svg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
       {/* Animación de píxeles */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal más pequeño y centrado */}
-      <main className="relative z-10 flex flex-col items-center justify-center text-center bg-opacity-80 p-8 rounded-lg shadow-lg w-[90%] max-w-lg">
-        <h1 className="text-2xl md:text-3xl mb-6 pixel-font text-white-300">
-          ¡Formulario Académico!
-        </h1>
-        <AcademicForm />
+      <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center">
+        <div className="flex flex-col gap-0">
+          <h1 className="text-3xl font-ea text-white-300">
+            Informacion
+          </h1>
+          <h1 className="text-5xl font-ea text-white-300">
+            Academica
+          </h1>
+        </div>
+        <div className="-mt-5">
+          <AcademicForm />
+        </div>
 
         <Footer />
 

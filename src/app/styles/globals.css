@@ -7,11 +7,31 @@
   font-style: normal;
   font-display: swap;
 }
-
+@font-face {
+  font-family: "FIFA26";
+  src: url("/fonts/FIFA26.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "FWC26";
+  src: url("/fonts/FWC26.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 .font-ea {
   font-family: "EA Font", sans-serif;
 }
 
+.font-fifa26 {
+  font-family: "FIFA26", sans-serif;
+}
+
+.font-fwc26 {
+  font-family: "FWC26", sans-serif;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -45,7 +65,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Press Start 2P", serif;
+  font-family: "inter", sans-serif;
   /* font-family: "EA Font", sans-serif; */
   /* Quita display: flex; justify-content: center; align-items: center; */
 }
