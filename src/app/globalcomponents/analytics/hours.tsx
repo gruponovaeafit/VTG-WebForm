@@ -46,13 +46,13 @@ export default function UsersByHourCurve() {
   }, []);
 
   return (
-    <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: "#000000", color: "#FFFFFF" }}>
+    <div className="p-6 rounded-lg shadow-lg bg-[#000072]">
       <div className="flex items-center space-x-3 mb-2">
-        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: "1px solid #FF00FF" }}>
-          <Clock className="h-4 w-4" style={{ color: "#FF00FF" }} />
+        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: "1px solid #FE9A02" }}>
+          <Clock className="h-4 w-4" style={{ color: "#FE9A02" }} />
         </div>
         <div>
-          <h2 className="text-xl font-bold" style={{ color: "#FF00FF" }}>
+          <h2 className="text-xl font-bold" style={{ color: "#FFFFFF" }}>
             Inscritos por Hora
           </h2>
         </div>
@@ -60,16 +60,21 @@ export default function UsersByHourCurve() {
 
       {/* Estadísticas de tiempo */}
       <div className="grid grid-cols-2 gap-2 mb-2">
-        <div className="text-center p-2 rounded-lg border" style={{ borderColor: "#555555", backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
+        <div className="text-center p-2 rounded-lg border" style={{ borderColor: "#FFFFFF", backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
           <p className="text-xs opacity-75" style={{ color: "#FFFFFF" }}>Hora Pico</p>
-          <p className="text-lg font-bold" style={{ color: "#FF0080" }}>
-            {data.length > 0 ? `${data.reduce((max, item) => item.cantidad > max.cantidad ? item : max, data[0])?.hora}:00` : "N/A"}
+          <p className="text-lg font-bold" style={{ color: "#FE9A02" }}>
+            {data.length > 0 ? `${data.reduce((max, item) => Number(item.cantidad) > Number(max.cantidad) ? item : max, data[0])?.hora}:00` : "N/A"}
           </p>
         </div>
-        <div className="text-center p-2 rounded-lg border" style={{ borderColor: "#555555", backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
+        <div className="text-center p-2 rounded-lg border" style={{ borderColor: "#FFFFFF", backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
           <p className="text-xs opacity-75" style={{ color: "#FFFFFF" }}>Promedio/Hora</p>
-          <p className="text-lg font-bold" style={{ color: "#00FFFF" }}>
-            {data.length > 0 ? Math.round(data.reduce((sum, item) => sum + item.cantidad, 0) / data.length) : 0}
+          <p className="text-lg font-bold" style={{ color: "#FE9A02" }}>
+            {(() => {
+              if (data.length === 0) return 0;
+              const total = data.reduce((sum, item) => sum + Number(item.cantidad), 0);
+              const promedio = total / data.length;
+              return promedio % 1 === 0 ? Math.round(promedio) : promedio.toFixed(1);
+            })()}
           </p>
         </div>
       </div>
@@ -79,7 +84,7 @@ export default function UsersByHourCurve() {
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-2 border-t-transparent mx-auto mb-4"
-                style={{ borderColor: "#00FFFF" }}></div>
+                style={{ borderColor: "#FE9A02" }}></div>
             <p style={{ color: "#FFFFFF" }}>Cargando datos del gráfico...</p>
           </div>
         </div>
@@ -92,11 +97,11 @@ export default function UsersByHourCurve() {
             <CartesianGrid stroke="#555555" strokeDasharray="3 3" />
             <XAxis
               dataKey="hora"
-              stroke="#00FFFF"
-              tick={{ fill: "#00FFFF", fontSize: 14 }}
+              stroke="#FFFFFF"
+              tick={{ fill: "#FFFFFF", fontSize: 14 }}
               tickFormatter={(tick) => `${tick}:00`}
             />
-            <YAxis stroke="#00FFFF" tick={{ fill: "#00FFFF", fontSize: 14 }} />
+            <YAxis stroke="#FFFFFF" tick={{ fill: "#FFFFFF", fontSize: 14 }} />
             <Tooltip
               contentStyle={{ backgroundColor: "#222222", borderColor: "#00FFFF", color: "#FFFFFF" }}
               labelFormatter={(label) => `Hora: ${label}:00`}
@@ -104,9 +109,9 @@ export default function UsersByHourCurve() {
             <Line
               type="monotone"
               dataKey="cantidad"
-              stroke="#FF0080"
+              stroke="#FE9A02"
               strokeWidth={2}
-              dot={{ r: 6, fill: "#FF0080" }}
+              dot={{ r: 6, fill: "#FE9A02" }}
               activeDot={{ r: 8 }}
             />
           </LineChart>

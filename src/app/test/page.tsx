@@ -15,6 +15,12 @@ interface Persona {
   fecha_creacion: string;
 }
 
+interface GrupoOption {
+  key: string;
+  id: number;
+  label: string;
+}
+
 export default function TestPage() {
   const [personas, setPersonas] = useState<Persona[]>([]);
   const [loading, setLoading] = useState(false);
@@ -24,7 +30,24 @@ export default function TestPage() {
     pregrado: "",
     pregrado_2: "",
     semestre: "",
+    grupo: "",
   });
+
+  const grupos: GrupoOption[] = [
+    { key: "aiesec", id: 1, label: "AIESEC" },
+    { key: "club_in", id: 2, label: "Club In" },
+    { key: "club_merc", id: 3, label: "Club Mercadeo" },
+    { key: "gpg", id: 4, label: "GPG" },
+    { key: "nexos", id: 5, label: "Nexos" },
+    { key: "nova", id: 6, label: "NOVA" },
+    { key: "oe", id: 7, label: "OE" },
+    { key: "partners", id: 8, label: "Partners" },
+    { key: "seres", id: 9, label: "Seres" },
+    { key: "spie", id: 10, label: "SPIE" },
+    { key: "tutores", id: 11, label: "Tutores" },
+    { key: "tvu", id: 12, label: "TVU" },
+    { key: "un", id: 13, label: "UN Society" },
+  ];
 
   // Cargar personas al montar el componente
   useEffect(() => {
@@ -66,6 +89,7 @@ export default function TestPage() {
           pregrado: formData.pregrado,
           pregrado_2: formData.pregrado_2 || null,
           semestre: formData.semestre ? parseInt(formData.semestre) : null,
+          ...(formData.grupo ? { grupo: formData.grupo } : {}),
         }),
       });
 
@@ -79,6 +103,7 @@ export default function TestPage() {
           pregrado: "",
           pregrado_2: "",
           semestre: "",
+          grupo: "",
         });
         loadPersonas();
       } else {
@@ -220,6 +245,29 @@ export default function TestPage() {
                 }
                 colorTheme="blue"
               />
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Grupo (opcional)
+                </label>
+                <select
+                  className="w-full bg-gray-900 text-white border border-gray-700 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={formData.grupo}
+                  onChange={(e) =>
+                    setFormData({ ...formData, grupo: e.target.value })
+                  }
+                >
+                  <option value="">-- No asignar grupo --</option>
+                  {grupos.map((g) => (
+                    <option key={g.key} value={g.key}>
+                      {g.label} (id_grupo {g.id})
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-gray-400 mt-1">
+                  Para pruebas: asigna también el id_grupo correspondiente.
+                </p>
+              </div>
             </FormContainer>
           </div>
 

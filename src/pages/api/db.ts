@@ -12,7 +12,8 @@ export const dbConfig: PoolConfig = connectionString
       ssl: { rejectUnauthorized: false }, // Supabase requiere SSL
       max: 20, // Máximo de conexiones en el pool
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+      connectionTimeoutMillis: 10000, // Aumentado a 10 segundos
+      query_timeout: 30000, // Timeout para queries
     }
   : // Opción 2: Variables individuales
     {
@@ -24,7 +25,8 @@ export const dbConfig: PoolConfig = connectionString
       ssl: { rejectUnauthorized: false }, // Supabase requiere SSL
       max: 20, // Máximo de conexiones en el pool
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+      connectionTimeoutMillis: 10000, // Aumentado a 10 segundos
+      query_timeout: 30000, // Timeout para queries
     };
 
 // Pool global para reutilizar conexiones
@@ -59,11 +61,24 @@ export async function connectToDatabase(): Promise<Pool> {
       // Manejar errores del pool
       pool.on("error", (err: Error) => {
         console.error("❌ Error inesperado en el pool de PostgreSQL:", err);
+        // Si hay un error crítico, resetear el pool
+        pool = null;
       });
+      
+      // Probar la conexión solo cuando se crea el pool por primera vez
+      try {
+        await pool.query("SELECT NOW()");
+        if (process.env.NODE_ENV === "development") {
+          console.log("✅ Conexión a Supabase establecida correctamente");
+        }
+      } catch (initialError: any) {
+        // Si falla la conexión inicial, limpiar el pool
+        pool = null;
+        throw initialError;
+      }
     }
     
-    // Probar la conexión con timeout
-    await pool.query("SELECT NOW()");
+    // Si el pool ya existe, solo retornarlo sin probar la conexión cada vez
     return pool;
   } catch (error: any) {
     console.error("❌ Error conectando a Supabase (PostgreSQL):", error);
