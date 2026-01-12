@@ -49,8 +49,8 @@ export default function StudentsBySemester() {
   return (
     <div className="p-6 rounded-lg shadow-lg bg-[#000072]">
       <div className="flex items-center space-x-3 mb-2">
-        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: "1px solid #FFffFF" }}>
-          <GraduationCap className="h-4 w-4" style={{ color: "#FFFFFF" }} />
+        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: "1px solid #FE9A02" }}>
+          <GraduationCap className="h-4 w-4" style={{ color: "#FE9A02" }} />
         </div>
         <div>
           <h2 className="text-xl font-bold" style={{ color: "#FFFFFF" }}>
@@ -85,7 +85,7 @@ export default function StudentsBySemester() {
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-2 border-t-transparent mx-auto mb-4"
-                style={{ borderColor: "#FFFFFF" }}></div>
+                style={{ borderColor: "#FE9A02" }}></div>
             <p style={{ color: "#FFFFFF" }}>Cargando datos del gráfico...</p>
           </div>
         </div>
