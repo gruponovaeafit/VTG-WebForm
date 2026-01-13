@@ -25,10 +25,21 @@ export default function UsersByHourCurve() {
   const fetchData = async () => {
     try {
       const response = await fetch("/api/analytics/hours");
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
       const result: HourData[] = await response.json();
-      setData(result);
+      console.log("Datos de horas recibidos:", result);
+      // Asegurar que result sea un array
+      if (Array.isArray(result)) {
+        setData(result);
+      } else {
+        console.error("La respuesta no es un array:", result);
+        setData([]);
+      }
     } catch (error) {
       console.error("Error obteniendo datos:", error);
+      setData([]);
     }
   };
 

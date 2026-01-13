@@ -77,7 +77,7 @@ export default function AiesecForm() {
         overlayClassName="bg-black/70 backdrop-blur-sm p-6 rounded-xl shadow-2xl border border-blue-500/60"
         formClassName="space-y-4"
         buttons={[
-          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
         <Input

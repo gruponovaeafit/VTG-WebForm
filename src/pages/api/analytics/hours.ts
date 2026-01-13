@@ -13,18 +13,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     pool = await connectToDatabase();
 
-    // 🔍 Consulta para contar usuarios agrupados por hora (entre 8:00 AM y 7:00 PM)
+    // 🔍 Consulta para contar usuarios agrupados por hora (todas las horas del día)
     const result = await pool.query(`
       SELECT 
         EXTRACT(HOUR FROM fecha_creacion)::INTEGER as hora, 
         COUNT(*)::INTEGER as cantidad
       FROM persona
       WHERE fecha_creacion IS NOT NULL
-        AND EXTRACT(HOUR FROM fecha_creacion) BETWEEN 8 AND 19
       GROUP BY EXTRACT(HOUR FROM fecha_creacion)
       ORDER BY hora
     `);
 
+    console.log("📊 Horas encontradas:", result.rows.length, "registros");
     res.status(200).json(result.rows);
   } catch (error: any) {
     console.error("❌ Error en la conexión con Supabase en la nube:", error.message);

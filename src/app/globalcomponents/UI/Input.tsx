@@ -113,11 +113,11 @@ export default function Input({
 }: InputProps) {
   const theme = colorThemes[colorTheme];
 
-  // Para este estilo: borde negro grueso siempre (como la imagen)
-  const borderClass = error ? "border-red-600" : borderColorClass || "border-black";
+  // Borde negro por defecto, blanco en focus
+  const borderClass = error ? "border-red-600" : borderColorClass || "border-black focus:border-white";
 
-  // Ring discreto (en la imagen no se ve ring fuerte)
-  const focusRingClass = error ? "focus:ring-red-500" : focusRingColorClass || "focus:ring-black/30";
+  // Ring blanco en focus
+  const focusRingClass = error ? "focus:ring-red-500" : focusRingColorClass || "focus:ring-white";
 
   const baseLabelClasses = "block text-left text-lg font-extrabold mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
 
