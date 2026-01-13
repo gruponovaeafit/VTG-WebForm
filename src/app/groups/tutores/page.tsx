@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
  
   const router = useRouter();
-  useEffect(() => {
+  {/*useEffect(() => {
     const checkCookie = async () => {
       try {
         const res = await fetch("/api/cookieCheck");
@@ -26,13 +26,13 @@ export default function Home() {
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);
+  }, [router]);*/}
 
   return (
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/tutores.svg')",
+      backgroundImage: "url('/TUTORES_Screen.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -44,12 +44,15 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6 pixel-font text-white glitch_Tutores">
-          Tutores
-        </h1>
-
-        <TutoresForm />
+      <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center row-start-2">
+        <div className="flex flex-col gap-0">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-ea text-white">
+            Tutores
+          </h1>
+        </div>
+        <div className="-mt-5">
+          <TutoresForm />
+        </div>
 
         <Footer/>
       

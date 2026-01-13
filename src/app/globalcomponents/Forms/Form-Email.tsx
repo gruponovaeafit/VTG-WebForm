@@ -113,7 +113,7 @@ export default function EmailForm() {
       onSubmit={handleFormSubmit} 
     
       buttons={[
-        <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+        <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
       ]}>
         <Input
           type="email"
