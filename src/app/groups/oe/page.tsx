@@ -1,10 +1,10 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
+import Footer from "@/app/globalcomponents/UI/Footer";``
 import OEForm from "../../globalcomponents/Forms/Form-OE";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 
 
 export default function Home() {
@@ -34,7 +34,7 @@ export default function Home() {
     <div
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
     style={{
-      backgroundImage: "url('/oe.svg')",
+      backgroundImage: "url('/OE_Screen.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -42,17 +42,16 @@ export default function Home() {
     >
 
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6 pixel-font text-white glitch_OE">
-        OE
-      </h1>
+      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10 ">
+      <img src="/OE.svg" alt="OE" width={150} height={120} />
 
-        <OEForm />
-
+        <div className="-mt-5">
+          <OEForm />
+        </div>
 
         <Footer />
 

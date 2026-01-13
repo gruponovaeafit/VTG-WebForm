@@ -1,10 +1,10 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import TutoresForm from "../../globalcomponents/Forms/Form-Tutores";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 export default function Home() {
  
   const router = useRouter();
@@ -40,7 +40,7 @@ export default function Home() {
     >
 
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}

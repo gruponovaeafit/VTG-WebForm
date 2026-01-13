@@ -33,7 +33,7 @@ export default function FormContainer({
   const defaultOverlayClassName =
     "w-full max-w-[420px] rounded-tl-[52px] rounded-tr-[52px] rounded-bl-[52px] rounded-br-0 border-[10px] border-black bg-black/65 p-4 sm:p-6";
   // Layout del form
-  const defaultFormClassName = "flex flex-col gap-3 sm:gap-4";
+  const defaultFormClassName = "flex flex-col gap-3 sm:gap-4 items-center text-center";
   // Título estilo “pixel” (si lo usas)
   const defaultTitleClassName = "text-4xl font-extrabold text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.65)]";
 

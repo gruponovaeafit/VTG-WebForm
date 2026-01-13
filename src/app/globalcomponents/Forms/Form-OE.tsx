@@ -70,18 +70,16 @@ export default function OEForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="programs" className="block text-m mb-2 text-blue-400">
-            ¿Puedes asistir a nuestra convocatoria para conocer más sobre el grupo?
+          <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
+            ¿Puedes asistir a nuestra charla informativa para conocer más sobre nuestros comités y el grupo?
           </label>
-          <label htmlFor="programs" className="block text-m mb-2">
-            Próximo viernes 25 de Julio a las 3:00pm
+          <label htmlFor="programs" className="block text-m mb-2 text-blue-400 font-bold">
+             Viernes 30 de enero 2:00 p.m. – 5:00 p.m.
           </label>
 
           <Select
@@ -92,18 +90,7 @@ export default function OEForm() {
               { label: "Si", value: "Si" },
               { label: "No", value: "No" },
             ]}
-            className="border-blue-400 focus:ring-2 focus:ring-blue-500"
-          />
-
-          <Input
-            type="text"
-            name="asesor"
-            label="Nombre de la persona que te inscribió"
-            placeholder="Asesor"
-            required
-            borderColorClass="border-blue-400"
-            focusRingColorClass="focus:ring-blue-500"
-            labelColorClass="text-blue-400"
+            className="border-black focus:ring-2 focus:ring-white"
           />
         </div>
       </FormContainer>

@@ -73,7 +73,7 @@ export default function SeresForm() {
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="talks" className="block text-sm mb-2 text-blue-200">
+          <label htmlFor="talks" className="block text-sm mb-2 text-white font-bold">
             ¿A qué charla informativa deseas asistir?
           </label>
         
@@ -81,12 +81,12 @@ export default function SeresForm() {
             id="talk"
             name="talk"
             required
-            className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-2 py-2 text-sm rounded border border-bl bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
             options={[
-              { label: "Vie. 25 jul, 8-9 a.m.", value: "Vie. 25 jul, 8-9 a.m." },
-              { label: "Vie. 25 jul, 10-11 a.m.", value: "Vie. 25 jul, 10-11 a.m." },
-              { label: "Vie. 25 jul, 12-1 p.m.", value: "Vie. 25 jul, 12-1 p.m." },
-              { label: "Vie. 25 jul, 3-4 p.m.", value: "Vie. 25 jul, 3-4 p.m." },
+              { label: "Vie. 30 ene, 9-10 a.m.", value: "Vie. 30 ene, 9-10 a.m." },
+              { label: "Vie. 30 ene, 11-12 m", value: "Vie. 30 ene, 11-12 m" },
+              { label: "Vie. 30 ene, 2-3 p.m.", value: "Vie. 30 ene, 2-3 p.m." },
+              { label: "Vie. 30 ene, 3-4 p.m.", value: "Vie. 30 ene, 3-4 p.m." },
             ]}
           />
         </div>

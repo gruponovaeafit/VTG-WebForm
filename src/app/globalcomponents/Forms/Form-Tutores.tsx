@@ -69,8 +69,6 @@ export default function TutoresForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
@@ -84,15 +82,11 @@ export default function TutoresForm() {
             placeholder="Tutor/a"
             borderColorClass="border-[#513D9C]"
             focusRingColorClass="focus:ring-white"
-            labelColorClass="text-[#513D9C]"
+            labelColorClass="text-white"
             label="Nombre del Tutor/a que te inscribió"
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="ig" className="block text-sm mb-2 text-[#513D9C]">
-            Ingresa a <a href="https://www.instagram.com/tutoreseafit" target="_blank" className="text-white">@tutoreseafit</a> para consultar los horarios de nuestras charlas informativas
-          </label>
-        </div>
+        
       </FormContainer>
       <ToastContainer />
     </>

@@ -9,26 +9,7 @@ import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
-  useEffect(() => {
-    const checkCookie = async () => {
-      try {
-        const res = await fetch("/api/cookieCheck");
-        if (!res.ok) {
-          router.push("/");
-        }
-      } catch (error) {
-        console.error("Error al verificar JWT:", error);
-        router.push("/");
-      }
-    };
-
-    checkCookie();
-    document.body.classList.add("no-scroll");
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [router]);
-
+  
   
   return (
     <div
@@ -46,8 +27,9 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center w-full max-w-2xl py-4">
+        <img src="/SERES.svg" alt="Seres" className="w-1/2" />
         <div className="flex flex-col gap-0 mb-2">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-ea text-white glitch_Seres">
+          <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-ea text-white">
             Seres
           </h1>
         </div>
