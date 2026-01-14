@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Pool } from "pg";
-import { connectToDatabase } from "../db";
+import { getPool } from "../db";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -8,10 +7,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  let pool: Pool | null = null;
-
   try {
-    pool = await connectToDatabase();
+    const pool = getPool();
 
     // 🔍 Consulta para contar usuarios agrupados por hora (todas las horas del día)
     const result = await pool.query(`

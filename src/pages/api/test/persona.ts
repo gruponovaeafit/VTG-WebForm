@@ -1,12 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Pool } from "pg";
-import { connectToDatabase } from "../db";
+import { getPool } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let pool: Pool | null = null;
-
   try {
-    pool = await connectToDatabase();
+    const pool = await getPool();
 
     if (req.method === "GET") {
       // Obtener todas las personas

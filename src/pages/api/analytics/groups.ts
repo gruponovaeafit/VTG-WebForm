@@ -1,16 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Pool } from "pg";
-import { connectToDatabase } from "../db";
+import { getPool } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  let pool: Pool | null = null;
-
   try {
-    pool = await connectToDatabase();
+    const pool = getPool();
 
     // 🔍 Contar la cantidad de registros en cada tabla de grupos
     const result = await pool.query(`
