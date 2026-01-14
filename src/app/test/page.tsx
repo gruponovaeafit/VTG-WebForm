@@ -33,6 +33,14 @@ export default function TestPage() {
     grupo: "",
   });
 
+  // Permitir scroll en esta página
+  useEffect(() => {
+    document.documentElement.style.overflow = "auto";
+    return () => {
+      document.documentElement.style.overflow = "hidden";
+    };
+  }, []);
+
   const grupos: GrupoOption[] = [
     { key: "aiesec", id: 1, label: "AIESEC" },
     { key: "club_in", id: 2, label: "Club In" },
@@ -165,6 +173,7 @@ export default function TestPage() {
               formClassName="space-y-4"
               buttons={[
                 <button
+                  key="submit"
                   type="submit"
                   disabled={loading}
                   className="w-full py-3 px-6 bg-blue-500 text-white rounded shadow hover:bg-blue-600 active:bg-blue-700 font-bold uppercase tracking-wider transition duration-300 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -172,6 +181,7 @@ export default function TestPage() {
                   {loading ? "Guardando..." : "Guardar"}
                 </button>,
                 <button
+                  key="reload"
                   type="button"
                   onClick={loadPersonas}
                   disabled={loading}

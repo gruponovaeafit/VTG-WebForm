@@ -1,21 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Pool } from "pg";
-import { connectToDatabase } from "../db";
+import { getPool } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  let pool: Pool | null = null;
-
   try {
-    pool = await connectToDatabase();
+    const pool = getPool();
 
     const result = await pool.query(`
       SELECT pregrado, COUNT(*)::INTEGER as cantidad
-      FROM persona
-      WHERE pregrado IS NOT NULL
+      FROM (
+        SELECT pregrado FROM persona WHERE pregrado IS NOT NULL
+        UNION ALL
+        SELECT pregrado_2 as pregrado FROM persona WHERE pregrado_2 IS NOT NULL
+      ) todas_carreras
       GROUP BY pregrado
       ORDER BY cantidad DESC
     `);
