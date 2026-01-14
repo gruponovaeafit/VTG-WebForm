@@ -116,11 +116,11 @@ export default function Select({
 
   const borderClass = error
     ? "border-red-600"
-    : borderColorClass || theme.border;
+    : borderColorClass || "border-black focus:border-white";
 
   const focusRingClass = error
     ? "focus:ring-red-500"
-    : focusRingColorClass || theme.focusRing;
+    : focusRingColorClass || "focus:ring-white";
 
   const labelColor =
     error ? "text-red-200" : labelColorClass || theme.label;
