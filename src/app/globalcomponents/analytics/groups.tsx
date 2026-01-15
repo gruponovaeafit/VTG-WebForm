@@ -22,12 +22,12 @@ interface GroupData {
 const COLORS = {
   background: "#000000",
   text: "#FFFFFF",
-  title: "#FF00FF",
-  bar: "#FF0080",
-  grid: "#555555",
-  axis: "#00FFFF",
+  title: "#FFFFFF",
+  bar: "#FE9A02",
+  grid: "#FFFFFF",
+  axis: "#FFFFFF",
   tooltipBackground: "#222222",
-  tooltipBorder: "#00FFFF",
+  tooltipBorder: "#FE9A02",
   tooltipText: "#FFFFFF",
   legend: "#FFFF00",
   label: "#FFFFFF"
@@ -61,10 +61,10 @@ export default function GroupInscriptionsChart() {
   }, []);
 
   return (
-    <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: COLORS.background, color: COLORS.text }}>
+    <div className="p-6 rounded-lg shadow-lg bg-[#000072]">
       <div className="flex items-center space-x-3">
-        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: `1px solid ${COLORS.title}` }}>
-          <Users className="h-4 w-4" style={{ color: COLORS.title }} />
+        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: `1px solid #FE9A02` }}>
+          <Users className="h-4 w-4" style={{ color: "#FE9A02" }} />
         </div>
         <div>
           <h2 className="text-xl font-bold" style={{ color: COLORS.title }}>
@@ -76,11 +76,11 @@ export default function GroupInscriptionsChart() {
       {/* Indicador de grupos */}
       <div className="flex items-center space-x-2 mb-2">
         <div className="flex space-x-1">
-          <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: COLORS.axis }}></div>
-          <div className="w-2 h-2 rounded-full animate-pulse delay-75" style={{ backgroundColor: COLORS.axis }}></div>
-          <div className="w-2 h-2 rounded-full animate-pulse delay-150" style={{ backgroundColor: COLORS.axis }}></div>
+          <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: "#FE9A02" }}></div>
+          <div className="w-2 h-2 rounded-full animate-pulse delay-75" style={{ backgroundColor: "#FE9A02" }}></div>
+          <div className="w-2 h-2 rounded-full animate-pulse delay-150" style={{ backgroundColor: "#FE9A02" }}></div>
         </div>
-        <span className="text-xs" style={{ color: COLORS.axis }}>
+        <span className="text-xs" style={{ color: "#FE9A02" }}>
           {data.length} grupos activos
         </span>
       </div>
@@ -89,8 +89,15 @@ export default function GroupInscriptionsChart() {
       <div className="grid grid-cols-1 gap-1 mb-2">
         <div className="text-center p-1 rounded-lg border" style={{ borderColor: COLORS.grid, backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
           <p className="text-xs opacity-75" style={{ color: COLORS.text }}>Promedio/Grupo</p>
-          <p className="text-lg font-bold" style={{ color: COLORS.axis }}>
-            {data.length > 0 ? Math.round(data.reduce((sum, item) => sum + item.cantidad, 0) / data.length) : 0}
+          <p className="text-lg font-bold" style={{ color: "#FE9A02" }}>
+            {(() => {
+              if (data.length === 0) return 0;
+              const total = data.reduce((sum, item) => sum + Number(item.cantidad), 0);
+              const promedio = total / data.length;
+              // Si el promedio tiene decimales significativos, mostrar 1 decimal
+              // Si es un número entero o muy cercano, mostrar sin decimales
+              return promedio % 1 === 0 ? Math.round(promedio) : promedio.toFixed(1);
+            })()}
           </p>
         </div>
       </div>

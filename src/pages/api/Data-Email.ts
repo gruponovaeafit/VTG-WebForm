@@ -1,22 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import sql, { config as SqlConfig, ConnectionPool } from "mssql";
+import { dbQuery } from "./db";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 
-const config: SqlConfig = {
-  user: process.env.DB_USER as string,
-  password: process.env.DB_PASS as string,
-  database: process.env.DB_NAME as string,
-  server: process.env.DB_SERVER as string,
-  port: parseInt(process.env.DB_PORT ?? "1433", 10),
-  options: {
-    encrypt: true,
-    trustServerCertificate: false,
-  },
-};
+function requiredEnv(name: string) {
+  const v = process.env[name];
+  if (!v) throw new Error(`Missing env: ${name}`);
+  return v;
+}
+
+function isEafitEmail(email: string) {
+  return /@eafit\.edu\.co$/i.test(email.trim());
+}
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let pool: ConnectionPool | null = null;
 
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -27,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
-  const { token, email } = req.body;
+  const { token, email } = req.body as { token?: string; email?: string };
 
   if (!token) {
     console.error("Token de reCAPTCHA faltante");
@@ -70,27 +68,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 2. Validar correo
-    if (!email || !email.endsWith("@eafit.edu.co")) {
-      console.error("Correo inválido o faltante:", { email });
+    if (!email || typeof email !== "string" || !isEafitEmail(email)) {
       return res.status(400).json({
-        notification: {
-          type: "error",
-          message: "El correo debe ser del dominio @eafit.edu.co.",
-        },
+        notification: { type: "error", message: "El correo debe ser del dominio @eafit.edu.co." },
       });
     }
 
-    // 3. Conexión a BD
-    pool = await sql.connect(config);
-    const emailLower = email.toLowerCase();
+    const emailLower = email.toLowerCase().trim();
 
-    // 4. Verificar si el usuario ya existe
-    const existingUser = await pool
-      .request()
-      .input("correo", sql.VarChar, emailLower)
-      .query("SELECT TOP 1 correo, nombre, pregrado FROM persona WHERE correo = @correo");
 
-    // Generar JWT
+    // 3) Verificar si el usuario ya existe 
+    const existingUser = await dbQuery<{
+      correo: string;
+      nombre: string | null;
+      pregrado: string | null;
+    }>(
+      `SELECT correo, nombre, pregrado
+       FROM persona
+       WHERE correo = $1
+       LIMIT 1`,
+      [emailLower]
+    );
+
+    // 4. Generar JWT
     const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
       expiresIn: "15m",
     });
@@ -108,8 +108,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     );
 
     // 5. Si el usuario existe
-    if (existingUser.recordset.length > 0) {
-      const user = existingUser.recordset[0];
+    if (existingUser.rows.length > 0) {
+      const user = existingUser.rows[0];
       console.log("Usuario encontrado:", user);
 
       return res.status(200).json({
@@ -122,10 +122,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 6. Insertar nuevo usuario
-    await pool.request().input("correo", sql.VarChar, emailLower).query(`
-      INSERT INTO persona (correo)
-      VALUES (@correo)
-    `);
+    await dbQuery(
+      `INSERT INTO persona (correo)
+       VALUES ($1)
+       ON CONFLICT (correo) DO NOTHING`,
+      [emailLower]
+    );
 
     return res.status(200).json({
       notification: {
@@ -142,9 +144,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         message: "Error interno del servidor.",
       },
     });
-  } finally {
-    if (pool) {
-      pool.close();
-    }
   }
 }

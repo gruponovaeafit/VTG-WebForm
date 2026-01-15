@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
-  {/*useEffect(() => {
+  useEffect(() => {
     const checkCookie = async () => {
       try {
         const res = await fetch("/api/cookieCheck");
@@ -23,7 +23,7 @@ export default function Home() {
     };
 
     checkCookie();
-  }, [router]);*/}
+  }, [router]);
 
   return (
     <div
