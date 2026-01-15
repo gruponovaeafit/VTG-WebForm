@@ -1,56 +1,51 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import sql from "mssql";
-import { dbConfig } from "../forms/db"; // Ajusta la ruta si es necesario
+import { getPool } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  let pool: sql.ConnectionPool | null = null;
-
   try {
-    pool = await sql.connect(dbConfig);
+    const pool = getPool();
 
     // 🔍 Consulta para encontrar el grupo con más inscritos
-    const result = await pool.request().query(`
-      SELECT TOP 1 grupo, cantidad FROM (
-        SELECT 'aiesec' AS grupo, COUNT(*) as cantidad FROM dbo.aiesec
+    // Combinamos los conteos de todas las tablas de grupos y obtenemos el primero ordenado por cantidad
+    const result = await pool.query(`
+      SELECT grupo, cantidad FROM (
+        SELECT 'aiesec' AS grupo, COUNT(*)::INTEGER as cantidad FROM aiesec
         UNION ALL
-        SELECT 'club_in', COUNT(*) FROM dbo.club_in
+        SELECT 'club_in' AS grupo, COUNT(*)::INTEGER as cantidad FROM club_in
         UNION ALL
-        SELECT 'clubmerc', COUNT(*) FROM dbo.clubmerc
+        SELECT 'club_merc' AS grupo, COUNT(*)::INTEGER as cantidad FROM club_merc
         UNION ALL
-        SELECT 'gpg', COUNT(*) FROM dbo.gpg
+        SELECT 'gpg' AS grupo, COUNT(*)::INTEGER as cantidad FROM gpg
         UNION ALL
-        SELECT 'nexos', COUNT(*) FROM dbo.nexos
+        SELECT 'nexos' AS grupo, COUNT(*)::INTEGER as cantidad FROM nexos
         UNION ALL
-        SELECT 'nova', COUNT(*) FROM dbo.nova
+        SELECT 'nova' AS grupo, COUNT(*)::INTEGER as cantidad FROM nova
         UNION ALL
-        SELECT 'oe', COUNT(*) FROM dbo.oe
+        SELECT 'oe' AS grupo, COUNT(*)::INTEGER as cantidad FROM oe
         UNION ALL
-        SELECT 'partners', COUNT(*) FROM dbo.partners
+        SELECT 'partners' AS grupo, COUNT(*)::INTEGER as cantidad FROM partners
         UNION ALL
-        SELECT 'seres', COUNT(*) FROM dbo.seres
+        SELECT 'seres' AS grupo, COUNT(*)::INTEGER as cantidad FROM seres
         UNION ALL
-        SELECT 'spie', COUNT(*) FROM dbo.spie
+        SELECT 'spie' AS grupo, COUNT(*)::INTEGER as cantidad FROM spie
         UNION ALL
-        SELECT 'tutores', COUNT(*) FROM dbo.tutores
+        SELECT 'tutores' AS grupo, COUNT(*)::INTEGER as cantidad FROM tutores
         UNION ALL
-        SELECT 'tvu', COUNT(*) FROM dbo.tvu
+        SELECT 'tvu' AS grupo, COUNT(*)::INTEGER as cantidad FROM tvu
         UNION ALL
-        SELECT 'un', COUNT(*) FROM dbo.un
-      ) AS grupos
+        SELECT 'un' AS grupo, COUNT(*)::INTEGER as cantidad FROM un
+      ) grupos_combined
       ORDER BY cantidad DESC
+      LIMIT 1
     `);
 
-    res.status(200).json(result.recordset[0]);
-  } catch (error) {
-    console.error("❌ Error en la conexión con MSSQL en la nube:", error);
+    res.status(200).json(result.rows[0] || { grupo: null, cantidad: 0 });
+  } catch (error: any) {
+    console.error("❌ Error en la conexión con Supabase en la nube:", error.message);
     res.status(500).json({ error: "Error en el servidor" });
-  } finally {
-    if (pool) {
-      await pool.close();
-    }
-  }
+  } 
 }

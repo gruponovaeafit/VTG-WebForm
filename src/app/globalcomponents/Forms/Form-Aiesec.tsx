@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
-import Input from "../UI/Input";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
 
@@ -73,20 +72,27 @@ export default function AiesecForm() {
   return (
     <>
       <FormContainer
-        onSubmit={handleFormSubmit} 
-        overlayClassName="bg-black/70 backdrop-blur-sm p-6 rounded-xl shadow-2xl border border-blue-500/60"
-        formClassName="space-y-4"
+        onSubmit={handleFormSubmit}
         buttons={[
-          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
-        <Input
-          type="tel"
-          name="phone"
-          label="Ingresa tu telefono"
-          placeholder="Ej: 3001234567"
+        <Select
+          id="department"
+          name="department"
+          label="¿A qué departamento te gustaría ingresar?"
+          labelColorClass="text-white"
+          className="border-black focus:ring-2 focus:ring-white" 
           required
-          colorTheme="blue"
+          options={[
+            { label: "MXP: Gestión Humana", value: "MXP: Gestión Humana" },
+            { label: "MKT: Mercadeo", value: "MKT: Mercadeo" },
+            { label: "F&L: Finanzas", value: "F&L: Finanzas" },
+            { label: "OGV: Voluntariados salientes", value: "OGV: Voluntariados salientes" },
+            { label: "OGT: Pasantías salientes", value: "OGT: Pasantías salientes" },
+            { label: "IGV: Voluntariados entrantes", value: "IGV: Voluntariados entrantes" },
+            { label: "IGT: Pasantías entrantes", value: "IGT: Pasantías entrantes" },
+          ]}
         />
         
       </FormContainer>

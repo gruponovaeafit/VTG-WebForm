@@ -9,7 +9,7 @@ import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
 export default function Home() {
   const router = useRouter();
   
-  {/*useEffect(() => {
+  useEffect(() => {
     const checkCookie = async () => {
       try {
         const res = await fetch("/api/cookieCheck");
@@ -27,7 +27,7 @@ export default function Home() {
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);*/}
+  }, [router]);
 
   return (
     <div

@@ -68,14 +68,12 @@ export default function TvuForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
-          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
         ]}
       >
-        <div className="mb-4">
-          <label htmlFor="talks" className="block text-m mb-2 text-purple-400">
+        <div className="mb-4 w-full">
+          <label htmlFor="talks" className="block text-m mb-2 text-white font-bold">
             ¿A qué charla informativa deseas asistir?
           </label>
 
@@ -83,10 +81,10 @@ export default function TvuForm() {
             id="talk"
             name="talk"
             required
-            className="border-purple-400 focus:ring-2 focus:ring-purple-500"
+            className="border-black focus:ring-2 focus:ring-white"
             options={[
-              { label: "Vie. 25 jul, 3-4 p.m.", value: "Vie. 25 jul, 3-4 p.m." },
-              { label: "Mar. 29 jul, 6-7 p.m.", value: "Mar. 29 jul, 6-7 p.m." },
+              { label: "Jue. 29 ene", value: "Jue. 29 ene" },
+              { label: "Vie. 30 ene", value: "Vie. 30 ene" },
             ]}
           />
         </div>

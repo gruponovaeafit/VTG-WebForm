@@ -113,7 +113,7 @@ export default function EmailForm() {
       onSubmit={handleFormSubmit} 
     
       buttons={[
-        <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+        <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
       ]}>
         <Input
           type="email"
@@ -127,11 +127,11 @@ export default function EmailForm() {
         />
 
         <div className="flex justify-center mb-4">
-          {/*<ReCAPTCHA
+          {<ReCAPTCHA
             ref={captchaRef}
             sitekey={process.env.NEXT_PUBLIC_CLIENT_KEY_CAPTCHA!}
             onChange={(token) => setCaptcha(token)}
-          />*/}
+          />}
         </div>
       </FormContainer>
       <ToastContainer />
