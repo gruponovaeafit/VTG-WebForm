@@ -12,8 +12,7 @@ export default function InfoSPIE() {
   };
 
   return (
-    <div className="relative flex min-h-[100dvh] items-center justify-center px-4 overflow-hidden">
-      {/* 🔵 FORMA ARRIBA IZQUIERDA */}
+    <div className="relative flex min-h-[100dvh] items-start justify-center pt-12 md:pt-20 px-4 overflow-hidden">
       <Image
         src="/forma-spie1.png"
         alt=""
@@ -22,7 +21,6 @@ export default function InfoSPIE() {
         className="absolute top-0 left-0 z-0 pointer-events-none select-none"
       />
 
-      {/* 🔵 FORMA ABAJO DERECHA */}
       <Image
         src="/forma-spie2.png"
         alt=""
@@ -31,9 +29,7 @@ export default function InfoSPIE() {
         className="absolute bottom-0 right-0 z-0 pointer-events-none select-none"
       />
 
-      {/* CONTENIDO */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* LOGO */}
         <div className="mb-2 md:mb-4">
           <Image
             src="/spie-logo.png"
@@ -46,7 +42,6 @@ export default function InfoSPIE() {
         </div>
 
 
-        {/* FORM / INFO */}
         <FormContainer
           formClassName="space-y-4"
           buttons={[

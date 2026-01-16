@@ -54,9 +54,7 @@ export default function SpieForm() {
 
   return (
     <>
-      {/* CONTENEDOR PRINCIPAL */}
-      <div className="relative flex min-h-screen items-center justify-center px-4 overflow-hidden">
-        {/* 🔵 FORMA ARRIBA IZQUIERDA */}
+      <div className="relative flex min-h-screen items-start justify-center pt-12 md:pt-20 px-4 overflow-hidden">
         <Image
           src="/forma-spie1.png"
           alt=""
@@ -65,7 +63,6 @@ export default function SpieForm() {
           className="absolute top-0 left-0 z-0 pointer-events-none select-none"
         />
 
-        {/* 🔵 FORMA ABAJO DERECHA */}
         <Image
           src="/forma-spie2.png"
           alt=""
@@ -74,9 +71,7 @@ export default function SpieForm() {
           className="absolute bottom-0 right-0 z-0 pointer-events-none select-none"
         />
 
-        {/* CONTENIDO (LOGO + FORM) */}
         <div className="relative z-10 flex flex-col items-center">
-          {/* LOGO */}
           <div className="mb-2 md:mb-4">
             <Image
               src="/spie-logo.png"
@@ -88,7 +83,6 @@ export default function SpieForm() {
             />
           </div>
 
-          {/* FORM */}
           <FormContainer
             onSubmit={handleFormSubmit}
             buttons={[
@@ -108,6 +102,7 @@ export default function SpieForm() {
               name="committie"
               label="¿A qué comité te gustaría ingresar?"
               required
+              labelColorClass="text-white"
               options={[
                 { label: "Comité de Publicidad", value: "Comité de Publicidad" },
                 { label: "Comité de Divulgación", value: "Comité de Divulgación" },
@@ -121,6 +116,7 @@ export default function SpieForm() {
               name="talk"
               label="¿A qué charla te gustaría asistir?"
               required
+              labelColorClass="text-white"
               options={[
                 { label: "Vie. 25 Jul, 4:00 p.m.", value: "Vie. 25 Jul, 4:00 p.m." },
                 { label: "Mie. 30 Jul, 6:00 p.m.", value: "Mie. 30 Jul, 6:00 p.m." },

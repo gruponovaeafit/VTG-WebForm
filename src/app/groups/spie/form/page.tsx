@@ -5,6 +5,7 @@ import SpieForm from "../../../globalcomponents/Forms/Form-Spie";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/globalcomponents/UI/Footer";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 
 export default function Home() {
   const router = useRouter();
@@ -38,9 +39,8 @@ export default function Home() {
         overflow: "hidden",
       }}
     >
-      {/* Animación de píxeles */}
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}

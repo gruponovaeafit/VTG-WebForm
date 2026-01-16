@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import InfoSPIE from "@/app/globalcomponents/Info/Info-SPIE";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/globalcomponents/UI/Footer";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 
 export default function Home() {
   const router = useRouter();
@@ -38,11 +39,10 @@ export default function Home() {
         overflow: "hidden",
       }}
     >
-      {/* Animación de píxeles */}
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
-
+      
       {/* Contenido principal */}
       <main className="flex flex-col row-start-2 items-center sm:items-start relative z-10">
         
