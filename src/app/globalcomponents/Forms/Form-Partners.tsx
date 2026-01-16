@@ -91,9 +91,10 @@ export default function PartnersForm() {
             name="talkSelection"
             required
             options={[
-              { label: "Mar. 27 ene", value: "Mar. 27 ene" },
-              { label: "Mie. 28 ene", value: "Mie. 28 ene" },
-              { label: "Jue. 29 ene", value: "Jue. 29 ene" },
+              { label: "Mar. 27 ene 5 - 6 p.m.", value: "Mar. 27 ene 5 - 6 p.m." },
+              { label: "Mie. 28 ene 5 - 6 p.m.", value: "Mie. 28 ene 5 - 6 p.m." },
+              { label: "Jue. 29 ene 5 - 6 p.m.", value: "Jue. 29 ene 5 - 6 p.m." },
+              { label: "Vie. 30 ene 9 - 10 a.m.", value: "Vie. 30 ene 9 - 10 a.m." },
             ]}
             className="w-full px-4 py-2 text-sm rounded border border-black bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
           />
