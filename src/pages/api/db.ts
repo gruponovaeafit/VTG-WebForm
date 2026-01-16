@@ -1,5 +1,5 @@
 // src/pages/api/db.ts
-import { Pool, PoolConfig, QueryResult } from "pg";
+import { Pool, PoolConfig, QueryResult, QueryResultRow } from "pg";
 
 // Puedes usar SUPABASE_DB_URL (connection string) o variables individuales
 const connectionString = process.env.SUPABASE_DB_URL || process.env.DATABASE_URL;
@@ -12,8 +12,8 @@ function buildDbConfig(): PoolConfig {
       ssl: { rejectUnauthorized: false }, // Supabase suele requerir SSL
       // IMPORTANTE: en serverless mantener bajo para evitar agotar conexiones
       max: Number(process.env.PG_POOL_MAX ?? 3),
-      idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 2_000,
+      idleTimeoutMillis: 0, // 0 = desactivar timeout (mantener conexiones vivas)
+      connectionTimeoutMillis: 10_000, // Aumentado para conexiones más lentas
     };
   }
 
@@ -35,8 +35,8 @@ function buildDbConfig(): PoolConfig {
     password,
     ssl: { rejectUnauthorized: false },
     max: Number(process.env.PG_POOL_MAX ?? 3),
-    idleTimeoutMillis: 30_000,
-    connectionTimeoutMillis: 2_000,
+    idleTimeoutMillis: 0, // 0 = desactivar timeout (mantener conexiones vivas)
+    connectionTimeoutMillis: 10_000, // Aumentado para conexiones más lentas
   };
 }
 
@@ -53,6 +53,15 @@ export function getPool(): Pool {
 
     global.__pgPool.on("error", (err) => {
       console.error("❌ Error inesperado en el pool de PostgreSQL:", err);
+      // Si hay un error, recrear el pool en la próxima llamada
+      global.__pgPool = undefined;
+    });
+
+    // Manejar desconexiones y reconectar automáticamente
+    global.__pgPool.on("connect", (client) => {
+      client.on("error", (err) => {
+        console.error("❌ Error en cliente PostgreSQL:", err);
+      });
     });
 
     if (process.env.NODE_ENV === "development") {
@@ -64,9 +73,10 @@ export function getPool(): Pool {
 }
 
 // Helper para ejecutar queries desde tus endpoints
-export async function dbQuery<T = any>(
+export async function dbQuery<T extends QueryResultRow = any>(
   text: string,
-  params: any[] = []
+  params: any[] = [],
+  retries = 1
 ): Promise<QueryResult<T>> {
   try {
     const pool = getPool();
@@ -74,6 +84,28 @@ export async function dbQuery<T = any>(
   } catch (error: any) {
     // Mensajes útiles sin filtrar secretos
     const msg = error?.message || "Error desconocido en dbQuery";
+
+    // Si la conexión se cerró, intentar reconectar una vez
+    if (
+      (msg.includes("Connection terminated") || 
+       msg.includes("Connection closed") ||
+       msg.includes("server closed the connection") ||
+       msg.includes("Connection ended")) &&
+      retries > 0
+    ) {
+      console.log("🔄 Reconectando a la base de datos...");
+      // Limpiar el pool para forzar una nueva conexión
+      if (global.__pgPool) {
+        try {
+          await global.__pgPool.end();
+        } catch (e) {
+          // Ignorar errores al cerrar
+        }
+        global.__pgPool = undefined;
+      }
+      // Reintentar la query
+      return dbQuery<T>(text, params, retries - 1);
+    }
 
     if (msg.includes("password authentication failed")) {
       throw new Error("Error DB: contraseña incorrecta (password authentication failed).");
