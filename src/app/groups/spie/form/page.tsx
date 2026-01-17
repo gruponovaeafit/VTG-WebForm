@@ -5,6 +5,7 @@ import SpieForm from "../../../globalcomponents/Forms/Form-Spie";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/globalcomponents/UI/Footer";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 
 export default function Home() {
   const router = useRouter();
@@ -38,16 +39,12 @@ export default function Home() {
         overflow: "hidden",
       }}
     >
-      {/* Animación de píxeles */}
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6 pixel-font text-white glitch_Spie">
-          SPIE
-        </h1>
         
         <SpieForm />
 
