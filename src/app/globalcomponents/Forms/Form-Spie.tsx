@@ -15,7 +15,16 @@ export default function SpieForm() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    
+    // Validar el formulario antes de enviar
+    if (!form.checkValidity()) {
+      // Mostrar mensajes de validación del navegador
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
 
     try {
       const response = await fetch("/api/forms/spie", {
@@ -86,15 +95,7 @@ export default function SpieForm() {
           <FormContainer
             onSubmit={handleFormSubmit}
             buttons={[
-              <Button
-                key="submit"
-                type="submit"
-                size="md"
-                state="active"
-                className="w-full"
-              >
-                ENVIAR
-              </Button>,
+              <Button type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
             ]}
           >
             <Select

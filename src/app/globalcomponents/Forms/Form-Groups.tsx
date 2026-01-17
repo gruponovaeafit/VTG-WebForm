@@ -43,7 +43,7 @@ export default function GroupsForm() {
   return (
     <>
     <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" formClassName="space-y-4" buttons={[
-      <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+      <Button type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
     ]}>
         <Select
           id="studentGroup"
@@ -52,6 +52,18 @@ export default function GroupsForm() {
           required
           options={[
             { label: "NOVA", value: "NOVA" },
+            { label: "AIESEC", value: "AIESEC" },
+            { label: "CLUBIN", value: "CLUBIN" },
+            { label: "CLUBMERC", value: "CLUBMERC" },
+            { label: "GPG", value: "GPG" },
+            { label: "NEXOS", value: "NEXOS" },
+            { label: "OE", value: "OE" },
+            { label: "PARTNERS", value: "PARTNERS" },
+            { label: "SERES", value: "SERES" },
+            { label: "SPIE", value: "SPIE" },
+            { label: "TUTORES", value: "TUTORES" },
+            { label: "TVU", value: "TVU" },
+            { label: "UN SOCIETY", value: "UN SOCIETY" },
           ]}
         />
       </FormContainer>

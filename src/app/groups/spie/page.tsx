@@ -1,11 +1,9 @@
 "use client";
-
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
-import InfoSPIE from "@/app/globalcomponents/Info/Info-SPIE";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/globalcomponents/UI/Footer";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import SpieForm from "@/app/globalcomponents/Forms/Form-Spie";
 
 export default function Home() {
   const router = useRouter();
@@ -46,7 +44,7 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="flex flex-col row-start-2 items-center sm:items-start relative z-10">
         
-        <InfoSPIE />
+        <SpieForm />
 
         <Footer/>
 
