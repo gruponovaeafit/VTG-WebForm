@@ -35,6 +35,7 @@ export default function Home() {
       style={{
         backgroundImage: "url('/AIESEC_Screen.svg')",
         backgroundSize: "cover",
+        backgroundPosition: "center",
         position: "relative",
         overflow: "hidden",
       }}

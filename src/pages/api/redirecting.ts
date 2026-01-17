@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       CLUBMERC: "/groups/clubmerc",
       GPG: "/groups/gpg",
       NEXOS: "/groups/nexos",
-      NOVA: "/assessmentassistance",
+      NOVA: "/groups/nova",
       OE: "/groups/oe",
       PARTNERS: "/groups/partners",
       SERES: "/groups/seres",

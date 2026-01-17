@@ -2,34 +2,10 @@
 <g clip-path="url(#clip0_220_2)">
 <rect width="640" height="960" fill="white"/>
 <path d="M640 0H0V960H640V0Z" fill="#0A69ED"/>
-<g filter="url(#filter0_d_220_2)">
 <path d="M180.09 654.435C215.115 637.601 260.764 645.057 284.354 677.128C332.515 742.634 324.336 894.411 251.402 940.901C209.895 967.352 98.1187 978.289 50.4294 964.301C-45.8038 936.093 -83.201 808.48 29.6381 774.387C51.4956 767.781 113.392 790.803 127.074 773.285C154.977 737.535 133.42 676.877 180.108 654.443L180.09 654.435Z" fill="#FE9A02"/>
-</g>
-<g filter="url(#filter1_d_220_2)">
-<path d="M576.668 0.321529C603.096 -2.60184 617.795 14.8656 619.792 34.1657C621.555 51.1823 614.124 70.8459 622.04 86.9027C628.679 100.4 649.674 99.3379 656.439 113.649C665.884 133.662 633.429 159.58 621.087 175.767C593.687 211.677 592.571 248.342 623.21 283.219C633.177 294.564 648.955 305.006 656.385 317.252C684.379 363.314 617.507 393.594 568.302 375.865C488.116 346.995 507.744 244.852 442.473 217.392C411.439 204.332 381.88 208.477 358.42 182.53C312.255 131.48 371.355 74.9765 437.634 67.3408C447.655 66.1918 467.283 67.4572 474.533 64.6502C481.064 62.1195 483.493 56.4618 488.062 52.5058C506.431 36.6382 550.203 3.25944 576.668 0.336072V0.321529Z" fill="#FE9A02"/>
-</g>
+<path d="M576.667 0.321529C603.096 -2.60184 617.795 14.8656 619.792 34.1657C621.555 51.1823 614.124 70.8459 622.04 86.9027C628.679 100.4 649.674 99.3379 656.439 113.649C665.884 133.662 633.429 159.58 621.087 175.767C593.687 211.677 592.571 248.342 623.21 283.219C633.177 294.564 648.955 305.006 656.385 317.252C684.379 363.314 617.507 393.594 568.302 375.865C488.116 346.995 507.744 244.852 442.473 217.392C411.439 204.332 381.88 208.477 358.42 182.53C312.255 131.48 371.355 74.9765 437.634 67.3408C447.655 66.1918 467.283 67.4572 474.533 64.6502C481.064 62.1195 483.493 56.4618 488.062 52.5058C506.431 36.6382 550.203 3.25944 576.667 0.336072V0.321529Z" fill="#FE9A02"/>
 </g>
 <defs>
-<filter id="filter0_d_220_2" x="-43.8569" y="645.699" width="362.461" height="332.716" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_220_2"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_220_2" result="shape"/>
-</filter>
-<filter id="filter1_d_220_2" x="338" y="0" width="329" height="389" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_220_2"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_220_2" result="shape"/>
-</filter>
 <clipPath id="clip0_220_2">
 <rect width="640" height="960" fill="white"/>
 </clipPath>

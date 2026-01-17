@@ -48,7 +48,7 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10">
-        <Image src="/PARTNERS.png" alt="Partners" width={150} height={120} />
+        <Image src="/PARTNERS.svg" alt="Partners" width={150} height={120} />
         
         <div className="-mt-5">
           <PartnersForm />

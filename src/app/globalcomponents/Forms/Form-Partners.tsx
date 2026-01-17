@@ -71,7 +71,7 @@ export default function PartnersForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         

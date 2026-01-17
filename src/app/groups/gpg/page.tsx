@@ -5,6 +5,7 @@ import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import GpgForm from "../../globalcomponents/Forms/Form-Gpg";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -46,7 +47,16 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10 ">
-        <img src="/GPG.svg" alt="GPG" width={150} height={120} />
+        <Image 
+          src="/GPG.svg" 
+          alt="GPG" 
+          width={329} 
+          height={172}
+          className="w-auto h-auto max-w-[200px]"
+          style={{ imageRendering: 'auto' }}
+          unoptimized
+          priority
+        />
 
         <div className="-mt-5">
           <GpgForm />

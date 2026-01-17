@@ -14,6 +14,14 @@ export default function AiesecForm() {
     e.preventDefault();
 
     const formElement = e.currentTarget;
+    
+    // Validar el formulario antes de enviar
+    if (!formElement.checkValidity()) {
+      // Mostrar mensajes de validación del navegador
+      formElement.reportValidity();
+      return;
+    }
+
     const formData = new FormData(formElement);
 
     try {
@@ -74,7 +82,7 @@ export default function AiesecForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <Select

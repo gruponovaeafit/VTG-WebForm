@@ -1,8 +1,8 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
-import InfoUn from "@/app/globalcomponents/Info/Info-Un";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import UnForm from "@/app/globalcomponents/Forms/Form-Un";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -40,7 +40,7 @@ export default function Home() {
     >
 
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}
@@ -49,7 +49,7 @@ export default function Home() {
           UN
         </h1>
 
-        <InfoUn/>
+        <UnForm/>
 
         <Footer/>
 
