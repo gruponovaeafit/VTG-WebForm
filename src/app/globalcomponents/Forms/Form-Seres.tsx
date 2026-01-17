@@ -69,7 +69,7 @@ export default function SeresForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-4">
