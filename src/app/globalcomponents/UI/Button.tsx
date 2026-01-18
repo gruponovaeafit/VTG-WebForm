@@ -18,7 +18,6 @@ type ButtonProps = {
   state?: ButtonState;
   type?: ButtonType;
 
-  // Hace girar el balón (tema 'fifa') tras el click hasta que la vista cambie
   spinOnClick?: boolean;
 
   show?: boolean;
@@ -60,7 +59,7 @@ const themes: Record<ButtonTheme, ThemeConfig> = {
       font-ea
       group
       relative w-full h-[72px]
-      pl-10 pr-24
+      pl-10 pr-16
       rounded-tr-full
       rounded-br-full
       rounded-bl-full
@@ -88,7 +87,7 @@ const themes: Record<ButtonTheme, ThemeConfig> = {
     },
     sizes: {
       sm: "h-[56px] text-2xl pl-8 pr-20",
-      md: "h-[72px] text-4xl pl-10 pr-16",
+      md: "h-[72px] text-4xl pl-10 pr-14",
       lg: "h-[88px] text-5xl pl-12 pr-28",
     },
   },
@@ -194,8 +193,8 @@ export default function Button({
       {theme === "fifa" && (
         <span
           className="
-            absolute right-[-40px] top-1/2 -translate-y-1/2
-            w-28 h-28 rounded-full
+            absolute right-[-35px] top-1/2 -translate-y-1/2
+            w-24 h-24 rounded-full
             overflow-hidden pointer-events-none
           "
         >

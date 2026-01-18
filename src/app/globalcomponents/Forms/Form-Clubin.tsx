@@ -133,8 +133,8 @@ export default function Clubin1Form() {
         formClassName="space-y-4"
         buttons={[
           //<button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
-            <Button type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
-          ]}
+          <Button  type="submit" variant="verde" size="md" state="active" className="w-full h-14 md:px-15" theme="fifa">SIGUIENTE</Button>
+        ]}
       >
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm mb-4 text-blue-200">
