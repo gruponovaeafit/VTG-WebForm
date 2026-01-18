@@ -23,6 +23,9 @@ type ButtonProps = {
   show?: boolean;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  
+  // Controla si se muestra la sombra del texto (solo para tema 'fifa')
+  textShadow?: boolean;
 };
 
 type ThemeConfig = {
@@ -126,6 +129,7 @@ export default function Button({
   show = true,
   className = "",
   onClick,
+  textShadow = true,
 }: ButtonProps) {
   if (!show) return null;
 
@@ -177,7 +181,7 @@ export default function Button({
       <span
         style={{
           textShadow:
-            theme === "fifa"
+            theme === "fifa" && textShadow
               ? "0 6px 0 rgba(0,80,35,0.9), 0 12px 18px rgba(0,0,0,0.35)"
               : undefined,
         }}

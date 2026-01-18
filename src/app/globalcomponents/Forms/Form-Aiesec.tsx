@@ -14,6 +14,14 @@ export default function AiesecForm() {
     e.preventDefault();
 
     const formElement = e.currentTarget;
+    
+    // Validar el formulario antes de enviar
+    if (!formElement.checkValidity()) {
+      // Mostrar mensajes de validación del navegador
+      formElement.reportValidity();
+      return;
+    }
+
     const formData = new FormData(formElement);
 
     try {

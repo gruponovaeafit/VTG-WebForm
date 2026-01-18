@@ -28,7 +28,21 @@ export default function Clubin1Form() {
         const data = await res.json();
         console.log("✅ Datos de backend recibidos:", data);
 
+        // Verificar que data y data.data existan
+        if (!data || !data.data) {
+          console.warn("⚠️ No se recibieron datos válidos del servidor");
+          setAvailableSlots({});
+          return;
+        }
+
         const grouped: { [key: string]: string[] } = {};
+
+        // Verificar que data.data sea un array
+        if (!Array.isArray(data.data)) {
+          console.warn("⚠️ data.data no es un array:", data.data);
+          setAvailableSlots({});
+          return;
+        }
 
         data.data.forEach((slot: any) => {
           const day = slot.day_of_week;
@@ -166,18 +180,6 @@ export default function Clubin1Form() {
             }
           />
         </div>
-
-        <Input
-          type="text"
-          name="asesor"
-          label="Escribe el nombre de tu asesor"
-          placeholder="Nombre"
-          required
-          borderColorClass="border-blue-200"
-          focusRingColorClass="focus:ring-blue-500"
-          labelColorClass="text-blue-200"
-          className="!px-2"
-        />
       </FormContainer>
       <ToastContainer />
     </>

@@ -72,7 +72,7 @@ export default function PersonalForm() {
   return (
     <>
       <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" formClassName="space-y-4" buttons={[
-         <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+         <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
       ]}>
         <Input
           type="text"
