@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";``
+import Footer from "@/app/globalcomponents/UI/Footer";
 import OEForm from "../../globalcomponents/Forms/Form-OE";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -46,14 +46,21 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10 ">
-      <img src="/OE.svg" alt="OE" width={150} height={120} />
+      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
+        {/* Logo siempre centrado */}
+        <div className="flex justify-center w-full mb-2 sm:mb-0">
+          <img src="/OE.svg" alt="OE" width={150} height={120} />
+        </div>
 
-        <div className="-mt-5">
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-5 w-full flex justify-center">
           <OEForm />
         </div>
 
-        <Footer />
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer />
+        </div>
 
       </main>
 

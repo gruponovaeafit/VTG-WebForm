@@ -27,7 +27,11 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center w-full max-w-2xl py-4">
-        <img src="/SERES.svg" alt="Seres" className="w-1/2" />
+        {/* Logo siempre centrado */}
+        <div className="flex justify-center w-full mb-2">
+          <img src="/SERES.svg" alt="Seres" className="w-1/2" />
+        </div>
+        
         <div className="flex flex-col gap-0 mb-2">
           <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-ea text-white">
             Seres
@@ -42,7 +46,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-4">
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-4">
           <Footer/>
         </div>
 

@@ -360,3 +360,33 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* Estilos para reCAPTCHA en móviles */
+@media (max-width: 640px) {
+  /* Asegurar que el iframe del captcha sea interactivo */
+  iframe[src*="recaptcha"] {
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Contenedor del captcha */
+  .g-recaptcha {
+    transform: scale(0.9);
+    transform-origin: center;
+    -webkit-transform: scale(0.9);
+    -webkit-transform-origin: center;
+  }
+}
+
+/* Asegurar que el captcha sea siempre clickeable */
+.g-recaptcha,
+.g-recaptcha > div,
+.g-recaptcha iframe {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  position: relative;
+  z-index: 1;
+}

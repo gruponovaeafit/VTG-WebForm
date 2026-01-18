@@ -47,14 +47,21 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10">
-        <Image src="/PARTNERS.svg" alt="Partners" width={150} height={120} />
-        
-        <div className="-mt-5">
+      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
+        {/* Logo siempre centrado */}
+        <div className="flex justify-center w-full mb-2 sm:mb-0">
+          <Image src="/PARTNERS.svg" alt="Partners" width={150} height={120} />
+        </div>
+
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-5 w-full flex justify-center">
           <PartnersForm />
         </div>
 
-        <Footer />
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer />
+        </div>
       </main>
     </div>
   );
