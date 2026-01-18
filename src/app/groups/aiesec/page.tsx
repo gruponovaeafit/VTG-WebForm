@@ -31,15 +31,26 @@ export default function Home() {
   
   return (
     <div
-      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#000072] text-white"
       style={{
-        backgroundImage: "url('/AIESEC_Screen.svg')",
-        backgroundSize: "cover",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      <div style={{ pointerEvents: "none" }}>
+      <img
+        src="/AIESEC_Star.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute right-0 top-0 z-0 w-[45vw] max-w-[380px] md:w-[30vw]"
+      />
+      <img
+        src="/AIESEC_Splash.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute bottom-0 left-0 z-0 w-[55vw] max-w-[420px] md:w-[35vw]"
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
         <ConfettiAnimation />
       </div>
 

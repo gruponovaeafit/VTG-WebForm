@@ -74,7 +74,7 @@ export default function AiesecForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" theme="fifa" className="w-full h-14 md:px-15">SIGUIENTE</Button>
         ]}
       >
         <Select
