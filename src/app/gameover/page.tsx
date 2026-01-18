@@ -1,6 +1,8 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer";
+import Button from "@/app/globalcomponents/UI/Button";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -27,25 +29,42 @@ export default function Home() {
   };
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-4 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10">
-        <h1 className="text-4xl md:text-1xl text-center mb-6 pixel-font text-white glitch">
-          GAME
-          <br />
-          OVER
+    <div className="relative flex flex-col justify-between items-center w-full h-screen overflow-hidden">
+      {/* Fondo que ocupa toda la pantalla */}
+      <div
+        className="absolute inset-0 bg-no-repeat bg-center bg-cover"
+        style={{ backgroundImage: "url('/Loading.svg')" }}
+      ></div>
+
+      {/* Animación de píxeles */}
+      <div className="absolute inset-0 pointer-events-none z-10">
+        <ConfettiAnimation />
+      </div>
+
+      {/* Contenido principal */}
+      <div className="relative z-20 flex flex-col justify-center items-center flex-grow">
+        <h1 className="text-4xl md:text-5xl text-center mb-6 font-ea text-white">
+          Gracias por participar
         </h1>
 
         {showButton && (
-          <button
+          <Button
             onClick={handleRestart}
-            className="mt-6 py-2 px-6 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded transition duration-300"
+            variant="verde"
+            size="md"
+            state="active"
+            theme="fifa"
+            className="mt-6"
+            textShadow={false}
           >
-            RESTART
-          </button>
+            Volver al inicio
+          </Button>
         )}
+      </div>
 
+      <div className="absolute bottom-10 left-0 right-0 justify-center items-center z-20">
         <Footer />
-      </main>
+      </div>
     </div>
   );
 }
