@@ -70,6 +70,7 @@ export default function AcademicForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
+        containerClassName="w-full flex items-center justify-center px-0"
         buttons={[
           <Button
             key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
