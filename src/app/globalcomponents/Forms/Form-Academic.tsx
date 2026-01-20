@@ -70,11 +70,10 @@ export default function AcademicForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        
         buttons={[
           <Button
-            type="submit" color="rojo" size="md" state="active" className="w-full">SIGUIENTE</Button>,
-        ]}
+            key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          ]}
       >
 
         {/*Campos del formulario*/}
@@ -105,6 +104,7 @@ export default function AcademicForm() {
                 { label: "Geología", value: "Geología" },
                 { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
                 { label: "Ingeniería Civil", value: "Ingeniería Civil" },
+                { label: "Ingeniería de Construcción", value: "Ingeniería de Construcción" },
                 { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
                 { label: "Ingeniería Física", value: "Ingeniería Física" },
                 { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
@@ -117,6 +117,7 @@ export default function AcademicForm() {
                 { label: "Mercadeo", value: "Mercadeo" },
                 { label: "Música", value: "Música" },
                 { label: "Negocios Internacionales", value: "Negocios Internacionales" },
+                { label: "Programa E", value: "Programa E" },
                 { label: "Psicología", value: "Psicología" },
               ]}
             />
@@ -147,6 +148,7 @@ export default function AcademicForm() {
                 { label: "Geología", value: "Geología" },
                 { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
                 { label: "Ingeniería Civil", value: "Ingeniería Civil" },
+                { label: "Ingeniería de Construcción", value: "Ingeniería de Construcción" },
                 { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
                 { label: "Ingeniería Física", value: "Ingeniería Física" },
                 { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
@@ -158,6 +160,7 @@ export default function AcademicForm() {
                 { label: "Mercadeo", value: "Mercadeo" },
                 { label: "Música", value: "Música" },
                 { label: "Negocios Internacionales", value: "Negocios Internacionales" },
+                { label: "Programa E", value: "Programa E" },
                 { label: "Psicología", value: "Psicología" },
               ]}
             />

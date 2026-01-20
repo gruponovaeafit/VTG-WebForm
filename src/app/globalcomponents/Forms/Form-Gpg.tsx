@@ -77,25 +77,25 @@ export default function GpgForm() {
         overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
         formClassName="space-y-4"
         buttons={[
-          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-4">
-          <Input
-            type="number"
-            name="age"
-            label="¿Qué edad tienes?"
-            placeholder="Edad"
+          <Select
+            id="talk"
+            name="talk"
+            label="¿A qué charla te gustaría asistir?"
             required
-            borderColorClass="border-purple-600"
-            focusRingColorClass="focus:ring-purple-700"
-            labelColorClass="text-purple-600"
+            options={[
+              { label: "Jue. 29 ene 5:30 – 7:20 p.m.", value: "Jue. 29 ene 5:30 – 7:20 p.m." },
+              { label: "Vie. 29 ene 2:30 – 4:20 p.m.", value: "Vie. 29 ene 2:30 – 4:20 p.m." },
+            ]}
           />
         </div>
 
         <Select
-          id="talk"
-          name="talk"
+          id="practice"
+          name="practice"
           label="¿Estás viendo pre-práctica?"
           required
           options={[

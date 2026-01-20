@@ -70,33 +70,18 @@ export default function PartnersForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
-          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         
-        <div className="mb-4">
-          <Input
-            type="text"
-            id="who"
-            name="who"
-            required
-            placeholder="Nombre"
-            title="Ingresa el nombre de quien te registró"
-            borderColorClass="border-orange-400"
-            focusRingColorClass="focus:ring-orange-400"
-            labelColorClass="text-orange-400"
-            label="¿Quién te registró?"
-          />
-        </div>
+        
 
         {/* Campo 2: ¿Vas a asistir a alguna de nuestras charlas informativas? */}
         <div className="mb-4">
           <label
             htmlFor="talkSelection"
-            className="block text-sm mb-2 text-orange-400"
+            className="block text-sm mb-2 text-white font-bold"
           >
             ¿Vas a asistir a alguna de nuestras charlas informativas?
           </label>
@@ -106,12 +91,26 @@ export default function PartnersForm() {
             name="talkSelection"
             required
             options={[
-              { label: "Mar. 22 Julio, 5 p.m.", value: "Mar. 22 Julio, 5 p.m." },
-              { label: "Mie. 23 Julio, 5 p.m.", value: "Mie. 23 Julio, 5 p.m." },
-              { label: "Jue. 24 Julio, 5 p.m.", value: "Jue. 24 Julio, 5 p.m." },
-              { label: "Vie. 25 Julio, 9 a.m.", value: "Vie. 25 Julio, 9 a.m." },
+              { label: "Mar. 27 ene 5 - 6 p.m.", value: "Mar. 27 ene 5 - 6 p.m." },
+              { label: "Mie. 28 ene 5 - 6 p.m.", value: "Mie. 28 ene 5 - 6 p.m." },
+              { label: "Jue. 29 ene 5 - 6 p.m.", value: "Jue. 29 ene 5 - 6 p.m." },
+              { label: "Vie. 30 ene 9 - 10 a.m.", value: "Vie. 30 ene 9 - 10 a.m." },
             ]}
-            className="w-full px-4 py-2 text-sm rounded border border-orange-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="w-full px-4 py-2 text-sm rounded border border-black bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            type="text"
+            id="who"
+            name="who"
+            required
+            placeholder="Nombre"
+            title="Ingresa el nombre de quien te registró"
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+            labelColorClass="text-white"
+            label="¿Quién te registró?"
           />
         </div>
 

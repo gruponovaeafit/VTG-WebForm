@@ -21,16 +21,16 @@ interface DataItem {
 }
 
 const COLORS = {
-  background: "#000000",
+  background: "#000072",
   text: "#FFFFFF",
-  title: "#FF00FF",
-  bar: "#FF0080",
-  grid: "#555555",
-  axis: "#00FFFF",
+  title: "#FFFFFF",
+  bar: "#FE9A02",
+  grid: "#FFFFFF",
+  axis: "#FE9A02",
   tooltipBackground: "#222222",
-  tooltipBorder: "#00FFFF",
+  tooltipBorder: "#FE9A02",
   tooltipText: "#FFFFFF",
-  legend: "#FFFF00",
+  legend: "#FFFFFF",
   label: "#FFFFFF"
 };
 
@@ -40,10 +40,20 @@ export default function UsersByDegreeChart() {
   const fetchData = async () => {
     try {
       const response = await fetch("/api/analytics/undergrad");
-      const result: DataItem[] = await response.json();
-      setData(result);
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const result = await response.json();
+      // Asegurar que result sea un array
+      if (Array.isArray(result)) {
+        setData(result);
+      } else {
+        console.error("La respuesta no es un array:", result);
+        setData([]);
+      }
     } catch (error) {
       console.error("Error obteniendo datos:", error);
+      setData([]); // Establecer array vacío en caso de error
     }
   };
 
@@ -81,23 +91,38 @@ export default function UsersByDegreeChart() {
     topCarrera,
     porcentajeData
   } = useMemo(() => {
+    // Asegurar que data sea un array antes de usar forEach
+    if (!Array.isArray(data) || data.length === 0) {
+      return {
+        totalInscritosCarrera: 0,
+        promedioPorCarrera: 0,
+        topCarrera: null,
+        porcentajeData: []
+      };
+    }
+
     let total = 0;
     let top: DataItem | null = null;
     let max = -Infinity;
 
     data.forEach((item) => {
-      total += item.cantidad;
-      if (item.cantidad > max) {
-        max = item.cantidad;
+      const cantidad = Number(item.cantidad) || 0;
+      total += cantidad;
+      if (cantidad > max) {
+        max = cantidad;
         top = item;
       }
     });
 
-    const promedio = data.length > 0 ? Math.round(total / data.length) : 0;
+    const promedioCalculado = data.length > 0 ? total / data.length : 0;
+    // Formatear promedio: mostrar decimales si tiene, sino mostrar entero
+    const promedio = promedioCalculado % 1 === 0 
+      ? Math.round(promedioCalculado) 
+      : promedioCalculado.toFixed(1);
 
     const porcentajeData = data.map((item) => ({
       ...item,
-      porcentaje: total > 0 ? ((item.cantidad / total) * 100).toFixed(2) : "0.00",
+      porcentaje: total > 0 ? ((Number(item.cantidad) || 0) / total * 100).toFixed(2) : "0.00",
     }));
 
     return {
@@ -119,8 +144,8 @@ export default function UsersByDegreeChart() {
   return (
     <div className="p-6 rounded-lg shadow-lg" style={{ backgroundColor: COLORS.background, color: COLORS.text }}>
       <div className="flex items-center space-x-3">
-        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: `1px solid ${COLORS.title}` }}>
-          <BarChart3 className="h-4 w-4" style={{ color: COLORS.title }} />
+        <div className="p-2 rounded-lg" style={{ backgroundColor: "rgba(255, 0, 255, 0.1)", border: `1px solid #FE9A02` }}>
+          <BarChart3 className="h-4 w-4" style={{ color: "#FE9A02"}} />
         </div>
         <div>
           <h2 className="text-xl font-bold" style={{ color: COLORS.title }}>
@@ -149,7 +174,7 @@ export default function UsersByDegreeChart() {
         </div>
         <div className="text-center p-2 rounded-lg border" style={{ borderColor: COLORS.grid, backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
           <p className="text-xs opacity-75" style={{ color: COLORS.text }}>Promedio</p>
-          <p className="text-lg font-bold" style={{ color: COLORS.axis }}>
+          <p className="text-lg font-bold" style={{ color: "#FE9A02"}}>
             {promedioPorCarrera}
           </p>
         </div>
@@ -178,12 +203,12 @@ export default function UsersByDegreeChart() {
             <CartesianGrid stroke={COLORS.grid} strokeDasharray="3 3" />
             <XAxis
               dataKey="pregrado"
-              stroke={COLORS.axis}
-              tick={{ fill: COLORS.axis, fontSize: 14 }}
+              stroke="#00FFFF"
+              tick={{ fill: "#FFFFFF", fontSize: 14 }}
             />
             <YAxis
-              stroke={COLORS.axis}
-              tick={{ fill: COLORS.axis, fontSize: 14 }}
+              stroke="00FFFF"
+              tick={{ fill: "#FFFFFF", fontSize: 14 }}
             />
             <Tooltip
               contentStyle={{

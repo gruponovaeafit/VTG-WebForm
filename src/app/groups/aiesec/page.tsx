@@ -1,10 +1,10 @@
 "use client";
 
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import AiesecForm from "../../globalcomponents/Forms/Form-Aiesec";
 import { useEffect } from "react";
 import Footer from "@/app/globalcomponents/UI/Footer";
 import { useRouter } from "next/navigation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 
 export default function Home() {
   const router = useRouter();
@@ -31,26 +31,44 @@ export default function Home() {
   
   return (
     <div
-      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#000072] text-white"
       style={{
-        backgroundImage: "url('/aiesec.svg')",
-        backgroundSize: "cover",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+      <img
+        src="/AIESEC_Star.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute right-0 top-0 z-0 w-[45vw] max-w-[380px] md:w-[30vw]"
+      />
+      <img
+        src="/AIESEC_Splash.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute bottom-0 left-0 z-0 w-[55vw] max-w-[420px] md:w-[35vw]"
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <ConfettiAnimation />
       </div>
 
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center pixel-font text-white glitch_aiesec">
-          AIESEC
-        </h1>
+      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
+        {/* Logo siempre centrado */}
+        <div className="flex justify-center w-full mb-2 sm:mb-0">
+          <img src="/AIESEC.svg" alt="AIESEC" width={150} height={120} />
+        </div>
 
-        <AiesecForm />
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-5 w-full flex justify-center">
+          <AiesecForm />
+        </div>
 
-        <Footer />
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer />
+        </div>
       </main>
     </div>
   );

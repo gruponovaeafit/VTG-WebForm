@@ -42,38 +42,48 @@ export default function GroupsForm() {
 
   return (
     <>
-    <FormContainer
-            onSubmit={handleFormSubmit}
-            
-            buttons={[
-              <Button
-                type="submit" color="rojo" size="md" state="active" className="w-full">SIGUIENTE</Button>,
-            ]}
+      <FormContainer
+        onSubmit={handleFormSubmit}
+        buttons={[
+          <Button
+            key="submit"
+            type="submit"
+            variant="verde"
+            size="md"
+            state="active"
+            className="w-full"
+            theme="fifa"
           >
-        <Select
-          id="studentGroup"
-          name="studentGroup"
-          label="Grupo estudiantil"
-          colorTheme="yellow"
-          borderColorClass="border-black"
-          focusRingColorClass="focus:ring-white"
-          labelColorClass="text-white"
-          options={[
-            { label: "Aiesec", value: "Aiesec" },
-            { label: "Clubin", value: "Clubin" },
-            { label: "Clubmerc", value: "Clubmerc" },
-            { label: "GPG", value: "GPG" },
-            { label: "Nexos", value: "Nexos" },
-            { label: "NOVA", value: "NOVA" },
-            { label: "OE", value: "OE" },
-            { label: "Partners", value: "Partners" },
-            { label: "Seres", value: "Seres" },
-            { label: "Spie", value: "Spie" },
-            { label: "Tutores", value: "Tutores" },
-            { label: "TVU", value: "TVU" },
-            { label: "UN", value: "UN" },
-          ]}
-        />
+            SIGUIENTE
+          </Button>,
+        ]}
+      >
+        
+          <Select
+            id="studentGroup"
+            name="studentGroup"
+            label="Grupo estudiantil"
+            colorTheme="yellow"
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+            labelColorClass="text-white"
+            options={[
+              { label: "NOVA", value: "NOVA" },
+              { label: "AIESEC", value: "AIESEC" },
+              { label: "CLUBIN", value: "CLUBIN" },
+              { label: "CLUBMERC", value: "CLUBMERC" },
+              { label: "GPG", value: "GPG" },
+              { label: "NEXOS", value: "NEXOS" },
+              { label: "OE", value: "OE" },
+              { label: "PARTNERS", value: "PARTNERS" },
+              { label: "SERES", value: "SERES" },
+              { label: "SPIE", value: "SPIE" },
+              { label: "TUTORES", value: "TUTORES" },
+              { label: "TVU", value: "TVU" },
+              { label: "UN SOCIETY", value: "UN SOCIETY" },
+            ]}
+          />
+        
       </FormContainer>
     </>
   );

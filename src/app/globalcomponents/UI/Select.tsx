@@ -116,20 +116,20 @@ export default function Select({
 
   const borderClass = error
     ? "border-red-600"
-    : borderColorClass || theme.border;
+    : borderColorClass || "border-black focus:border-white";
 
   const focusRingClass = error
     ? "focus:ring-red-500"
-    : focusRingColorClass || theme.focusRing;
+    : focusRingColorClass || "focus:ring-white";
 
   const labelColor =
     error ? "text-red-200" : labelColorClass || theme.label;
 
-  const baseLabelClasses = "block text-left text-lg font-extrabold mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
+  const baseLabelClasses = "block text-left text-base sm:text-lg font-extrabold mb-1.5 sm:mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
 
   const baseSelectClasses =
     "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#f2dc4b] " +
-    "px-4 py-2.5 text-base text-[#2b2b2b] font-semibold " +
+    "px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base text-[#2b2b2b] font-semibold " +
     "focus:outline-none focus:ring-2 " +
     "disabled:opacity-50 disabled:cursor-not-allowed";
 

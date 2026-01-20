@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
@@ -9,6 +10,60 @@ import Button from "../UI/Button";
 
 export default function SeresForm() {
   const router = useRouter();
+  const [availableTalks, setAvailableTalks] = useState<{ label: string; value: string }[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAvailableTalks = async () => {
+      console.log("📡 Iniciando solicitud para obtener charlas disponibles...");
+      try {
+        const res = await fetch("/api/forms/seres");
+
+        if (!res.ok) {
+          throw new Error(`❌ Error al obtener los datos. Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log("✅ Datos de backend recibidos:", data);
+
+        // Verificar que data y data.data existan
+        if (!data || !data.data) {
+          console.warn("⚠️ No se recibieron datos válidos del servidor");
+          setAvailableTalks([]);
+          setIsLoading(false);
+          return;
+        }
+
+        // Verificar que data.data sea un array
+        if (!Array.isArray(data.data)) {
+          console.warn("⚠️ data.data no es un array:", data.data);
+          setAvailableTalks([]);
+          setIsLoading(false);
+          return;
+        }
+
+        const talks = data.data.map((talkSlot: any) => {
+          // Formatear como "day_of_week, start_time" para mantener consistencia
+          const talkLabel = `${talkSlot.day_of_week}, ${talkSlot.start_time}`;
+          console.log(`🕒 Charla recibida: ${talkLabel} (capacidad: ${talkSlot.capacity})`);
+          return {
+            label: talkLabel,
+            value: talkLabel,
+          };
+        });
+
+        setAvailableTalks(talks);
+        console.log("📅 Charlas disponibles:", talks);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("🔥 Error al obtener las charlas disponibles:", error);
+        toast.error("No se pudieron cargar las charlas. Inténtalo más tarde.");
+        setIsLoading(false);
+      }
+    };
+
+    fetchAvailableTalks();
+  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,14 +123,12 @@ export default function SeresForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
-          <Button type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="talks" className="block text-sm mb-2 text-blue-200">
+          <label htmlFor="talks" className="block text-sm mb-2 text-white font-bold">
             ¿A qué charla informativa deseas asistir?
           </label>
         
@@ -83,13 +136,15 @@ export default function SeresForm() {
             id="talk"
             name="talk"
             required
-            className="w-full px-2 py-2 text-sm rounded border border-blue-200 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            options={[
-              { label: "Vie. 25 jul, 8-9 a.m.", value: "Vie. 25 jul, 8-9 a.m." },
-              { label: "Vie. 25 jul, 10-11 a.m.", value: "Vie. 25 jul, 10-11 a.m." },
-              { label: "Vie. 25 jul, 12-1 p.m.", value: "Vie. 25 jul, 12-1 p.m." },
-              { label: "Vie. 25 jul, 3-4 p.m.", value: "Vie. 25 jul, 3-4 p.m." },
-            ]}
+            disabled={isLoading || availableTalks.length === 0}
+            className="w-full px-2 py-2 text-sm rounded border border-bl bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
+            options={
+              isLoading
+                ? [{ label: "Cargando charlas...", value: "" }]
+                : availableTalks.length > 0
+                ? availableTalks
+                : [{ label: "No hay charlas disponibles", value: "" }]
+            }
           />
         </div>
       </FormContainer>
