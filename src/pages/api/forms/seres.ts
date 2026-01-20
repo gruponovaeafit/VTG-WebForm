@@ -80,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { talk } = req.body;
       console.log("📩 Datos recibidos:", { talk });
 
-      const groupId = 9;
+      const groupId = 2;
       const email = verifyJwtFromCookies(req, res);
       console.log("📧 Correo verificado:", email);
 

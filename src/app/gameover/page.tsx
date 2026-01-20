@@ -16,7 +16,7 @@ export default function Home() {
     // Mostrar el botón después de 5 segundos
     const timer = setTimeout(() => {
       setShowButton(true);
-    }, 5000);
+    }, 3000);
 
     return () => {
       document.body.classList.remove("no-scroll");
