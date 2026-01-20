@@ -68,101 +68,126 @@ export default function AcademicForm() {
 
   return (
     <>
-      <FormContainer onSubmit={handleFormSubmit} overlayClassName="bg-gray-800 bg-opacity-90 p-3 rounded-lg shadow-lg max-w-md w-full" 
-      formClassName="space-y-4" 
-      buttons={[
-        <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
-      ]}>
-        <div className="mb-4">
-          <Select
-            id="programs"
-            name="programs"
-            label="Programa académico"
-            required
-            options={[
-              { label: "Administración de Negocios", value: "Administración de Negocios" },
-              { label: "Biología", value: "Biología" },
-              { label: "Ciencias Políticas", value: "Ciencias Políticas" },
-              { label: "Comunicación Social", value: "Comunicación Social" },
-              { label: "Contaduría Pública", value: "Contaduría Pública" },
-              { label: "Derecho", value: "Derecho" },
-              { label: "Diseño Interactivo", value: "Diseño Interactivo" },
-              { label: "Diseño Urbano y Gestión del Hábitat", value: "Diseño Urbano y Gestión del Hábitat" },
-              { label: "Economía", value: "Economía" },
-              { label: "Finanzas", value: "Finanzas" },
-              { label: "Geología", value: "Geología" },
-              { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
-              { label: "Ingeniería Civil", value: "Ingeniería Civil" },
-              { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
-              { label: "Ingeniería Física", value: "Ingeniería Física" },
-              { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
-              { label: "Ingeniería Mecánica", value: "Ingeniería Mecánica" },
-              { label: "Ingeniería de Procesos", value: "Ingeniería de Procesos" },
-              { label: "Ingeniería de Producción", value: "Ingeniería de Producción" },
-              { label: "Ingeniería de Sistemas", value: "Ingeniería de Sistemas" },
-              { label: "Ingeniería Industrial", value: "Ingeniería Industrial" },
-              { label: "Literatura", value: "Literatura" },
-              { label: "Mercadeo", value: "Mercadeo" },
-              { label: "Música", value: "Música" },
-              { label: "Negocios Internacionales", value: "Negocios Internacionales" },
-              { label: "Psicología", value: "Psicología" },
-            ]}
-          />
-        </div>
+      <FormContainer
+        onSubmit={handleFormSubmit}
+        buttons={[
+          <Button
+            key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          ]}
+      >
 
-        <div className="mb-4">
-          <Select
-            id="secondaryPrograms"
-            name="secondaryPrograms"
-            label="Programa académico Secundario"
-            required
-            options={[
-              { label: "No Aplica", value: "No Aplica" },
-              { label: "Administración de Negocios", value: "Administración de Negocios" },
-              { label: "Biología", value: "Biología" },
-              { label: "Ciencias Políticas", value: "Ciencias Políticas" },
-              { label: "Comunicación Social", value: "Comunicación Social" },
-              { label: "Contaduría Pública", value: "Contaduría Pública" },
-              { label: "Derecho", value: "Derecho" },
-              { label: "Diseño Interactivo", value: "Diseño Interactivo" },
-              { label: "Diseño Urbano y Gestión del Hábitat", value: "Diseño Urbano y Gestión del Hábitat" },
-              { label: "Economía", value: "Economía" },
-              { label: "Finanzas", value: "Finanzas" },
-              { label: "Geología", value: "Geología" },
-              { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
-              { label: "Ingeniería Civil", value: "Ingeniería Civil" },
-              { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
-              { label: "Ingeniería Física", value: "Ingeniería Física" },
-              { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
-              { label: "Ingeniería Mecánica", value: "Ingeniería Mecánica" },
-              { label: "Ingeniería de Procesos", value: "Ingeniería de Procesos" },
-              { label: "Ingeniería de Producción", value: "Ingeniería de Producción" },
-              { label: "Ingeniería de Sistemas", value: "Ingeniería de Sistemas" },
-              { label: "Literatura", value: "Literatura" },
-              { label: "Mercadeo", value: "Mercadeo" },
-              { label: "Música", value: "Música" },
-              { label: "Negocios Internacionales", value: "Negocios Internacionales" },
-              { label: "Psicología", value: "Psicología" },
-            ]}
-          />
-        </div>
+        {/*Campos del formulario*/}
+        <div className="space-y-4">
+          <div>
+            <Select
+              id="programs"
+              name="programs"
+              required
+              label="Pregrado"
+              colorTheme="yellow"
+              borderColorClass="border-black"
+              focusRingColorClass="focus:ring-white"
+              labelColorClass="text-white"
+        
+              
+              options={[
+                { label: "Administración de Negocios", value: "Administración de Negocios" },
+                { label: "Biología", value: "Biología" },
+                { label: "Ciencias Políticas", value: "Ciencias Políticas" },
+                { label: "Comunicación Social", value: "Comunicación Social" },
+                { label: "Contaduría Pública", value: "Contaduría Pública" },
+                { label: "Derecho", value: "Derecho" },
+                { label: "Diseño Interactivo", value: "Diseño Interactivo" },
+                { label: "Diseño Urbano y Gestión del Hábitat", value: "Diseño Urbano y Gestión del Hábitat" },
+                { label: "Economía", value: "Economía" },
+                { label: "Finanzas", value: "Finanzas" },
+                { label: "Geología", value: "Geología" },
+                { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
+                { label: "Ingeniería Civil", value: "Ingeniería Civil" },
+                { label: "Ingeniería de Construcción", value: "Ingeniería de Construcción" },
+                { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
+                { label: "Ingeniería Física", value: "Ingeniería Física" },
+                { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
+                { label: "Ingeniería Mecánica", value: "Ingeniería Mecánica" },
+                { label: "Ingeniería de Procesos", value: "Ingeniería de Procesos" },
+                { label: "Ingeniería de Producción", value: "Ingeniería de Producción" },
+                { label: "Ingeniería de Sistemas", value: "Ingeniería de Sistemas" },
+                { label: "Ingeniería Industrial", value: "Ingeniería Industrial" },
+                { label: "Literatura", value: "Literatura" },
+                { label: "Mercadeo", value: "Mercadeo" },
+                { label: "Música", value: "Música" },
+                { label: "Negocios Internacionales", value: "Negocios Internacionales" },
+                { label: "Programa E", value: "Programa E" },
+                { label: "Psicología", value: "Psicología" },
+              ]}
+            />
+          </div>
 
-        <div className="mb-4">
-          <Select
-            id="semester"
-            name="semester"
-            label="¿En qué semestre te encuentras matriculadx?"
-            required
-            options={[
-              ...Array.from({ length: 10 }, (_, i) => ({
-                label: `${i + 1}`,
-                value: `${i + 1}`,
-              })),
-              { label: "10+", value: "10+" },
-            ]}
-          />
+          <div>
+            <Select
+              id="secondaryPrograms"
+              name="secondaryPrograms"
+              label="2° pregrado"
+              required
+              colorTheme="yellow"
+              borderColorClass="border-black"
+              focusRingColorClass="focus:ring-white"
+              labelColorClass="text-white"
+              options={[
+                { label: "No Aplica", value: "No Aplica" },
+                { label: "Administración de Negocios", value: "Administración de Negocios" },
+                { label: "Biología", value: "Biología" },
+                { label: "Ciencias Políticas", value: "Ciencias Políticas" },
+                { label: "Comunicación Social", value: "Comunicación Social" },
+                { label: "Contaduría Pública", value: "Contaduría Pública" },
+                { label: "Derecho", value: "Derecho" },
+                { label: "Diseño Interactivo", value: "Diseño Interactivo" },
+                { label: "Diseño Urbano y Gestión del Hábitat", value: "Diseño Urbano y Gestión del Hábitat" },
+                { label: "Economía", value: "Economía" },
+                { label: "Finanzas", value: "Finanzas" },
+                { label: "Geología", value: "Geología" },
+                { label: "Ingeniería Agronómica", value: "Ingeniería Agronómica" },
+                { label: "Ingeniería Civil", value: "Ingeniería Civil" },
+                { label: "Ingeniería de Construcción", value: "Ingeniería de Construcción" },
+                { label: "Ingeniería de Diseño de Producto", value: "Ingeniería de Diseño de Producto" },
+                { label: "Ingeniería Física", value: "Ingeniería Física" },
+                { label: "Ingeniería Matemática", value: "Ingeniería Matemática" },
+                { label: "Ingeniería Mecánica", value: "Ingeniería Mecánica" },
+                { label: "Ingeniería de Procesos", value: "Ingeniería de Procesos" },
+                { label: "Ingeniería de Producción", value: "Ingeniería de Producción" },
+                { label: "Ingeniería de Sistemas", value: "Ingeniería de Sistemas" },
+                { label: "Literatura", value: "Literatura" },
+                { label: "Mercadeo", value: "Mercadeo" },
+                { label: "Música", value: "Música" },
+                { label: "Negocios Internacionales", value: "Negocios Internacionales" },
+                { label: "Programa E", value: "Programa E" },
+                { label: "Psicología", value: "Psicología" },
+              ]}
+            />
+          </div>
+
+          <div>
+            <Select
+              id="semester"
+              name="semester"
+              label="Semestre"
+              required
+              colorTheme="yellow"
+              borderColorClass="border-black"
+              focusRingColorClass="focus:ring-white"
+              labelColorClass="text-white"
+              options={[
+                ...Array.from({ length: 10 }, (_, i) => ({
+                  label: `Semestre ${i + 1}`,
+                  value: `${i + 1}`,
+                })),
+                { label: "10+", value: "10+" },
+              ]}
+            />
+          </div>
         </div>
       </FormContainer>
+
       <ToastContainer />
     </>
   );
