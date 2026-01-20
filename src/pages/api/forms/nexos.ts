@@ -71,7 +71,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   } catch (err) {
     console.error("Error en /api/forms/nexos:", err);
     return res.status(500).json({
-      notification: { type: "error", message: "Error interno del servidor." },
+      notification: { 
+        type: "error", 
+        message: "Error interno del servidor." },
     });
   }
 }
