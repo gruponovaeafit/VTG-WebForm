@@ -35,7 +35,8 @@ export default function Home() {
       style={{
         backgroundImage: "url('/main.svg')",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        position: "relative",
+
       }}
     >
       {/* Animación de píxeles */}

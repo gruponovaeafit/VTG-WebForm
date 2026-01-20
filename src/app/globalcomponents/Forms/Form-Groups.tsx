@@ -42,30 +42,48 @@ export default function GroupsForm() {
 
   return (
     <>
-    <FormContainer onSubmit={handleFormSubmit}  buttons={[
-      <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
-    ]}>
-        <Select
-          id="studentGroup"
-          name="studentGroup"
-          label="Grupo estudiantil de interés"
-          required
-          options={[
-            { label: "NOVA", value: "NOVA" },
-            { label: "AIESEC", value: "AIESEC" },
-            { label: "CLUBIN", value: "CLUBIN" },
-            { label: "CLUBMERC", value: "CLUBMERC" },
-            { label: "GPG", value: "GPG" },
-            { label: "NEXOS", value: "NEXOS" },
-            { label: "OE", value: "OE" },
-            { label: "PARTNERS", value: "PARTNERS" },
-            { label: "SERES", value: "SERES" },
-            { label: "SPIE", value: "SPIE" },
-            { label: "TUTORES", value: "TUTORES" },
-            { label: "TVU", value: "TVU" },
-            { label: "UN SOCIETY", value: "UN SOCIETY" },
-          ]}
-        />
+      <FormContainer
+        onSubmit={handleFormSubmit}
+        buttons={[
+          <Button
+            key="submit"
+            type="submit"
+            variant="verde"
+            size="md"
+            state="active"
+            className="w-full"
+            theme="fifa"
+          >
+            SIGUIENTE
+          </Button>,
+        ]}
+      >
+        
+          <Select
+            id="studentGroup"
+            name="studentGroup"
+            label="Grupo estudiantil"
+            colorTheme="yellow"
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+            labelColorClass="text-white"
+            options={[
+              { label: "NOVA", value: "NOVA" },
+              { label: "AIESEC", value: "AIESEC" },
+              { label: "CLUBIN", value: "CLUBIN" },
+              { label: "CLUBMERC", value: "CLUBMERC" },
+              { label: "GPG", value: "GPG" },
+              { label: "NEXOS", value: "NEXOS" },
+              { label: "OE", value: "OE" },
+              { label: "PARTNERS", value: "PARTNERS" },
+              { label: "SERES", value: "SERES" },
+              { label: "SPIE", value: "SPIE" },
+              { label: "TUTORES", value: "TUTORES" },
+              { label: "TVU", value: "TVU" },
+              { label: "UN SOCIETY", value: "UN SOCIETY" },
+            ]}
+          />
+        
       </FormContainer>
     </>
   );
