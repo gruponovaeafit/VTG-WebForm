@@ -40,28 +40,48 @@ export default function Home() {
     >
 
 
-      <div style={{ pointerEvents: "none" }}>
+      {/* Imágenes decorativas - fuera del main para posicionamiento absoluto correcto */}
+      <img
+        src="/NEXOS_Cordon.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute left-0 -top-0 z-0 w-[39vw] max-w-[220px]
+         sm:-right-10 sm:-top-12 sm:w-[80vw] 
+         md:right-0 md:-top-2 md:w-[80vw] md:max-w-[320px]"
+      />
+      <img
+        src="/NEXOS_Curva.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute -bottom-7 right-[-110px] z-0 w-[100vw] max-w-[520px] 
+        sm:-bottom-11 sm:right-[-150px] sm:w-[80vw] sm:max-w-[700px]
+        md:-bottom-20 md:right-[-250px] md:w-[70vw] md:max-w-[900px]"
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
         <ConfettiAnimation />
       </div>
+      
 
-      {/* Contenido principal */}
-      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
-        {/* Logo siempre centrado */}
-        <div className="flex justify-center w-full mb-2 sm:mb-0">
-          <img src="/NEXOS.svg" alt="Nexos" width={150} height={120} />
+      {/* Logo + Formulario centrados juntos en la pantalla */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-[500px] px-4 flex flex-col items-center">
+        {/* Logo siempre arriba del form */}
+        <div className="mb-[0px] z-20">
+          <img
+            src="/NEXOS.svg"
+            alt="Nexos"
+            className="h-auto w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px]"
+          />
         </div>
-
-        {/* Formulario - puede expandirse */}
-        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
-          <NexosForm />
-        </div>
-
-        {/* Footer siempre centrado */}
-        <div className="flex justify-center w-full mt-2 sm:mt-0">
+        {/* Formulario */}
+        <NexosForm />
+        {/* Footer siempre debajo del form */}
+        <div className="mt-[40px] z-20 
+        sm:mt-[40px] 
+        md:mt-[70px]">
           <Footer/>
         </div>
-
-      </main>
+      </div>
 
       
       
