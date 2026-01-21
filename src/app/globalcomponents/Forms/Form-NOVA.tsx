@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
@@ -75,10 +76,21 @@ export default function NOVAForm() {
 
   return (
     <>
+
+       <div className="relative z-10 flex flex-col items-center">
+         <div className="mb-2 md:mb-4">
+            <Image
+                src="/NOVA_logo_2.svg"
+                alt="NOVA Logo"
+                width={200}
+                height={200}
+                className="md:w-[180px]"
+                priority
+             />
+       </div>
+
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
@@ -87,12 +99,27 @@ export default function NOVAForm() {
         <Select
           id="talk"
           name="talk"
-          label="¿A qué charla informartiva asistirás?"
+          label="¿A qué charla te gustaría asistir?"
+          labelColorClass="text-white"
           required
           options={[
             { label: "Jue. 24 jul, 12-1 p.m.", value: "Jue. 24 jul, 12-1 p.m." },
             { label: "Vie. 25 jul, 2-3 p.m.", value: "Vie. 25 jul, 2-3 p.m." },
             { label: "Mié. 30 jul, 5-6 p.m.", value: "Mié. 30 jul, 5-6 p.m." },
+          ]}
+        />
+
+        <Select
+          id="committie"
+          name="committie"
+          label="¿A qué depto te gustaría entrar?"
+          labelColorClass="text-white"
+          required
+          options={[
+            { label: "Communities", value: "Communities" },
+            { label: "R.R.P.P.", value: "R.R.P.P." },
+            { label: "G.H.", value: "G.H." },
+            { label: "Mercadeo", value: "Mercadeo" },
           ]}
         />
 
@@ -103,12 +130,10 @@ export default function NOVAForm() {
             label="Nombre del Novatto/a que te inscribió"
             placeholder="Novatto/a"
             required
-            borderColorClass="border-purple-600"
-            focusRingColorClass="focus:ring-purple-700"
-            labelColorClass="text-purple-600"
           />
         </div>
       </FormContainer>
+      </div>
       <ToastContainer />
     </>
   );

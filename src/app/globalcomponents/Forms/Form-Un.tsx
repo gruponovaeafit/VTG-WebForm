@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
+import Input from "../UI/Input";
 import Button from "../UI/Button";
 
 export default function UnForm() {
@@ -65,63 +66,49 @@ export default function UnForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-2">
-          <label htmlFor="committies" className="block text-sm mb-2 text-blue-400">
-            ¿Cuáles son tus comités de preferencia?
-          </label>
           
           <Select
             id="committie"
             name="committie"
+            label="¿A qué comité te gustaría ingresar?"
+            labelColorClass="text-white"
             required
-            className="w-full px-2 py-2 text-xs rounded border border-blue-400 bg-black text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             options={[
-              { label: "Publicidad y Redes", value: "Publicidad y Redes" },
-              { label: "Gestión Humana", value: "Gestión Humana" },
-              { label: "Relaciones Públicas", value: "Relaciones Públicas" },
+              { label: "Académico", value: "Académico"  },
               { label: "Logística", value: "Logística" },
-              { label: "Académico", value: "Académico" },
+              { label: "GH", value: "GH" },
+              { label: "RP y Redes", value: "RP y Redes" },
             ]}
           />
         </div>
 
         <div className="mb-2">
-          <label htmlFor="talks" className="block text-sm mb-2 text-blue-400">
-            ¿Podrás asistir a la charla informativa del Viernes 25 de julio a las 4:00pm?
-          </label>
           
           <Select
             id="talk"
             name="talk"
+            label="¿A qué charla te gustaría asistir?"
+            labelColorClass="text-white"
             required
-            className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             options={[
-              { label: "Sí, podré asistir", value: "Sí, podré asistir" },
-              { label: "No, nos vemos en el Assessment.", value: "No, nos vemos en el Assessment." },
+              { label: "Viernes 30 de enero 2:00 p.m. – 3:30 p.m.", value: "Viernes 30 de enero 2:00 p.m. – 3:30 p.m." },
+              { label: "Viernes 30 de enero 4:00 p.m. – 5:30 p.m.", value: "Viernes 30 de enero 4:00 p.m. – 5:30 p.m." },
             ]}
           />
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="assessment" className="block text-sm mb-2 text-blue-400">
-            ¿Puedes asistir al assessment el sábado 26 de julio?
-          </label>
-          
-          <Select
-            id="assessment"
-            name="assessment"
-            required
-            className="w-full px-2 py-2 text-xs rounded border text-sm border-blue-400 bg-black text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            options={[
-              { label: "Sí", value: "Sí" },
-              { label: "No", value: "No" },
-            ]}
+        <div className="mb-2">
+          <Input
+              type="text"
+              name="referral_name"
+              label="¿Quién te inscribió?"
+              placeholder="Nombre"
+              required
           />
         </div>
       </FormContainer>

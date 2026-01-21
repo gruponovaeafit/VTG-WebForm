@@ -32,9 +32,9 @@ export default function Home() {
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#000072] text-white"
     style={{
-      backgroundImage: "url('/nova.svg')",
+      backgroundImage: "url('/NOVA_Screen.svg')",
       backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
@@ -46,17 +46,14 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6 pixel-font text-white glitch_NOVA">
-          NOVA
-        </h1>
+      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
 
         <Form />
 
-        <Footer />
-
+        <Footer/>
       </main>
+      
+    </div>     
 
-    </div>
   );
 }

@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#000072] text-white"
     style={{
       backgroundImage: "url('/UN_Screen.svg')",
       backgroundSize: "cover",
@@ -44,24 +44,18 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-2 row-start-2 items-center sm:items-start relative z-10 ">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-1 pixel-font text-white glitch_UN">
-          UN
-        </h1>
+      <main className="flex flex-col row-start-2 items-center sm:items-start relative z-10">
 
-        <UnForm/>
+        <div className="w-full flex justify-center translate-y-32">
+          <UnForm />
+        </div>
 
-        <Footer/>
-
+        <div className="flex justify-center w-full translate-y-32 sm:mt-0">
+          <Footer/>
+        </div>
       </main>
-
       
-      
-    </div>
-
-
-
-        
+    </div>     
 
   );
 }
