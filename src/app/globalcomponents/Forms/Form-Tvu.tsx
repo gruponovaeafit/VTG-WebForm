@@ -83,8 +83,9 @@ export default function TvuForm() {
             required
             className="border-black focus:ring-2 focus:ring-white"
             options={[
-              { label: "Jue. 29 ene", value: "Jue. 29 ene" },
-              { label: "Vie. 30 ene", value: "Vie. 30 ene" },
+              { label: "Mie. 28 ene 6:00PM-7:00PM", value: "Mie. 28 ene 6:00PM-7:00PM" },
+              { label: "Jue. 29 ene 6:00PM-7:00PM", value: "Jue. 29 ene 6:00PM-7:00PM" },
+              { label: "Vie. 30 ene 12:00M-1:00PM", value: "Vie. 30 ene 12:00M-1:00PM" },
             ]}
           />
         </div>
