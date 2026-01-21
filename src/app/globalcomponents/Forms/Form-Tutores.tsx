@@ -80,7 +80,7 @@ export default function TutoresForm() {
             name="IdTutor"
             required
             placeholder="Tutor/a"
-            borderColorClass="border-[#513D9C]"
+            borderColorClass="border-black"
             focusRingColorClass="focus:ring-white"
             labelColorClass="text-white"
             label="Nombre del Tutor/a que te inscribió"
