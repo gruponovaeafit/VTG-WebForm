@@ -23,6 +23,9 @@ type ButtonProps = {
   show?: boolean;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  
+  // Controla si se muestra la sombra del texto (solo para tema 'fifa')
+  textShadow?: boolean;
 };
 
 type ThemeConfig = {
@@ -55,8 +58,8 @@ const themes: Record<ButtonTheme, ThemeConfig> = {
     base: `
       font-ea
       group
-      relative w-full h-[72px]
-      pl-10 pr-16
+      relative w-full
+      pl-4 pr-14 sm:pl-6 sm:pr-16 md:pl-8 md:pr-20
       rounded-tr-full
       rounded-br-full
       rounded-bl-full
@@ -65,15 +68,16 @@ const themes: Record<ButtonTheme, ThemeConfig> = {
       flex items-center justify-center
       overflow-visible
       uppercase tracking-wide
+      text-3xl sm:text-4xl md:text-5xl
       transition
       active:translate-y-1
     `,
     variants: {
       verde: `
         bg-[#34C759] text-white
-        shadow-[0_14px_0_rgba(0,0,0,0.35)]
+        shadow-[0_10px_0_rgba(0,0,0,0.35)] sm:shadow-[0_12px_0_rgba(0,0,0,0.35)] md:shadow-[0_14px_0_rgba(0,0,0,0.35)]
         hover:bg-[#2FB650]
-        active:shadow-[0_8px_0_rgba(0,0,0,0.35)]
+        active:shadow-[0_6px_0_rgba(0,0,0,0.35)]
       `,
       amarillo:
         "bg-yellow-400 text-black hover:bg-yellow-500 active:bg-yellow-600",
@@ -83,9 +87,9 @@ const themes: Record<ButtonTheme, ThemeConfig> = {
         "bg-orange-400 text-black hover:bg-orange-500 active:bg-orange-600",
     },
     sizes: {
-      sm: "h-[56px] text-2xl pl-8 pr-20",
-      md: "h-[72px] text-4xl pl-10 pr-14",
-      lg: "h-[88px] text-5xl pl-12 pr-28",
+      sm: "h-[48px] sm:h-[52px]",
+      md: "h-[50px] sm:h-[64px] md:h-[72px]",
+      lg: "h-[64px] sm:h-[76px] md:h-[88px]",
     },
   },
 
@@ -126,6 +130,7 @@ export default function Button({
   show = true,
   className = "",
   onClick,
+  textShadow = true,
 }: ButtonProps) {
   if (!show) return null;
 
@@ -177,7 +182,7 @@ export default function Button({
       <span
         style={{
           textShadow:
-            theme === "fifa"
+            theme === "fifa" && textShadow
               ? "0 6px 0 rgba(0,80,35,0.9), 0 12px 18px rgba(0,0,0,0.35)"
               : undefined,
         }}
@@ -189,8 +194,8 @@ export default function Button({
       {theme === "fifa" && (
         <span
           className="
-            absolute right-[-35px] top-1/2 -translate-y-1/2
-            w-24 h-24 rounded-full
+            absolute right-[-20px] sm:right-[-28px] md:right-[-32px] top-1/2 -translate-y-1/2
+            w-20 h-18 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full
             overflow-hidden pointer-events-none
           "
         >

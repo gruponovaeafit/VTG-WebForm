@@ -69,7 +69,7 @@ export default function TvuForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-4 w-full">

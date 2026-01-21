@@ -93,64 +93,28 @@ export default function NexosForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
-          <Button key="submit" type="submit" color="rojo" size="md" state="active" className="w-full">Level Up!</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" theme="fifa" className="w-full h-14 md:px-15">SIGUIENTE</Button>
         ]}
       >
-        <div className="mb-4">
-          <label htmlFor="Departments" className="block text-sm mb-2 text-[#9A975F]">
-            Departamentos
-          </label>
-          <div className="flex flex-col space-y-2">
-            {["Edición", "Desarrollo Humano", "Mercadeo", "Relaciones Públicas"].map(
-              (department, index) => (
-                <label key={index} className="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    name="departments"
-                    value={department}
-                    className="form-checkbox text-[#9A975F] focus:ring-[#9A975F]"
-                  />
-                  <span className="ml-2 text-white">{department}</span>
-                </label>
-              )
-            )}
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="assistance" className="block text-sm mb-2 text-[#9A975F]">
-            ¿Asistirás a la charla informativa el viernes 25 de Julio a la 1:30pm? 
-            <br />
-            Salón 34-302
-          </label>
-         
-          <Select
-            id="assistance"
-            name="assistance"
-            required
-            options={[
-              { label: "Sí", value: "Sí" },
-              { label: "No", value: "No" },
-            ]}
-            className="w-full px-4 py-2 rounded border border-[#9A975F] bg-black text-white focus:outline-none focus:ring-2 focus:ring-[#9A975F]"
-          />
-        </div>
-
-        <div className="mb-4">
-          <Input
-            type="text"
-            name="excuse"
-            label="En caso de que no puedas ir a la charla. ¿Por qué no puedes asistir?"
-            placeholder="Ingresa tu excusa aquí"
-            required
-            borderColorClass="border-[#9A975F]"
-            focusRingColorClass="focus:ring-[#9A975F]"
-            labelColorClass="text-[#9A975F]"
-          />
-        </div>
+        <Select
+          id="department"
+          name="department"
+          label="¿A qué departamento te gustaría ingresar?"
+          labelColorClass="text-white"
+          className="border-black focus:ring-2 focus:ring-white" 
+          required
+          options={[
+            { label: "MXP: Gestión Humana", value: "MXP: Gestión Humana" },
+            { label: "MKT: Mercadeo", value: "MKT: Mercadeo" },
+            { label: "F&L: Finanzas", value: "F&L: Finanzas" },
+            { label: "OGV: Voluntariados salientes", value: "OGV: Voluntariados salientes" },
+            { label: "OGT: Pasantías salientes", value: "OGT: Pasantías salientes" },
+            { label: "IGV: Voluntariados entrantes", value: "IGV: Voluntariados entrantes" },
+            { label: "IGT: Pasantías entrantes", value: "IGT: Pasantías entrantes" },
+          ]}
+        />
+        
       </FormContainer>
       <ToastContainer />
     </>

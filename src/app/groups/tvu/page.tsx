@@ -45,13 +45,21 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-2 row-start-2 items-center sm:items-start relative z-10 ">
-       <img src="/TVU.svg" alt="TVU" className="w-1/2" />
-        <div className="-mt-4">
+      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
+        {/* Logo siempre centrado */}
+        <div className="flex justify-center w-full mb-2 sm:mb-0">
+          <img src="/TVU.svg" alt="TVU" className="w-1/2" />
+        </div>
+
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-4 w-full flex justify-center">
           <TvuForm />
         </div>
-        
-        <Footer/>
+
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer/>
+        </div>
 
       </main>
 

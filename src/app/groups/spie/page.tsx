@@ -1,10 +1,9 @@
 "use client";
-
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
-import InfoSPIE from "@/app/globalcomponents/Info/Info-SPIE";
 import { useRouter } from "next/navigation";
 import Footer from "@/app/globalcomponents/UI/Footer";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import SpieForm from "@/app/globalcomponents/Forms/Form-Spie";
 
 export default function Home() {
   const router = useRouter();
@@ -38,18 +37,14 @@ export default function Home() {
         overflow: "hidden",
       }}
     >
-      {/* Animación de píxeles */}
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
-
+      
       {/* Contenido principal */}
       <main className="flex flex-col row-start-2 items-center sm:items-start relative z-10">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-center mb-6 pixel-font text-white glitch_Spie">
-          SPIE
-        </h1>
         
-        <InfoSPIE />
+        <SpieForm />
 
         <Footer/>
 
