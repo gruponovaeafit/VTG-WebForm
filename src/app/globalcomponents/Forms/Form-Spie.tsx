@@ -99,8 +99,8 @@ export default function SpieForm() {
             ]}
           >
             <Select
-              id="committie"
-              name="committie"
+              id="comite"
+              name="comite"
               label="¿A qué comité te gustaría ingresar?"
               required
               labelColorClass="text-white"

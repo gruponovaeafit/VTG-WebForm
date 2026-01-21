@@ -4,9 +4,6 @@ import { verifyJwtFromCookies } from "../cookieManagement";
 
 const recentRequests = new Map<string, number>();
 
-// ===============================
-// SQL QUERIES (PostgreSQL)
-// ===============================
 const QUERIES = {
   CHECK_PERSONA: `
     SELECT 1 
@@ -57,22 +54,13 @@ const QUERIES = {
   `,
 } as const;
 
-// ===============================
-// Helpers
-// ===============================
 async function getAvailableSlots() {
   const result = await dbQuery(QUERIES.GET_AVAILABLE_SLOTS);
   return result.rows;
 }
 
-// ===============================
-// Handler
-// ===============================
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    // ---------------------------
-    // POST → reservar cupo
-    // ---------------------------
     if (req.method === "POST") {
       const { date, talk } = req.body as { date?: string; talk?: string };
 
@@ -158,9 +146,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     }
 
-    // ---------------------------
-    // GET → slots disponibles
-    // ---------------------------
     if (req.method === "GET") {
       const availableSlots = await getAvailableSlots();
       return res.status(200).json({
@@ -169,17 +154,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // ---------------------------
-    // Método no permitido
-    // ---------------------------
-    return res.status(405).json({ message: "Método no permitido" });
+    return res.status(405).json({
+      notification: {
+        type: "error",
+        message: "Método no permitido.",
+      },
+    });
 
   } catch (err) {
     console.error("🔥 Error inesperado:", err);
     return res.status(500).json({
       notification: {
         type: "error",
-        message: "Error interno del servidor. Inténtelo de nuevo más tarde.",
+        message: "Error interno del servidor.",
       },
       details: err instanceof Error ? err.message : String(err),
     });
