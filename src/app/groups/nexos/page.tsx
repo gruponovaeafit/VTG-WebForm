@@ -68,17 +68,21 @@ export default function Home() {
         {/* Logo siempre arriba del form */}
         <div className="mb-[0px] z-20">
           <img
-            src="/NEXOS.svg"
-            alt="Nexos"
-            className="h-auto w-[180px] sm:w-[220px] md:w-[260px] lg:w-[300px] xl:w-[340px]"
+            src="/NEXOS.png"
+            alt="AIESEC"
+            className="h-auto w-[150px] sm:w-[190px] md:w-[230px] lg:w-[270px] xl:w-[310px]"
           />
         </div>
-        {/* Formulario */}
-        <NexosForm />
-        {/* Footer siempre debajo del form */}
-        <div className="mt-[40px] z-20 
-        sm:mt-[40px] 
-        md:mt-[70px]">
+       
+>>>>>>>>> Temporary merge branch 2
+
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+          <NexosForm />
+        </div>
+
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
           <Footer/>
         </div>
       </div>
