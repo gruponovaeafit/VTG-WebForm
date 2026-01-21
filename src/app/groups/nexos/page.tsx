@@ -1,7 +1,7 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import NexosForm from "../../globalcomponents/Forms/Form-Nexos";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -41,7 +41,7 @@ export default function Home() {
 
 
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}
@@ -50,15 +50,21 @@ export default function Home() {
         <div className="flex justify-center w-full mb-2 sm:mb-0">
           <img
             src="/NEXOS.png"
-            alt="AIESEC"
+            alt="NEXOS"
             className="h-auto w-[150px] sm:w-[190px] md:w-[230px] lg:w-[270px] xl:w-[310px]"
           />
         </div>
        
 
-        <NexosForm />
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+          <NexosForm />
+        </div>
 
-        <Footer/>
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer/>
+        </div>
 
       </main>
 
