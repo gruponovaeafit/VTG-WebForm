@@ -94,7 +94,7 @@ export default function NexosForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" theme="fifa" className="w-full h-14 md:px-15">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-4">
