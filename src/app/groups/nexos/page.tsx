@@ -1,7 +1,7 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import NexosForm from "../../globalcomponents/Forms/Form-Nexos";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#FFFFFF] text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white text-black"
     style={{
       position: "relative",
       overflow: "hidden",
@@ -41,24 +41,25 @@ export default function Home() {
 
 
       <div style={{ pointerEvents: "none" }}>
-        <PixelsAnimation />
+        <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-         {/* Logo siempre centrado */}
+      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
+        {/* Logo siempre centrado */}
         <div className="flex justify-center w-full mb-2 sm:mb-0">
-          <img
-            src="/NEXOS.png"
-            alt="AIESEC"
-            className="h-auto w-[150px] sm:w-[190px] md:w-[230px] lg:w-[270px] xl:w-[310px]"
-          />
+          <img src="/NEXOS.svg" alt="Nexos" width={150} height={120} />
         </div>
-       
 
-        <NexosForm />
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+          <NexosForm />
+        </div>
 
-        <Footer/>
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer/>
+        </div>
 
       </main>
 

@@ -33,31 +33,27 @@ export default function Home() {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center min-h-screen text-white overflow-hidden"
-      style={{  
+      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 bg-black text-white"
+      style={{
         backgroundImage: "url('/main.svg')",
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Animación de píxeles */}
-      <div className="absolute inset-0 pointer-events-none z-0">
+      {/* Animación de confeti */}
+      <div style={{ pointerEvents: "none" }}>
         <ConfettiAnimation />
       </div>
 
       {/* Contenido principal */}
-      <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center">
+      <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center row-start-2">
         <div className="flex flex-col gap-0">
-          <h1 className="text-2xl font-ea text-white-300">
-            Escoge
-          </h1>
-          <h1 className="text-5xl font-ea text-white-300">
-            Tu grupo
-          </h1>
+          <h1 className="text-3xl font-ea text-white-300">Escoge</h1>
+          <h1 className="text-5xl font-ea text-white-300">Tu grupo</h1>
         </div>
         {/* Formulario arcade */}
         <GroupsForm />
-
         <Footer />
 
       </main>

@@ -94,27 +94,39 @@ export default function NexosForm() {
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" variant="verde" size="md" state="active" theme="fifa" className="w-full h-14 md:px-15">SIGUIENTE</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
-        <Select
-          id="department"
-          name="department"
-          label="¿A qué departamento te gustaría ingresar?"
-          labelColorClass="text-white"
-          className="border-black focus:ring-2 focus:ring-white" 
-          required
-          options={[
-            { label: "MXP: Gestión Humana", value: "MXP: Gestión Humana" },
-            { label: "MKT: Mercadeo", value: "MKT: Mercadeo" },
-            { label: "F&L: Finanzas", value: "F&L: Finanzas" },
-            { label: "OGV: Voluntariados salientes", value: "OGV: Voluntariados salientes" },
-            { label: "OGT: Pasantías salientes", value: "OGT: Pasantías salientes" },
-            { label: "IGV: Voluntariados entrantes", value: "IGV: Voluntariados entrantes" },
-            { label: "IGT: Pasantías entrantes", value: "IGT: Pasantías entrantes" },
-          ]}
-        />
-        
+        <div className="mb-4">
+          <Select
+            id="talk"
+            name="talk"
+            label="A qué charla informativa asistirás?"
+            colorTheme="yellow"
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+            labelColorClass="text-white"
+            required
+            options={[
+              { label: "Jue. enero 29, 6:00PM", value: "Jue. enero 29, 6:00PM" },
+              { label: "Vie. enero 30, 12:00M", value: "Vie. enero 30, 12:00M"},
+            ]}
+            className="w-full px-4 py-2 text-sm rounded border border-black bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
+          />
+        </div>
+
+        <div className="mb-4">
+          <Input
+            type="text"
+            name="name"
+            label="¿Quién te inscribió?"
+            placeholder="Nombre"
+            required={false}
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+            labelColorClass="text-white"
+          />
+        </div>
       </FormContainer>
       <ToastContainer />
     </>
