@@ -15,7 +15,16 @@ export default function SpieForm() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    
+    // Validar el formulario antes de enviar
+    if (!form.checkValidity()) {
+      // Mostrar mensajes de validación del navegador
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
 
     try {
       const response = await fetch("/api/forms/spie", {
@@ -86,20 +95,12 @@ export default function SpieForm() {
           <FormContainer
             onSubmit={handleFormSubmit}
             buttons={[
-              <Button
-                key="submit"
-                type="submit"
-                size="md"
-                state="active"
-                className="w-full"
-              >
-                ENVIAR
-              </Button>,
+              <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
             ]}
           >
             <Select
-              id="committie"
-              name="committie"
+              id="comite"
+              name="comite"
               label="¿A qué comité te gustaría ingresar?"
               required
               labelColorClass="text-white"
@@ -118,9 +119,9 @@ export default function SpieForm() {
               required
               labelColorClass="text-white"
               options={[
-                { label: "Vie. 25 Jul, 4:00 p.m.", value: "Vie. 25 Jul, 4:00 p.m." },
-                { label: "Mie. 30 Jul, 6:00 p.m.", value: "Mie. 30 Jul, 6:00 p.m." },
-                { label: "Vie. 1 Ago, 4:00 p.m.", value: "Vie. 1 Ago, 4:00 p.m." },
+                { label: "Vie. 30 Ene, 12:00 p.m.", value: "Vie. 30 Ene, 12:00 p.m." },
+                { label: "Vie. 30 Ene, 2:00 p.m.", value: "Vie. 30 Ene, 2:00 p.m." },
+                { label: "Vie. 6 Feb, 12:00 p.m.", value: "Vie. 6 Feb, 12:00 p.m." },
               ]}
             />
 

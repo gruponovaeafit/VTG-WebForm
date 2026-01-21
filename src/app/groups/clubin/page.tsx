@@ -2,7 +2,6 @@
 
 import ClubinForm from "../../globalcomponents/Forms/Form-Clubin";
 import Image from "next/image";
-import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin";
@@ -73,7 +72,10 @@ export default function Home() {
           <Clubin1Form />
         </div>
 
-        <Footer />
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-2 sm:mt-0">
+          <Footer />
+        </div>
 
       </main>  
       

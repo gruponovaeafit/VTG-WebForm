@@ -1,5 +1,5 @@
 // src/pages/api/db.ts
-import { Pool, PoolConfig, QueryResult, QueryResultRow } from "pg";
+import { Pool, PoolConfig, QueryResult, QueryResultRow, PoolClient } from "pg";
 
 // Puedes usar SUPABASE_DB_URL (connection string) o variables individuales
 const connectionString = process.env.SUPABASE_DB_URL || process.env.DATABASE_URL;
@@ -123,3 +123,27 @@ export async function dbQuery<T extends QueryResultRow = any>(
     throw new Error(`Error DB: ${msg}`);
   }
 }
+
+export async function withTransaction<T>(
+  fn: (client: PoolClient) => Promise<T>
+): Promise<T> {
+  const pool = getPool();
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const result = await fn(client);
+    await client.query("COMMIT");
+    return result;
+  } catch (err) {
+    try {
+      await client.query("ROLLBACK");
+    } catch {
+      // ignorar fallos de rollback
+    }
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+

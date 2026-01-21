@@ -5,28 +5,27 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FormContainer from "../UI/FormContainer";
-import Input from "../UI/Input";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
 
 export default function Clubin1Form() {
   const router = useRouter();
 
-  const [selectedDay, setSelectedDay] = useState<"Miercoles" | "Jueves" | "Viernes">("Miercoles");
+  // ✅ Arranca sin día seleccionado (y NO se autoselecciona)
+  const [selectedDay, setSelectedDay] = useState<"Miercoles" | "Jueves" | "Viernes" | "">("");
   const [availableSlots, setAvailableSlots] = useState<{ [key: string]: string[] }>({});
 
   useEffect(() => {
     const fetchAvailableSlots = async () => {
-      console.log("📡 Iniciando solicitud para obtener horarios disponibles...");
       try {
         const res = await fetch("/api/forms/clubin");
-
-        if (!res.ok) {
-          throw new Error(`❌ Error al obtener los datos. Status: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`Error al obtener los datos. Status: ${res.status}`);
 
         const data = await res.json();
-        console.log("✅ Datos de backend recibidos:", data);
+        if (!data || !Array.isArray(data.data)) {
+          setAvailableSlots({});
+          return;
+        }
 
         const grouped: { [key: string]: string[] } = {};
 
@@ -34,16 +33,17 @@ export default function Clubin1Form() {
           const day = slot.day_of_week;
           const time = slot.start_time;
           const cap = slot.capacity;
-          console.log(`🕒 Slot recibido: ${day} - ${time} (capacidad: ${cap})`);
 
-          if (!grouped[day]) grouped[day] = [];
-          grouped[day].push(time);
+          // ✅ Solo slots con cupo
+          if (cap > 0) {
+            if (!grouped[day]) grouped[day] = [];
+            grouped[day].push(time);
+          }
         });
 
         setAvailableSlots(grouped);
-        console.log("📅 Slots agrupados y guardados en estado:", grouped);
       } catch (error) {
-        console.error("🔥 Error al obtener los horarios disponibles:", error);
+        console.error("Error al obtener los horarios disponibles:", error);
         toast.error("No se pudieron cargar los horarios. Inténtalo más tarde.");
       }
     };
@@ -54,62 +54,54 @@ export default function Clubin1Form() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // ✅ Validación simple: obliga a escoger día (y por ende hora)
+    if (!selectedDay) {
+      toast.error("Selecciona un día para ver los horarios.", { position: "top-center", autoClose: 1200 });
+      return;
+    }
+
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
-
     const payload = Object.fromEntries(formData.entries());
-    console.log("🚀 Enviando datos del formulario:", payload);
 
     try {
       const response = await fetch("/api/forms/clubin", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const result = await response.json();
-      console.log("📥 Respuesta recibida del backend:", result);
 
-      // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
         const errorMessage = result.notification?.message || "Error en el servidor.";
 
         toast.error(errorMessage, {
           position: "top-center",
           autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
           pauseOnHover: false,
           onClose: () => {
             if (errorMessage === "Ya estás registrado en este grupo.") {
-              console.log("🔁 Redireccionando a /groupslist por registro duplicado...");
               router.push("/groupslist");
             }
           },
         });
-
         return;
       }
 
-      // Si todo sale bien
-      toast.success(result.notification.message, {
+      toast.success(result.notification?.message || "Reserva realizada con éxito.", {
         position: "top-center",
         autoClose: 500,
       });
 
-      setTimeout(() => {
-        console.log("🔁 Redireccionando a /gameover por inscripción exitosa...");
-        router.push("/gameover");
-      }, 2000);
+      setTimeout(() => router.push("/gameover"), 800);
     } catch (error) {
-      console.error("❌ Error al enviar el formulario:", error);
-      toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      console.error("Error al enviar el formulario:", error);
+      toast.error("Hubo un error al enviar el formulario.");
     }
   };
 
-  const hasSlots = availableSlots[selectedDay]?.length > 0;
+  const hasSlots = !!(selectedDay && availableSlots[selectedDay]?.length > 0);
 
   return (
     <>
@@ -118,29 +110,38 @@ export default function Clubin1Form() {
         overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
         formClassName="space-y-4"
         buttons={[
-          //<button type="submit" className="w-full py-2 px-4 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-600 font-bold uppercase tracking-wider transition duration-300">Level Up!</button>
-          <Button type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          <Button
+            key="submit"
+            type="submit"
+            variant="verde"
+            size="md"
+            state="active"
+            className="w-full h-14 md:px-15"
+            theme="fifa"
+          >
+            SIGUIENTE
+          </Button>,
         ]}
       >
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm mb-4 text-blue-200 font-">
             Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
           </label>
+
           <Select
             id="date"
             name="date"
             label="Días"
             required
             value={selectedDay}
-            onChange={(e) => {
-              const newDay = e.target.value as "Miercoles" | "Jueves" | "Viernes";
-              console.log("🗓️ Día seleccionado:", newDay);
-              setSelectedDay(newDay);
-            }}
-            options={Object.keys(availableSlots).map((date) => ({
-              label: date,
-              value: date,
-            }))}
+            onChange={(e) => setSelectedDay(e.target.value as any)}
+            options={[
+              { label: "Selecciona un día", value: "" }, // ✅ placeholder
+              ...Object.keys(availableSlots).map((date) => ({
+                label: date,
+                value: date,
+              })),
+            ]}
           />
         </div>
 
@@ -152,33 +153,17 @@ export default function Clubin1Form() {
             required
             disabled={!hasSlots}
             options={
-              hasSlots && availableSlots[selectedDay]
+              hasSlots
                 ? availableSlots[selectedDay].map((hora) => ({
                     label: hora,
                     value: hora,
                   }))
-                : [
-                    {
-                      label: "No hay horarios disponibles",
-                      value: "",
-                    },
-                  ]
+                : [{ label: "Selecciona un día primero", value: "" }]
             }
           />
         </div>
-
-        <Input
-          type="text"
-          name="asesor"
-          label="Escribe el nombre de tu asesor"
-          placeholder="Nombre"
-          required
-          borderColorClass="border-blue-200"
-          focusRingColorClass="focus:ring-blue-500"
-          labelColorClass="text-blue-200"
-          className="!px-2"
-        />
       </FormContainer>
+
       <ToastContainer />
     </>
   );
