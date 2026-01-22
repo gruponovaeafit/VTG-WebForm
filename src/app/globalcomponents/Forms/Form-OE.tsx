@@ -74,7 +74,7 @@ export default function OEForm() {
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
-        <div className="mb-4">
+        <div className="mb-1">
           <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
             ¿Puedes asistir a nuestra charla informativa para conocer más sobre nuestros comités y el grupo?
           </label>
