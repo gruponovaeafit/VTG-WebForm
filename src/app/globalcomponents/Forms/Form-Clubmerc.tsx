@@ -29,7 +29,7 @@ export default function ClubmercForm() {
 
       // Manejo de errores en la respuesta del servidor
       if (!response.ok) {
-        const errorMessage = result.message || "Error en el servidor.";
+        const errorMessage = result.notification?.message || result.message || "Error en el servidor.";
 
         toast.error(errorMessage, {
           position: "top-center",
@@ -47,7 +47,8 @@ export default function ClubmercForm() {
       }
       
       // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
-      toast.success(result.message || "Formulario enviado con éxito.", {
+      const successMessage = result.notification?.message || result.message || "Formulario enviado con éxito.";
+      toast.success(successMessage, {
         position: "top-center",
         autoClose: 500,
         hideProgressBar: false,
@@ -73,8 +74,6 @@ export default function ClubmercForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
@@ -83,6 +82,7 @@ export default function ClubmercForm() {
           id="committieSelect"
           name="committieSelect"
           label="Comités"
+          labelColorClass="text-white"
           required
           options={[
             { label: "Relaciones Públicas", value: "Relaciones Públicas" },
@@ -92,16 +92,6 @@ export default function ClubmercForm() {
           ]}
         />
 
-        <Select
-          id="talk"
-          name="talk"
-          label="¿Tienes disponibilidad este Sábado 26 de Julio?"
-          required
-          options={[
-            { label: "Sí", value: "Sí" },
-            { label: "No", value: "No" },
-          ]}
-        />
 
       </FormContainer>
       <ToastContainer />

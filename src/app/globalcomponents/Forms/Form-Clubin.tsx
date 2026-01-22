@@ -107,8 +107,6 @@ export default function Clubin1Form() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button
             key="submit"
@@ -124,7 +122,7 @@ export default function Clubin1Form() {
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm mb-4 text-blue-200 font-">
+          <label htmlFor="name" className="block text-sm mb-4 text-white font-">
             Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
           </label>
 

@@ -7,7 +7,7 @@ import ClubmercForm from "../../globalcomponents/Forms/Form-Clubmerc";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
-
+import InfoClubmerc from "@/app/globalcomponents/Info/Info-Clubmerc";
 export default function Home() {
   const router = useRouter();
   
@@ -68,10 +68,11 @@ export default function Home() {
         </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <img src="/CLUBMERC.svg" alt="CLUBMERC" width={150} height={120} />
+      <main className="flex flex-col gap-8 row-start-2 items-center relative z-10 ">
+        <img src="/CLUBMERC.svg" alt="CLUBMERC" width={150} height={120} className="mx-auto" />
 
         <div className="-mt-5">
+          <InfoClubmerc />
           <ClubmercForm/>
         </div>
 
