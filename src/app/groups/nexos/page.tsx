@@ -54,8 +54,8 @@ export default function Home() {
         alt=""
         aria-hidden="true"
         className="pointer-events-none select-none absolute -bottom-7 right-[-110px] z-0 w-[100vw] max-w-[520px] 
-        sm:-bottom-11 sm:right-[-150px] sm:w-[80vw] sm:max-w-[700px]
-        md:-bottom-20 md:right-[-250px] md:w-[70vw] md:max-w-[900px]"
+        sm:-bottom-11 sm:right-[-100px] sm:w-[80vw] sm:max-w-[700px]
+        md:-bottom-20 md:right-[-250px] md:w-[100vw] md:max-w-[900px]"
       />
 
       <div className="pointer-events-none absolute inset-0 z-[1]">
@@ -80,7 +80,7 @@ export default function Home() {
         </div>
 
         {/* Footer siempre centrado */}
-        <div className="flex justify-center w-full mt-2 sm:mt-0">
+        <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
           <Footer/>
         </div>
       </div>

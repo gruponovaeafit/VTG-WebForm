@@ -1,14 +1,15 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer";
-import TutoresForm from "../../globalcomponents/Forms/Form-Tutores";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import TutoresForm from "../../globalcomponents/Forms/Form-Tutores";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function Home() {
- 
-  const router = useRouter();
-  {/*useEffect(() => {
+  
+    const router = useRouter();
+    useEffect(() => {
     const checkCookie = async () => {
       try {
         const res = await fetch("/api/cookieCheck");
@@ -26,37 +27,62 @@ export default function Home() {
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);*/}
+  }, [router]);
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#000072] text-black"
     style={{
-      backgroundImage: "url('/TUTORES_Screen.svg')",
-      backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
     }}
     >
 
-      <div style={{ pointerEvents: "none" }}>
+
+      {/* Imágenes decorativas - fuera del main para posicionamiento absoluto correcto */}
+      <img
+        src="/TUTORES_ManchaTop.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute left-0 top-0 z-0 w-[200px] h-auto
+         sm:w-[100px] 
+         md:w-[600px]"
+      />
+      <img
+        src="/TUTORES_ManchaBottom.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute bottom-[0px] right-0 z-0 w-[240px] h-auto
+        sm:w-[100px]
+        md:w-[600px]"
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
         <ConfettiAnimation />
       </div>
+      
 
-      {/* Contenido principal */}
-      <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center row-start-2">
-        <div className="flex flex-col gap-0">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-ea text-white">
-            Tutores
-          </h1>
+      {/* Logo + Formulario centrados juntos en la pantalla */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-[500px] px-4 flex flex-col items-center">
+        {/* Logo siempre arriba del form */}
+        <div className="mb-[0px] z-20">
+          <img
+            src="/TUTORES_Logo.svg"
+            alt=""
+            className="h-auto w-[150px] sm:w-[190px] md:w-[230px]"
+          />
         </div>
-        <div className="-mt-5">
+       
+        {/* Formulario - puede expandirse */}
+        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
           <TutoresForm />
         </div>
 
-        <Footer/>
-      
-      </main>
+        {/* Footer siempre centrado */}
+        <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
+          <Footer/>
+        </div>
+      </div>
 
       
       

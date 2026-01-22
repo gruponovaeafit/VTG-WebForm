@@ -5,6 +5,7 @@ export default function InfoSeres() {
     return (
         <>
         <FormContainer
+            containerClassName="w-full flex items-center justify-center p-5"
             overlayClassName="w-full max-w-7xl rounded-tl-[52px] rounded-tr-[52px] rounded-bl-[52px] rounded-br-0 border-[10px] border-black bg-black/65 p-0"
             formClassName="flex flex-col"
         >

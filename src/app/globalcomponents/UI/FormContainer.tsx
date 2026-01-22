@@ -51,7 +51,7 @@ export default function FormContainer({
           {children}
 
           {buttons && buttons.length > 0 && (
-            <div className="mt-2 flex justify-center">
+            <div className="mt-0 flex justify-center">
               <div className="flex items-center gap-4">{buttons}</div>
             </div>
           )}
