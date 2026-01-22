@@ -123,11 +123,12 @@ export default function SeresForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
+        formClassName="flex flex-col gap-1 items-center text-center"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
-        <div className="mb-4">
+        <div className="mb-0">
           <label htmlFor="talks" className="block text-sm mb-2 text-white font-bold">
             ¿A qué charla informativa deseas asistir?
           </label>

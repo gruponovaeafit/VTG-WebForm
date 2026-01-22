@@ -31,37 +31,58 @@ export default function Home() {
 
   return (
     <div
-    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white"
+    className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#594EB7] text-black"
     style={{
-      backgroundImage: "url('/TVU_Screen.svg')",
-      backgroundSize: "cover",
       position: "relative",
       overflow: "hidden",
     }}
     >
 
-      <div style={{ pointerEvents: "none" }}>
-        <ConfettiAnimation /> 
+
+      {/* Imágenes decorativas - fuera del main para posicionamiento absoluto correcto */}
+      <img
+        src="/TVU_ManchaTop.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute right-0 top-0 z-0 w-[440px] h-auto
+         sm:w-[100px] 
+         md:w-[100px]"
+      />
+      <img
+        src="/TVU_ManchaBotton.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute bottom-[0px] right-0 z-0 w-[440px] h-auto
+        sm:w-[100px]
+        md:w-[2000px]"
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <ConfettiAnimation />
       </div>
+      
 
-      {/* Contenido principal */}
-      <main className="flex flex-col row-start-2 items-center relative z-10 w-full">
-        {/* Logo siempre centrado */}
-        <div className="flex justify-center w-full mb-2 sm:mb-0">
-          <img src="/TVU.svg" alt="TVU" className="w-1/2" />
+      {/* Logo + Formulario centrados juntos en la pantalla */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-[500px] px-4 flex flex-col items-center">
+        {/* Logo siempre arriba del form */}
+        <div className="mb-[0px] z-20">
+          <img
+            src="/TVU_Logo.svg"
+            alt=""
+            className="h-auto w-[150px] sm:w-[190px] md:w-[230px]"
+          />
         </div>
-
+       
         {/* Formulario - puede expandirse */}
-        <div className="-mt-4 w-full flex justify-center">
+        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
           <TvuForm />
         </div>
 
         {/* Footer siempre centrado */}
-        <div className="flex justify-center w-full mt-2 sm:mt-0">
+        <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
           <Footer/>
         </div>
-
-      </main>
+      </div>
 
       
       
