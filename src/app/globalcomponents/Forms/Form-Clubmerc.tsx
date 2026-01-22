@@ -73,8 +73,6 @@ export default function ClubmercForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
@@ -83,6 +81,7 @@ export default function ClubmercForm() {
           id="committieSelect"
           name="committieSelect"
           label="Comités"
+          labelColorClass="text-white"
           required
           options={[
             { label: "Relaciones Públicas", value: "Relaciones Públicas" },
@@ -96,6 +95,7 @@ export default function ClubmercForm() {
           id="talk"
           name="talk"
           label="¿Tienes disponibilidad este Sábado 26 de Julio?"
+          labelColorClass="text-white"
           required
           options={[
             { label: "Sí", value: "Sí" },

@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       };
 
       const email = verifyJwtFromCookies(req, res);
-      const grupoId = 2; // ID del grupo seleccionado
+      const grupoId = 4; // ID del grupo seleccionado
       const talkValue = talk === "Sí" ? 1 : 0;
 
       try {

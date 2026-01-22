@@ -68,8 +68,8 @@ export default function Home() {
         </div>
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <img src="/CLUBMERC.svg" alt="CLUBMERC" width={150} height={120} />
+      <main className="flex flex-col gap-8 row-start-2 items-center relative z-10 ">
+        <img src="/CLUBMERC.svg" alt="CLUBMERC" width={150} height={120} className="mx-auto" />
 
         <div className="-mt-5">
           <ClubmercForm/>
