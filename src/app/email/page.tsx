@@ -2,7 +2,7 @@
 
 import EmailForm from "../globalcomponents/Forms/Form-Email";
 import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
-import Footer from "../globalcomponents/UI/Footer";
+import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -42,7 +42,7 @@ export default function Home() {
           <EmailForm />
         </div>
 
-        <Footer />
+        <Footer_NOVA_blanco />
 
       </main>
 

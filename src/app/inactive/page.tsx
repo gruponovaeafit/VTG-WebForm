@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import { useEffect } from "react";
-import Footer from "../globalcomponents/UI/Footer";
+import Footer from "../globalcomponents/UI/Footer_NOVA_negro";
 
 export default function MainPage() {
   const router = useRouter();

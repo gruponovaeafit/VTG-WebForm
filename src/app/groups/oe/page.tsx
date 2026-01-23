@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
+import Footer from "@/app/globalcomponents/UI/Footer_NOVA_negro";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import OeForm from "../../globalcomponents/Forms/Form-OE";
 import { useRouter } from "next/navigation";

@@ -63,13 +63,13 @@ export default function SpieForm() {
 
   return (
     <>
-      <div className="relative flex min-h-screen items-start justify-center pt-20 md:pt-32 px-4 overflow-hidden">
+      <div className="relative flex items-start justify-center w-full">
         <Image
           src="/forma-spie1.png"
           alt=""
           width={300}
           height={300}
-          className="absolute top-0 left-0 z-0 pointer-events-none select-none"
+          className="absolute top-0 left-0 z-0 pointer-events-none select-none opacity-50"
         />
 
         <Image
@@ -77,21 +77,10 @@ export default function SpieForm() {
           alt=""
           width={300}
           height={300}
-          className="absolute bottom-0 right-0 z-0 pointer-events-none select-none"
+          className="absolute bottom-0 right-0 z-0 pointer-events-none select-none opacity-50"
         />
 
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="mb-2 md:mb-4">
-            <Image
-              src="/spie-logo.png"
-              alt="SPIE Logo"
-              width={140}
-              height={140}
-              className="md:w-[180px]"
-              priority
-            />
-          </div>
-
+        <div className="relative z-10 flex flex-col items-center w-full">
           <FormContainer
             onSubmit={handleFormSubmit}
             buttons={[

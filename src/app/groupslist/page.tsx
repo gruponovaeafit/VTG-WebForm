@@ -1,11 +1,10 @@
 "use client";
 
 import GroupsForm from "../globalcomponents/Forms/Form-Groups";
-import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
-import Footer from "../globalcomponents/UI/Footer";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation"
 import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
+import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 
 
 export default function Home() {
@@ -54,7 +53,7 @@ export default function Home() {
         </div>
         {/* Formulario arcade */}
         <GroupsForm />
-        <Footer />
+        <Footer_NOVA_blanco />
 
       </main>
 

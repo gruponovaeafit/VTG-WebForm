@@ -3,7 +3,7 @@
 import AcademicForm from "../globalcomponents/Forms/Form-Academic";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Footer from "@/app/globalcomponents/UI/Footer";
+import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
 
 export default function Home() {
@@ -58,7 +58,7 @@ export default function Home() {
           <AcademicForm />
         </div>
 
-        <Footer />
+        <Footer_NOVA_blanco />
 
       </main>
 

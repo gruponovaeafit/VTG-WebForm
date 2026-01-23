@@ -1,7 +1,7 @@
 "use client";
 
 
-import Footer from "@/app/globalcomponents/UI/Footer";
+import Footer from "@/app/globalcomponents/UI/Footer_NOVA_negro";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import ClubmercForm from "../../globalcomponents/Forms/Form-Clubmerc";
 import { useEffect } from "react";

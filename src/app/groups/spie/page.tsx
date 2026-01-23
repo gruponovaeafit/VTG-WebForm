@@ -1,10 +1,11 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
+
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import SpieForm from "../../globalcomponents/Forms/Form-Spie";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Footer_NOVA_blanco from "../../globalcomponents/UI/Footer_NOVA_blanco";
 
 
 export default function Home() {
@@ -35,14 +36,14 @@ export default function Home() {
     className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#000072] text-black"
     style={{
       position: "relative",
-      overflow: "hidden",
+      overflow: "auto",
     }}
     >
 
 
       {/* Imágenes decorativas - fuera del main para posicionamiento absoluto correcto */}
       <img
-        src="/.svg"
+        src="/SPIE_ManchaTop.svg"
         alt=""
         aria-hidden="true"
         className="pointer-events-none select-none absolute left-14 top-1 z-0 w-[260px] h-auto
@@ -50,7 +51,7 @@ export default function Home() {
          md:w-[800px] md:left-[400px]"
       />
       <img
-        src="/.svg"
+        src="/SPIE_ManchaBottom.svg"
         alt=""
         aria-hidden="true"
         className="pointer-events-none select-none absolute bottom-[185px] right-0 z-0 w-[240px] h-auto
@@ -68,8 +69,8 @@ export default function Home() {
         {/* Logo siempre arriba del form */}
         <div className="mb-[0px] z-20">
           <img
-            src="/.svg"
-            alt=""
+            src="/SPIE_logo.svg"
+            alt="SPIE Logo"
             className="h-auto w-[150px] sm:w-[190px] md:w-[230px]"
           />
         </div>
@@ -80,8 +81,8 @@ export default function Home() {
         </div>
 
         {/* Footer siempre centrado */}
-        <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
-          <Footer/>
+        <div className="flex justify-center w-full mt-2 sm:mt-2 relative z-20">
+          <Footer_NOVA_blanco/>
         </div>
       </div>
 

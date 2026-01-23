@@ -2,7 +2,7 @@
 
 import AiesecForm from "../../globalcomponents/Forms/Form-Aiesec";
 import { useEffect } from "react";
-import Footer from "@/app/globalcomponents/UI/Footer";
+import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import { useRouter } from "next/navigation";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 
@@ -73,7 +73,7 @@ export default function Home() {
 
         {/* Footer siempre centrado */}
         <div className="flex justify-center w-full mt-2 sm:mt-0">
-          <Footer />
+          <Footer_NOVA_blanco />
         </div>
       </main>
     </div>

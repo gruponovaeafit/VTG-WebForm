@@ -1,10 +1,10 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import PartnersForm from "../../globalcomponents/Forms/Form-Partners";
+import Footer_NOVA_blanco from "../../globalcomponents/UI/Footer_NOVA_blanco";
 
 
 export default function Home() {
@@ -81,7 +81,7 @@ export default function Home() {
 
         {/* Footer siempre centrado */}
         <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
-          <Footer/>
+          <Footer_NOVA_blanco />
         </div>
       </div>
 
