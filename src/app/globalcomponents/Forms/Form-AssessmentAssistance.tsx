@@ -98,7 +98,7 @@ export default function AssessmentAssistanceForm() {
             label="¿Vas a asistir al assessment?"
             required
             options={[
-              { label: "Si", value: "Si" },
+              { label: "Sí", value: "Sí" },
               { label: "No", value: "No" },
             ]}
           />

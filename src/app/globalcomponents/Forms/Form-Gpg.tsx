@@ -99,7 +99,7 @@ export default function GpgForm() {
           labelColorClass="text-white"
           required
           options={[
-            { label: "Si", value: "Si" },
+            { label: "Sí", value: "Sí" },
             { label: "No", value: "No" },
           ]}
         />

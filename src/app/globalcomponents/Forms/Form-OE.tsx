@@ -89,7 +89,7 @@ export default function OEForm() {
             name="talk"
             required
             options={[
-              { label: "Si", value: "Si" },
+              { label: "Sí", value: "Sí" },
               { label: "No", value: "No" },
             ]}
             className="border-black focus:ring-2 focus:ring-white"

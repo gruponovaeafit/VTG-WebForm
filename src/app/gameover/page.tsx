@@ -44,7 +44,10 @@ export default function Home() {
       {/* Contenido principal */}
       <div className="relative z-20 flex flex-col justify-center items-center flex-grow w-full py-8 sm:py-12 md:py-16">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-4 sm:mb-6 font-ea text-white px-4">
-          Gracias por participar
+          pitazo final
+        </h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-4 sm:mb-6 font-ea text-white px-4">
+          bienvenido a la familia
         </h1>
 
         {showButton && (

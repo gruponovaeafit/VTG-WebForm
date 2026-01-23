@@ -100,7 +100,7 @@ export default function NexosForm() {
         <Select
           id="talk"
           name="talk"
-          label="A qué charla informativa asistirás?"
+          label="¿A qué charla informativa asistirás?"
           colorTheme="yellow"
           borderColorClass="border-black"
           focusRingColorClass="focus:ring-white"
