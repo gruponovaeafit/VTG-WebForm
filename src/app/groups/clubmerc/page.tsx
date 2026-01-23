@@ -43,25 +43,21 @@ export default function Home() {
       overflow: "hidden",
     }}
     >
+      <img src="/CLUBMERC_E1.svg"
+      alt=""
+      aria-hidden="true"
+      className="pointer-events-none select-none absolute right-0 top-0 z-0 w-[210px] h-auto
+         sm:w-[100px] 
+         md:w-[900px] md:right-[0px]"
+      />
       <img
-  src="/CLUBMERC_E1.svg"
-  alt=""
-  aria-hidden="true"
-  className="
-    pointer-events-none select-none absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/4
-    z-0 w-[120%] max-w-none
-  "
-/>
-
-<img
-  src="/CLUBMERC_E2.svg"
-  alt=""
-  aria-hidden="true"
-  className="
-    pointer-events-none select-none absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/4
-    z-0 w-[120%] max-w-none
-  "
-/>
+      src="/CLUBMERC_E2.svg"
+      alt=""
+      aria-hidden="true"
+      className="pointer-events-none select-none absolute bottom-[0px] right-4 z-0 w-[340px] h-auto
+        sm:w-[100px]
+        md:w-[3000px] md:left-[-400px] md:bottom-[-150px]"
+      />
 
         <div style={{ pointerEvents: "none" }}>
           { <ConfettiAnimation /> }
@@ -69,7 +65,9 @@ export default function Home() {
 
       {/* Contenido principal */}
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start relative z-10 ">
-        <img src="/CLUBMERC.svg" alt="CLUBMERC" width={150} height={120} />
+        <img src="/CLUBMERC.svg" 
+        alt="CLUBMERC"   
+        className="h-auto w-[150px] sm:w-[190px] md:w-[230px]" />
 
         <div className="-mt-5">
           <ClubmercForm/>
