@@ -46,19 +46,6 @@ export default function PartnersPage() {
     return () => clearInterval(interval);
   }, [authenticated]);
 
-  const groupData = groupByDate
-    ? Object.entries(
-        data.reduce((acc, item) => {
-          item.participants?.forEach((p: any) => {
-            const date = new Date(p.fecha_inscripcion).toLocaleDateString("es-CO");
-            if (!acc[date]) acc[date] = [];
-            acc[date].push(p);
-          });
-          return acc;
-        }, {} as Record<string, any[]>)
-      )
-    : data.map((charla) => [charla.charla_info, charla.participants]);
-
   if (!authenticated) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-black text-green-300 px-4">
@@ -113,15 +100,30 @@ export default function PartnersPage() {
   if (error)
     return <div className="p-2 text-sm text-red-400">Error al cargar los datos.</div>;
 
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return (
+      <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center">
+        <div>No hay datos disponibles.</div>
+      </div>
+    );
+  }
+
+  // Agrupar todos los participantes para vista alternativa
+  const allParticipants = data.flatMap((item: any) => item.participants || []);
+
+  const groupData = groupByDate
+    ? [["Todos los participantes", allParticipants]]
+    : data.map((charla) => [charla.charla || charla.charla_info, charla.participants]);
+
   return (
     <div className="p-2 h-screen overflow-auto bg-black text-green-300 font-mono">
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">Partners - Charlas</h1>
+        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">Partners Dashboard</h1>
         <button
           className="px-3 py-1 text-sm bg-gray-800 border border-green-500 text-green-300 rounded hover:bg-green-700"
           onClick={() => setGroupByDate(!groupByDate)}
         >
-          Agrupar por {groupByDate ? "charla" : "fecha de inscripción"}
+          Agrupar por {groupByDate ? "charla" : "Listar todos los participantes"}
         </button>
       </div>
 
@@ -140,29 +142,21 @@ export default function PartnersPage() {
           <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
             <thead>
               <tr className="bg-gray-700 text-yellow-300">
-                <th className="border border-green-500 px-2 py-1">Correo</th>
-                {!groupByDate && (
-                  <>
-                    <th className="border border-green-500 px-2 py-1">Nombre</th>
-                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                    <th className="border border-green-500 px-2 py-1">Semestre</th>
-                    <th className="border border-green-500 px-2 py-1">Asesor</th>
-                  </>
-                )}
+                  <th className="border border-green-500 px-2 py-1">Correo</th>
+                  <th className="border border-green-500 px-2 py-1">Nombre</th>
+                  <th className="border border-green-500 px-2 py-1">Pregrado</th>
+                  <th className="border border-green-500 px-2 py-1">Semestre</th>
+                  <th className="border border-green-500 px-2 py-1">Nombre del Miembro</th>
               </tr>
             </thead>
             <tbody>
-              {(participants as any[]).map((p) => (
-                <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
-                  <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                  {!groupByDate && (
-                    <>
-                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{p.asesor || "N/A"}</td>
-                    </>
-                  )}
+              {(participants as any[]).map((p, idx) => (
+                <tr key={`${p.correo}-${idx}`} className="hover:bg-gray-800">
+                  <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
+                  <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                  <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
+                  <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
+                  <td className="border border-green-500 px-2 py-1">{p.nombre_miembro || "N/A"}</td>
                 </tr>
               ))}
             </tbody>

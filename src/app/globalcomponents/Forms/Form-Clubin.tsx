@@ -122,7 +122,7 @@ export default function Clubin1Form() {
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm mb-4 text-blue-200 font-">
+          <label htmlFor="name" className="block text-left text-lg font-bold mb-4 text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]">
             Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
           </label>
 
@@ -130,6 +130,7 @@ export default function Clubin1Form() {
             id="date"
             name="date"
             label="Días"
+            labelColorClass="text-white"
             required
             value={selectedDay}
             onChange={(e) => setSelectedDay(e.target.value as any)}
@@ -148,6 +149,7 @@ export default function Clubin1Form() {
             id="talk"
             name="talk"
             label="Horas"
+            labelColorClass="text-white"
             required
             disabled={!hasSlots}
             options={

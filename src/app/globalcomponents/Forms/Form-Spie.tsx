@@ -63,7 +63,7 @@ export default function SpieForm() {
 
   return (
     <>
-      <div className="relative flex min-h-screen items-start justify-center pt-12 md:pt-20 px-4 overflow-hidden">
+      <div className="relative flex min-h-screen items-start justify-center pt-20 md:pt-32 px-4 overflow-hidden">
         <Image
           src="/forma-spie1.png"
           alt=""
@@ -130,7 +130,6 @@ export default function SpieForm() {
               name="referral_name"
               label="Nombre del que te dio la información"
               placeholder="Nombre"
-              required
             />
           </FormContainer>
         </div>

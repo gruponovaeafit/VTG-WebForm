@@ -1,55 +1,59 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import sql from "mssql";
-import { dbConfig } from "../forms/db"; // Ajusta la ruta si es necesario
+import { dbQuery } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  let pool: sql.ConnectionPool | null = null;
-
   try {
-    pool = await sql.connect(dbConfig);
-
     // Consulta para obtener información de la tabla 'aiesec' junto con los datos de la persona
-    const result = await pool.request().query(`
+    const result = await dbQuery<{
+      id_grupo: number;
+      correo: string;
+      departamento: string;
+      nombre: string | null;
+      pregrado: string | null;
+      semestre: number | null;
+    }>(`
       SELECT 
         a.id_grupo,
         a.correo,
-        a.telefono,
-        a.fecha_inscripcion,
+        a.departamento,
         pe.nombre,
         pe.pregrado,
         pe.semestre
-      FROM dbo.aiesec AS a
-      LEFT JOIN dbo.persona AS pe ON a.correo = pe.correo
-      ORDER BY a.id_grupo;
+      FROM aiesec AS a
+      LEFT JOIN persona AS pe ON a.correo = pe.correo
+      ORDER BY a.departamento, pe.nombre;
     `);
 
-    // Agrupar los datos por grupo
-    const groupedData = result.recordset.reduce((acc, row) => {
-      if (!acc[row.id_grupo]) {
-        acc[row.id_grupo] = { id_grupo: row.id_grupo, participants: [] };
+    if (!result.rows || result.rows.length === 0) {
+      return res.status(200).json({ success: true, data: [] });
+    }
+
+    // Agrupar los datos por departamento
+    const groupedData = result.rows.reduce((acc, row) => {
+      const dept = row.departamento || "Sin departamento";
+      if (!acc[dept]) {
+        acc[dept] = { departamento: dept, participants: [] };
       }
-      acc[row.id_grupo].participants.push({
+      acc[dept].participants.push({
+        id_grupo: row.id_grupo,
         correo: row.correo,
         nombre: row.nombre,
-        telefono: row.telefono,
-        fecha_inscripcion: row.fecha_inscripcion,
         pregrado: row.pregrado,
         semestre: row.semestre
       });
       return acc;
-    }, {});
+    }, {} as Record<string, { departamento: string; participants: any[] }>);
 
-    res.status(200).json({ success: true, data: Object.values(groupedData) });
-  } catch (error) {
-    console.error("❌ Error en la conexión con MSSQL en la nube:", error);
-    res.status(500).json({ error: "Error en el servidor" });
-  } finally {
-    if (pool) {
-      await pool.close();
-    }
+    const finalData = Object.values(groupedData);
+    console.log(`✅ AIESEC: ${finalData.length} departamentos encontrados, ${result.rows.length} participantes totales`);
+
+    res.status(200).json({ success: true, data: finalData });
+  } catch (error: any) {
+    console.error("❌ Error en la consulta de aiesec:", error);
+    res.status(500).json({ error: "Error en el servidor", details: error.message });
   }
 }
