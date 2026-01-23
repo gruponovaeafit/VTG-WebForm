@@ -68,14 +68,14 @@ export default function Home() {
         {/* Logo siempre arriba del form */}
         <div className="mb-[0px] z-20">
           <img
-            src="/PARTNERS_Logo.svg"
+            src="/PARTNERS_LOGO.svg"
             alt=""
             className="h-auto w-[150px] sm:w-[190px] md:w-[230px]"
           />
         </div>
        
         {/* Formulario - puede expandirse */}
-        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+        <div className="-mt-1 sm:-mt-5 w-full flex justify-center">
           <PartnersForm />
         </div>
 

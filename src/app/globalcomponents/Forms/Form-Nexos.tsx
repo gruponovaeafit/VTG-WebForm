@@ -123,7 +123,7 @@ export default function NexosForm() {
           borderColorClass="border-black"
           focusRingColorClass="focus:ring-white"
           labelColorClass="text-white"
-          containerClassName="mb-0"
+          containerClassName="mb-0 w-full"
         />
       </FormContainer>
       <ToastContainer />

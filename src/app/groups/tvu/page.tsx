@@ -74,7 +74,7 @@ export default function Home() {
         </div>
        
         {/* Formulario - puede expandirse */}
-        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+        <div className="mt  -1 sm:-mt-5 w-full flex justify-center">
           <TvuForm />
         </div>
 

@@ -75,7 +75,7 @@ export default function PartnersForm() {
         ]}
       >
         {/* Campo 2: ¿Vas a asistir a alguna de nuestras charlas informativas? */}
-        <div className="mb-4">
+        <div className="mb-2">
           <label
             htmlFor="talkSelection"
             className="block text-sm mb-2 text-white font-bold"
@@ -96,7 +96,7 @@ export default function PartnersForm() {
             className="w-full px-4 py-2 text-sm rounded border border-black bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 w-full">
           <Input
             type="text"
             id="who"

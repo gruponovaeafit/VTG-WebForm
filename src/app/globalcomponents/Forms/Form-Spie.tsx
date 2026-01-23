@@ -119,6 +119,7 @@ export default function SpieForm() {
               name="referral_name"
               label="Nombre del que te dio la información"
               placeholder="Nombre"
+              containerClassName="mb-4"
             />
           </FormContainer>
         </div>

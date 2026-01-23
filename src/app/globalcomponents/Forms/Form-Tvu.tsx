@@ -72,8 +72,8 @@ export default function TvuForm() {
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
-        <div className="mb-4 w-full">
-          <label htmlFor="talks" className="block text-m mb-2 text-white font-bold">
+        <div className="mb-2 w-full">
+          <label htmlFor="talks" className="block text-m mb-4 text-white font-bold">
             ¿A qué charla informativa deseas asistir?
           </label>
 

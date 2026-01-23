@@ -66,7 +66,7 @@ export default function Home() {
       {/* Logo + Formulario centrados juntos en la pantalla */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-[500px] px-4 flex flex-col items-center">
         {/* Logo siempre arriba del form */}
-        <div className="mb-[0px] z-20">
+        <div className="mb-4 z-20">
           <img
             src="/NEXOS.png"
             alt="AIESEC"
@@ -75,7 +75,7 @@ export default function Home() {
         </div>
        
         {/* Formulario - puede expandirse */}
-        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+        <div className="w-full flex justify-center">
           <NexosForm />
         </div>
 

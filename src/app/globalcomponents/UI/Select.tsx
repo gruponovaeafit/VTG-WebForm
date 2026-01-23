@@ -128,13 +128,13 @@ export default function Select({
   const baseLabelClasses = "block text-left text-base sm:text-lg font-extrabold mb-1.5 sm:mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
 
   const baseSelectClasses =
-    "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#f2dc4b] " +
+    "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#F7D95C] " +
     "px-4 py-2.5 text-base text-[#2b2b2b] " +
     "focus:outline-none focus:ring-2 " +
     "disabled:opacity-50 disabled:cursor-not-allowed";
 
   return (
-    <div className={containerClassName || "mb-4"}>
+    <div className={containerClassName || "mb-4 w-full"}>
       {label && (
         <label
           htmlFor={id}

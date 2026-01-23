@@ -119,10 +119,10 @@ export default function Input({
   // Ring blanco en focus
   const focusRingClass = error ? "focus:ring-red-500" : focusRingColorClass || "focus:ring-white";
 
-  const baseLabelClasses = "block text-left text-lg font-extrabold mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
+  const baseLabelClasses = "block text-left text-base sm:text-lg font-extrabold mb-1.5 sm:mb-2 " + "drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]";
 
   const baseInputClasses =
-    "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#f2dc4b] " +
+    "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#F7D95C] " +
     "px-4 py-2.5 text-base text-[#2b2b2b] " +
     "placeholder:text-[#6b6b6b] placeholder:opacity-80 " +
     "focus:outline-none focus:ring-2 " +

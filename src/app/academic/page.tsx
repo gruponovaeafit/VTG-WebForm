@@ -54,7 +54,7 @@ export default function Home() {
             Academica
           </h1>
         </div>
-        <div className="-mt-5">
+        <div className="mt-5">
           <AcademicForm />
         </div>
 

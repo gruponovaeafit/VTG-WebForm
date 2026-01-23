@@ -5,7 +5,7 @@ export default function Footer() {
     return (
       <footer className="flex items-center justify-center py-4 relative z-10">
         <Image
-          src="/Powered_NOVA_Blanco.svg"
+          src="/Powered_NOVA_blanco.svg"
           alt="Powered By NOVA"
           className="w-32 md:w-48"
           width={192} // Equivalent to w-32

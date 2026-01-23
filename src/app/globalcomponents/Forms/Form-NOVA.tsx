@@ -82,7 +82,7 @@ export default function NOVAForm() {
         ]}
       >
 
-        <div className="mb-4">
+        <div className="mb-2">
           <Select
             id="charla"
             name="charla"
@@ -98,7 +98,7 @@ export default function NOVAForm() {
             focusRingColorClass="focus:ring-white"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <Select
             id="departmento"
             name="departmento"
@@ -115,7 +115,7 @@ export default function NOVAForm() {
             focusRingColorClass="focus:ring-white"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-2">
           <Input
             id="nombre_miembro"
             name="nombre_miembro"
