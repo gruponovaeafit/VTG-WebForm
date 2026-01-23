@@ -122,7 +122,7 @@ export default function Clubin1Form() {
         ]}
       >
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm mb-4 text-white font-">
+          <label htmlFor="name" className="block text-sm mb-4 text-blue-200 font-">
             Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
           </label>
 
