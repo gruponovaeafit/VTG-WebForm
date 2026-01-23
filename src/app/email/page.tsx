@@ -31,7 +31,7 @@ export default function Home() {
       <main className="relative z-10 flex flex-col items-center justify-center flex-grow text-center">
         <div className="flex flex-col gap-0">
           <h1 className="text-3xl font-ea text-white-300">
-            ¡Bienvenidos
+            ¡Bienvenidxs
           </h1>
           <h1 className="text-5xl font-ea text-white-300">
             al Formulario VTG!

@@ -119,7 +119,7 @@ export default function EmailForm() {
           type="email"
           name="email"
           label="Correo Institucional"
-          placeholder="usuario@eafit.edu.co"
+          placeholder="usuarix@eafit.edu.co"
           required
           borderColorClass="border-black"
           focusRingColorClass="focus:ring-white"

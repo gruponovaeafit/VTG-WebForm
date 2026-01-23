@@ -88,7 +88,7 @@ export default function MainPage() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-10 left-0 right-0 justify-center items-center">
+      <div className="absolute bottom-20 left-0 right-0 justify-center items-center">
         <Footer_NOVA_blanco/>
       </div>
 
