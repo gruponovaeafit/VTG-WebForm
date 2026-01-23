@@ -46,7 +46,7 @@ export default function ClubmercForm() {
         return;
       }
       
-      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /gameover
+      // Si todo está bien desde el servidor, muestra un toast de éxito y redirige a /90+1
       const successMessage = result.notification?.message || result.message || "Formulario enviado con éxito.";
       toast.success(successMessage, {
         position: "top-center",
@@ -55,7 +55,7 @@ export default function ClubmercForm() {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        onClose: () => router.push("/gameover"), // Redirige tras la notificación
+        onClose: () => router.push("/90+1"), // Redirige tras la notificación
       });
     } catch (error) {
       console.error("Error al enviar el formulario:", error);

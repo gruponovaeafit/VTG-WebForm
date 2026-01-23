@@ -20,6 +20,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = req.body;
 
     const email = verifyJwtFromCookies(req, res);
+    if (!email) return; // Ya se envió respuesta 401 desde verifyJwtFromCookies
+    
     const { name, secondName } = body;
 
     if (!name || !secondName) {

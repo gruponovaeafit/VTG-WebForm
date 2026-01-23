@@ -132,12 +132,21 @@ export default function Button({
   onClick,
   textShadow = true,
 }: ButtonProps) {
+  const [isSpinning, setIsSpinning] = React.useState(false);
+  const spinTimerRef = React.useRef<number | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (spinTimerRef.current) {
+        window.clearTimeout(spinTimerRef.current);
+      }
+    };
+  }, []);
+
   if (!show) return null;
 
   const isDisabled = state === "disabled" || state === "loading";
   const t = themes[theme];
-  const [isSpinning, setIsSpinning] = React.useState(false);
-  const spinTimerRef = React.useRef<number | null>(null);
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     if (spinOnClick && theme === "fifa") {
@@ -153,14 +162,6 @@ export default function Button({
     }
     onClick?.(e);
   };
-
-  React.useEffect(() => {
-    return () => {
-      if (spinTimerRef.current) {
-        window.clearTimeout(spinTimerRef.current);
-      }
-    };
-  }, []);
 
   return (
     <button

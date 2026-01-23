@@ -80,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 6) Decidir la ruta de redirección según la respuesta
-    const redirectUrl = talk === "Si" ? "/assessment" : "/gameover";
+    const redirectUrl = talk === "Si" ? "/assessment" : "/90+1";
 
     return res.status(200).json({
       notification: {

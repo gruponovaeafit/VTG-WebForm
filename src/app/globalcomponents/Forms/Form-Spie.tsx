@@ -51,7 +51,7 @@ export default function SpieForm() {
       toast.success("Formulario enviado con éxito", {
         position: "top-center",
         autoClose: 500,
-        onClose: () => router.push("/gameover"),
+        onClose: () => router.push("/90+1"),
       });
     } catch {
       toast.error("Error al enviar el formulario.", {

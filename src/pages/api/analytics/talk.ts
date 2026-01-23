@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Pool } from "pg";
-import { connectToDatabase } from "../db";
+import { getPool } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: Pool | null = null;
 
   try {
-    pool = await connectToDatabase();
+    pool = getPool();
 
     // 🔍 Consulta para contar usuarios agrupados por hora (entre 8:00 AM y 7:00 PM)
     const result = await pool.query(`

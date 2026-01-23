@@ -17,7 +17,7 @@ export default function InfoUn2() {
         overlayClassName="bg-gray-800 bg-opacity-90 p-2 rounded-lg shadow-lg max-w-md w-full"
         formClassName="space-y-4"
         buttons={[
-          <button type="button" onClick={handleNextClick} className="w-full mt-3 py-2 px-3 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-400 font-bold uppercase tracking-wider transition duration-300">Siguiente</button>
+          <button key="next" type="button" onClick={handleNextClick} className="w-full mt-3 py-2 px-3 bg-yellow-400 text-black rounded shadow hover:bg-yellow-500 active:bg-yellow-400 font-bold uppercase tracking-wider transition duration-300">Siguiente</button>
         ]}
         >
             <div className="bg-gray-800 bg-opacity-90 p-2 rounded-lg shadow-lg max-w-md w-full">

@@ -94,7 +94,7 @@ export default function Clubin1Form() {
         autoClose: 500,
       });
 
-      setTimeout(() => router.push("/gameover"), 800);
+      setTimeout(() => router.push("/90+1"), 800);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario.");

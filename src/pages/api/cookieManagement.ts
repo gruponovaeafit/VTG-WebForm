@@ -27,3 +27,8 @@ export function verifyJwtFromCookies(
     return null;
   }
 }
+
+// Default export requerido por Next.js para archivos en pages/api
+export default function handler() {
+  return null;
+}

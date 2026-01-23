@@ -12,7 +12,7 @@ function buildDbConfig(): PoolConfig {
       ssl: { rejectUnauthorized: false }, // Supabase suele requerir SSL
       // IMPORTANTE: en serverless mantener bajo para evitar agotar conexiones
       max: Number(process.env.PG_POOL_MAX ?? 3),
-      idleTimeoutMillis: 0, // 0 = desactivar timeout (mantener conexiones vivas)
+      idleTimeoutMillis: 10000, // 0 = desactivar timeout (mantener conexiones vivas)
       connectionTimeoutMillis: 10_000, // Aumentado para conexiones más lentas
     };
   }
@@ -42,8 +42,7 @@ function buildDbConfig(): PoolConfig {
 
 // Evitar múltiples pools por Hot Reload en Next.js (dev)
 declare global {
-  // eslint-disable-next-line no-var
-  var __pgPool: Pool | undefined;
+    var __pgPool: Pool | undefined;
 }
 
 export function getPool(): Pool {
@@ -145,5 +144,10 @@ export async function withTransaction<T>(
   } finally {
     client.release();
   }
+}
+
+// Default export requerido por Next.js para archivos en pages/api
+export default function handler() {
+  return null;
 }
 
