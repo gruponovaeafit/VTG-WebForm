@@ -77,8 +77,6 @@ export default function NOVAForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
