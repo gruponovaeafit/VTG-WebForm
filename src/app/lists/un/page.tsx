@@ -47,18 +47,6 @@ export default function UnPage() {
     return () => clearInterval(interval);
   }, [authenticated]);
 
-  const groupParticipantsByDate = (data: any[]) => {
-    const grouped: { [fecha: string]: any[] } = {};
-    data.forEach((charla) => {
-      charla.participants.forEach((p: any) => {
-        const fecha = p.fecha_inscripcion?.split("T")[0] || "Sin fecha";
-        if (!grouped[fecha]) grouped[fecha] = [];
-        grouped[fecha].push(p);
-      });
-    });
-    return grouped;
-  };
-
   if (!authenticated) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-black text-green-300 px-4">
@@ -108,74 +96,94 @@ export default function UnPage() {
     );
   if (error) return <div className="p-2 text-sm text-red-400">Error al cargar los datos.</div>;
 
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return (
+      <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center">
+        <div>No hay datos disponibles.</div>
+      </div>
+    );
+  }
+
+  // Agrupar todos los participantes para vista alternativa
+  const allParticipants = data.flatMap((item: any) => item.participants || []);
+
   return (
     <div className="p-2 h-screen overflow-auto bg-black text-green-300 font-mono">
       <div className="flex justify-between items-center mb-2">
-        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">UN - Charlas</h1>
+        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">UN Dashboard</h1>
         <button
           onClick={() => setGroupByDate(!groupByDate)}
-          className="px-3 py-1 text-sm bg-green-600 hover:bg-green-500 text-black font-semibold rounded"
+          className="px-2 py-1 text-xs bg-green-500 text-black roundedpx-4 py-1 bg-green-700 hover:bg-green-600 text-white text-xs rounded transition"
         >
-          {groupByDate ? "Ver por charla" : "Ver por fecha"}
+          {groupByDate ? "Ver por charla" : "Listar todos los participantes"}
         </button>
       </div>
 
       {groupByDate ? (
-        Object.entries(groupParticipantsByDate(data)).map(([fecha, participants]: any) => (
-          <div key={fecha} className="mb-4 border border-yellow-500 rounded-lg p-2 bg-gray-900">
-            <h2 className="text-md font-semibold mb-2 text-cyan-400">Inscritos en {fecha}</h2>
-            <table className="w-full border-collapse border border-green-500 text-xs text-green-200">
-              <thead>
-                <tr className="bg-gray-700 text-yellow-300">
-                  <th className="border border-green-500 px-2 py-1">Correo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {participants.map((p: any) => (
-                  <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
-                    <td className="border border-green-500 px-2 py-1">{p.correo}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ))
-      ) : (
-        data?.map((charla: { charla_info: string; participants: any[] }) => (
-          <div key={charla.charla_info} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
-            <h2 className="text-md font-semibold mb-1 text-cyan-400">
-              {charla.charla_info ==   "1" ? "Asiste a la charla" : "No asiste a la charla"}
-            </h2>
+        allParticipants.length > 0 ? (
+          <div className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
+            <h2 className="text-md font-semibold mb-1 text-cyan-400">Todos los participantes</h2>
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
               <Users className="h-5 w-5 text-green-500" />
-              <span>Participantes: {charla.participants.length}</span>
+              <span>Participantes: {allParticipants.length}</span>
             </div>
             <table className="w-full border-collapse border border-green-500 text-xs text-green-200 mt-2">
               <thead>
                 <tr className="bg-gray-700 text-yellow-300">
                   <th className="border border-green-500 px-2 py-1">Correo</th>
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
-                  <th className="border border-green-500 px-2 py-1">Pregrado</th>
-                  <th className="border border-green-500 px-2 py-1">Semestre</th>
-                  <th className="border border-green-500 px-2 py-1">Departamentos</th>
-                  <th className="border border-green-500 px-2 py-1">Asistencia Assessment</th>
                 </tr>
               </thead>
               <tbody>
-                {charla.participants.map((p: any) => (
-                  <tr key={`${p.correo}-${p.id_grupo}`} className="hover:bg-gray-800">
-                    <td className="border border-green-500 px-2 py-1">{p.correo}</td>
+                {allParticipants.map((p: any, i: number) => (
+                  <tr key={`${p.correo}-${i}`} className="hover:bg-gray-800">
+                    <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{p.departamentos || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{p.asis_assessment || "N/A"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        ))
+        ) : (
+          <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center">
+            <div>No hay participantes registrados.</div>
+          </div>
+        )
+      ) : (
+        data.map((charla: { charla: string; participants: any[] }) => {
+          const participantesArray = charla.participants || [];
+          return (
+            <div key={charla.charla} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
+              <h2 className="text-md font-semibold mb-1 text-cyan-400">{charla.charla || "Sin charla"}</h2>
+              <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
+                <Users className="h-5 w-5 text-green-500" />
+                <span>Participantes: {participantesArray.length}</span>
+              </div>
+              <table className="w-full border-collapse border border-green-500 text-xs text-green-200">
+                <thead>
+                  <tr className="bg-gray-700 text-yellow-300">
+                    <th className="border border-green-500 px-2 py-1">Correo</th>
+                    <th className="border border-green-500 px-2 py-1">Nombre</th>
+                    <th className="border border-green-500 px-2 py-1">Pregrado</th>
+                    <th className="border border-green-500 px-2 py-1">Semestre</th>
+                    <th className="border border-green-500 px-2 py-1">Comité</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {participantesArray.map((p: any, idx: number) => (
+                    <tr key={`${p.correo}-${idx}`} className="hover:bg-gray-800">
+                      <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{p.comite || "N/A"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        })
       )}
     </div>
   );

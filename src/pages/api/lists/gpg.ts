@@ -1,58 +1,62 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import sql from "mssql";
-import { dbConfig } from "../forms/db"; // Ajusta la ruta si es necesario
+import { dbQuery } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  let pool: sql.ConnectionPool | null = null;
-
   try {
-    pool = await sql.connect(dbConfig);
-
     // Consulta para obtener información de la tabla 'gpg' junto con los datos de la persona
-    const result = await pool.request().query(`
+    const result = await dbQuery<{
+      id_grupo: number;
+      correo: string;
+      charla: string;
+      prepractica: number;
+      nombre: string | null;
+      pregrado: string | null;
+      semestre: number | null;
+    }>(`
       SELECT 
         g.id_grupo,
         g.correo,
+        g.charla,
         g.prepractica,
-        g.edad,
-        g.fecha_inscripcion,
         pe.nombre,
         pe.pregrado,
         pe.semestre
-      FROM dbo.gpg AS g
-      LEFT JOIN dbo.persona AS pe ON g.correo = pe.correo
-      ORDER BY g.prepractica DESC, g.edad ASC;
+      FROM gpg AS g
+      LEFT JOIN persona AS pe ON g.correo = pe.correo
+      ORDER BY g.prepractica DESC, g.charla, pe.nombre;
     `);
 
-    // Agrupar los datos por prepráctica
-    const groupedData = result.recordset.reduce((acc, row) => {
-      const key = row.prepractica ? "Con Prepráctica" : "Sin Prepráctica";
+    if (!result.rows || result.rows.length === 0) {
+      return res.status(200).json({ success: true, data: [] });
+    }
+
+    // Agrupar los datos por prepractica
+    const groupedData = result.rows.reduce((acc, row) => {
+      const key = row.prepractica === 1 ? "Con Prepráctica" : "Sin Prepráctica";
       if (!acc[key]) {
         acc[key] = { prepractica: key, participants: [] };
       }
       acc[key].participants.push({
         id_grupo: row.id_grupo,
         correo: row.correo,
-        edad: row.edad,
+        charla: row.charla,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre,
-        fecha_inscripcion: row.fecha_inscripcion
+        semestre: row.semestre
       });
       return acc;
-    }, {});
+    }, {} as Record<string, { prepractica: string; participants: any[] }>);
 
-    res.status(200).json({ success: true, data: Object.values(groupedData) });
-  } catch (error) {
-    console.error("❌ Error en la conexión con MSSQL en la nube:", error);
-    res.status(500).json({ error: "Error en el servidor" });
-  } finally {
-    if (pool) {
-      await pool.close();
-    }
+    const finalData = Object.values(groupedData);
+    console.log(`✅ GPG: ${finalData.length} grupos encontrados, ${result.rows.length} participantes totales`);
+
+    res.status(200).json({ success: true, data: finalData });
+  } catch (error: any) {
+    console.error("❌ Error en la consulta de gpg:", error);
+    res.status(500).json({ error: "Error en el servidor", details: error.message });
   }
 }

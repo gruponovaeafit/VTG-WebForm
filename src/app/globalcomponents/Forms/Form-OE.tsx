@@ -78,10 +78,12 @@ export default function OEForm() {
           <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
             ¿Puedes asistir a nuestra charla informativa para conocer más sobre nuestros comités y el grupo?
           </label>
-          <label htmlFor="programs" className="block text-m mb-2 text-blue-400 font-bold">
+          <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
              Viernes 30 de enero 2:00 p.m. – 5:00 p.m.
           </label>
-
+          <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
+            LA ASISTENCIA ES OBLIGATORIA
+          </label>
           <Select
             id="talk"
             name="talk"

@@ -2,9 +2,9 @@
 
 import Footer from "@/app/globalcomponents/UI/Footer";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
-import OeForm from "../../globalcomponents/Forms/Form-OE";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import PartnersForm from "../../globalcomponents/Forms/Form-Partners";
 
 
 export default function Home() {
@@ -76,7 +76,7 @@ export default function Home() {
        
         {/* Formulario - puede expandirse */}
         <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
-          <OeForm />
+          <PartnersForm />
         </div>
 
         {/* Footer siempre centrado */}
