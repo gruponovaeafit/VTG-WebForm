@@ -46,7 +46,7 @@ export default function Home() {
       <img src="/CLUBMERC_E1.svg"
       alt=""
       aria-hidden="true"
-      className="pointer-events-none select-none absolute right-0 top-0 z-0 w-[210px] h-auto
+      className="pointer-events-none select-none absolute right-0 top-0 z-0 w-[270px] h-auto
          sm:w-[100px] 
          md:w-[900px] md:right-[0px]"
       />
@@ -54,7 +54,7 @@ export default function Home() {
       src="/CLUBMERC_E2.svg"
       alt=""
       aria-hidden="true"
-      className="pointer-events-none select-none absolute bottom-[0px] right-4 z-0 w-[340px] h-auto
+      className="pointer-events-none select-none absolute bottom-[0px] right-4 z-0 w-[380px] h-auto
         sm:w-[100px]
         md:w-[3000px] md:left-[-400px] md:bottom-[-150px]"
       />
