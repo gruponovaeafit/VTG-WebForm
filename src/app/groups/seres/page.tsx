@@ -1,6 +1,6 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
+import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import SeresForm from "../../globalcomponents/Forms/Form-Seres";
 import InfoSeres from "../../globalcomponents/Info/Info-Seres";
@@ -98,7 +98,7 @@ export default function Home() {
 
         {/* Footer siempre centrado */}
         <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
-          <Footer/>
+          <Footer_NOVA_blanco/>
         </div>
       </div>
 

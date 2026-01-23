@@ -93,7 +93,7 @@ export default function UnForm() {
           <Select
             id="talk"
             name="talk"
-            label="¿A que charla te gustaría asistir?"
+            label="¿A qué charla te gustaría asistir?"
             labelColorClass="text-white"
             required
             options={[

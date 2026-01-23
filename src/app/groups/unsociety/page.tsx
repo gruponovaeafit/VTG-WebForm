@@ -2,9 +2,9 @@
 
 import UnForm from "../../globalcomponents/Forms/Form-Un";
 import { useEffect } from "react";
-import Footer from "@/app/globalcomponents/UI/Footer";
 import { useRouter } from "next/navigation";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 
 export default function Home() {
   const router = useRouter();
@@ -73,7 +73,7 @@ export default function Home() {
 
         {/* Footer siempre centrado */}
         <div className="flex justify-center w-full mt-2 sm:mt-0">
-          <Footer />
+          <Footer_NOVA_blanco/>
         </div>
       </main>
     </div>

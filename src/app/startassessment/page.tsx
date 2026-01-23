@@ -2,7 +2,7 @@
 
 import EmailForm from "../globalcomponents/Forms/Form-EmailAssessment";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
-import Footer from "../globalcomponents/UI/Footer";
+import Footer from "../globalcomponents/UI/Footer_NOVA_negro";
 import { useEffect } from "react";
 
 export default function Home() {

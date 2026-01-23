@@ -2,7 +2,7 @@
 
 import PersonalForm from "../globalcomponents/Forms/Form-Personal";
 import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
-import Footer from "../globalcomponents/UI/Footer";
+import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -53,7 +53,7 @@ export default function Home() {
           <PersonalForm />
         </div>
 
-        <Footer />
+        <Footer_NOVA_blanco />
       </main>
     </div>
   );

@@ -23,7 +23,7 @@ export default function RootLayout({
     // OJO: Ponemos overflow: hidden para que NO se pueda scrollear
     <html lang="es" style={{ overflow: "hidden" }}>
       <head>
-        <link rel="icon" href="/NOVA.ico" />
+        <link rel="icon" href="/FifaBall.png" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover"

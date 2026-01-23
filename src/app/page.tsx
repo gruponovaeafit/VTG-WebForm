@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import ConfettiAnimation from "./globalcomponents/UI/ConfettiAnimation";
 import { useEffect, useState } from "react";
-import Footer from "./globalcomponents/UI/Footer";
+import Footer_NOVA_blanco from "./globalcomponents/UI/Footer_NOVA_blanco";
 
 export default function MainPage() {
   const router = useRouter();
@@ -89,7 +89,7 @@ export default function MainPage() {
         </div>
       </div>
       <div className="absolute bottom-10 left-0 right-0 justify-center items-center">
-        <Footer />
+        <Footer_NOVA_blanco/>
       </div>
 
     </div>

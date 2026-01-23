@@ -1,12 +1,10 @@
 "use client";
 
-import ClubinForm from "../../globalcomponents/Forms/Form-Clubin";
-import Image from "next/image";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Clubin1Form from "@/app/globalcomponents/Forms/Form-Clubin";
-import Footer from "@/app/globalcomponents/UI/Footer";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 
 export default function Home() {
   const router = useRouter();
@@ -74,7 +72,7 @@ export default function Home() {
 
         {/* Footer siempre centrado */}
         <div className="flex justify-center w-full mt-2 sm:mt-0">
-          <Footer />
+          <Footer_NOVA_blanco />  
         </div>
 
       </main>  

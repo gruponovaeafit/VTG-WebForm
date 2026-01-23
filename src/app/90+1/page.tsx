@@ -1,10 +1,10 @@
 "use client";
 
-import Footer from "@/app/globalcomponents/UI/Footer";
 import Button from "@/app/globalcomponents/UI/Button";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 
 export default function Home() {
   const [showButton, setShowButton] = useState(false);
@@ -29,7 +29,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative flex flex-col justify-between items-center w-full h-screen overflow-hidden">
+    <div className="relative flex flex-col justify-between items-center w-full min-h-screen overflow-hidden px-4 sm:px-6 md:px-8">
       {/* Fondo que ocupa toda la pantalla */}
       <div
         className="absolute inset-0 bg-no-repeat bg-center bg-cover"
@@ -42,9 +42,12 @@ export default function Home() {
       </div>
 
       {/* Contenido principal */}
-      <div className="relative z-20 flex flex-col justify-center items-center flex-grow">
-        <h1 className="text-4xl md:text-5xl text-center mb-6 font-ea text-white">
-          Gracias por participar
+      <div className="relative z-20 flex flex-col justify-center items-center flex-grow w-full py-8 sm:py-12 md:py-16">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-4 sm:mb-6 font-ea text-white px-4">
+          pitazo final
+        </h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-4 sm:mb-6 font-ea text-white px-4">
+          bienvenido a la familia
         </h1>
 
         {showButton && (
@@ -54,7 +57,7 @@ export default function Home() {
             size="md"
             state="active"
             theme="fifa"
-            className="mt-6"
+            className="mt-4 sm:mt-6 w-full max-w-xs sm:max-w-sm md:max-w-md"
             textShadow={false}
           >
             Volver al inicio
@@ -62,8 +65,8 @@ export default function Home() {
         )}
       </div>
 
-      <div className="absolute bottom-10 left-0 right-0 justify-center items-center z-20">
-        <Footer />
+      <div className="relative z-20 w-full flex justify-center items-center pb-4 sm:pb-6 md:pb-10">
+        <Footer_NOVA_blanco/>
       </div>
     </div>
   );
