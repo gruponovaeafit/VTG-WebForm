@@ -129,7 +129,7 @@ export default function Select({
 
   const baseSelectClasses =
     "w-full rounded-tl-[16px] rounded-tr-[16px] rounded-bl-[16px] rounded-br-0 border-[3px] bg-[#f2dc4b] " +
-    "px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base text-[#2b2b2b] font-semibold " +
+    "px-4 py-2.5 text-base text-[#2b2b2b] " +
     "focus:outline-none focus:ring-2 " +
     "disabled:opacity-50 disabled:cursor-not-allowed";
 
