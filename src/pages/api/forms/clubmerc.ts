@@ -1,72 +1,77 @@
-// pages/api/forms/clubmerc.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import { connect, Int, VarChar, config as SqlConfig, ConnectionPool } from "mssql";
 import { verifyJwtFromCookies } from "../cookieManagement";
-
-const config: SqlConfig = {
-  user: process.env.DB_USER as string,
-  password: process.env.DB_PASS as string,
-  database: process.env.DB_NAME as string,
-  server: process.env.DB_SERVER as string,
-  port: parseInt(process.env.DB_PORT ?? "1433", 10),
-  options: {
-    encrypt: true,
-    trustServerCertificate: false,
-  },
-};
+import { dbQuery } from "../db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let pool: ConnectionPool | null = null;
-
   try {
-    pool = await connect(config);
-
-    if (req.method === "POST") {
-      const { committieSelect, talk } = req.body as {
-        committieSelect: string;
-        talk: string;
-      };
-
-      const email = verifyJwtFromCookies(req, res);
-      const grupoId = 2; // ID del grupo seleccionado
-      const talkValue = talk === "Sí" ? 1 : 0;
-
-      try {
-        await pool.request()
-          .input("id_grupo", Int, grupoId)
-          .input("correo", VarChar, email)
-          .input("comite", VarChar, committieSelect)
-          .input("asistencia_charla", Int, talkValue)
-          .query(`
-            INSERT INTO clubmerc (id_grupo, correo, comite, asistencia_charla)
-            VALUES (@id_grupo, @correo, @comite, @asistencia_charla)
-          `);
-
-        return res.status(200).json({
-          message: "Formulario enviado con éxito.",
-        });
-      } catch (error: any) {
-        if (error.number === 2627) {
-          return res.status(400).json({
-            message: "Ya estás registrado en este grupo.",
-          });
-        }
-        throw error;
-      }
-    } else {
+    if (req.method !== "POST") {
       return res.status(405).json({
-        message: "Método no permitido.",
+        notification: {
+          type: "error",
+          message: "Método no permitido.",
+        },
       });
     }
-  } catch (err) {
-    console.error("Error en la conexión SQL:", err);
-    return res.status(500).json({
-      message: "Error de servidor.",
-      details: err,
-    });
-  } finally {
-    if (pool) {
-      pool.close();
+
+    // 1) Email desde cookie JWT
+    const email = verifyJwtFromCookies(req, res);
+    
+    if (!email || typeof email !== "string") {
+      return res.status(401).json({
+        notification: {
+          type: "error",
+          message: "Sesión inválida o expirada.",
+        },
+      });
     }
+
+    // 2) Datos del form
+    const groupId = 4;
+    // El formulario envía "committieSelect" pero también aceptamos "comite" por compatibilidad
+    const comite = String(req.body?.committieSelect ?? req.body?.comite ?? "").trim();
+
+    if (!comite) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Debes seleccionar un comité.",
+        },
+      });
+    }
+
+    // 3) Insert en Supabase
+    const result = await dbQuery<{ id_grupo: number }>(
+        `
+        INSERT INTO club_merc (id_grupo, correo, comite)
+        VALUES ($1, $2, $3)
+        ON CONFLICT (id_grupo, correo) DO NOTHING
+        RETURNING id_grupo
+        `,
+        [groupId, email.toLowerCase().trim(), comite]
+      );
+
+    if (result.rows.length === 0) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Ya estás registrado en este grupo.",
+        },
+      });
+    }
+    
+    return res.status(200).json({
+      notification: {
+        type: "success",
+        message: "Formulario enviado con éxito.",
+      },
+    });
+  } catch (err) {
+    console.error("Error en /api/forms/clubmerc:", err);
+    return res.status(500).json({
+      notification: {
+        type: "error",
+        message: "Error interno del servidor.",
+      },
+    });
   }
 }

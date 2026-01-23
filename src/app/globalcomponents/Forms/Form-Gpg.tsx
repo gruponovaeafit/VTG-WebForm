@@ -74,8 +74,6 @@ export default function GpgForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
@@ -85,6 +83,7 @@ export default function GpgForm() {
             id="talk"
             name="talk"
             label="¿A qué charla te gustaría asistir?"
+            labelColorClass="text-white"
             required
             options={[
               { label: "Jue. 29 ene 5:30 – 7:20 p.m.", value: "Jue. 29 ene 5:30 – 7:20 p.m." },
@@ -97,6 +96,7 @@ export default function GpgForm() {
           id="practice"
           name="practice"
           label="¿Estás viendo pre-práctica?"
+          labelColorClass="text-white"
           required
           options={[
             { label: "Si", value: "Si" },

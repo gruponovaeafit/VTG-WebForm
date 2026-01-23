@@ -77,35 +77,51 @@ export default function NOVAForm() {
     <>
       <FormContainer
         onSubmit={handleFormSubmit}
-        overlayClassName="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md w-full"
-        formClassName="space-y-4"
         buttons={[
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
 
-        <Select
-          id="talk"
-          name="talk"
-          label="¿A qué charla informartiva asistirás?"
-          required
-          options={[
-            { label: "Jue. 24 jul, 12-1 p.m.", value: "Jue. 24 jul, 12-1 p.m." },
-            { label: "Vie. 25 jul, 2-3 p.m.", value: "Vie. 25 jul, 2-3 p.m." },
-            { label: "Mié. 30 jul, 5-6 p.m.", value: "Mié. 30 jul, 5-6 p.m." },
-          ]}
-        />
-
+        <div className="mb-4">
+          <Select
+            id="charla"
+            name="charla"
+            label="¿A qué charla te gustaría asistir?"
+            required
+            options={[
+              { label: "Jue. enero 29, 12:00M - 2:00PM", value: "Jue. enero 29, 12:00M - 2:00PM" },
+              { label: "Jue. enero 29, 6:00PM - 7:00PM", value: "Jue. enero 29, 6:00PM - 7:00PM"},
+              { label: "Mar. febrero 3, 6:00PM - 7:00PM", value: "Mar. febrero 3, 6:00PM - 7:00PM"},
+            ]}
+            labelColorClass="text-white"
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+          />
+        </div>
+        <div className="mb-4">
+          <Select
+            id="departmento"
+            name="departmento"
+            label="¿A qué departamento te gustaría ingresar?"
+            required
+            options={[
+              { label: "Gestión Humana", value: "Gestión Humana" },
+              { label: "Relaciones Públicas", value: "Relaciones Públicas"},
+              { label: "Communities", value: "Communities"},
+              { label: "Mercadeo", value: "Mercadeo"},
+            ]}
+            labelColorClass="text-white"
+            borderColorClass="border-black"
+            focusRingColorClass="focus:ring-white"
+          />
+        </div>
         <div className="mb-4">
           <Input
-            type="text"
-            name="IdNovato"
+            id="nombre_miembro"
+            name="nombre_miembro"
             label="Nombre del Novatto/a que te inscribió"
             placeholder="Novatto/a"
             required
-            borderColorClass="border-purple-600"
-            focusRingColorClass="focus:ring-purple-700"
-            labelColorClass="text-purple-600"
           />
         </div>
       </FormContainer>

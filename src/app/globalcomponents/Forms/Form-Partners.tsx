@@ -74,9 +74,6 @@ export default function PartnersForm() {
           <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
-        
-        
-
         {/* Campo 2: ¿Vas a asistir a alguna de nuestras charlas informativas? */}
         <div className="mb-4">
           <label
