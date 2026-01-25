@@ -1,7 +1,7 @@
 "use client";
 
 import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import TutoresForm from "../../globalcomponents/Forms/Form-Tutores";
 import { useEffect } from "react";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";

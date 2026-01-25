@@ -1,7 +1,7 @@
 "use client";
 
 import EmailForm from "../globalcomponents/Forms/Form-Email";
-import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 import { useEffect } from "react";
 

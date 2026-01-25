@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { dbQuery } from "./db";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
-import { decryptRequestBody } from "./lib/decrypt";
+import { decryptRequestBody } from "@/lib/decrypt";
 
 function requiredEnv(name: string) {
   const v = process.env[name];

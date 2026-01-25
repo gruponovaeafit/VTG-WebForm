@@ -1,7 +1,7 @@
 "use client";
 
 
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import SpieForm from "../../globalcomponents/Forms/Form-Spie";
 import { useEffect } from "react";
 import Footer_NOVA_blanco from "../../globalcomponents/UI/Footer_NOVA_blanco";

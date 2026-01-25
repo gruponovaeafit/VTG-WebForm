@@ -1,6 +1,6 @@
 "use client";
 
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useEffect } from "react";
 import PartnersForm from "../../globalcomponents/Forms/Form-Partners";
 import Footer_NOVA_blanco from "../../globalcomponents/UI/Footer_NOVA_blanco";

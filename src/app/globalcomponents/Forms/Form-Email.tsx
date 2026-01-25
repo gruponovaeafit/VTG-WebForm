@@ -1,28 +1,40 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import ReCAPTCHA from "react-google-recaptcha";
+import dynamic from "next/dynamic";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
 import { encryptedFetch } from "@/lib/crypto";
 
+// Lazy load ReCAPTCHA para mejorar LCP
+const ReCAPTCHA = dynamic(
+  () => import("react-google-recaptcha"),
+  { 
+    ssr: false,
+    loading: () => (
+      <div className="h-[78px] w-[304px] bg-gray-200 animate-pulse rounded flex items-center justify-center">
+        <span className="text-gray-500 text-sm">Cargando verificación...</span>
+      </div>
+    )
+  }
+);
+
 export default function EmailForm() {
   const router = useRouter();
   const [captcha, setCaptcha] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const captchaRef = useRef<ReCAPTCHA>(null);
+  const [captchaKey, setCaptchaKey] = useState(0); // Key para forzar reset del captcha
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     if (!captcha) {
       toast.error("Por favor completa el reCAPTCHA antes de enviar.", {
         position: "top-center",
-        autoClose: 1500, // Notificación de 3 segundos
+        autoClose: 2500, // Notificación de 2.5 segundos
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -30,6 +42,8 @@ export default function EmailForm() {
       });
       return;
     }
+
+    setIsSubmitting(true);
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
@@ -59,14 +73,14 @@ export default function EmailForm() {
         } else {
           toast.error("Ocurrió un error al enviar el formulario.", {
             position: "top-center",
-            autoClose: 1000, // Notificación de 1.5 segundos
+            autoClose: 2500, // Notificación de 1.5 segundos
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
           });
         }
-        if (captchaRef.current) captchaRef.current.reset();
+        setCaptchaKey(k => k + 1); // Reset captcha
         setCaptcha(null);
         return;
       }
@@ -89,19 +103,19 @@ export default function EmailForm() {
         },
       });
 
-      if (captchaRef.current) captchaRef.current.reset();
+      setCaptchaKey(k => k + 1); // Reset captcha
       setCaptcha(null);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error interno al enviar el formulario.", {
         position: "top-center",
-        autoClose: 1500, 
+        autoClose: 2500, 
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
       });
-      if (captchaRef.current) captchaRef.current.reset();
+      setCaptchaKey(k => k + 1); // Reset captcha
       setCaptcha(null);
     } finally {
       setIsSubmitting(false);
@@ -129,9 +143,9 @@ export default function EmailForm() {
         <div className="flex justify-center mb-4 w-full overflow-visible">
           <div className="transform scale-90 sm:scale-100 origin-center" style={{ touchAction: 'manipulation' }}>
             <ReCAPTCHA
-              ref={captchaRef}
+              key={captchaKey}
               sitekey={process.env.NEXT_PUBLIC_CLIENT_KEY_CAPTCHA!}
-              onChange={(token) => setCaptcha(token)}
+              onChange={(token: string | null) => setCaptcha(token)}
             />
           </div>
         </div>

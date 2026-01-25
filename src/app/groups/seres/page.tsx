@@ -1,7 +1,7 @@
 "use client";
 
 import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import SeresForm from "../../globalcomponents/Forms/Form-Seres";
 import InfoSeres from "../../globalcomponents/Info/Info-Seres";
 import { useEffect } from "react";

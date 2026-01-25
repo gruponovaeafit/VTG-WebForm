@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { verifyJwtFromCookies } from "../cookieManagement";
 import { dbQuery, withTransaction } from "../db";
-import { decryptRequestBody } from "../lib/decrypt";
+import { decryptRequestBody } from "@/lib/decrypt";
 
 const recentRequests = new Map<string, number>();
 

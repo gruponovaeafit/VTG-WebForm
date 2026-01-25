@@ -2,7 +2,7 @@
 
 import GroupsForm from "../globalcomponents/Forms/Form-Groups";
 import { useEffect } from "react";
-import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 

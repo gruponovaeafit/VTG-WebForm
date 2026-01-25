@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { connect, VarChar, config as SqlConfig } from "mssql";
 import type { ConnectionPool } from "mssql";
 import { verifyJwtFromCookies } from "./cookieManagement"; // <-- Ajusta la ruta a tu helper
-import { decryptRequestBody } from "./lib/decrypt";
+import { decryptRequestBody } from "@/lib/decrypt";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,

@@ -5,7 +5,7 @@ import Footer from "@/app/globalcomponents/UI/Footer_NOVA_negro";
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import ClubmercForm from "../../globalcomponents/Forms/Form-Clubmerc";
 import { useEffect } from "react";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {

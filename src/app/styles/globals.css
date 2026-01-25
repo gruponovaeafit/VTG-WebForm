@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Fuentes personalizadas con font-display: swap para mejor CLS */
 @font-face {
   font-family: "EA Font";
   src: url("/fonts/EASPORTS.woff2") format("woff2"),
@@ -7,6 +9,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "FIFA26";
   src: url("/fonts/FIFA26.woff2") format("woff2");
@@ -14,6 +17,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "FWC26";
   src: url("/fonts/FWC26.woff") format("woff");
@@ -21,6 +25,8 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* Clases de fuentes */
 .font-ea {
   font-family: "EA Font", sans-serif;
 }

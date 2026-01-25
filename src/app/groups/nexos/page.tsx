@@ -1,7 +1,7 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer_NOVA_negro";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import NexosForm from "../../globalcomponents/Forms/Form-Nexos";
 import { useEffect } from "react";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";

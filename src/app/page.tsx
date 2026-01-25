@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import ConfettiAnimation from "./globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useEffect, useState } from "react";
 import Footer_NOVA_blanco from "./globalcomponents/UI/Footer_NOVA_blanco";
 

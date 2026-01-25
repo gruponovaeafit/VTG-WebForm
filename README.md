@@ -13,7 +13,7 @@ git clone https://github.com/gruponovaeafit/VTG-WebForm.git
 Enter the project folder and install the dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ---
@@ -25,7 +25,7 @@ If the project requires additional configuration 🔐, make sure to create a `.e
 To see the form in action, run the following command:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Then open [http://localhost:3000](http://localhost:3000) 🌐 in your browser.

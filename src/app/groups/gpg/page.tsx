@@ -1,7 +1,7 @@
 "use client";
 
 import Footer from "@/app/globalcomponents/UI/Footer_NOVA_negro";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import GpgForm from "../../globalcomponents/Forms/Form-Gpg";
 import { useEffect } from "react";
 import Image from "next/image";

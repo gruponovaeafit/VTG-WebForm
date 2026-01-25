@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
-import { decryptRequestBody } from "./lib/decrypt";
+import { decryptRequestBody } from "@/lib/decrypt";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,

@@ -3,7 +3,7 @@
 import AiesecForm from "../../globalcomponents/Forms/Form-Aiesec";
 import { useEffect } from "react";
 import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {

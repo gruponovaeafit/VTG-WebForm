@@ -3,7 +3,7 @@
 import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import TvuForm from "../../globalcomponents/Forms/Form-Tvu";
 import { useEffect } from "react";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {

@@ -2,7 +2,7 @@
 
 import UnForm from "../../globalcomponents/Forms/Form-Un";
 import { useEffect } from "react";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 

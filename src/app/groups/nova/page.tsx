@@ -2,7 +2,7 @@
 
 import PixelsAnimation from "../../globalcomponents/UI/Pixels_animation";
 import NovaForm from "../../globalcomponents/Forms/Form-NOVA";
-import ConfettiAnimation from "../../globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useEffect } from "react";
 import Footer from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";

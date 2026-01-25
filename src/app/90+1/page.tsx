@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/app/globalcomponents/UI/Button";
-import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
@@ -54,19 +54,22 @@ export default function Home() {
           bienvenidx a la familia
         </h1>
 
-        {showButton && (
-          <Button
-            onClick={handleRestart}
-            variant="verde"
-            size="md"
-            state="active"
-            theme="fifa"
-            className="mt-4 sm:mt-6 w-full max-w-xs sm:max-w-sm md:max-w-md"
-            textShadow={false}
-          >
-            Volver al inicio
-          </Button>
-        )}
+        {/* Contenedor con altura fija para evitar CLS cuando aparece el botón */}
+        <div className="min-h-[60px] sm:min-h-[70px] mt-4 sm:mt-6 w-full max-w-xs sm:max-w-sm md:max-w-md flex items-center justify-center">
+          {showButton ? (
+            <Button
+              onClick={handleRestart}
+              variant="verde"
+              size="md"
+              state="active"
+              theme="fifa"
+              className="w-full"
+              textShadow={false}
+            >
+              Volver al inicio
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <div className="relative z-20 w-full flex justify-center items-center pb-4 sm:pb-6 md:pb-10">

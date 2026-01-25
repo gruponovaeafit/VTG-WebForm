@@ -1,7 +1,7 @@
 "use client";
 
 import PersonalForm from "../globalcomponents/Forms/Form-Personal";
-import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
 import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 

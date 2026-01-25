@@ -3,7 +3,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { dbQuery } from "./db"
 import { verifyJwtFromCookies } from "./cookieManagement";
-import { decryptRequestBody } from "./lib/decrypt";
+import { decryptRequestBody } from "@/lib/decrypt";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

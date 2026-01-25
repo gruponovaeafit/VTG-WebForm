@@ -1,6 +1,6 @@
 // pages/api/forms/final.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import { decryptRequestBody } from "./lib/decrypt";
+import { decryptRequestBody } from "@/lib/decrypt";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
