@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import sql, { config as SqlConfig, ConnectionPool } from "mssql";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
+import { decryptRequestBody } from "./lib/decrypt";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -24,6 +25,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         type: "error",
         message: "Método no permitido.",
       },
+    });
+  }
+
+  // Desencriptar el body si viene encriptado
+  const decryptResult = decryptRequestBody(req);
+  if (!decryptResult.success) {
+    return res.status(400).json({
+      notification: { type: "error", message: decryptResult.error || "Error al procesar los datos." },
     });
   }
 

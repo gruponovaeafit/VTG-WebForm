@@ -1,19 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
 
 export default function SpieForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const form = e.currentTarget;
     
@@ -27,11 +30,10 @@ export default function SpieForm() {
     const formData = new FormData(form);
 
     try {
-      const response = await fetch("/api/forms/spie", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
+      const response = await encryptedFetch(
+        "/api/forms/spie",
+        Object.fromEntries(formData.entries()) as Record<string, unknown>
+      );
 
       const result = await response.json();
 
@@ -58,11 +60,12 @@ export default function SpieForm() {
         position: "top-center",
         autoClose: 1500,
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
       <div className="relative flex items-start justify-center w-full">
         <Image
           src="/forma-spie1.png"
@@ -84,7 +87,7 @@ export default function SpieForm() {
           <FormContainer
             onSubmit={handleFormSubmit}
             buttons={[
-              <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+              <Button key="submit" type="submit" variant="verde" size="md" state={isSubmitting ? "loading" : "active"} disabled={isSubmitting} className="w-full" theme="fifa">SIGUIENTE</Button>
             ]}
           >
             <Select
@@ -124,8 +127,5 @@ export default function SpieForm() {
           </FormContainer>
         </div>
       </div>
-
-      <ToastContainer />
-    </>
   );
 }

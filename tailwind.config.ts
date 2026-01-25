@@ -20,6 +20,16 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      // Fix para iOS Safari - usar dvh (dynamic viewport height)
+      height: {
+        screen: "100dvh",
+      },
+      minHeight: {
+        screen: "100dvh",
+      },
+      maxHeight: {
+        screen: "100dvh",
+      },
       animation: {
         fastPulse: 'pulse 0.1s ease-in-out infinite',
         growShrink: 'growShrink 1.5s infinite ease-in-out', 

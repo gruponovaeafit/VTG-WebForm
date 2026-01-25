@@ -1,29 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
 
 export default function AcademicForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/Data-Academic", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
+      const response = await encryptedFetch(
+        "/api/Data-Academic",
+        Object.fromEntries(formData.entries()) as Record<string, unknown>
+      );
 
       const result = await response.json();
 
@@ -63,17 +63,18 @@ export default function AcademicForm() {
           draggable: true,
         }
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
       <FormContainer
         onSubmit={handleFormSubmit}
         containerClassName="w-full flex items-center justify-center px-0"
         buttons={[
           <Button
-            key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+            key="submit" type="submit" variant="verde" size="md" state={isSubmitting ? "loading" : "active"} disabled={isSubmitting} className="w-full" theme="fifa">SIGUIENTE</Button>
           ]}
       >
 
@@ -188,8 +189,5 @@ export default function AcademicForm() {
           </div>
         </div>
       </FormContainer>
-
-      <ToastContainer />
-    </>
   );
 }

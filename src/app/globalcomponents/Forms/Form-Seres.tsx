@@ -2,33 +2,46 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
+
+// Tipos para la respuesta de la API
+interface TalkSlot {
+  day_of_week: string;
+  start_time: string;
+  capacity: number;
+}
+
+interface TalksApiResponse {
+  data?: TalkSlot[];
+  notification?: {
+    type: string;
+    message: string;
+  };
+}
 
 export default function SeresForm() {
   const router = useRouter();
   const [availableTalks, setAvailableTalks] = useState<{ label: string; value: string }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchAvailableTalks = async () => {
-      console.log("📡 Iniciando solicitud para obtener charlas disponibles...");
       try {
         const res = await fetch("/api/forms/seres");
 
         if (!res.ok) {
-          throw new Error(`❌ Error al obtener los datos. Status: ${res.status}`);
+          throw new Error(`Error al obtener los datos. Status: ${res.status}`);
         }
 
-        const data = await res.json();
-        console.log("✅ Datos de backend recibidos:", data);
+        const data: TalksApiResponse = await res.json();
 
         // Verificar que data y data.data existan
         if (!data || !data.data) {
-          console.warn("⚠️ No se recibieron datos válidos del servidor");
           setAvailableTalks([]);
           setIsLoading(false);
           return;
@@ -36,16 +49,13 @@ export default function SeresForm() {
 
         // Verificar que data.data sea un array
         if (!Array.isArray(data.data)) {
-          console.warn("⚠️ data.data no es un array:", data.data);
           setAvailableTalks([]);
           setIsLoading(false);
           return;
         }
 
-        const talks = data.data.map((talkSlot: any) => {
-          // Formatear como "day_of_week, start_time" para mantener consistencia
+        const talks = data.data.map((talkSlot) => {
           const talkLabel = `${talkSlot.day_of_week}, ${talkSlot.start_time}`;
-          console.log(`🕒 Charla recibida: ${talkLabel} (capacidad: ${talkSlot.capacity})`);
           return {
             label: talkLabel,
             value: talkLabel,
@@ -53,10 +63,9 @@ export default function SeresForm() {
         });
 
         setAvailableTalks(talks);
-        console.log("📅 Charlas disponibles:", talks);
         setIsLoading(false);
       } catch (error) {
-        console.error("🔥 Error al obtener las charlas disponibles:", error);
+        console.error("Error al obtener las charlas disponibles:", error);
         toast.error("No se pudieron cargar las charlas. Inténtalo más tarde.");
         setIsLoading(false);
       }
@@ -67,18 +76,16 @@ export default function SeresForm() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/forms/seres", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
+      const response = await encryptedFetch(
+        "/api/forms/seres",
+        Object.fromEntries(formData.entries()) as Record<string, unknown>
+      );
 
       const result = await response.json();
 
@@ -116,15 +123,16 @@ export default function SeresForm() {
           autoClose: 1500,
         }
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
-      <FormContainer
-        onSubmit={handleFormSubmit}
+    <FormContainer
+      onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state={isSubmitting ? "loading" : "active"} disabled={isSubmitting} className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-0">
@@ -148,7 +156,5 @@ export default function SeresForm() {
           />
         </div>
       </FormContainer>
-      <ToastContainer />
-    </>
   );
 }

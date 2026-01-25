@@ -1,8 +1,17 @@
 // pages/api/forms/final.ts
 import { NextApiRequest, NextApiResponse } from "next";
+import { decryptRequestBody } from "./lib/decrypt";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
+    // Desencriptar el body si viene encriptado
+    const decryptResult = decryptRequestBody(req);
+    if (!decryptResult.success) {
+      return res.status(400).json({
+        notification: { type: "error", message: decryptResult.error || "Error al procesar los datos." },
+      });
+    }
+    
     const { studentGroup } = req.body;
 
     // Mapea los grupos a sus respectivas rutas

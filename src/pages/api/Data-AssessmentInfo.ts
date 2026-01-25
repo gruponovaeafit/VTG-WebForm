@@ -3,6 +3,7 @@ import { connect, VarChar, config as SqlConfig } from "mssql";
 import type { ConnectionPool } from "mssql";
 import { parse } from "cookie";
 import jwt from "jsonwebtoken";
+import { decryptRequestBody } from "./lib/decrypt";
 
 const config: SqlConfig = {
   user: process.env.DB_USER as string,
@@ -29,6 +30,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   let pool: ConnectionPool | null = null;
 
   try {
+    // Desencriptar el body si viene encriptado
+    const decryptResult = decryptRequestBody(req);
+    if (!decryptResult.success) {
+      return res.status(400).json({
+        notification: { type: "error", message: decryptResult.error || "Error al procesar los datos." },
+      });
+    }
+    
     // 1) Extraemos los campos del body (SIN token)
     const { foodRestrictions, healthConsiderations } = req.body;
 

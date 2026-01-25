@@ -3,31 +3,20 @@
 import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import TvuForm from "../../globalcomponents/Forms/Form-Tvu";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {
-  
-  const router = useRouter();
-  useEffect(() => {
-    const checkCookie = async () => {
-      try {
-        const res = await fetch("/api/cookieCheck");
-        if (!res.ok) {
-          router.push("/");
-        }
-      } catch (error) {
-        console.error("Error al verificar JWT:", error);
-        router.push("/");
-      }
-    };
+  const isVerified = useAuthCheck();
 
-    checkCookie();
+  useEffect(() => {
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);
+  }, []);
+
+  if (!isVerified) return null;
 
   return (
     <div

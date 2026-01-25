@@ -4,32 +4,21 @@ import Footer_NOVA_blanco from "@/app/globalcomponents/UI/Footer_NOVA_blanco";
 import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import SeresForm from "../../globalcomponents/Forms/Form-Seres";
 import InfoSeres from "../../globalcomponents/Info/Info-Seres";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 
 export default function Home() {
-  
-    const router = useRouter();
-    useEffect(() => {
-    const checkCookie = async () => {
-      try {
-        const res = await fetch("/api/cookieCheck");
-        if (!res.ok) {
-          router.push("/");
-        }
-      } catch (error) {
-        console.error("Error al verificar JWT:", error);
-        router.push("/");
-      }
-    };
+  const isVerified = useAuthCheck();
 
-    checkCookie();
+  useEffect(() => {
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);
+  }, []);
+
+  if (!isVerified) return null;
 
   return (
     <div
@@ -43,7 +32,7 @@ export default function Home() {
 
       {/* Imágenes decorativas - fuera del main para posicionamiento absoluto correcto */}
       <img
-        src="/SERES_ManchaTopleft.svg"
+        src="/SERES_ManchaTopLeft.svg"
         alt=""
         aria-hidden="true"
         className="pointer-events-none select-none absolute right-0 top-32 z-0 w-[70px] h-auto

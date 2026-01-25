@@ -60,6 +60,9 @@ html,
 body {
   width: 100%;
   height: 100%;
+  /* Fix para iOS Safari - usar dvh cuando esté disponible */
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 body {
@@ -68,6 +71,29 @@ body {
   font-family: "inter", sans-serif;
   /* font-family: "EA Font", sans-serif; */
   /* Quita display: flex; justify-content: center; align-items: center; */
+}
+
+/* Utility classes para viewport height compatible con iOS Safari */
+.min-h-screen-safe {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.h-screen-safe {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Fallback para h-screen y min-h-screen en navegadores que no soportan dvh */
+@supports not (height: 100dvh) {
+  .h-screen {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
 }
 
 /* Clases de scroll (usarlas solo si haces un toggle manual) */

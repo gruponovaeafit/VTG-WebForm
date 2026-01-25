@@ -6,11 +6,13 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import RocketAnimation from "./RocketAnimation";
 import "../styles/globals.css";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function TalkAnimationPage() {
   const [showLogo, setShowLogo] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
+  const isVerified = useAuthCheck();
 
   useEffect(() => {
     document.body.classList.add("no-scroll");
@@ -24,6 +26,8 @@ export default function TalkAnimationPage() {
       clearTimeout(buttonTimer);
     };
   }, []);
+
+  if (!isVerified) return null;
 
   const handleRestart = () => {
     router.push("/");

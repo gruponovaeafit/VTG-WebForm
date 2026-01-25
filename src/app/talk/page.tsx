@@ -1,33 +1,22 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import TalkEmailForm from "../globalcomponents/Forms/Form-EmailTalk";
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {
-  const router = useRouter();
+  const isVerified = useAuthCheck();
   
   useEffect(() => {
-    const checkCookie = async () => {
-      try {
-        const res = await fetch("/api/cookieCheck");
-        if (!res.ok) {
-          router.replace("/");
-        }
-      } catch (error) {
-        console.error("Error al verificar JWT:", error);
-        router.replace("/");
-      }
-    };
-
-    checkCookie();
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
     };
-  }, [router]);
+  }, []);
+
+  if (!isVerified) return null;
 
   return (
     <div

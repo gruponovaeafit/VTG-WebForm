@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { verifyJwtFromCookies } from "../cookieManagement";
 import { dbQuery } from "../db";
+import { decryptRequestBody } from "../lib/decrypt";
 
 
 
@@ -13,6 +14,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           type: "error",
           message: "Método no permitido.",
         },
+      });
+    }
+
+    // Desencriptar el body si viene encriptado
+    const decryptResult = decryptRequestBody(req);
+    if (!decryptResult.success) {
+      return res.status(400).json({
+        notification: { type: "error", message: decryptResult.error || "Error al procesar los datos." },
       });
     }
 

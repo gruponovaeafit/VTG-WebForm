@@ -1,48 +1,69 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
+
+interface RedirectResponse {
+  redirectUrl?: string;
+  notification?: {
+    type: string;
+    message: string;
+  };
+}
 
 export default function GroupsForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/redirecting", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())), // Convierte FormData a JSON
-      });
+      const response = await encryptedFetch(
+        "/api/redirecting",
+        Object.fromEntries(formData.entries()) as Record<string, unknown>
+      );
+
+      const result: RedirectResponse = await response.json();
 
       if (!response.ok) {
-        throw new Error("Error en el servidor");
+        toast.error(result.notification?.message || "Error en el servidor", {
+          position: "top-center",
+          autoClose: 1500,
+        });
+        return;
       }
 
-      const { redirectUrl } = await response.json();
-
-      if (redirectUrl) {
-        router.push(redirectUrl); // Redirige a la página correspondiente
+      if (result.redirectUrl) {
+        router.push(result.redirectUrl);
       } else {
-        throw new Error("No se recibió una URL de redirección");
+        toast.error("No se recibió una URL de redirección", {
+          position: "top-center",
+          autoClose: 1500,
+        });
       }
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
-      alert("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.");
+      toast.error("Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
-      <FormContainer
+    <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
           <Button
@@ -50,7 +71,8 @@ export default function GroupsForm() {
             type="submit"
             variant="verde"
             size="md"
-            state="active"
+            state={isSubmitting ? "loading" : "active"}
+            disabled={isSubmitting}
             className="w-full"
             theme="fifa"
           >
@@ -85,6 +107,5 @@ export default function GroupsForm() {
           />
         
       </FormContainer>
-    </>
   );
 }

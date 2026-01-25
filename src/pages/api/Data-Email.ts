@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { dbQuery } from "./db";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
+import { decryptRequestBody } from "./lib/decrypt";
 
 function requiredEnv(name: string) {
   const v = process.env[name];
@@ -25,6 +26,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
   }
 
+  // Desencriptar el body si viene encriptado
+  const decryptResult = decryptRequestBody(req);
+  if (!decryptResult.success) {
+    return res.status(400).json({
+      notification: {
+        type: "error",
+        message: decryptResult.error || "Error al procesar los datos.",
+      },
+    });
+  }
+  
   const { token, email } = req.body as { token?: string; email?: string };
 
   if (!token) {
@@ -92,7 +104,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // 4. Generar JWT
     const jwtToken = jwt.sign({ email: emailLower }, process.env.JWT_SECRET_KEY as string, {
-      expiresIn: "15m",
+      expiresIn: "12m",
     });
 
     // Setear la cookie
@@ -101,7 +113,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       serialize("jwtToken", jwtToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 3600,
+        maxAge: 720,
         path: "/",
         sameSite: "strict",
       })

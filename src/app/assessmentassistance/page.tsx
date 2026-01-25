@@ -4,14 +4,19 @@ import AssessmentAssistanceForm from "../globalcomponents/Forms/Form-AssessmentA
 import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {
+  const isVerified = useAuthCheck();
+
   useEffect(() => {
     document.body.classList.add("no-scroll");
     return () => {
       document.body.classList.remove("no-scroll");
     };
   }, []);
+
+  if (!isVerified) return null;
 
   return (
     <div

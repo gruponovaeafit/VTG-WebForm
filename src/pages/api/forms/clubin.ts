@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { dbQuery, withTransaction } from "../db";
 import { verifyJwtFromCookies } from "../cookieManagement";
+import { decryptRequestBody } from "../lib/decrypt";
 
 const recentRequests = new Map<string, number>();
 
@@ -62,6 +63,14 @@ async function getAvailableSlots() {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === "POST") {
+      // Desencriptar el body si viene encriptado
+      const decryptResult = decryptRequestBody(req);
+      if (!decryptResult.success) {
+        return res.status(400).json({
+          notification: { type: "error", message: decryptResult.error || "Error al procesar los datos." },
+        });
+      }
+      
       const { date, talk } = req.body as { date?: string; talk?: string };
 
       const groupId = 1;

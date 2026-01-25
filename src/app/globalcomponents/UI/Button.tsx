@@ -19,6 +19,7 @@ type ButtonProps = {
   type?: ButtonType;
 
   spinOnClick?: boolean;
+  disabled?: boolean;
 
   show?: boolean;
   className?: string;
@@ -127,6 +128,7 @@ export default function Button({
   state = "active",
   type = "button",
   spinOnClick = true,
+  disabled = false,
   show = true,
   className = "",
   onClick,
@@ -145,7 +147,7 @@ export default function Button({
 
   if (!show) return null;
 
-  const isDisabled = state === "disabled" || state === "loading";
+  const isDisabled = state === "disabled" || state === "loading" || disabled;
   const t = themes[theme];
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {

@@ -1,29 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
 
 export default function PersonalForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/Data-Personal", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
+      const response = await encryptedFetch(
+        "/api/Data-Personal",
+        Object.fromEntries(formData.entries()) as Record<string, unknown>
+      );
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -66,13 +66,14 @@ export default function PersonalForm() {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
       <FormContainer onSubmit={handleFormSubmit} buttons={[
-         <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+         <Button key="submit" type="submit" variant="verde" size="md" state={isSubmitting ? "loading" : "active"} disabled={isSubmitting} className="w-full" theme="fifa">SIGUIENTE</Button>
       ]}>
         <Input
           type="text"
@@ -98,7 +99,5 @@ export default function PersonalForm() {
           label="Apellidos"
         />
       </FormContainer>
-      <ToastContainer />
-    </>
   );
 }

@@ -5,24 +5,28 @@ import ConfettiAnimation from "@/app/globalcomponents/UI/ConfettiAnimation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
+  const isVerified = useAuthCheck();
 
   useEffect(() => {
     document.body.classList.add("no-scroll");
 
-    // Mostrar el botón después de 5 segundos
+    // Mostrar el botón después de 3 segundos
     const timer = setTimeout(() => {
       setShowButton(true);
     }, 3000);
 
     return () => {
       document.body.classList.remove("no-scroll");
-      clearTimeout(timer); // Limpiar el temporizador al desmontar el componente
+      clearTimeout(timer);
     };
   }, []);
+
+  if (!isVerified) return null;
 
   const handleRestart = () => {
     router.push("/"); // Redirige a la ruta "/"
@@ -47,7 +51,7 @@ export default function Home() {
           pitazo final
         </h1>
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center mb-4 sm:mb-6 font-ea text-white px-4">
-          bienvenido a la familia
+          bienvenidx a la familia
         </h1>
 
         {showButton && (

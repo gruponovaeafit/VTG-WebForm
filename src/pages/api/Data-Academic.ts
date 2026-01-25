@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { dbQuery } from "./db"
 import { verify } from "jsonwebtoken";
 import { parse } from "cookie";
+import { decryptRequestBody } from "./lib/decrypt";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -15,6 +16,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+
+    // Desencriptar el body si viene encriptado
+    const decryptResult = decryptRequestBody(req);
+    if (!decryptResult.success) {
+      return res.status(400).json({
+        notification: { type: "error", message: decryptResult.error || "Error al procesar los datos." },
+      });
+    }
 
     // 1) Obtener las cookies
     const cookies = req.headers.cookie;

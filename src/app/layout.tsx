@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Press_Start_2P } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./styles/globals.css";
 
 const pressStart2P = Press_Start_2P({
@@ -31,6 +33,7 @@ export default function RootLayout({
       </head>
       <body className={`${pressStart2P.variable} antialiased`}>
         {children}
+        <ToastContainer />
         <SpeedInsights />
       </body>
     </html>

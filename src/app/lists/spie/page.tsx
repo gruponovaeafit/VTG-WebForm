@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
+import { toast } from "react-toastify";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_SPIE_TSS;
 
@@ -16,14 +17,14 @@ export default function SpiePage() {
   const handlePasswordSubmit = () => {
     if (!GLOBAL_PASSWORD) {
       console.error("La contraseña global no está configurada.");
-      alert("Error en la configuración del servidor.");
+      toast.error("Error en la configuración del servidor.", { position: "top-center", autoClose: 2000 });
       return;
     }
 
     if (password === GLOBAL_PASSWORD) {
       setAuthenticated(true);
     } else {
-      alert("Contraseña incorrecta");
+      toast.error("Contraseña incorrecta", { position: "top-center", autoClose: 2000 });
     }
   };
 

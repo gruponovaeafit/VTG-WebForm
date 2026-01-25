@@ -3,27 +3,12 @@
 import PersonalForm from "../globalcomponents/Forms/Form-Personal";
 import ConfettiAnimation from "../globalcomponents/UI/ConfettiAnimation";
 import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
 export default function Home() {
-  const router = useRouter();
+  const isVerified = useAuthCheck("/email");
 
-  useEffect(() => {
-    const checkCookie = async () => {
-      try {
-        const res = await fetch("/api/cookieCheck");
-        if (!res.ok) {
-          router.push("/email");
-        }
-      } catch (error) {
-        console.error("Error al verificar JWT:", error);
-        router.push("/email");
-      }
-    };
-
-    checkCookie();
-  }, [router]);
+  if (!isVerified) return null;
 
   return (
     <div

@@ -1,30 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
 
 export default function TutoresForm() {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/forms/tutores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
+      const response = await encryptedFetch(
+        "/api/forms/tutores",
+        Object.fromEntries(formData.entries()) as Record<string, unknown>
+      );
 
       const result = await response.json();
 
@@ -62,15 +62,16 @@ export default function TutoresForm() {
           autoClose: 1500,
         }
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
       <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
-          <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+          <Button key="submit" type="submit" variant="verde" size="md" state={isSubmitting ? "loading" : "active"} disabled={isSubmitting} className="w-full" theme="fifa">SIGUIENTE</Button>
         ]}
       >
         <div className="mb-4">
@@ -88,7 +89,5 @@ export default function TutoresForm() {
         </div>
         
       </FormContainer>
-      <ToastContainer />
-    </>
   );
 }

@@ -2,17 +2,33 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
+
+// Tipos para la respuesta de la API
+interface TimeSlot {
+  day_of_week: string;
+  start_time: string;
+  capacity: number;
+}
+
+interface SlotsApiResponse {
+  data?: TimeSlot[];
+  notification?: {
+    type: string;
+    message: string;
+  };
+}
+
+type DayOption = "Miercoles" | "Jueves" | "Viernes" | "";
 
 export default function Clubin1Form() {
   const router = useRouter();
-
-  // ✅ Arranca sin día seleccionado (y NO se autoselecciona)
-  const [selectedDay, setSelectedDay] = useState<"Miercoles" | "Jueves" | "Viernes" | "">("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedDay, setSelectedDay] = useState<DayOption>("");
   const [availableSlots, setAvailableSlots] = useState<{ [key: string]: string[] }>({});
 
   useEffect(() => {
@@ -21,7 +37,7 @@ export default function Clubin1Form() {
         const res = await fetch("/api/forms/clubin");
         if (!res.ok) throw new Error(`Error al obtener los datos. Status: ${res.status}`);
 
-        const data = await res.json();
+        const data: SlotsApiResponse = await res.json();
         if (!data || !Array.isArray(data.data)) {
           setAvailableSlots({});
           return;
@@ -29,12 +45,11 @@ export default function Clubin1Form() {
 
         const grouped: { [key: string]: string[] } = {};
 
-        data.data.forEach((slot: any) => {
+        data.data.forEach((slot) => {
           const day = slot.day_of_week;
           const time = slot.start_time;
           const cap = slot.capacity;
 
-          // ✅ Solo slots con cupo
           if (cap > 0) {
             if (!grouped[day]) grouped[day] = [];
             grouped[day].push(time);
@@ -53,9 +68,11 @@ export default function Clubin1Form() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     // ✅ Validación simple: obliga a escoger día (y por ende hora)
     if (!selectedDay) {
+      setIsSubmitting(false);
       toast.error("Selecciona un día para ver los horarios.", { position: "top-center", autoClose: 1200 });
       return;
     }
@@ -65,11 +82,10 @@ export default function Clubin1Form() {
     const payload = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("/api/forms/clubin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await encryptedFetch(
+        "/api/forms/clubin",
+        payload as Record<string, unknown>
+      );
 
       const result = await response.json();
 
@@ -98,14 +114,15 @@ export default function Clubin1Form() {
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const hasSlots = !!(selectedDay && availableSlots[selectedDay]?.length > 0);
 
   return (
-    <>
-      <FormContainer
+    <FormContainer
         onSubmit={handleFormSubmit}
         buttons={[
           <Button
@@ -113,7 +130,8 @@ export default function Clubin1Form() {
             type="submit"
             variant="verde"
             size="md"
-            state="active"
+            state={isSubmitting ? "loading" : "active"}
+            disabled={isSubmitting}
             className="w-full h-14 md:px-15"
             theme="fifa"
           >
@@ -133,7 +151,7 @@ export default function Clubin1Form() {
             labelColorClass="text-white"
             required
             value={selectedDay}
-            onChange={(e) => setSelectedDay(e.target.value as any)}
+            onChange={(e) => setSelectedDay(e.target.value as DayOption)}
             options={[
               { label: "Selecciona un día", value: "" }, // ✅ placeholder
               ...Object.keys(availableSlots).map((date) => ({
@@ -163,8 +181,5 @@ export default function Clubin1Form() {
           />
         </div>
       </FormContainer>
-
-      <ToastContainer />
-    </>
   );
 }

@@ -2,20 +2,22 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
 import FormContainer from "../UI/FormContainer";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
+import { encryptedFetch } from "@/lib/crypto";
 
 export default function EmailForm() {
   const router = useRouter();
   const [captcha, setCaptcha] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const captchaRef = useRef<ReCAPTCHA>(null);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     if (!captcha) {
       toast.error("Por favor completa el reCAPTCHA antes de enviar.", {
@@ -33,16 +35,13 @@ export default function EmailForm() {
     const formData = new FormData(formElement);
 
     try {
-      const response = await fetch("/api/Data-Email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await encryptedFetch(
+        "/api/Data-Email",
+        {
           token: captcha,
           ...Object.fromEntries(formData.entries()),
-        }),
-      });
+        }
+      );
 
       const result = await response.json();
 
@@ -104,16 +103,17 @@ export default function EmailForm() {
       });
       if (captchaRef.current) captchaRef.current.reset();
       setCaptcha(null);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <>
       <FormContainer 
       onSubmit={handleFormSubmit} 
     
       buttons={[
-        <Button key="submit" type="submit" variant="verde" size="md" state="active" className="w-full" theme="fifa">SIGUIENTE</Button>
+        <Button key="submit" type="submit" variant="verde" size="md" state={isSubmitting ? "loading" : "active"} disabled={isSubmitting} className="w-full" theme="fifa">SIGUIENTE</Button>
       ]}>
         <Input
           type="email"
@@ -136,7 +136,5 @@ export default function EmailForm() {
           </div>
         </div>
       </FormContainer>
-      <ToastContainer />
-    </>
   );
 }
