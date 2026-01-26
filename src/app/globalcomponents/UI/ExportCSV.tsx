@@ -6,26 +6,53 @@ type Column<T> = {
 };
 
 interface ExportCSVProps<T> {
-  data: T[];
+  data: T[] | Group<T>[];
   columns: Column<T>[];
   filename?: string;
   label?: string;
+
+  /** Opcional: nombre de la columna del grupo */
+  groupHeader?: string;
 }
+
+type Group<T> = {
+  group: string;
+  items: T[];
+};
 
 export default function ExportCSV<T>({
   data,
   columns,
   filename = "export.csv",
   label = "Exportar Excel (CSV)",
+  groupHeader = "Grupo",
 }: ExportCSVProps<T>) {
   const descargarCSV = () => {
-    if (!data?.length) return;
+    if (!data || !data.length) return;
 
-    const headers = columns.map((c) => c.header);
+    const isGrouped = typeof (data as any)[0]?.items !== "undefined";
 
-    const filas = data.map((row) =>
-      columns.map((c) => c.accessor(row) ?? "")
-    );
+    const headers = [
+      ...(isGrouped ? [groupHeader] : []),
+      ...columns.map((c) => c.header),
+    ];
+
+    const filas: (string | number)[][] = [];
+
+    if (isGrouped) {
+      (data as Group<T>[]).forEach((group) => {
+        group.items.forEach((row) => {
+          filas.push([
+            group.group,
+            ...columns.map((c) => c.accessor(row) ?? ""),
+          ]);
+        });
+      });
+    } else {
+      (data as T[]).forEach((row) => {
+        filas.push(columns.map((c) => c.accessor(row) ?? ""));
+      });
+    }
 
     const csvContent =
       "\uFEFF" +
