@@ -90,7 +90,7 @@ export default function NOVAForm() {
             label="¿A qué charla te gustaría asistir?"
             required
             options={[
-              { label: "Jue. enero 29, 12:00M - 2:00PM", value: "Jue. enero 29, 12:00M - 2:00PM" },
+              { label: "Jue. enero 29, 1:00M - 2:00PM", value: "Jue. enero 29, 12:00M - 2:00PM" },
               { label: "Jue. enero 29, 6:00PM - 7:00PM", value: "Jue. enero 29, 6:00PM - 7:00PM"},
               { label: "Mar. febrero 3, 6:00PM - 7:00PM", value: "Mar. febrero 3, 6:00PM - 7:00PM"},
             ]}
