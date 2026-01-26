@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
+import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_CLUBMERC_TSS;
 
@@ -92,6 +93,14 @@ export default function ClubmercPage() {
 
   // Agrupar todos los participantes para vista alternativa
   const allParticipants = data.flatMap((item: any) => item.participants || []);
+  // Preparar datos para exportar todos los participantes
+  const exportAllaiesec = allParticipants.map((p: any) => ({
+  correo: p.correo,
+  nombre: p.nombre,
+  pregrado: p.pregrado ?? "N/A",
+  semestre: p.semestre ?? "N/A",
+}));
+
 
   return (
     <div className="p-2 h-screen overflow-auto bg-black text-green-300 font-mono">
@@ -109,6 +118,17 @@ export default function ClubmercPage() {
         allParticipants.length > 0 ? (
           <div className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
             <h2 className="text-md font-semibold mb-1 text-cyan-400">Todos los participantes</h2>
+            <ExportCSV
+                          data={exportAllaiesec}
+                          filename="Clubmerc-todos-los-inscritos.csv"
+                          label="Descargar CSV"
+                          columns={[
+                            { header: "Correo", accessor: (r) => r.correo },
+                            { header: "Nombre", accessor: (r) => r.nombre },
+                            { header: "Pregrado", accessor: (r) => r.pregrado },
+                            { header: "Semestre", accessor: (r) => r.semestre },
+                          ]}
+                        />
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
               <Users className="h-5 w-5 text-green-500" />
               <span>Participantes: {allParticipants.length}</span>

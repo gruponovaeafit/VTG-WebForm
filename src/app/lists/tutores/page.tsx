@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
+import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_TUTORES_TSS;
 
@@ -120,6 +121,15 @@ export default function TutoresPage() {
       </div>
     );
   }
+  const exportAllTutores = data.flatMap((item: any) => 
+    (item.participants || []).map((p: any) => ({
+      correo: p.correo,
+      nombre: p.nombre,
+      pregrado: p.pregrado ?? "N/A",
+      semestre: p.semestre ?? "N/A",
+      inscrito_por: item.tutor ?? "N/A",
+    }))
+  );
 
   return (
     <div className="p-2 bg-black text-green-300 font-mono h-screen overflow-y-auto">
@@ -127,6 +137,17 @@ export default function TutoresPage() {
         <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">
           Tutores Dashboard
         </h1>
+        <ExportCSV
+            data={exportAllTutores}
+            filename="tutores-todos-los-inscritos.csv"
+            label="Descargar CSV"
+            columns={[
+              { header: "Correo", accessor: (r) => r.correo },
+              { header: "Nombre", accessor: (r) => r.nombre },
+              { header: "Pregrado", accessor: (r) => r.pregrado },
+              { header: "Semestre", accessor: (r) => r.semestre },
+            ]}
+          />
       </div>
 
       {data.map((tutor: { tutor: string; participants: any[] }) => {
