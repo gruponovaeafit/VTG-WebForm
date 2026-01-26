@@ -43,7 +43,28 @@ export default function GroupsForm() {
         return;
       }
 
-      if (result.redirectUrl) {
+      // Si hay una notificación, mostrarla primero
+      if (result.notification) {
+        const notificationType = result.notification.type === "error" ? toast.error : 
+                               result.notification.type === "info" ? toast.info : 
+                               toast.success;
+        
+        notificationType(result.notification.message, {
+          position: "top-center",
+          autoClose: result.notification.type === "error" ? 3000 : 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          onClose: () => {
+            // Redirigir después de que se cierre la notificación
+            if (result.redirectUrl) {
+              router.push(result.redirectUrl);
+            }
+          },
+        });
+      } else if (result.redirectUrl) {
+        // Si no hay notificación pero hay redirectUrl, redirigir inmediatamente
         router.push(result.redirectUrl);
       } else {
         toast.error("No se recibió una URL de redirección", {
