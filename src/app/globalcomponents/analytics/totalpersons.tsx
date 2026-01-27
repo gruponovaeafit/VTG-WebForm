@@ -36,7 +36,7 @@ export default function TotalInscriptions() {
     <div className="flex items-center justify-center mb-4">
       <Users className="h-6 w-6 mr-2" style={{ color: "#FE9A02" }} />
       <h2 className="text-xl font-ea" style={{ color: "#FFFFFF" }}>
-        Total de Inscritos
+        Total de Personas Inscritas
       </h2>
     </div>
 
