@@ -10,15 +10,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const pool = getPool();
 
     const result = await pool.query(`
-      SELECT pregrado, COUNT(*)::INTEGER as cantidad
+      SELECT pregrado, COUNT(*)::INTEGER AS cantidad
       FROM (
-        SELECT pregrado FROM persona WHERE pregrado IS NOT NULL
+        SELECT pregrado
+        FROM persona
+        WHERE pregrado IS NOT NULL
+          AND TRIM(pregrado) <> ''
+          AND LOWER(TRIM(pregrado)) NOT IN ('no aplica', 'n/a', 'na')
+    
         UNION ALL
-        SELECT pregrado_2 as pregrado FROM persona WHERE pregrado_2 IS NOT NULL
+    
+        SELECT pregrado_2 AS pregrado
+        FROM persona
+        WHERE pregrado_2 IS NOT NULL
+          AND TRIM(pregrado_2) <> ''
+          AND LOWER(TRIM(pregrado_2)) NOT IN ('no aplica', 'n/a', 'na')
       ) todas_carreras
       GROUP BY pregrado
       ORDER BY cantidad DESC
     `);
+    
+    
 
     res.status(200).json(result.rows);
   } catch (error: any) {
