@@ -26,8 +26,13 @@ export default function StudentsBySemester() {
   const fetchData = async () => {
     try {
       const response = await fetch("/api/analytics/semester");
-      const result: SemesterData[] = await response.json();
-      setData(result);
+      const raw: any[] = await response.json();
+      // Normalizar tipos por seguridad (aunque el API ya devuelve INTEGER)
+      const normalized: SemesterData[] = raw.map((item) => ({
+        semestre: Number(item.semestre),
+        cantidad: Number(item.cantidad),
+      }));
+      setData(normalized);
     } catch (error) {
       console.error("Error obteniendo datos:", error);
     }
@@ -45,6 +50,10 @@ export default function StudentsBySemester() {
     // Al desmontar el componente, limpiamos el intervalo
     return () => clearInterval(interval);
   }, []);
+
+  // Calcular dominio del eje Y para que crezca un poco por encima del máximo
+  const maxCantidad = data.length ? Math.max(...data.map((item) => item.cantidad)) : 0;
+  const yDomain: [number, number] = [0, maxCantidad > 0 ? maxCantidad + 2 : 1];
 
   return (
     <div className="p-6 rounded-lg shadow-lg bg-[#000072]">
@@ -84,22 +93,43 @@ export default function StudentsBySemester() {
       {data.length === 0 ? (
         <div className="flex items-center justify-center h-96">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-2 border-t-transparent mx-auto mb-4"
-                style={{ borderColor: "#FE9A02" }}></div>
+            <div
+              className="animate-spin rounded-full h-12 w-12 border-2 border-t-transparent mx-auto mb-4"
+              style={{ borderColor: "#FE9A02" }}
+            ></div>
             <p style={{ color: "#FFFFFF" }}>Cargando datos del gráfico...</p>
           </div>
         </div>
       ) : (
-        <ResponsiveContainer width="100%" height={435}>
-          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            data={data}
+            // Margen superior suficiente para que las etiquetas tipo \"top\" queden dentro del área
+            margin={{ top: 40, right: 30, left: 20, bottom: 5 }}
+          >
             <CartesianGrid stroke="#555555" strokeDasharray="3 3" />
-            <XAxis dataKey="semestre" stroke="#FFFFFF " tick={{ fill: "#FFFFFF", fontSize: 14 }} />
-            <YAxis stroke="#FFFFFF" tick={{ fill: "#FFFFFF", fontSize: 14 }} />
+            <XAxis
+              dataKey="semestre"
+              stroke="#FFFFFF "
+              tick={{ fill: "#FFFFFF", fontSize: 14 }}
+            />
+            <YAxis
+              stroke="#FFFFFF"
+              tick={{ fill: "#FFFFFF", fontSize: 14 }}
+              allowDecimals={false}
+              domain={yDomain}
+            />
             <Tooltip
               contentStyle={{ backgroundColor: "#222222", borderColor: "#FE9A02", color: "#FFFFFF" }}
             />
             <Bar dataKey="cantidad" fill="#FE9A02">
-              <LabelList dataKey="cantidad" position="top" fill="#FFFFFF" fontSize={14} />
+              <LabelList
+                dataKey="cantidad"
+                // Igual que en \"Inscritos por Grupo Estudiantil\": etiqueta sobre la barra
+                position="top"
+                fill="#FFFFFF"
+                fontSize={14}
+              />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

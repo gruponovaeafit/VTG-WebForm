@@ -10,8 +10,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const pool = getPool();
 
     // 🔍 Consulta para contar estudiantes por semestre
+    // Se castea a INTEGER para que el frontend reciba números reales, no strings
     const result = await pool.query(`
-      SELECT semestre, COUNT(*) as cantidad
+      SELECT semestre::INTEGER AS semestre, COUNT(*)::INTEGER AS cantidad
       FROM persona
       WHERE semestre IS NOT NULL
       GROUP BY semestre

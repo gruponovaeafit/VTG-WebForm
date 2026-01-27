@@ -60,6 +60,15 @@ export default function GroupInscriptionsChart() {
     return () => clearInterval(interval);
   }, []);
 
+  // Cálculos derivados
+  const totalRegistros = data.reduce(
+    (sum, item) => sum + Number(item.cantidad || 0),
+    0
+  );
+
+  const promedioPorGrupo =
+    data.length === 0 ? 0 : totalRegistros / data.length;
+
   return (
     <div className="p-6 rounded-lg shadow-lg bg-[#000072]">
       <div className="flex items-center space-x-3">
@@ -86,18 +95,50 @@ export default function GroupInscriptionsChart() {
       </div>
 
       {/* Estadísticas de grupos */}
-      <div className="grid grid-cols-1 gap-1 mb-2">
-        <div className="text-center p-1 rounded-lg border" style={{ borderColor: COLORS.grid, backgroundColor: "rgba(255, 255, 255, 0.05)" }}>
-          <p className="text-xs opacity-75" style={{ color: COLORS.text }}>Promedio/Grupo</p>
-          <p className="text-lg font-bold" style={{ color: "#FE9A02" }}>
-            {(() => {
-              if (data.length === 0) return 0;
-              const total = data.reduce((sum, item) => sum + Number(item.cantidad), 0);
-              const promedio = total / data.length;
-              // Si el promedio tiene decimales significativos, mostrar 1 decimal
-              // Si es un número entero o muy cercano, mostrar sin decimales
-              return promedio % 1 === 0 ? Math.round(promedio) : promedio.toFixed(1);
-            })()}
+      <div className="grid grid-cols-2 gap-2 mb-2">
+        {/* Total de inscripciones en grupos (suma de registros) */}
+        <div
+          className="text-center p-1 rounded-lg border"
+          style={{
+            borderColor: COLORS.grid,
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+          }}
+        >
+          <p
+            className="text-xs opacity-75"
+            style={{ color: COLORS.text }}
+          >
+            Total Inscritos en Grupos
+          </p>
+          <p
+            className="text-lg font-bold"
+            style={{ color: "#FE9A02" }}
+          >
+            {totalRegistros}
+          </p>
+        </div>
+
+        {/* Promedio por grupo */}
+        <div
+          className="text-center p-1 rounded-lg border"
+          style={{
+            borderColor: COLORS.grid,
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+          }}
+        >
+          <p
+            className="text-xs opacity-75"
+            style={{ color: COLORS.text }}
+          >
+            Promedio/Grupo
+          </p>
+          <p
+            className="text-lg font-bold"
+            style={{ color: "#FE9A02" }}
+          >
+            {promedioPorGrupo % 1 === 0
+              ? Math.round(promedioPorGrupo)
+              : promedioPorGrupo.toFixed(1)}
           </p>
         </div>
       </div>

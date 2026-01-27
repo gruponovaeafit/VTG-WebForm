@@ -25,8 +25,13 @@ export default function UsersByDate() {
   const fetchData = async () => {
     try {
       const response = await fetch("/api/analytics/days");
-      const result: DateData[] = await response.json();
-      setData(result);
+      const raw: any[] = await response.json();
+      // Normalizar tipos: asegurar que cantidad sea numérica
+      const normalized: DateData[] = raw.map((item) => ({
+        fecha: item.fecha,
+        cantidad: Number(item.cantidad),
+      }));
+      setData(normalized);
     } catch (error) {
       console.error("Error obteniendo datos:", error);
     }
@@ -76,18 +81,14 @@ export default function UsersByDate() {
           <p className="text-xs opacity-75" style={{ color: "#FFFFFF" }}>Mejor Día</p>
           <p className="text-sm font-bold" style={{ color: "#FE9A02" }}>
             {(() => {
-              if (!Array.isArray(data) || data.length === 0) return 0;
+              if (!Array.isArray(data) || data.length === 0) return "N/A";
 
-              let max = typeof data[0]?.cantidad === 'number' ? data[0].cantidad : 0;
+              const best = data.reduce(
+                (max, item) => (item.cantidad > max.cantidad ? item : max),
+                data[0]
+              );
 
-              for (let i = 1; i < data.length; i++) {
-                const item = data[i];
-                if (item && typeof item.cantidad === 'number' && item.cantidad > max) {
-                  max = item.cantidad;
-                }
-              }
-
-              return max;
+              return new Date(best.fecha).toLocaleDateString();
             })()}
           </p>
         </div>
