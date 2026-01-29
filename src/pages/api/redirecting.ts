@@ -140,6 +140,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       );
 
       if (checkResult.rows.length > 0) {
+        if (config.tabla === "nova") {
+          return res.status(200).json({ redirectUrl: "/assessmentassistance" });
+        }
+
         return res.status(400).json({
           notification: {
             type: "error",
@@ -164,4 +168,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   res.setHeader("Allow", ["POST"]);
   res.status(405).end(`Method ${req.method} Not Allowed`);
 }
-

@@ -1,21 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { connect, VarChar, config as SqlConfig } from "mssql";
-import type { ConnectionPool } from "mssql";
-import { parse } from "cookie";
-import jwt from "jsonwebtoken";
+import { verifyJwtFromCookies } from "./cookieManagement";
 import { decryptRequestBody } from "@/lib/decrypt";
-
-const config: SqlConfig = {
-  user: process.env.DB_USER as string,
-  password: process.env.DB_PASS as string,
-  database: process.env.DB_NAME as string,
-  server: process.env.DB_SERVER as string,
-  port: parseInt(process.env.DB_PORT ?? "1433", 10),
-  options: {
-    encrypt: true,
-    trustServerCertificate: false,
-  },
-};
+import { dbQuery } from "./db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -26,8 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
   }
-
-  let pool: ConnectionPool | null = null;
 
   try {
     // Desencriptar el body si viene encriptado
@@ -41,50 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // 1) Extraemos los campos del body (SIN token)
     const { foodRestrictions, healthConsiderations } = req.body;
 
-    // 2) Obtener email desde la cookie (jwtToken)
-    const { cookie } = req.headers;
-    if (!cookie) {
-      return res.status(401).json({
-        notification: {
-          type: "error",
-          message: "No se encontró cookie en la petición.",
-        },
-      });
-    }
-
-    const parsedCookies = parse(cookie);
-    const jwtToken = parsedCookies.jwtToken;
-    if (!jwtToken) {
-      return res.status(401).json({
-        notification: {
-          type: "error",
-          message: "No se encontró jwtToken en las cookies.",
-        },
-      });
-    }
-
-    // Decodificar el JWT para extraer el correo
-    let decoded;
-    try {
-      decoded = jwt.verify(jwtToken, process.env.JWT_SECRET_KEY as string) as { email: string };
-    } catch (error) {
-      return res.status(401).json({
-        notification: {
-          type: "error",
-          message: "JWT inválido o expirado.",
-        },
-      });
-    }
-
-    const email = decoded.email;
-    if (!email) {
-      return res.status(401).json({
-        notification: {
-          type: "error",
-          message: "No se pudo obtener el email del JWT.",
-        },
-      });
-    }
+    const email = verifyJwtFromCookies(req, res);
+    if (!email) return;
 
     // Validar que los campos existan
     if (!foodRestrictions || !healthConsiderations) {
@@ -96,36 +38,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // 3) Conexión a la base de datos
-    pool = await connect(config);
+    const existing = await dbQuery<{ correo: string }>(
+      "SELECT correo FROM assessment_nova WHERE correo = $1 LIMIT 1",
+      [email]
+    );
 
-    // 4) Revisar si ya existe un registro en assessment_nova con ese correo
-    const existing = await pool.request()
-      .input("correo", VarChar, email)
-      .query("SELECT correo FROM assessment_nova WHERE correo = @correo");
-
-    // 5) Si existe => UPDATE, si no => INSERT
-    if (existing.recordset.length > 0) {
-      await pool.request()
-        .input("correo", VarChar, email)
-        .input("restriccion", VarChar, foodRestrictions)
-        .input("salud", VarChar, healthConsiderations)
-        .query(`
-          UPDATE assessment_nova
-          SET restriccion_alimentaria = @restriccion,
-              consideracion_salud = @salud
-          WHERE correo = @correo
-        `);
+    if (existing.rows.length > 0) {
+      await dbQuery(
+        `UPDATE assessment_nova
+         SET restriccion_alimentaria = $1,
+             consideracion_salud = $2
+         WHERE correo = $3`,
+        [foodRestrictions, healthConsiderations, email]
+      );
     } else {
-      await pool.request()
-        .input("correo", VarChar, email)
-        .input("restriccion", VarChar, foodRestrictions)
-        .input("salud", VarChar, healthConsiderations)
-        .query(`
-          INSERT INTO assessment_nova (correo, asistencia, restriccion_alimentaria, consideracion_salud)
-          VALUES (@correo, 'Si', @restriccion, @salud)
-        `);
-      // Ajusta 'asistencia' según la lógica que manejes (por ejemplo 'Si' / 'No'). 
+      await dbQuery(
+        `INSERT INTO assessment_nova (correo, asistencia, restriccion_alimentaria, consideracion_salud)
+         VALUES ($1, $2, $3, $4)`,
+        [email, true, foodRestrictions, healthConsiderations]
+      );
     }
 
     // 6) Devolver resultado y la ruta para redirigir
@@ -145,8 +76,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
   } finally {
-    if (pool) {
-      pool.close();
-    }
+    // dbQuery maneja el pool internamente
   }
 }

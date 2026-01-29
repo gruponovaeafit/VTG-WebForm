@@ -1,20 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { connect, VarChar, config as SqlConfig } from "mssql";
-import type { ConnectionPool } from "mssql";
-import { verifyJwtFromCookies } from "./cookieManagement"; // <-- Ajusta la ruta a tu helper
+import { verifyJwtFromCookies } from "./cookieManagement";
 import { decryptRequestBody } from "@/lib/decrypt";
-
-const config: SqlConfig = {
-  user: process.env.DB_USER as string,
-  password: process.env.DB_PASS as string,
-  database: process.env.DB_NAME as string,
-  server: process.env.DB_SERVER as string,
-  port: parseInt(process.env.DB_PORT ?? "1433", 10),
-  options: {
-    encrypt: true,
-    trustServerCertificate: false,
-  },
-};
+import { dbQuery } from "./db";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -25,8 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
   }
-
-  let pool: ConnectionPool | null = null;
 
   try {
     // Desencriptar el body si viene encriptado
@@ -51,7 +36,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 2) Verificar que "talk" sea válido
-    if (!talk || !["Si", "No"].includes(talk)) {
+    const normalizedTalk = String(talk ?? "").trim().toLowerCase();
+    const asistencia =
+      normalizedTalk === "si" || normalizedTalk === "sí" ? true :
+      normalizedTalk === "no" ? false :
+      null;
+
+    if (asistencia === null) {
       return res.status(400).json({
         notification: {
           type: "error",
@@ -60,36 +51,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    // 3) Conexión a BD
-    pool = await connect(config);
+    const existing = await dbQuery<{ correo: string }>(
+      "SELECT correo FROM assessment_nova WHERE correo = $1 LIMIT 1",
+      [email]
+    );
 
-    // 4) Revisar si ya existe un registro en assessment_nova con ese correo
-    const existing = await pool.request()
-      .input("correo", VarChar, email)
-      .query("SELECT correo FROM assessment_nova WHERE correo = @correo");
-
-    // 5) Si existe => UPDATE, si no => INSERT
-    if (existing.recordset.length > 0) {
-      await pool.request()
-        .input("correo", VarChar, email)
-        .input("asistencia", VarChar, talk)
-        .query(`
-          UPDATE assessment_nova
-          SET asistencia = @asistencia
-          WHERE correo = @correo
-        `);
+    if (existing.rows.length > 0) {
+      await dbQuery(
+        "UPDATE assessment_nova SET asistencia = $1 WHERE correo = $2",
+        [asistencia, email]
+      );
     } else {
-      await pool.request()
-        .input("correo", VarChar, email)
-        .input("asistencia", VarChar, talk)
-        .query(`
-          INSERT INTO assessment_nova (correo, asistencia)
-          VALUES (@correo, @asistencia)
-        `);
+      await dbQuery(
+        "INSERT INTO assessment_nova (correo, asistencia) VALUES ($1, $2)",
+        [email, asistencia]
+      );
     }
 
     // 6) Decidir la ruta de redirección según la respuesta
-    const redirectUrl = talk === "Si" ? "/assessment" : "/90+1";
+    const redirectUrl = asistencia ? "/assessment" : "/90+1";
 
     return res.status(200).json({
       notification: {
@@ -107,8 +87,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
   } finally {
-    if (pool) {
-      await pool.close();
-    }
+    // dbQuery maneja el pool internamente
   }
 }
