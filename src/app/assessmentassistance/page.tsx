@@ -1,8 +1,8 @@
 "use client";
 
 import AssessmentAssistanceForm from "../globalcomponents/Forms/Form-AssessmentAssistance";
-import PixelsAnimation from "../globalcomponents/UI/Pixels_animation";
-import Image from "next/image";
+import ConfettiAnimation from "@/app/globalcomponents/UI/LazyConfetti";
+import Footer_NOVA_blanco from "../globalcomponents/UI/Footer_NOVA_blanco";
 import { useEffect } from "react";
 import { useAuthCheck } from "@/app/hooks/useAuthCheck";
 
@@ -20,38 +20,47 @@ export default function Home() {
 
   return (
     <div
-      className="relative flex flex-col justify-center items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-black text-white overflow-hidden"
+      className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-[#594EB7] text-black"
       style={{
-        backgroundImage: "url('/nova.svg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      {/* Animación de píxeles */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <PixelsAnimation />
+      <img
+        src="/NOVA_ManchaTop.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute left-0 top-0 z-0 w-[220px] h-auto
+         sm:w-[760px] 
+         md:w-[600px]"
+      />
+      <img
+        src="/NOVA_ManchaBottom.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none select-none absolute bottom-0 right-0 z-0 w-[280px] h-auto
+        sm:w-[620px]
+        md:w-[700px]"
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <ConfettiAnimation />
       </div>
 
-      {/* Contenido principal */}
-      <main className="relative z-10 flex flex-col gap-8 items-center text-center">
-        <h1 className="text-3xl md:text-3xl mb-6 pixel-font text-white glitch_NOVA">
-          Assessment NOVA
-        </h1>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-[500px] px-4 flex flex-col items-center text-center">
+        <div className="flex flex-col gap-0 mb-4">
+          <h1 className="text-3xl font-ea text-white">Assessment</h1>
+          <h2 className="text-5xl font-ea text-white">NOVA</h2>
+        </div>
 
+        <div className="-mt-3 sm:-mt-5 w-full flex justify-center">
+          <AssessmentAssistanceForm />
+        </div>
 
-        <AssessmentAssistanceForm />
-
-        <footer className="flex items-center justify-center relative z-10">
-                      <Image
-                                src="/PoweredByLOVE.svg"
-                                alt="Powered By NOVA"
-                                className="w-40 h-10"
-                                width={240} // Equivalent to w-40
-                                height={120} // Equivalent to h-20
-                      />
-                </footer>
-
-      </main>
+        <div className="flex justify-center w-full mt-8 sm:mt-0 md:mt-20">
+          <Footer_NOVA_blanco />
+        </div>
+      </div>
       
     </div>
   );

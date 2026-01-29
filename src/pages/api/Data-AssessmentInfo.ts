@@ -134,7 +134,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         type: "success",
         message: "Información guardada con éxito.",
       },
-      redirectUrl: "/talk_animation", // Ajusta la ruta que necesites
+      redirectUrl: "/talk",
     });
   } catch (error) {
     console.error("Error en el servidor:", error);

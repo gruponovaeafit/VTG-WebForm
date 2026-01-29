@@ -102,7 +102,7 @@ export default function AssessmentForm() {
             placeholder="Cuéntanos acá"
             borderColorClass="border-purple-600"
             focusRingColorClass="focus:ring-purple-700"
-            labelColorClass="text-purple-600"
+            labelColorClass="text-white"
             label="¿Cuentas con alguna preferencia o restricción en tu alimentación?"
           />
         </div>
@@ -117,7 +117,7 @@ export default function AssessmentForm() {
             placeholder="Cuéntanos acá"
             borderColorClass="border-purple-600"
             focusRingColorClass="focus:ring-purple-700"
-            labelColorClass="text-purple-600"
+            labelColorClass="text-white"
             label="¿Existe alguna consideración de salud o movilidad que te gustaría compartir para garantizar tu comodidad y seguridad durante las actividades?"
           />
         </div>
