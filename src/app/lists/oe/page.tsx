@@ -15,6 +15,17 @@ export default function OePage() {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [groupByDate, setGroupByDate] = useState<boolean>(false);
 
+  const formatDate = (value: any) => {
+    if (!value) return "N/A";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "N/A";
+    return new Intl.DateTimeFormat("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }).format(date);
+  };
+
   const handlePasswordSubmit = () => {
     if (!GLOBAL_PASSWORD) {
       console.error("La contraseña global no está configurada.");
@@ -113,13 +124,14 @@ export default function OePage() {
   // Agrupar todos los participantes para vista alternativa
   const allParticipants = data.flatMap((item: any) => item.participants || []);
    // Preparar datos para exportar todos los participantes
- const exportAllaiesec = data.flatMap((item: any) => 
+  const exportAllaiesec = data.flatMap((item: any) => 
   (item.participants || []).map((p: any) => ({
     correo: p.correo,
     nombre: p.nombre,
     pregrado: p.pregrado ?? "N/A",
     semestre: p.semestre ?? "N/A",
     asistencia: item.charla ?? "N/A",
+    fecha_inscripcion: formatDate(p.fecha_inscripcion),
   }))
 );
 
@@ -153,6 +165,7 @@ export default function OePage() {
                                         { header: "Pregrado", accessor: (r) => r.pregrado },
                                         { header: "Semestre", accessor: (r) => r.semestre },
                                         { header: "asistencia", accessor: (r) => r.asistencia },
+                                        { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
                                       ]}
                                     />
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
@@ -164,6 +177,7 @@ export default function OePage() {
                 <tr className="bg-gray-700 text-yellow-300">
                   <th className="border border-green-500 px-2 py-1">Correo</th>
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -171,6 +185,7 @@ export default function OePage() {
                   <tr key={`${p.correo}-${i}`} className="hover:bg-gray-800">
                     <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -200,6 +215,7 @@ export default function OePage() {
                     <th className="border border-green-500 px-2 py-1">Nombre</th>
                     <th className="border border-green-500 px-2 py-1">Pregrado</th>
                     <th className="border border-green-500 px-2 py-1">Semestre</th>
+                    <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -209,6 +225,7 @@ export default function OePage() {
                       <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{formatDate(participant.fecha_inscripcion)}</td>
                     </tr>
                   ))}
                 </tbody>
