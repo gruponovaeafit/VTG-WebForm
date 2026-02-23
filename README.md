@@ -55,7 +55,7 @@ Este documento está pensado para los nuevos miembros de **Grupo NOVA**, por lo 
 Antes de empezar, asegúrate de tener instalado en tu máquina:
 
 - **Node.js** versión 22 o superior (recomendada la LTS).  
-- **pnpm** como gestor de paquetes (lo usamos en lugar de npm por su velocidad y eficiencia).  
+- **npm** como gestor de paquetes (Puedes usar pnpm para que sea mas rapido).  
 - **Git** para clonar el repositorio.  
 - **Docker** y **Docker Compose** (opcional, solo si quieres levantar una base de datos local en lugar de usar Supabase).  
 - Conocimientos básicos de:
