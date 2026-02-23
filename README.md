@@ -71,25 +71,17 @@ Si aún no dominas alguno de estos temas, no te preocupes: con la práctica irá
 
 ## 📁 Estructura del proyecto
 
-A continuación se muestra la organización de carpetas y archivos principales. No te asustes, es más sencillo de lo que parece.
-VTG-WebForm/
-├── public/ # Archivos estáticos (imágenes, fuentes)
-├── scripts/ # Utilidades, ej: optimización de imágenes
+vtg-webform/
+│
+├── public/                # Assets (imágenes, logos, fuentes)
+├── scripts/               # Scripts auxiliares
 ├── src/
-│ ├── app/ # Rutas de la aplicación (App Router de Next.js)
-│ │ ├── (carpetas por ruta) ej: email, home, academic, groupslist, groups/
-│ │ ├── globalcomponents/ # Componentes compartidos (Forms, UI, Info, analytics)
-│ │ ├── hooks/ # Custom hooks (ej: useAuthCheck)
-│ │ └── styles/ # Estilos globales (CSS + Tailwind)
-│ ├── lib/ # Utilidades de encriptación (crypto, decrypt)
-│ └── pages/api/ # API routes (backend dentro de Next.js)
-├── .env.local (ejemplo) # Variables de entorno (no versionado)
-├── docker-compose.yaml # Para levantar MySQL local (no es la DB principal)
-├── init.sql # Script inicial para MySQL (no usado actualmente)
-├── next.config.ts # Configuración de Next.js
-├── package.json # Dependencias y scripts
-├── pnpm-lock.yaml # Lockfile de pnpm
-├── postcss.config.mjs # Configuración de PostCSS (para Tailwind)
-├── tailwind.config.ts # Configuración de Tailwind CSS
-├── tsconfig.json # Configuración de TypeScript
-└── README.md # Este archivo 
+│   ├── app/               # Frontend (App Router)
+│   ├── pages/api/         # Backend (API routes)
+│   ├── lib/               # Utilidades (crypto, decrypt)
+│   └── fonts/             # Tipografías
+│
+├── docker-compose.yaml    # Base de datos (MySQL + phpMyAdmin)
+├── init.sql               # Inicialización de DB
+├── package.json           # Dependencias
+└── README.md
