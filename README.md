@@ -85,3 +85,53 @@ vtg-webform/
 ├── init.sql               # Script de inicialización de base de datos
 ├── package.json           # Dependencias y scripts del proyecto
 └── README.md              # Documentación principal
+
+
+
+
+
+
+
+**Nota:** El archivo `docker-compose.yaml` levanta una base de datos MySQL, pero **nuestro proyecto usa PostgreSQL (Supabase)**. Lo dejamos por si alguien quiere probar con MySQL local, pero la configuración activa apunta a Supabase.
+
+---
+
+## 🧩 Módulos principales
+
+### 4.1 Páginas y enrutamiento (App Router)
+
+Todas las rutas están en `src/app/`. Cada subcarpeta representa una ruta:
+
+- `/` → página de inicio con animación de confeti y redirección automática a `/email`.
+- `/email` → formulario de correo institucional con reCAPTCHA.
+- `/home` → formulario de datos personales (nombre y apellidos).
+- `/academic` → formulario de datos académicos (pregrado, segundo pregrado, semestre).
+- `/groupslist` → selector de grupo estudiantil.
+- `/groups/[grupo]` → formulario específico de cada grupo (ej: `/groups/aiesec`).
+- `/90+1` → página final después de inscribirse a un grupo (con animación).
+- `/analytics` → dashboard de estadísticas (requiere contraseña global).
+- `/lists/[grupo]` → listado de inscritos por grupo (cada uno con su propia contraseña).
+- `/assessment`, `/assessmentassistance`, `/talk`, `/talk_animation` → páginas para el proceso de assessment de NOVA (otro flujo).
+
+Cada página es un componente de React (`page.tsx`) que puede incluir lógica de autenticación, formularios y animaciones.
+
+### 4.2 Formularios de grupos
+
+Los formularios específicos de cada grupo se encuentran en `src/app/globalcomponents/Forms/` y tienen nombres como `Form-Aiesec.tsx`, `Form-NOVA.tsx`, etc. Todos siguen una estructura similar:
+
+- Importan `FormContainer`, `Select`, `Input`, `Button` de `@/app/globalcomponents/UI`.
+- Usan el hook `useState` para manejar el estado de envío.
+- Al enviar, llaman a `encryptedFetch` (ver sección 4.8) para enviar los datos a la API correspondiente (ej: `/api/forms/aiesec`).
+- Muestran notificaciones con `react-toastify`.
+- Redirigen a `/90+1` en caso de éxito (excepto algunos grupos que redirigen a otro lado).
+
+**Ejemplo mínimo de un formulario de grupo:**
+
+```tsx
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  const formData = new FormData(e.currentTarget);
+  const response = await encryptedFetch('/api/forms/aiesec', Object.fromEntries(formData));
+  // manejo de respuesta...
+};
