@@ -73,15 +73,15 @@ Si aún no dominas alguno de estos temas, no te preocupes: con la práctica irá
 
 vtg-webform/
 │
-├── public/                # Assets (imágenes, logos, fuentes)
-├── scripts/               # Scripts auxiliares
+├── public/                # Assets estáticos (imágenes, logos, fuentes)
+├── scripts/               # Scripts auxiliares y automatizaciones
 ├── src/
-│   ├── app/               # Frontend (App Router)
-│   ├── pages/api/         # Backend (API routes)
-│   ├── lib/               # Utilidades (crypto, decrypt)
-│   └── fonts/             # Tipografías
+│   ├── app/               # Frontend (Next.js App Router)
+│   ├── pages/api/         # Backend (API Routes)
+│   ├── lib/               # Utilidades (ej: crypto, decrypt)
+│   └── fonts/             # Tipografías personalizadas
 │
-├── docker-compose.yaml    # Base de datos (MySQL + phpMyAdmin)
-├── init.sql               # Inicialización de DB
-├── package.json           # Dependencias
-└── README.md
+├── docker-compose.yaml    # Configuración de servicios (MySQL + phpMyAdmin)
+├── init.sql               # Script de inicialización de base de datos
+├── package.json           # Dependencias y scripts del proyecto
+└── README.md              # Documentación principal
