@@ -25,11 +25,6 @@
    - [5.1 Clonar el repositorio](#51-clonar-el-repositorio)  
    - [5.2 Configurar variables de entorno](#52-configurar-variables-de-entorno)  
    - [5.3 Instalar dependencias](#53-instalar-dependencias)  
-   - [5.4 Inicializar la base de datos](#54-inicializar-la-base-de-datos)  
-   - [5.5 Ejecutar en modo desarrollo](#55-ejecutar-en-modo-desarrollo)  
-   - [5.6 Verificar que todo funciona](#56-verificar-que-todo-funciona)  
-6. [Solución de problemas comunes](#solución-de-problemas-comunes)  
-7. [Contacto y contribución](#contacto-y-contribución)  
 
 ---
 
@@ -121,7 +116,6 @@ Los formularios específicos de cada grupo se encuentran en `src/app/globalcompo
 - Redirigen a `/90+1` en caso de éxito (excepto algunos grupos que redirigen a otro lado).
 
 **Ejemplo mínimo de un formulario de grupo:**
-
 ```tsx
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -130,96 +124,89 @@ const handleSubmit = async (e) => {
   const response = await encryptedFetch('/api/forms/aiesec', Object.fromEntries(formData));
   // manejo de respuesta...
 };
+```
+
+### 4.3 Formulario de correo y datos personales/académicos
+
+- **Form-Email.tsx**: pide correo institucional y verifica reCAPTCHA. Se comunica con `/api/Data-Email`. Si el usuario ya existe, redirige según su progreso; si no, lo crea y redirige a `/home`. Genera un JWT y lo guarda en cookie HttpOnly.
+- **Form-Personal.tsx**: envía nombre y apellidos a `/api/Data-Personal`.
+- **Form-Academic.tsx**: envía pregrado, segundo pregrado y semestre a `/api/Data-Academic`.
+
+Estos formularios comparten la misma estructura básica que los de grupo.
+
+---
+
+### 4.4 Panel de análisis (analytics)
+
+Ruta: `/analytics`. Protegido por la variable `NEXT_PUBLIC_ANALY_TSS`. Muestra el componente `<Dashboard />` con varios subcomponentes:
+
+- `career.tsx` – Inscritos por carrera.
+- `days.tsx` – Inscritos por día.
+- `groups.tsx` – Inscritos por grupo estudiantil.
+- `hours.tsx` – Inscritos por hora del día.
+- `semester.tsx` – Inscritos por semestre.
+- `top-group.tsx` – Grupo con más inscritos.
+- `totalpersons.tsx` – Total de personas registradas.
+
+Todos obtienen datos de los endpoints `/api/analytics/*` y se actualizan cada 5 segundos con `setInterval`.
 
 
-4.3 Formulario de correo y datos personales/académicos
-Form-Email.tsx: pide el correo institucional y verifica reCAPTCHA. Al enviar, se comunica con /api/Data-Email. Si el usuario ya existe, redirige según su progreso; si no, lo crea y redirige a /home. Además, genera un JWT y lo guarda en una cookie HttpOnly.
+### 4.5 Paneles de listas (lists)
 
-Form-Personal.tsx: envía nombre y apellidos a /api/Data-Personal.
+Ruta: `/lists/[grupo]` (ej. `/lists/aiesec`). Cada grupo tiene su propia página, protegida por contraseñas individuales (`NEXT_PUBLIC_AIESEC_TSS`, `NEXT_PUBLIC_NOVA_TSS`, etc.). Consultan su endpoint `/api/lists/[grupo]` y muestran los datos en tablas, con opción de exportar a CSV y cambiar entre vista agrupada y lista plana.
 
-Form-Academic.tsx: envía pregrado, segundo pregrado y semestre a /api/Data-Academic.
+---
 
-Estos formularios son los primeros pasos del flujo principal y comparten la misma estructura básica que los formularios de grupo.
+### 4.6 Autenticación (JWT + cookies)
 
-4.4 Panel de análisis (analytics)
-Ruta: /analytics. Muestra gráficos y estadísticas globales de las inscripciones. Está protegido por una contraseña fija definida en la variable de entorno NEXT_PUBLIC_ANALY_TSS. Una vez autenticado, se muestra el componente <Dashboard /> que contiene varios subcomponentes:
+Se usa **JWT** almacenado en cookie **HttpOnly** llamada `jwtToken`. Esto protege contra XSS.
 
-career.tsx: gráfico de inscritos por carrera (usando recharts).
+- **Generación**: en `/api/Data-Email` (y otros endpoints) se firma el JWT con `JWT_SECRET_KEY` y se envía mediante `Set-Cookie`.
+- **Verificación en cliente**: el hook `useAuthCheck` (en `hooks/useAuthCheck.ts`) llama a `/api/cookieCheck`. Si no es válido, redirige a `/`.
+- **Verificación en servidor**: muchos endpoints usan `verifyJwtFromCookies` (en `cookieManagement.ts`) para extraer y verificar el token, devolviendo el email.
 
-days.tsx: inscritos por día.
+La cookie tiene una duración corta (12 minutos) pero se renueva en cada paso.
 
-groups.tsx: inscritos por grupo estudiantil.
 
-hours.tsx: inscritos por hora del día.
+### 4.7 API routes
 
-semester.tsx: inscritos por semestre.
+Todas las rutas están en `src/pages/api/`. Principales endpoints:
 
-top-group.tsx: grupo con más inscritos.
+- `Data-Email.ts`, `Data-Personal.ts`, `Data-Academic.ts` – manejan los pasos iniciales.
+- `forms/[grupo].ts` – reciben datos de formularios de grupos e insertan en la tabla correspondiente (con `ON CONFLICT` para evitar duplicados).
+- `analytics/*.ts` – devuelven datos agregados para gráficos.
+- `lists/[grupo].ts` – devuelven registros de cada grupo con joins a `persona`.
+- `redirecting.ts` – recibe el grupo seleccionado, verifica si ya está inscrito y redirige al formulario correspondiente.
+- `cookieCheck.ts` – verifica validez del JWT.
+- `authMiddleware.ts` – ejemplo de middleware (no usado actualmente).
 
-totalpersons.tsx: total de personas registradas.
+---
 
-Todos estos componentes obtienen datos de los endpoints de la API (ej: /api/analytics/days, /api/analytics/groups, etc.) y se actualizan automáticamente cada 5 segundos mediante setInterval.
+### 4.8 Utilidades de encriptación
 
-4.5 Paneles de listas (lists)
-Ruta: /lists/[grupo] (ej: /lists/aiesec). Cada grupo tiene su propia página que muestra la lista de personas inscritas, agrupada por algún criterio (departamento, horario, comité, etc.). También están protegidas por contraseñas individuales definidas en variables de entorno como NEXT_PUBLIC_AIESEC_TSS, NEXT_PUBLIC_NOVA_TSS, etc.
+`src/lib/crypto.ts` y `src/lib/decrypt.ts` implementan encriptación híbrida RSA + AES.
 
-Cada página consulta su correspondiente endpoint en /api/lists/[grupo] y muestra los datos en tablas. Incluye un botón para exportar a CSV y un botón para cambiar entre vista agrupada y lista plana.
+- **Cliente (`crypto.ts`)**: genera una clave AES aleatoria, encripta los datos con AES‑CBC, luego encripta la clave AES con la clave pública RSA (`NEXT_PUBLIC_RSA_PUBLIC_KEY`). Envía `{ encryptedKey, encryptedData, iv }`.
+- **Servidor (`decrypt.ts`)**: desencripta la clave AES con la clave privada RSA (`RSA_PRIVATE_KEY`), luego desencripta los datos con AES. El helper `getRequestBody` desencripta automáticamente si el header `X-Encrypted` está presente.
 
-4.6 Autenticación (JWT + cookies)
-La autenticación se maneja mediante JWT almacenado en una cookie HttpOnly llamada jwtToken. Esto evita que el token sea accesible desde JavaScript en el cliente, protegiéndolo contra ataques XSS.
+---
 
-Generación: en /api/Data-Email (y otros endpoints similares) se firma un JWT con la clave secreta JWT_SECRET_KEY y se envía al cliente mediante Set-Cookie.
+### 4.9 Capa de base de datos
 
-Verificación en cliente: el hook useAuthCheck (en src/app/hooks/useAuthCheck.ts) se encarga de verificar si el token es válido llamando a /api/cookieCheck. Si no es válido, redirige al inicio (/).
+`src/pages/api/db.ts` maneja la conexión a PostgreSQL (Supabase). Exporta:
 
-Verificación en servidor: muchos endpoints usan el helper verifyJwtFromCookies (en cookieManagement.ts) para extraer y verificar el token, devolviendo el email del usuario.
+- `getPool()` – devuelve un pool de conexiones (singleton).
+- `dbQuery()` – ejecuta una consulta, con reconexión automática en caso de fallo.
+- `withTransaction()` – ejecuta múltiples consultas dentro de una transacción.
 
-Importante: La cookie tiene un tiempo de vida corto (12 minutos en /api/Data-Email) para reforzar la seguridad, pero se renueva en cada paso del flujo.
+Tablas principales:
 
-4.7 API routes
-Todas las rutas API están dentro de src/pages/api/. Siguen la estructura de archivos de Next.js (páginas/api). Los endpoints más importantes son:
+- `persona`: datos básicos (correo, nombre, pregrado, semestre, etc.)
+- Tablas por grupo: `aiesec`, `nova`, `club_in`, etc. (clave foránea a `persona(correo)`)
 
-Data-Email.ts, Data-Personal.ts, Data-Academic.ts: manejan los pasos iniciales del formulario.
+Esquema simplificado:
 
-forms/[grupo].ts: reciben los datos de los formularios de grupos y los insertan en la tabla correspondiente (ej: aiesec, nova). Verifican duplicados usando ON CONFLICT.
-
-analytics/*.ts: devuelven datos agregados para los gráficos.
-
-lists/[grupo].ts: devuelven los registros de cada grupo, con joins a la tabla persona para obtener información adicional.
-
-redirecting.ts: recibe el grupo seleccionado y redirige al formulario correspondiente, verificando si el usuario ya está inscrito.
-
-cookieCheck.ts: verifica la validez del JWT.
-
-authMiddleware.ts: (actualmente no se usa, pero es un ejemplo de middleware para proteger rutas).
-
-4.8 Utilidades de encriptación
-src/lib/crypto.ts y src/lib/decrypt.ts implementan un sistema de encriptación híbrida:
-
-Cliente (crypto.ts): genera una clave AES aleatoria, encripta los datos con AES‑CBC, luego encripta la clave AES con la clave pública RSA (obtenida de NEXT_PUBLIC_RSA_PUBLIC_KEY). Envía al servidor { encryptedKey, encryptedData, iv }.
-
-Servidor (decrypt.ts): recibe el payload, desencripta la clave AES usando la clave privada RSA (RSA_PRIVATE_KEY), luego desencripta los datos con AES. También incluye un helper getRequestBody que desencripta automáticamente si el header X-Encrypted está presente.
-
-Esto asegura que incluso si alguien intercepta la petición, no pueda leer los datos sin la clave privada.
-
-4.9 Capa de base de datos
-La conexión a PostgreSQL se maneja en src/pages/api/db.ts. Exporta:
-
-getPool(): devuelve un pool de conexiones (singleton) configurado con variables de entorno (preferiblemente SUPABASE_DB_URL o variables individuales).
-
-dbQuery(): ejecuta una consulta y maneja reconexiones automáticas en caso de fallos de conexión.
-
-withTransaction(): ejecuta múltiples consultas dentro de una transacción.
-
-Las tablas principales son:
-
-persona: datos básicos de cada usuario (correo, nombre, pregrado, semestre, etc.).
-
-Tablas específicas por grupo: aiesec, nova, club_in, etc., que contienen las respuestas de los formularios, con una clave foránea a persona(correo).
-
-Esquema simplificado (no exhaustivo):
-
-sql
+```sql
 persona (
   correo VARCHAR PRIMARY KEY,
   nombre VARCHAR,
@@ -235,125 +222,6 @@ aiesec (
   departamento VARCHAR,
   PRIMARY KEY (id_grupo, correo)
 );
-
 -- similar para otros grupos
-4.10 Componentes de UI reutilizables
-En src/app/globalcomponents/UI/ encontramos componentes de interfaz genéricos:
+```
 
-Button.tsx: botón con múltiples temas (default, fifa, china) y variantes de color. El tema "fifa" tiene un diseño especial con sombra y un balón animado.
-
-Input.tsx y Select.tsx: inputs y selects estilizados, con soporte para errores y temas de color.
-
-FormContainer.tsx: un contenedor que envuelve los formularios con un diseño de tarjeta con bordes redondeados.
-
-ConfettiAnimation.tsx y Pixels_animation.tsx: animaciones en canvas para darle vida a las páginas.
-
-ExportCSV.tsx: botón para exportar datos a CSV.
-
-Footer_NOVA_blanco/negro.tsx: pies de página con el logo de NOVA.
-
-Estos componentes son utilizados en todas las páginas para mantener una apariencia consistente.
-
-4.11 Configuración y assets
-Tailwind CSS: configurado en tailwind.config.ts y postcss.config.mjs. Se definen fuentes personalizadas (EA Font, FIFA26, FWC26) y utilidades para viewport dinámico (dvh).
-
-Next.js config: en next.config.ts se ignoran errores de ESLint en builds y se configuran patrones remotos para imágenes (usamos blob storage de Azure).
-
-Fuentes e imágenes: en public/ y src/fonts/. El script scripts/optimize-images.mjs convierte PNG a WebP para optimizar carga.
-
-Variables de entorno: necesitas crear un archivo .env.local con las claves que se detallan en la siguiente sección.
-
-🚀 Guía de ejecución local
-Sigue estos pasos para poner el proyecto en funcionamiento en tu máquina.
-
-5.1 Clonar el repositorio
-bash
-git clone https://github.com/gruponovaeafit/VTG-WebForm.git
-cd VTG-WebForm
-5.2 Configurar variables de entorno
-Crea un archivo .env.local en la raíz del proyecto. Pide al director o al encargado del proyecto los valores reales. Aquí tienes un ejemplo con las variables necesarias:
-
-env
-# Base de datos (Supabase)
-SUPABASE_DB_URL=postgresql://usuario:contraseña@host:puerto/basedatos
-# o si usas variables individuales:
-# SUPABASE_DB_HOST=...
-# SUPABASE_DB_PASSWORD=...
-# etc.
-
-# JWT
-JWT_SECRET_KEY=una_clave_secreta_muy_larga
-
-# reCAPTCHA
-NEXT_PUBLIC_CLIENT_KEY_CAPTCHA=clave_publica_del_sitio
-SERVER_KEY_CAPTCHA=clave_secreta_del_servidor
-
-# RSA (pares de llaves)
-NEXT_PUBLIC_RSA_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
-RSA_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
-
-# Contraseñas para paneles (cada grupo y analytics)
-NEXT_PUBLIC_ANALY_TSS=clave_analytics
-NEXT_PUBLIC_AIESEC_TSS=clave_aiesec
-NEXT_PUBLIC_NOVA_TSS=clave_nova
-... # y así para cada grupo
-Nota: Las llaves RSA deben tener los saltos de línea representados como \n (así como vienen en el ejemplo). Si tienes dudas, pide ayuda.
-
-5.3 Instalar dependencias
-Usamos pnpm:
-
-bash
-pnpm install
-5.4 Inicializar la base de datos
-La base de datos en la nube (Supabase) ya debería tener las tablas creadas. Si necesitas crearlas localmente, puedes usar el script init.sql (aunque está pensado para MySQL). Para PostgreSQL, deberías ejecutar manualmente las sentencias CREATE TABLE correspondientes. Consulta el esquema en el código (archivos de API) para conocer la estructura de cada tabla.
-
-Si tienes Docker y quieres probar con PostgreSQL local, puedes levantar un contenedor:
-
-bash
-docker run --name vtg-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
-Luego crea las tablas usando un cliente SQL o mediante las migraciones que tengas.
-
-5.5 Ejecutar en modo desarrollo
-bash
-pnpm dev
-La aplicación estará disponible en http://localhost:3000.
-
-5.6 Verificar que todo funciona
-Abre http://localhost:3000 – deberías ver la página de inicio con animación y después de 5 segundos redirigir a /email.
-
-Completa el formulario de correo con un correo @eafit.edu.co y resuelve el reCAPTCHA. Si es la primera vez, te redirigirá a /home.
-
-Llena los datos personales y académicos; luego en /groupslist selecciona un grupo y completa su formulario.
-
-Al finalizar, deberías ver la página /90+1 con un botón para volver al inicio.
-
-Prueba los paneles: /analytics (requiere contraseña) y /lists/aiesec (con su propia contraseña). Deberías ver datos si ya hay inscripciones.
-
-Si todo funciona, ¡felicitaciones! Ya tienes el entorno listo.
-
-❗ Solución de problemas comunes
-Error: NEXT_PUBLIC_RSA_PUBLIC_KEY no está configurada
-Asegúrate de tener el archivo .env.local completo y con las variables correctas. Las llaves RSA deben incluir los saltos de línea como \n.
-
-Error de conexión a la base de datos: password authentication failed o ENOTFOUND
-Verifica que las variables de entorno de la base de datos sean correctas (especialmente SUPABASE_DB_URL). Si usas Supabase, asegúrate de que la IP de tu máquina esté permitida en la configuración de Supabase (Network Restrictions).
-
-Error de validación de reCAPTCHA
-Asegúrate de que las claves de reCAPTCHA estén bien configuradas y que el dominio localhost esté agregado en la consola de Google reCAPTCHA.
-
-No se guardan los datos al enviar un formulario de grupo
-Revisa la consola del navegador y del servidor. Posibles causas: token JWT expirado (vuelve a empezar desde /email), conflicto de clave primaria (ya estás registrado), o error en la API.
-
-Si ves el error "Ya estás registrado en este grupo", es normal: significa que ya te inscribiste antes.
-
-La cookie JWT no se está enviando
-Verifica que la cookie tenga el flag HttpOnly y que el navegador la esté enviando. Puedes verlo en las herramientas de desarrollo (pestaña Application > Cookies).
-
-Problemas con las animaciones (confeti, píxeles)
-Las animaciones usan canvas y pueden consumir muchos recursos. Si notas lentitud, puedes reducir el número de partículas en los componentes (numPieces en ConfettiAnimation).
-
-Error de tipos en TypeScript
-Asegúrate de tener las versiones correctas de las dependencias. Ejecuta pnpm install nuevamente.
-
-No encuentras una variable de entorno
-Pregunta al director del proyecto o busca en el canal de Discord/WhatsApp del equipo. Nunca subas las claves reales al repositorio.
