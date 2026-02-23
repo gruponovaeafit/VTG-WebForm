@@ -225,3 +225,62 @@ aiesec (
 -- similar para otros grupos
 ```
 
+
+### 4.10 Componentes de UI reutilizables
+
+En `src/app/globalcomponents/UI/`:
+
+- **Button.tsx**: botones con temas (default, fifa, china) y variantes de color.
+- **Input.tsx** y **Select.tsx**: inputs y selects estilizados, con soporte para errores.
+- **FormContainer.tsx**: contenedor con diseño de tarjeta para formularios.
+- **ConfettiAnimation.tsx** y **Pixels_animation.tsx**: animaciones en canvas.
+- **ExportCSV.tsx**: botón para exportar a CSV.
+- **Footer_NOVA_blanco/negro.tsx**: pies de página con logo NOVA.
+
+---
+
+### 4.11 Configuración y assets
+
+- **Tailwind CSS**: configurado en `tailwind.config.ts` y `postcss.config.mjs`. Se definen fuentes personalizadas (`EA Font`, `FIFA26`, `FWC26`) y utilidades para viewport dinámico (`dvh`).
+- **Next.js config**: en `next.config.ts` se ignoran errores de ESLint en builds y se configuran patrones remotos para imágenes (Azure Blob Storage).
+- **Fuentes e imágenes**: en `public/` y `src/fonts/`. El script `scripts/optimize-images.mjs` convierte PNG a WebP para optimizar carga.
+- **Variables de entorno**: se definen en `.env.local` (ver sección 5.2).
+
+
+
+Guía de ejecución local
+5.1 Clonar el repositorio
+bash
+git clone https://github.com/gruponovaeafit/VTG-WebForm.git
+cd VTG-WebForm
+5.2 Configurar variables de entorno
+Crea un archivo .env.local en la raíz. Pide al director del proyecto los valores reales. Ejemplo:
+
+env
+# Base de datos (Supabase)
+SUPABASE_DB_URL=postgresql://usuario:contraseña@host:puerto/basedatos
+
+# JWT
+JWT_SECRET_KEY=una_clave_secreta_muy_larga
+
+# reCAPTCHA
+NEXT_PUBLIC_CLIENT_KEY_CAPTCHA=clave_publica_del_sitio
+SERVER_KEY_CAPTCHA=clave_secreta_del_servidor
+
+# RSA
+NEXT_PUBLIC_RSA_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----"
+RSA_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+
+# Contraseñas para paneles
+NEXT_PUBLIC_ANALY_TSS=clave_analytics
+NEXT_PUBLIC_AIESEC_TSS=clave_aiesec
+NEXT_PUBLIC_NOVA_TSS=clave_nova
+# ... para cada grupo
+Las llaves RSA deben incluir los saltos de línea como \n.
+
+5.3 Instalar dependencias
+Usamos pnpm:
+
+bash
+pnpm install
+
