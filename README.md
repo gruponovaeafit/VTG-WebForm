@@ -244,15 +244,7 @@ En `src/app/globalcomponents/UI/`:
 
 
 
-Guía de ejecución local
-5.1 Clonar el repositorio
-bash
-git clone https://github.com/gruponovaeafit/VTG-WebForm.git
-cd VTG-WebForm
-5.2 Configurar variables de entorno
-Crea un archivo .env.local en la raíz. Pide al director del proyecto los valores reales. Ejemplo:
-
-env (Pregunte a un admin por las contraseñas)
+# (Pregunte a un admin por las contraseñas)
 
 # Base de datos (Supabase)
 SUPABASE_DB_URL=
@@ -273,11 +265,11 @@ NEXT_PUBLIC_ANALY_TSS=clave_analytics
 NEXT_PUBLIC_AIESEC_TSS=clave_aiesec
 NEXT_PUBLIC_NOVA_TSS=clave_nova
 # ... para cada grupo
-Las llaves RSA deben incluir los saltos de línea como \n.
+
+⚠️ Las llaves RSA deben incluir los saltos de línea como \n.
 
 5.3 Instalar dependencias
+
 Usamos npm:
 
-bash
 npm install
-
