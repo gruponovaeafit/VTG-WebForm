@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       nombre: string | null;
       pregrado: string | null;
       semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         n.id_grupo,
@@ -25,10 +26,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         n.charla,
         pe.nombre,
         pe.pregrado,
-        pe.semestre
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM nexos AS n
       LEFT JOIN persona AS pe ON n.correo = pe.correo
-      ORDER BY n.charla, pe.nombre;
+      ORDER BY pe.fecha_creacion NULLS LAST, n.charla, pe.nombre;
     `);
 
     // Verificar si hay datos
@@ -48,7 +50,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         nombre_miembro: row.nombre_miembro,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {} as Record<string, { charla: string; participants: any[] }>);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_NEXOS_TSS;
 
@@ -142,6 +143,7 @@ export default function NexosPage() {
     pregrado: p.pregrado ?? "N/A",
     semestre: p.semestre ?? "N/A",
     miembro: p.nombre_miembro,
+    fecha_inscripcion: formatDate(p.fecha_inscripcion),
   }))
 );
 
@@ -172,6 +174,7 @@ export default function NexosPage() {
     { header: "Pregrado", accessor: (r) => r.pregrado },
     { header: "Semestre", accessor: (r) => r.semestre },
     { header: "Miembro", accessor: (r) => r.miembro },
+    { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
   ]}
 />
 
@@ -185,6 +188,7 @@ export default function NexosPage() {
                   <th className="border border-green-500 px-2 py-1">Correo</th>
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
                   <th className="border border-green-500 px-2 py-1">Nombre del Miembro</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -193,6 +197,7 @@ export default function NexosPage() {
                     <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre_miembro || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -222,6 +227,7 @@ export default function NexosPage() {
                       <th className="border border-green-500 px-2 py-1">Pregrado</th>
                       <th className="border border-green-500 px-2 py-1">Semestre</th>
                       <th className="border border-green-500 px-2 py-1">Nombre del Miembro</th>
+                      <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -232,6 +238,7 @@ export default function NexosPage() {
                         <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                         <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
                         <td className="border border-green-500 px-2 py-1">{participant.nombre_miembro || "N/A"}</td>
+                        <td className="border border-green-500 px-2 py-1">{formatDate(participant.fecha_inscripcion)}</td>
                       </tr>
                     ))}
                   </tbody>

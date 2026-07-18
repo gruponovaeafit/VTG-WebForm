@@ -36,14 +36,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // 2) Datos del form
     const group_id = 13;
     const department = String(req.body?.department ?? "").trim();
+    const nombreMiembro = String(req.body?.nombre_miembro ?? "").trim().slice(0, 32);
+
+    if (!department) {
+      return res.status(400).json({
+        notification: { type: "error", message: "Debes seleccionar un departamento." },
+      });
+    }
+
+    if (!nombreMiembro) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Debes indicar el nombre del miembro que te inscribió.",
+        },
+      });
+    }
 
     // 3) Insert en Supabase/Postgres
     const result = await dbQuery<{ id_grupo: number }>(
-      `INSERT INTO aiesec (id_grupo, correo, departamento)
-       VALUES ($1, $2, $3)
+      `INSERT INTO aiesec (id_grupo, correo, departamento, nombre_miembro)
+       VALUES ($1, $2, $3, $4)
        ON CONFLICT (id_grupo, correo) DO NOTHING
        RETURNING id_grupo`,
-      [group_id, email.toLowerCase().trim(), department]
+      [group_id, email.toLowerCase().trim(), department, nombreMiembro]
     );
       
     // Respuesta en caso de éxito

@@ -48,6 +48,7 @@ type InputProps = {
   readOnly?: boolean;
   min?: string | number;
   max?: string | number;
+  maxLength?: number;
   step?: string | number;
   pattern?: string;
   title?: string;
@@ -96,6 +97,7 @@ export default function Input({
   readOnly = false,
   min,
   max,
+  maxLength,
   step,
   pattern,
   title,
@@ -157,6 +159,7 @@ export default function Input({
         readOnly={readOnly}
         min={min}
         max={max}
+        maxLength={maxLength}
         step={step}
         pattern={pattern}
         title={title}

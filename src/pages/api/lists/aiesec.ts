@@ -12,20 +12,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       id_grupo: number;
       correo: string;
       departamento: string;
+      nombre_miembro: string | null;
       nombre: string | null;
       pregrado: string | null;
       semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         a.id_grupo,
         a.correo,
         a.departamento,
+        a.nombre_miembro,
         pe.nombre,
         pe.pregrado,
-        pe.semestre
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM aiesec AS a
       LEFT JOIN persona AS pe ON a.correo = pe.correo
-      ORDER BY a.departamento, pe.nombre;
+      ORDER BY pe.fecha_creacion NULLS LAST, a.departamento, pe.nombre;
     `);
 
     if (!result.rows || result.rows.length === 0) {
@@ -43,7 +47,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         correo: row.correo,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        nombre_miembro: row.nombre_miembro,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {} as Record<string, { departamento: string; participants: any[] }>);

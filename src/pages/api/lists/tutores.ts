@@ -15,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       nombre: string | null;
       pregrado: string | null;
       semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         t.id_grupo,
@@ -22,10 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         t.nombre_miembro,
         pe.nombre,
         pe.pregrado,
-        pe.semestre
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM tutores AS t
       LEFT JOIN persona AS pe ON t.correo = pe.correo
-      ORDER BY t.nombre_miembro, pe.nombre;
+      ORDER BY pe.fecha_creacion NULLS LAST, t.nombre_miembro, pe.nombre;
     `);
 
     if (!result.rows || result.rows.length === 0) {
@@ -44,7 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         nombre: row.nombre,
         pregrado: row.pregrado,
         semestre: row.semestre,
-        nombre_miembro: row.nombre_miembro
+        nombre_miembro: row.nombre_miembro,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {} as Record<string, { tutor: string; participants: any[] }>);

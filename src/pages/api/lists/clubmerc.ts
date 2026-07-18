@@ -15,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       nombre: string | null;
       pregrado: string | null;
       semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         c.id_grupo,
@@ -22,10 +23,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         c.comite,
         pe.nombre,
         pe.pregrado,
-        pe.semestre
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM club_merc AS c
       LEFT JOIN persona AS pe ON c.correo = pe.correo
-      ORDER BY c.comite, pe.nombre;
+      ORDER BY pe.fecha_creacion NULLS LAST, c.comite, pe.nombre;
     `);
 
     if (!result.rows || result.rows.length === 0) {
@@ -43,7 +45,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         correo: row.correo,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {} as Record<string, { comite: string; participants: any[] }>);

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_TUTORES_TSS;
 
@@ -128,6 +129,7 @@ export default function TutoresPage() {
       pregrado: p.pregrado ?? "N/A",
       semestre: p.semestre ?? "N/A",
       inscrito_por: item.tutor ?? "N/A",
+      fecha_inscripcion: formatDate(p.fecha_inscripcion),
     }))
   );
 
@@ -146,6 +148,7 @@ export default function TutoresPage() {
               { header: "Nombre", accessor: (r) => r.nombre },
               { header: "Pregrado", accessor: (r) => r.pregrado },
               { header: "Semestre", accessor: (r) => r.semestre },
+              { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
             ]}
           />
       </div>
@@ -167,6 +170,7 @@ export default function TutoresPage() {
                   <th className="border border-green-500 px-2 py-1">Pregrado</th>
                   <th className="border border-green-500 px-2 py-1">Semestre</th>
                   <th className="border border-green-500 px-2 py-1">Inscrito por</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -177,6 +181,7 @@ export default function TutoresPage() {
                     <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{participant.nombre_miembro || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(participant.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>

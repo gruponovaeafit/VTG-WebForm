@@ -13,11 +13,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // 🔍 Consulta para contar usuarios agrupados por hora (todas las horas del día)
     const result = await pool.query(`
       SELECT 
-        EXTRACT(HOUR FROM fecha_creacion)::INTEGER as hora, 
+        EXTRACT(HOUR FROM (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota'))::INTEGER as hora, 
         COUNT(*)::INTEGER as cantidad
       FROM persona
       WHERE fecha_creacion IS NOT NULL
-      GROUP BY EXTRACT(HOUR FROM fecha_creacion)
+      GROUP BY EXTRACT(HOUR FROM (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota'))
       ORDER BY hora
     `);
 

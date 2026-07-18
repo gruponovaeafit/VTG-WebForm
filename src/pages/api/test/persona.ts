@@ -58,9 +58,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Mapear nombre de grupo a consulta de inserción de prueba
         const groupInsertQueries: Record<string, string> = {
           aiesec:
-            "INSERT INTO aiesec (id_grupo, correo, departamento) VALUES (1, $1, 'TEST-DEPARTAMENTO') ON CONFLICT (id_grupo, correo) DO NOTHING",
+            "INSERT INTO aiesec (id_grupo, correo, departamento, nombre_miembro) VALUES (13, $1, 'TEST-DEPARTAMENTO', 'TEST-MIEMBRO') ON CONFLICT (id_grupo, correo) DO NOTHING",
           club_in:
-            "INSERT INTO club_in (id_grupo, correo, slot_id) VALUES (2, $1, NULL) ON CONFLICT (id_grupo, correo) DO NOTHING",
+            "INSERT INTO club_in (id_grupo, correo, charla, practica, intercambio) VALUES (1, $1, 'Si', 'Si', 'No') ON CONFLICT (id_grupo, correo) DO NOTHING",
           club_merc:
             "INSERT INTO club_merc (id_grupo, correo, comite) VALUES (3, $1, 'TEST-COMITE') ON CONFLICT (id_grupo, correo) DO NOTHING",
           gpg:
@@ -82,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           tvu:
             "INSERT INTO tvu (id_grupo, correo, charla) VALUES (12, $1, 'TEST-CHARLA') ON CONFLICT (id_grupo, correo) DO NOTHING",
           un:
-            "INSERT INTO un (id_grupo, correo, charla, nombre_miembro, comite) VALUES (13, $1, 'TEST-CHARLA', 'TEST-MIEMBRO', 'TEST-COMITE') ON CONFLICT (id_grupo, correo) DO NOTHING",
+            "INSERT INTO un (id_grupo, correo, charla, comite, donde_conocio) VALUES (12, $1, 'TEST-CHARLA', 'TEST-COMITE', 'Redes sociales') ON CONFLICT (id_grupo, correo) DO NOTHING",
         };
 
         const normalizedGroup = String(grupo).toLowerCase();

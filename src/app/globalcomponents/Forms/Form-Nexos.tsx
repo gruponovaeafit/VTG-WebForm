@@ -109,8 +109,8 @@ export default function NexosForm() {
           containerClassName="mb-0"
           required
           options={[
-            { label: "Jue. enero 29, 6:00PM", value: "Jue. enero 29, 6:00PM" },
-            { label: "Vie. enero 30, 12:00M", value: "Vie. enero 30, 12:00M"},
+            { label: "Jue. julio 23, 6:00PM", value: "Jue. julio 23, 6:00PM" },
+            { label: "Vie. julio 24, 12:00PM", value: "Vie. julio 24, 12:00PM"},
           ]}
           className="w-full px-4 py-2 text-sm rounded border border-black bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
         />

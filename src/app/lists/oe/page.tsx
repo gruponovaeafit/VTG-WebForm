@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_OE_TSS;
 
@@ -14,17 +15,6 @@ export default function OePage() {
   const [password, setPassword] = useState<string>("");
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [groupByDate, setGroupByDate] = useState<boolean>(false);
-
-  const formatDate = (value: any) => {
-    if (!value) return "N/A";
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "N/A";
-    return new Intl.DateTimeFormat("es-CO", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }).format(date);
-  };
 
   const handlePasswordSubmit = () => {
     if (!GLOBAL_PASSWORD) {

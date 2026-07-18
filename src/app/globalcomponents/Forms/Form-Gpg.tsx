@@ -87,8 +87,10 @@ export default function GpgForm() {
             labelColorClass="text-white"
             required
             options={[
-              { label: "Jue. 29 ene 5:30 – 7:20 p.m.", value: "Jue. 29 ene 5:30 – 7:20 p.m." },
-              { label: "Vie. 29 ene 2:30 – 4:20 p.m.", value: "Vie. 29 ene 2:30 – 4:20 p.m." },
+              { label: "Jue. 23 jul 5:00 p.m. 33-102", value: "Jue. 23 jul 5:00 p.m. 33-102" },
+              { label: "Jue. 23 jul 5:00 p.m. 33-404", value: "Jue. 23 jul 5:00 p.m. 33-404" },
+              { label: "Vie. 24 jul 3:00 p.m. 38-204", value: "Vie. 24 jul 3:00 p.m. 38-204" },
+              { label: "Vie. 24 jul 3:00 p.m. 38-304", value: "Vie. 24 jul 3:00 p.m. 38-304" },
             ]}
           />
         </div>

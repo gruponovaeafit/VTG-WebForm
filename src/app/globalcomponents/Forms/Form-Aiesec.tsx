@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
+import Input from "../UI/Input";
 import { encryptedFetch } from "@/lib/crypto";
 
 export default function AiesecForm() {
@@ -104,6 +105,18 @@ export default function AiesecForm() {
             { label: "IGT: Pasantías entrantes", value: "IGT: Pasantías entrantes" },
           ]}
         />
+
+        <div className="mb-2 mt-4">
+          <Input
+            id="nombre_miembro"
+            name="nombre_miembro"
+            label="Nombre del miembro de AIESEC que te inscribió"
+            labelColorClass="text-white"
+            placeholder="Nombre del miembro"
+            required
+            maxLength={32}
+          />
+        </div>
         
       </FormContainer>
   );
