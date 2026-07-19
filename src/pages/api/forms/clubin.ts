@@ -5,6 +5,16 @@ import { decryptRequestBody } from "@/lib/decrypt";
 
 const recentRequests = new Map<string, number>();
 
+const ALLOWED_CHARLAS = new Set([
+  "Miércoles Jul. 22 11:00 AM - 12:00 PM",
+  "Miércoles Jul. 22 3:00 PM - 4:00 PM",
+  "Jueves Jul. 23 3:00 PM - 4:00 PM",
+  "Viernes Jul. 24 11:00 AM - 12:00 PM",
+  "Viernes Jul. 24 12:00 PM - 1:00 PM",
+]);
+
+const ALLOWED_PRACTICAS = new Set(["2026-2", "2027-1", "Ninguno"]);
+
 function yesNoToString(value: unknown): string | null {
   const v = String(value ?? "").trim().toLowerCase();
   if (v === "si" || v === "sí") return "Si";
@@ -54,15 +64,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     recentRequests.set(email, now);
 
     const groupId = 1;
-    const charla = yesNoToString(req.body?.charla);
-    const practica = yesNoToString(req.body?.practica);
+    const charla = String(req.body?.charla ?? "").trim();
+    const practica = String(req.body?.practica ?? "").trim();
     const intercambio = yesNoToString(req.body?.intercambio);
 
-    if (charla === null || practica === null || intercambio === null) {
+    if (!ALLOWED_CHARLAS.has(charla)) {
       return res.status(400).json({
         notification: {
           type: "error",
-          message: "Debes responder todas las preguntas (Sí/No).",
+          message: "Debes seleccionar un horario de charla válido.",
+        },
+      });
+    }
+
+    if (!ALLOWED_PRACTICAS.has(practica)) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Debes indicar en qué semestre harás la práctica (o Ninguno).",
+        },
+      });
+    }
+
+    if (intercambio === null) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Debes indicar si harás intercambio académico (Sí/No).",
         },
       });
     }
