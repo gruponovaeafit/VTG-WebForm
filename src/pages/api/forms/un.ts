@@ -37,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const groupId = 12;
     const talk = String(req.body?.talk ?? "").trim();
     const comite = String(req.body?.comite ?? "").trim();
+    const dondeConocio = String(req.body?.donde_conocio ?? "").trim().slice(0, 32);
     
     if (!talk) {
       return res.status(400).json({
@@ -56,15 +57,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
+    if (!dondeConocio) {
+      return res.status(400).json({
+        notification: {
+          type: "error",
+          message: "Debes indicar dónde conociste al grupo.",
+        },
+      });
+    }
+
     // 3) Insert en Supabase
     const result = await dbQuery<{ id_grupo: number }>(
         `
-        INSERT INTO un (id_grupo, correo, comite, charla)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO un (id_grupo, correo, comite, charla, donde_conocio)
+        VALUES ($1, $2, $3, $4, $5)
         ON CONFLICT (id_grupo, correo) DO NOTHING
         RETURNING id_grupo
         `,
-        [groupId, email.toLowerCase().trim(), comite, talk]
+        [groupId, email.toLowerCase().trim(), comite, talk, dondeConocio]
       );
 
     if (result.rows.length === 0) {

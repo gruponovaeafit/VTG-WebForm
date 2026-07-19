@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_TVU_TSS;
 
@@ -117,6 +118,7 @@ export default function TvuPage() {
     pregrado: p.pregrado ?? "N/A",
     semestre: p.semestre ?? "N/A",
     horario: item.charla ?? "N/A",
+    fecha_inscripcion: formatDate(p.fecha_inscripcion),
   }))
 );
 
@@ -147,6 +149,7 @@ export default function TvuPage() {
                                        { header: "Pregrado", accessor: (r) => r.pregrado },
                                        { header: "Semestre", accessor: (r) => r.semestre },
                                        { header: "Horario", accessor: (r) => r.horario },
+                                       { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
                                      ]}
                                    />
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
@@ -158,6 +161,7 @@ export default function TvuPage() {
                 <tr className="bg-gray-700 text-yellow-300">
                   <th className="border border-green-500 px-2 py-1">Correo</th>
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -165,6 +169,7 @@ export default function TvuPage() {
                   <tr key={`${p.correo}-${i}`} className="hover:bg-gray-800">
                     <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -192,6 +197,7 @@ export default function TvuPage() {
                     <th className="border border-green-500 px-2 py-1">Nombre</th>
                     <th className="border border-green-500 px-2 py-1">Pregrado</th>
                     <th className="border border-green-500 px-2 py-1">Semestre</th>
+                    <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -201,6 +207,7 @@ export default function TvuPage() {
                       <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{formatDate(participant.fecha_inscripcion)}</td>
                     </tr>
                   ))}
                 </tbody>

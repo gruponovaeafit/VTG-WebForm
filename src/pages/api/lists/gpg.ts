@@ -16,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       nombre: string | null;
       pregrado: string | null;
       semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         g.id_grupo,
@@ -24,10 +25,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         g.prepractica,
         pe.nombre,
         pe.pregrado,
-        pe.semestre
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM gpg AS g
       LEFT JOIN persona AS pe ON g.correo = pe.correo
-      ORDER BY g.prepractica DESC, g.charla, pe.nombre;
+      ORDER BY pe.fecha_creacion NULLS LAST, g.prepractica DESC, g.charla, pe.nombre;
     `);
 
     if (!result.rows || result.rows.length === 0) {
@@ -46,7 +48,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         charla: row.charla,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {} as Record<string, { prepractica: string; participants: any[] }>);

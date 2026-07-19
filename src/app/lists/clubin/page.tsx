@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_CLUBIN_TSS;
 
@@ -13,11 +14,14 @@ export default function ClubInPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [password, setPassword] = useState<string>("");
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const [groupByDate, setGroupByDate] = useState<boolean>(false);
+  const [groupByCharla, setGroupByCharla] = useState<boolean>(true);
 
   const handlePasswordSubmit = () => {
     if (!GLOBAL_PASSWORD) {
-      toast.error("Error en la configuración del servidor.", { position: "top-center", autoClose: 2000 });
+      toast.error("Error en la configuración del servidor.", {
+        position: "top-center",
+        autoClose: 2000,
+      });
       return;
     }
 
@@ -55,10 +59,18 @@ export default function ClubInPage() {
           <div className="p-2 rounded-lg border border-green-400 bg-opacity-10">
             <LayoutDashboard className="h-5 w-5 text-green-400" />
           </div>
-          <h1 className="text-4xl font-bold text-green-400 text-center">Dashboard VTG CLUBIN</h1>
+          <h1 className="text-4xl font-bold text-green-400 text-center">
+            Dashboard VTG CLUBIN
+          </h1>
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); handlePasswordSubmit(); }} className="w-full max-w-sm p-6 bg-gray-900 rounded-lg shadow-lg">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handlePasswordSubmit();
+          }}
+          className="w-full max-w-sm p-6 bg-gray-900 rounded-lg shadow-lg"
+        >
           <h2 className="text-2xl font-bold mb-4 text-center">Ingresa la contraseña</h2>
           <input
             type="password"
@@ -67,7 +79,10 @@ export default function ClubInPage() {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 mb-4 rounded-md bg-gray-800 text-green-300 placeholder-green-500 focus:outline-none focus:ring-2 focus:ring-green-400"
           />
-          <button type="submit" className="w-full py-2 px-4 bg-green-500 text-black font-semibold rounded-md hover:bg-green-400 transition duration-200">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-green-500 text-black font-semibold rounded-md hover:bg-green-400 transition duration-200"
+          >
             Acceder
           </button>
         </form>
@@ -75,12 +90,13 @@ export default function ClubInPage() {
     );
   }
 
-  if (isLoading) return (
-    <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center">
-      <div className="animate-pulse">Cargando datos, por favor espera...</div>
-    </div>
-  );
-  
+  if (isLoading)
+    return (
+      <div className="p-4 text-green-300 bg-gray-800 rounded-lg shadow-inner border border-green-400 text-sm text-center">
+        <div className="animate-pulse">Cargando datos, por favor espera...</div>
+      </div>
+    );
+
   if (error) return <div className="p-2 text-sm text-red-400">Error al cargar los datos.</div>;
 
   if (!data || !Array.isArray(data) || data.length === 0) {
@@ -91,39 +107,55 @@ export default function ClubInPage() {
     );
   }
 
-  // Agrupar todos los participantes para vista alternativa
-  const allParticipants = data.flatMap((item: any) => item.participants || []);
-  // Preparar datos para exportar todos los participantes
-   const exportAllaiesec = allParticipants.map((p: any) => ({
-  correo: p.correo,
-  slot_id: p.slot_id,
-}));
+  const allParticipants = data.flatMap((item: any) =>
+    (item.participants || []).map((p: any) => ({
+      ...p,
+      charla: item.charla,
+    }))
+  );
+
+  const exportAll = allParticipants.map((p: any) => ({
+    correo: p.correo,
+    nombre: p.nombre,
+    pregrado: p.pregrado,
+    semestre: p.semestre,
+    charla: p.charla,
+    practica: p.practica,
+    intercambio: p.intercambio,
+    fecha_inscripcion: formatDate(p.fecha_inscripcion),
+  }));
 
   return (
     <div className="p-2 h-screen overflow-auto bg-black text-green-300 font-mono">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">Club In Dashboard</h1>
+        <h1 className="text-lg font-bold text-yellow-300 border-b border-yellow-500">
+          Club In Dashboard
+        </h1>
         <button
-          onClick={() => setGroupByDate(!groupByDate)}
+          onClick={() => setGroupByCharla(!groupByCharla)}
           className="px-4 py-1 bg-green-700 hover:bg-green-600 text-white text-xs rounded"
         >
-          {groupByDate ? "Agrupar por horario" : "Listar todos los participantes"}
+          {groupByCharla ? "Listar todos los participantes" : "Agrupar por charla"}
         </button>
       </div>
 
-      {groupByDate ? (
+      {!groupByCharla ? (
         allParticipants.length > 0 ? (
           <div className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
             <h2 className="text-md font-semibold mb-1 text-cyan-400">Todos los participantes</h2>
             <ExportCSV
-                data={exportAllaiesec}
-                filename="Clubin-todos-los-inscritos.csv"
-                label="Descargar CSV"
-                columns={[
+              data={exportAll}
+              filename="Clubin-todos-los-inscritos.csv"
+              label="Descargar CSV"
+              columns={[
                 { header: "Correo", accessor: (r) => r.correo },
-                { header: "Slot ID", accessor: (r) => r.slot_id}
-                ]}
-                />
+                { header: "Nombre", accessor: (r) => r.nombre },
+                { header: "Charla", accessor: (r) => r.charla },
+                { header: "Práctica", accessor: (r) => r.practica },
+                { header: "Intercambio", accessor: (r) => r.intercambio },
+                { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
+              ]}
+            />
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
               <Users className="h-5 w-5 text-green-500" />
               <span>Participantes: {allParticipants.length}</span>
@@ -132,14 +164,24 @@ export default function ClubInPage() {
               <thead>
                 <tr className="bg-gray-700 text-yellow-300">
                   <th className="border border-green-500 px-2 py-1">Correo</th>
-                  <th className="border border-green-500 px-2 py-1">Slot ID</th>
+                  <th className="border border-green-500 px-2 py-1">Nombre</th>
+                  <th className="border border-green-500 px-2 py-1">Charla</th>
+                  <th className="border border-green-500 px-2 py-1">Práctica</th>
+                  <th className="border border-green-500 px-2 py-1">Intercambio</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
                 {allParticipants.map((p: any, i: number) => (
                   <tr key={`${p.correo}-${i}`} className="hover:bg-gray-800">
                     <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
-                    <td className="border border-green-500 px-2 py-1">{p.slot_id || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.charla || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.practica || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">
+                      {p.intercambio || "N/A"}
+                    </td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -151,31 +193,48 @@ export default function ClubInPage() {
           </div>
         )
       ) : (
-        data.map((slot: { day_of_week: string | null; start_time: string | null; capacity: number | null; participants: any[] }) => {
-          const participantesArray = slot.participants || [];
-          const slotKey = `${slot.day_of_week || "Sin día"}-${slot.start_time || "Sin hora"}`;
+        data.map((group: { charla: string; participants: any[] }) => {
+          const participantesArray = group.participants || [];
           return (
-            <div key={slotKey} className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900">
+            <div
+              key={group.charla}
+              className="mb-4 border border-yellow-500 rounded-lg p-2 shadow-lg text-sm bg-gray-900"
+            >
               <h2 className="text-md font-semibold mb-1 text-cyan-400">
-                {slot.day_of_week && slot.start_time ? `${slot.day_of_week} - ${slot.start_time}` : "Sin slot asignado"}
+                Charla: {group.charla === "Si" ? "Asiste" : group.charla === "No" ? "No asiste" : group.charla}
               </h2>
               <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
                 <Users className="h-5 w-5 text-green-500" />
                 <span>Participantes: {participantesArray.length}</span>
-                {slot.capacity !== null && <span className="text-yellow-400">| Capacidad: {slot.capacity}</span>}
               </div>
               <table className="w-full border-collapse border border-green-500 text-xs text-green-200">
                 <thead>
                   <tr className="bg-gray-700 text-yellow-300">
                     <th className="border border-green-500 px-2 py-1">Correo</th>
-                    <th className="border border-green-500 px-2 py-1">Slot ID</th>
+                    <th className="border border-green-500 px-2 py-1">Nombre</th>
+                    <th className="border border-green-500 px-2 py-1">Práctica</th>
+                    <th className="border border-green-500 px-2 py-1">Intercambio</th>
+                    <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                   </tr>
                 </thead>
                 <tbody>
                   {participantesArray.map((participant: any, idx: number) => (
                     <tr key={`${participant.correo}-${idx}`} className="hover:bg-gray-800">
-                      <td className="border border-green-500 px-2 py-1">{participant.correo || "N/A"}</td>
-                      <td className="border border-green-500 px-2 py-1">{participant.slot_id || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">
+                        {participant.correo || "N/A"}
+                      </td>
+                      <td className="border border-green-500 px-2 py-1">
+                        {participant.nombre || "N/A"}
+                      </td>
+                      <td className="border border-green-500 px-2 py-1">
+                        {participant.practica || "N/A"}
+                      </td>
+                      <td className="border border-green-500 px-2 py-1">
+                        {participant.intercambio || "N/A"}
+                      </td>
+                      <td className="border border-green-500 px-2 py-1">
+                        {formatDate(participant.fecha_inscripcion)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>

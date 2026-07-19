@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_AIESEC_TSS;
 
@@ -117,6 +118,8 @@ export default function AiesecPage() {
   nombre: p.nombre,
   pregrado: p.pregrado ?? "N/A",
   semestre: p.semestre ?? "N/A",
+  nombre_miembro: p.nombre_miembro ?? "N/A",
+  fecha_inscripcion: formatDate(p.fecha_inscripcion),
 }));
 
 
@@ -145,6 +148,8 @@ export default function AiesecPage() {
                 { header: "Nombre", accessor: (r) => r.nombre },
                 { header: "Pregrado", accessor: (r) => r.pregrado },
                 { header: "Semestre", accessor: (r) => r.semestre },
+                { header: "Miembro", accessor: (r) => r.nombre_miembro },
+                { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
               ]}
             />
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
@@ -158,6 +163,8 @@ export default function AiesecPage() {
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
                   <th className="border border-green-500 px-2 py-1">Pregrado</th>
                   <th className="border border-green-500 px-2 py-1">Semestre</th>
+                  <th className="border border-green-500 px-2 py-1">Miembro</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -167,6 +174,8 @@ export default function AiesecPage() {
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{p.nombre_miembro || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -194,6 +203,8 @@ export default function AiesecPage() {
                     <th className="border border-green-500 px-2 py-1">Nombre</th>
                     <th className="border border-green-500 px-2 py-1">Pregrado</th>
                     <th className="border border-green-500 px-2 py-1">Semestre</th>
+                    <th className="border border-green-500 px-2 py-1">Miembro</th>
+                    <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -203,6 +214,8 @@ export default function AiesecPage() {
                       <td className="border border-green-500 px-2 py-1">{participant.nombre || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{participant.pregrado || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{participant.semestre || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{participant.nombre_miembro || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{formatDate(participant.fecha_inscripcion)}</td>
                     </tr>
                   ))}
                 </tbody>

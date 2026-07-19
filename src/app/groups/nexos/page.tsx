@@ -57,7 +57,7 @@ export default function Home() {
         {/* Logo siempre arriba del form */}
         <div className="mb-4 z-20">
           <img
-            src="/NEXOS.png"
+            src="/NEXOS.svg"
             alt="AIESEC"
             className="h-auto w-[150px] sm:w-[190px] md:w-[230px] lg:w-[270px] xl:w-[310px]"
           />

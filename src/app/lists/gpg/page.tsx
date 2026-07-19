@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_GPG_TSS;
 
@@ -113,6 +114,7 @@ export default function GpgPage() {
   correo: p.correo,
   nombre: p.nombre,
   charla: p.charla ?? "N/A",
+  fecha_inscripcion: formatDate(p.fecha_inscripcion),
 }));
 
   return (
@@ -139,6 +141,7 @@ export default function GpgPage() {
                             { header: "Correo", accessor: (r) => r.correo },
                             { header: "Nombre", accessor: (r) => r.nombre },
                             { header: "Charla", accessor: (r) => r.charla },
+                            { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
                           ]}
                         />
             <div className="flex items-center gap-2 text-lg text-green-400 mb-4 pb-3 border-b border-gray-700">
@@ -151,6 +154,7 @@ export default function GpgPage() {
                   <th className="border border-green-500 px-2 py-1">Correo</th>
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
                   <th className="border border-green-500 px-2 py-1">Charla</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -159,6 +163,7 @@ export default function GpgPage() {
                     <td className="border border-green-500 px-2 py-1">{p.correo || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.charla || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -187,6 +192,7 @@ export default function GpgPage() {
                     <th className="border border-green-500 px-2 py-1">Pregrado</th>
                     <th className="border border-green-500 px-2 py-1">Semestre</th>
                     <th className="border border-green-500 px-2 py-1">Charla</th>
+                    <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -197,6 +203,7 @@ export default function GpgPage() {
                       <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{p.charla || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                     </tr>
                   ))}
                 </tbody>

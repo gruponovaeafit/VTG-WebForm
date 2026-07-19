@@ -12,10 +12,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // 🔍 Consulta para contar usuarios agrupados por fecha de creación
     // COUNT se castea a INTEGER para evitar strings en el frontend
     const result = await pool.query(`
-      SELECT fecha_creacion::DATE AS fecha, COUNT(*)::INTEGER AS cantidad
+      SELECT (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota')::DATE AS fecha, COUNT(*)::INTEGER AS cantidad
       FROM persona
       WHERE fecha_creacion IS NOT NULL
-      GROUP BY fecha_creacion::DATE
+      GROUP BY (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota')::DATE
       ORDER BY fecha
     `);
 

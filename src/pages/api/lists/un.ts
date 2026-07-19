@@ -13,21 +13,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       correo: string;
       comite: string;
       charla: string;
+      donde_conocio: string | null;
       nombre: string | null;
       pregrado: string | null;
       semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         u.id_grupo,
         u.correo,
         u.comite,
         u.charla,
+        u.donde_conocio,
         pe.nombre,
         pe.pregrado,
-        pe.semestre
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM un AS u
       LEFT JOIN persona AS pe ON u.correo = pe.correo
-      ORDER BY u.charla, pe.nombre;
+      ORDER BY pe.fecha_creacion NULLS LAST, u.charla, pe.nombre;
     `);
 
     if (!result.rows || result.rows.length === 0) {
@@ -44,9 +48,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         id_grupo: row.id_grupo,
         correo: row.correo,
         comite: row.comite,
+        donde_conocio: row.donde_conocio,
         nombre: row.nombre,
         pregrado: row.pregrado,
-        semestre: row.semestre
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion
       });
       return acc;
     }, {} as Record<string, { charla: string; participants: any[] }>);

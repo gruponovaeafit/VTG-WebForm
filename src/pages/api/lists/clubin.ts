@@ -7,55 +7,58 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // Consulta para obtener información de la tabla 'club_in' agrupada por slot
     const result = await dbQuery<{
       id_grupo: number;
       correo: string;
-      slot_id: number | null;
-      day_of_week: string | null;
-      start_time: string | null;
-      capacity: number | null;
+      charla: string | null;
+      practica: string | null;
+      intercambio: string | null;
+      nombre: string | null;
+      pregrado: string | null;
+      semestre: number | null;
+      fecha_inscripcion: string | Date | null;
     }>(`
       SELECT 
         c.id_grupo,
         c.correo,
-        c.slot_id,
-        p.day_of_week,
-        p.start_time,
-        p.capacity
+        c.charla,
+        c.practica,
+        c.intercambio,
+        pe.nombre,
+        pe.pregrado,
+        pe.semestre,
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM club_in AS c
-      LEFT JOIN pre_assessment_slot AS p ON c.slot_id = p.slot_id
-      ORDER BY p.day_of_week ASC, p.start_time ASC, c.correo;
+      LEFT JOIN persona AS pe ON c.correo = pe.correo
+      ORDER BY pe.fecha_creacion NULLS LAST, c.charla, pe.nombre;
     `);
 
     if (!result.rows || result.rows.length === 0) {
       return res.status(200).json({ success: true, data: [] });
     }
 
-    // Agrupar los datos por day_of_week y start_time
     const groupedData = result.rows.reduce((acc, row) => {
-      const key = row.day_of_week && row.start_time 
-        ? `${row.day_of_week} - ${row.start_time}` 
-        : "Sin slot asignado";
-      
-      if (!acc[key]) {
-        acc[key] = { 
-          day_of_week: row.day_of_week, 
-          start_time: row.start_time, 
-          capacity: row.capacity, 
-          participants: [] 
-        };
+      const charla = row.charla || "Sin charla";
+      if (!acc[charla]) {
+        acc[charla] = { charla, participants: [] };
       }
-      acc[key].participants.push({
+      acc[charla].participants.push({
         id_grupo: row.id_grupo,
         correo: row.correo,
-        slot_id: row.slot_id
+        practica: row.practica,
+        intercambio: row.intercambio,
+        nombre: row.nombre,
+        pregrado: row.pregrado,
+        semestre: row.semestre,
+        fecha_inscripcion: row.fecha_inscripcion,
       });
       return acc;
-    }, {} as Record<string, { day_of_week: string | null; start_time: string | null; capacity: number | null; participants: any[] }>);
+    }, {} as Record<string, { charla: string; participants: any[] }>);
 
     const finalData = Object.values(groupedData);
-    console.log(`✅ Club In: ${finalData.length} slots encontrados, ${result.rows.length} participantes totales`);
+    console.log(
+      `✅ Club In: ${finalData.length} grupos por charla, ${result.rows.length} participantes totales`
+    );
 
     res.status(200).json({ success: true, data: finalData });
   } catch (error: any) {

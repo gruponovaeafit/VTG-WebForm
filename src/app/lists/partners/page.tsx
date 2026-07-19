@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_PARTNERS_TSS;
 
@@ -124,6 +125,7 @@ export default function PartnersPage() {
     pregrado: p.pregrado ?? "N/A",
     semestre: p.semestre ?? "N/A",
     horario: item.charla ?? "N/A",
+    fecha_inscripcion: formatDate(p.fecha_inscripcion),
   }))
 );
 
@@ -158,6 +160,7 @@ export default function PartnersPage() {
                 { header: "Pregrado", accessor: (r) => r.pregrado },
                 { header: "Semestre", accessor: (r) => r.semestre },
                 { header: "Horario", accessor: (r) => r.horario },
+                { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
               ]}
             />
           )}
@@ -173,6 +176,7 @@ export default function PartnersPage() {
                   <th className="border border-green-500 px-2 py-1">Pregrado</th>
                   <th className="border border-green-500 px-2 py-1">Semestre</th>
                   <th className="border border-green-500 px-2 py-1">Nombre del Miembro</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
               </tr>
             </thead>
             <tbody>
@@ -183,6 +187,7 @@ export default function PartnersPage() {
                   <td className="border border-green-500 px-2 py-1">{p.pregrado || "N/A"}</td>
                   <td className="border border-green-500 px-2 py-1">{p.semestre || "N/A"}</td>
                   <td className="border border-green-500 px-2 py-1">{p.nombre_miembro || "N/A"}</td>
+                  <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                 </tr>
               ))}
             </tbody>

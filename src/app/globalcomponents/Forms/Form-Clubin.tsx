@@ -1,81 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import FormContainer from "../UI/FormContainer";
 import Select from "../UI/Select";
 import Button from "../UI/Button";
 import { encryptedFetch } from "@/lib/crypto";
 
-// Tipos para la respuesta de la API
-interface TimeSlot {
-  day_of_week: string;
-  start_time: string;
-  capacity: number;
-}
-
-interface SlotsApiResponse {
-  data?: TimeSlot[];
-  notification?: {
-    type: string;
-    message: string;
-  };
-}
-
-type DayOption = "Miercoles" | "Jueves" | "Viernes" | "";
-
 export default function Clubin1Form() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedDay, setSelectedDay] = useState<DayOption>("");
-  const [availableSlots, setAvailableSlots] = useState<{ [key: string]: string[] }>({});
-
-  useEffect(() => {
-    const fetchAvailableSlots = async () => {
-      try {
-        const res = await fetch("/api/forms/clubin");
-        if (!res.ok) throw new Error(`Error al obtener los datos. Status: ${res.status}`);
-
-        const data: SlotsApiResponse = await res.json();
-        if (!data || !Array.isArray(data.data)) {
-          setAvailableSlots({});
-          return;
-        }
-
-        const grouped: { [key: string]: string[] } = {};
-
-        data.data.forEach((slot) => {
-          const day = slot.day_of_week;
-          const time = slot.start_time;
-          const cap = slot.capacity;
-
-          if (cap > 0) {
-            if (!grouped[day]) grouped[day] = [];
-            grouped[day].push(time);
-          }
-        });
-
-        setAvailableSlots(grouped);
-      } catch (error) {
-        console.error("Error al obtener los horarios disponibles:", error);
-        toast.error("No se pudieron cargar los horarios. Inténtalo más tarde.");
-      }
-    };
-
-    fetchAvailableSlots();
-  }, []);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // ✅ Validación simple: obliga a escoger día (y por ende hora)
-    if (!selectedDay) {
-      setIsSubmitting(false);
-      toast.error("Selecciona un día para ver los horarios.", { position: "top-center", autoClose: 1200 });
-      return;
-    }
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
@@ -90,7 +29,8 @@ export default function Clubin1Form() {
       const result = await response.json();
 
       if (!response.ok) {
-        const errorMessage = result.notification?.message || "Error en el servidor.";
+        const errorMessage =
+          result.notification?.message || result.message || "Error en el servidor.";
 
         toast.error(errorMessage, {
           position: "top-center",
@@ -105,12 +45,11 @@ export default function Clubin1Form() {
         return;
       }
 
-      toast.success(result.notification?.message || "Reserva realizada con éxito.", {
+      toast.success(result.notification?.message || "Formulario enviado con éxito.", {
         position: "top-center",
         autoClose: 500,
+        onClose: () => router.push("/90+1"),
       });
-
-      setTimeout(() => router.push("/90+1"), 800);
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Hubo un error al enviar el formulario.");
@@ -119,67 +58,69 @@ export default function Clubin1Form() {
     }
   };
 
-  const hasSlots = !!(selectedDay && availableSlots[selectedDay]?.length > 0);
-
   return (
     <FormContainer
-        onSubmit={handleFormSubmit}
-        buttons={[
-          <Button
-            key="submit"
-            type="submit"
-            variant="verde"
-            size="md"
-            state={isSubmitting ? "loading" : "active"}
-            disabled={isSubmitting}
-            className="w-full h-14 md:px-15"
-            theme="fifa"
-          >
-            SIGUIENTE
-          </Button>,
-        ]}
-      >
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-left text-lg font-bold mb-4 text-white drop-shadow-[0_2px_0_rgba(0,0,0,0.7)]">
-            Debes inscribirte en uno de nuestros pre-assessment, elige el horario que mejor te quede
-          </label>
+      onSubmit={handleFormSubmit}
+      buttons={[
+        <Button
+          key="submit"
+          type="submit"
+          variant="verde"
+          size="md"
+          state={isSubmitting ? "loading" : "active"}
+          disabled={isSubmitting}
+          className="w-full h-14 md:px-15"
+          theme="fifa"
+        >
+          SIGUIENTE
+        </Button>,
+      ]}
+    >
+      <div className="mb-4">
+        <Select
+          id="charla"
+          name="charla"
+          label="Inscribete a un horario de charla informativa (si no puedes en ninguna notifica a través del correo clinbin@eafit.edu.co)"
+          labelColorClass="text-white"
+          required
+          options={[
+            { label: "Miércoles Jul. 22 11:00 AM - 12:00 PM", value: "Miércoles Jul. 22 11:00 AM - 12:00 PM" },
+            { label: "Miércoles Jul. 22 3:00 PM - 4:00 PM", value: "Miércoles Jul. 22 3:00 PM - 4:00 PM" },
+            { label: "Jueves Jul. 23 3:00 PM - 4:00 PM", value: "Jueves Jul. 23 3:00 PM - 4:00 PM" },
+            { label: "Viernes Jul. 24 11:00 AM - 12:00 PM", value: "Viernes Jul. 24 11:00 AM - 12:00 PM" },
+            { label: "Viernes Jul. 24 12:00 PM - 1:00 PM", value: "Viernes Jul. 24 12:00 PM - 1:00 PM" },
+          ]}
+        />
+      </div>
 
-          <Select
-            id="date"
-            name="date"
-            label="Días"
-            labelColorClass="text-white"
-            required
-            value={selectedDay}
-            onChange={(e) => setSelectedDay(e.target.value as DayOption)}
-            options={[
-              { label: "Selecciona un día", value: "" }, // ✅ placeholder
-              ...Object.keys(availableSlots).map((date) => ({
-                label: date,
-                value: date,
-              })),
-            ]}
-          />
-        </div>
+      <div className="mb-4">
+        <Select
+          id="practica"
+          name="practica"
+          label="¿Harás la práctica académica en el próximo año?"
+          labelColorClass="text-white"
+          required
+          options={[
+            { label: "2026-2", value: "2026-2" },
+            { label: "2027-1", value: "2027-1" },
+            { label: "Ninguno", value: "Ninguno" },
+          ]}
+        />
+      </div>
 
-        <div className="mb-4">
-          <Select
-            id="talk"
-            name="talk"
-            label="Horas"
-            labelColorClass="text-white"
-            required
-            disabled={!hasSlots}
-            options={
-              hasSlots
-                ? availableSlots[selectedDay].map((hora) => ({
-                    label: hora,
-                    value: hora,
-                  }))
-                : [{ label: "Selecciona un día primero", value: "" }]
-            }
-          />
-        </div>
-      </FormContainer>
+      <div className="mb-4">
+        <Select
+          id="intercambio"
+          name="intercambio"
+          label="¿Estás de intercambio académico o harás uno el próximo semestre?"
+          labelColorClass="text-white"
+          required
+          options={[
+            { label: "Sí", value: "Si" },
+            { label: "No", value: "No" },
+          ]}
+        />
+      </div>
+    </FormContainer>
   );
 }

@@ -57,7 +57,7 @@ export default function Home() {
         {/* Logo siempre arriba del form */}
         <div className="mb-[0px] z-20">
           <img
-            src="/OE_Logo.png"
+            src="/OE_Logo.svg"
             alt="OE"
             className="h-auto w-[150px] sm:w-[190px] md:w-[230px]"
           />

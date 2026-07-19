@@ -15,12 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // 🔍 Consulta para contar usuarios agrupados por hora (entre 8:00 AM y 7:00 PM)
     const result = await pool.query(`
       SELECT 
-        EXTRACT(HOUR FROM fecha_creacion)::INTEGER as hora, 
+        EXTRACT(HOUR FROM (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota'))::INTEGER as hora, 
         COUNT(*) as cantidad
       FROM persona
       WHERE fecha_creacion IS NOT NULL
-        AND EXTRACT(HOUR FROM fecha_creacion) BETWEEN 8 AND 19
-      GROUP BY EXTRACT(HOUR FROM fecha_creacion)
+        AND EXTRACT(HOUR FROM (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota')) BETWEEN 8 AND 19
+      GROUP BY EXTRACT(HOUR FROM (fecha_creacion AT TIME ZONE 'UTC' AT TIME ZONE 'America/Bogota'))
       ORDER BY hora
     `);
 

@@ -52,15 +52,19 @@ export default function Home() {
         </div>  
 
       {/* Contenido principal */}
-      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10 font-extrabold font-extrabold mb-2 ">
-        <img src="/CLUBIN.svg" alt="CLUBIN" width={150} height={120} />
+      <main className="flex flex-col gap-0 row-start-2 items-center sm:items-start relative z-10 font-extrabold mb-0">
+        <img
+          src="/CLUBIN.svg"
+          alt="CLUBIN"
+          className="h-auto w-[90px] sm:w-[110px] md:w-[120px]"
+        />
 
-        <div className="-mt-5">
+        <div className="-mt-2">
           <Clubin1Form />
         </div>
 
         {/* Footer siempre centrado */}
-        <div className="flex justify-center w-full mt-2 sm:mt-0">
+        <div className="flex justify-center w-full mt-1">
           <Footer_NOVA_blanco />  
         </div>
 

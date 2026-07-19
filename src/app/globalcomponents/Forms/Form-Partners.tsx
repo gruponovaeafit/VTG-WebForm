@@ -89,10 +89,10 @@ export default function PartnersForm() {
             name="talkSelection"
             required
             options={[
-              { label: "Mar. 27 ene 5 - 6 p.m.", value: "Mar. 27 ene 5 - 6 p.m." },
-              { label: "Mie. 28 ene 5 - 6 p.m.", value: "Mie. 28 ene 5 - 6 p.m." },
-              { label: "Jue. 29 ene 5 - 6 p.m.", value: "Jue. 29 ene 5 - 6 p.m." },
-              { label: "Vie. 30 ene 9 - 10 a.m.", value: "Vie. 30 ene 9 - 10 a.m." },
+              { label: "Mar. 21 jul 4:00 PM", value: "Mar. 21 jul 4:00 PM" },
+              { label: "Mie. 22 jul 4:00 PM", value: "Mie. 22 jul 4:00 PM" },
+              { label: "Jue. 23 jul 9:00 AM", value: "Jue. 23 jul 9:00 AM" },
+              { label: "Jue. 23 jul 6:00 PM", value: "Jue. 23 jul 6:00 PM" },
             ]}
             className="w-full px-4 py-2 text-sm rounded border border-black bg-yellow text-black focus:outline-none focus:ring-2 focus:ring-white"
           />
@@ -104,11 +104,11 @@ export default function PartnersForm() {
             name="who"
             required
             placeholder="Nombre"
-            title="Ingresa el nombre de quien te registró"
+            title="Ingresa el nombre del partner que te inscribió"
             borderColorClass="border-black"
             focusRingColorClass="focus:ring-white"
             labelColorClass="text-white"
-            label="¿Quién te registró?"
+            label="Ingresa el nombre del partner que te inscribió"
           />
         </div>
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Users } from "lucide-react";
 import { toast } from "react-toastify";
 import ExportCSV from "@/app/globalcomponents/UI/ExportCSV";
+import { formatDateColombia as formatDate } from "@/lib/formatDate";
 
 const GLOBAL_PASSWORD = process.env.NEXT_PUBLIC_NOVA_TSS;
 
@@ -120,6 +121,7 @@ export default function NovaPage() {
   semestre: p.semestre ?? "N/A",
   departamento: p.departamento ?? "N/A",
   miembro: p.nombre_miembro,
+  fecha_inscripcion: formatDate(p.fecha_inscripcion),
 }));
 
 
@@ -150,6 +152,7 @@ export default function NovaPage() {
     { header: "Semestre", accessor: (r) => r.semestre },
     { header: "Departamento", accessor: (r) => r.departamento },
     { header: "Miembro", accessor: (r) => r.miembro },
+    { header: "Fecha inscripción", accessor: (r) => r.fecha_inscripcion },
   ]}
 />
 
@@ -164,6 +167,7 @@ export default function NovaPage() {
                   <th className="border border-green-500 px-2 py-1">Nombre</th>
                   <th className="border border-green-500 px-2 py-1">Departamento</th>
                   <th className="border border-green-500 px-2 py-1">Nombre del Miembro</th>
+                  <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -173,6 +177,7 @@ export default function NovaPage() {
                     <td className="border border-green-500 px-2 py-1">{p.nombre || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.departamento || "N/A"}</td>
                     <td className="border border-green-500 px-2 py-1">{p.nombre_miembro || "N/A"}</td>
+                    <td className="border border-green-500 px-2 py-1">{formatDate(p.fecha_inscripcion)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -202,6 +207,7 @@ export default function NovaPage() {
                     <th className="border border-green-500 px-2 py-1">Semestre</th>
                     <th className="border border-green-500 px-2 py-1">Departamento</th>
                     <th className="border border-green-500 px-2 py-1">Nombre del Miembro</th>
+                    <th className="border border-green-500 px-2 py-1">Fecha inscripción</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -213,6 +219,7 @@ export default function NovaPage() {
                       <td className="border border-green-500 px-2 py-1">{person.semestre || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{person.departamento || "N/A"}</td>
                       <td className="border border-green-500 px-2 py-1">{person.nombre_miembro || "N/A"}</td>
+                      <td className="border border-green-500 px-2 py-1">{formatDate(person.fecha_inscripcion)}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -80,10 +80,10 @@ export default function OEForm() {
             ¿Puedes asistir a nuestra charla informativa para conocer más sobre nuestros comités y el grupo?
           </label>
           <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
-             Viernes 30 de enero 2:00 p.m. – 5:00 p.m.
+             Viernes 24 de julio 3:00 p.m
           </label>
           <label htmlFor="programs" className="block text-m mb-2 text-white font-bold">
-            LA ASISTENCIA ES OBLIGATORIA
+            LA ASISTENCIA ES OBLIGATORIA pero si no puedes ir puedes enviar un correo a <span className="text-blue-500">oe@eafit.edu.co</span>
           </label>
           <Select
             id="talk"

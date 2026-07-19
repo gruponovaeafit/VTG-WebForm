@@ -11,6 +11,7 @@ import { encryptedFetch } from "@/lib/crypto";
 export default function UnForm() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dondeConocio, setDondeConocio] = useState("");
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,12 +19,27 @@ export default function UnForm() {
 
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
+    const payload = Object.fromEntries(formData.entries()) as Record<string, unknown>;
+
+    // Si eligió "Otro", guardar el texto libre (máx 32 en API); si no, la opción del select
+    if (dondeConocio === "Otro") {
+      const otro = String(payload.donde_conocio_otro ?? "").trim();
+      if (!otro) {
+        setIsSubmitting(false);
+        toast.error("Indica dónde conociste al grupo.", {
+          position: "top-center",
+          autoClose: 1500,
+        });
+        return;
+      }
+      payload.donde_conocio = otro.slice(0, 32);
+    } else {
+      payload.donde_conocio = dondeConocio;
+    }
+    delete payload.donde_conocio_otro;
 
     try {
-      const response = await encryptedFetch(
-        "/api/forms/un",
-        Object.fromEntries(formData.entries()) as Record<string, unknown>
-      );
+      const response = await encryptedFetch("/api/forms/un", payload);
 
       const result = await response.json();
 
@@ -98,11 +114,48 @@ export default function UnForm() {
             labelColorClass="text-white"
             required
             options={[
-              { label: "Vie. 30 de enero 2:00 p.m. – 3:30 p.m.", value: "Vie. 30 de enero 2:00 p.m. – 3:30 p.m." },
-              { label: "Vie. 30 de enero 4:00 p.m. – 5:30 p.m.", value: "Vie. 30 de enero 4:00 p.m. – 5:30 p.m." },
+              { label: "Lun. 27 de julio 2:00 p.m. – 4:00 p.m. 33-202", value: "Lun. 27 de julio 2:00 p.m. – 4:00 p.m. 33-202" },
+              { label: "Lun. 27 de julio 4:00 p.m. – 6:00 p.m. 20-520", value: "Vie. 30 de enero 4:00 p.m. – 5:30 p.m. 20-520" },
             ]}
           />
-        </div>  
+        </div>
+
+        <div className="mb-2">
+          <Select
+            id="donde_conocio"
+            name="donde_conocio"
+            label="¿Dónde conociste a UN Society?"
+            labelColorClass="text-white"
+            required
+            value={dondeConocio}
+            onChange={(e) => setDondeConocio(e.target.value)}
+            options={[
+              { label: "Selecciona una opción", value: "" },
+              { label: "Instagram", value: "Instagram" },
+              { label: "Facebook", value: "Facebook" },
+              { label: "WhatsApp", value: "WhatsApp" },
+              { label: "Twitter", value: "Twitter" },
+              { label: "LinkedIn", value: "LinkedIn" },
+              { label: "Físico", value: "Físico" },
+              { label: "Otro", value: "Otro" },
+            ]}
+          />
+        </div>
+
+        {dondeConocio === "Otro" && (
+          <div className="mb-2">
+            <Input
+              id="donde_conocio_otro"
+              name="donde_conocio_otro"
+              type="text"
+              label="¿Cuál?"
+              labelColorClass="text-white"
+              placeholder="Escribe dónde nos conociste"
+              required
+              maxLength={32}
+            />
+          </div>
+        )}
       </FormContainer>
   );
 }

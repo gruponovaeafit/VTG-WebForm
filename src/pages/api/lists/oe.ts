@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         pe.nombre,
         pe.pregrado,
         pe.semestre,
-        pe.fecha_creacion AS fecha_inscripcion
+        (pe.fecha_creacion AT TIME ZONE 'UTC') AS fecha_inscripcion
       FROM oe AS o
       LEFT JOIN persona AS pe ON o.correo = pe.correo
       ORDER BY pe.fecha_creacion NULLS LAST, o.charla, pe.nombre;

@@ -111,9 +111,9 @@ export default function SpieForm() {
               required
               labelColorClass="text-white"
               options={[
-                { label: "Vie. 30 Ene, 12:00 p.m.", value: "Vie. 30 Ene, 12:00 p.m." },
-                { label: "Vie. 30 Ene, 2:00 p.m.", value: "Vie. 30 Ene, 2:00 p.m." },
-                { label: "Vie. 6 Feb, 12:00 p.m.", value: "Vie. 6 Feb, 12:00 p.m." },
+                { label: "Jue. 23 Jul, 2:00 p.m.  34-302", value: "Jue. 23 Jul, 2:00 p.m.  34-302" },
+                { label: "Lun. 27 Jul, 2:00 p.m. 34-101", value: "Lun. 27 Jul, 2:00 p.m. 34-101" },
+                { label: "Mar. 28 Jul, 3:00 p.m. 33-102", value: "Mar. 28 Jul, 3:00 p.m. 33-102" },
               ]}
             />
 
